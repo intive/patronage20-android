@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dashboard.view.DashboardActivity">
+    tools:context=".dashboard.view.SmartHomeActivity">
 
         <fragment
             android:id="@+id/fragment"
@@ -11,4 +11,4 @@
             android:layout_height="match_parent"
             class="com.intive.patronage.smarthome.dashboard.view.DashboardFragment"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
