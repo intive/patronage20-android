@@ -3,7 +3,7 @@ package com.intive.patronage.smarthome
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.intive.patronage.smarthome.dashboard.view.DashboardActivity
+import com.intive.patronage.smarthome.dashboard.view.SmartHomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this, DashboardActivity::class.java))
+        startActivity(Intent(this, SmartHomeActivity::class.java))
         finish()
     }
 }

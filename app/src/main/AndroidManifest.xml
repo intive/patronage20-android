@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".dashboard.view.DashboardActivity">
+        <activity android:name=".dashboard.view.SmartHomeActivity">
         </activity>
 
     </application>
