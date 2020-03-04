@@ -2,4 +2,7 @@
     <string name="app_name">SmartHome</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
+    <string name="red">R: 98</string>
+    <string name="green">G: 0</string>
+    <string name="blue">B: 238</string>
 </resources>

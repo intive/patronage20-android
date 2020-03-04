@@ -1,15 +1,11 @@
 package com.intive.patronage.smarthome.viewmodel
 
-import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 //TODO: add service to constructor
-public class LightsDetailsViewModel() : ViewModel() {
-    var redValue = 98
-    var greenValue = 0
-    var blueValue = 238
+class LightsDetailsViewModel() : ViewModel() {
 
     // just for now
     data class LightsData(val id: Int, val type: String, val hue: Int, val saturation: Int, val value: Int)
@@ -38,10 +34,6 @@ public class LightsDetailsViewModel() : ViewModel() {
             - change view color on seek bar swipe
             - send data to API
          */
-        redValue = 100
-        greenValue = 100
-        blueValue = 100
-        var color = Color.rgb(redValue, greenValue, blueValue)
     }
 
     override fun onCleared() {
