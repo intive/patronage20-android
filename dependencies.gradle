@@ -28,6 +28,6 @@ ext {
             constraintlayout        : "androidx.constraintlayout:constraintlayout:$constraintlayout_version",
             junit                   : "junit:junit:$junit_version",
             test_ext                : "androidx.test.ext:junit:$test_ext_version",
-            test_espresso           : "androidx.test.espresso:espresso-core:$test_espresso_version"
+            test_espresso           : "androidx.test.espresso:espresso-core:$test_espresso_version",
     ]
 }
