@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
-import kotlinx.android.synthetic.main.dashboard_activity.*
 
-class DashboardFragment() : Fragment() {
+class DashboardFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

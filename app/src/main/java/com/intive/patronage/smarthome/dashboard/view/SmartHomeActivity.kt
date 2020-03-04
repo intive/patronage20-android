@@ -8,7 +8,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dashboard_activity)
+        setContentView(R.layout.smart_home_activity)
     }
 
     override fun onBackPressed() {
