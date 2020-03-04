@@ -8,8 +8,12 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle(R.string.dashboard_appbar)
         setContentView(R.layout.dashboard_activity)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //navigator.quit()
     }
 
 }
