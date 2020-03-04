@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SmartHome</string>
+    <string name="dashboard_appbar">Dashboard</string>
 </resources>
