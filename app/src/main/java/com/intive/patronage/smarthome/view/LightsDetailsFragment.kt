@@ -2,11 +2,15 @@ package com.intive.patronage.smarthome.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.intive.patronage.smarthome.R
@@ -28,12 +32,18 @@ class LightsDetailsFragment : Fragment() {
 
         val lightsDetailsViewModel = ViewModelProviders.of(this).get(LightsDetailsViewModel::class.java)
 
-        lightsDetailsViewModel.getLights().observe(this, Observer {
+        lightsDetailsViewModel.getLights().observe(viewLifecycleOwner, Observer {
+            convertHSVtoRGB(it.hue, it.saturation, it.value)
             //TODO: update UI
         })
 
         view.okButton.setOnClickListener {
+            convertRGBtoHSV()
             //TODO: send data to API
+        }
+
+        view.cancelButton.setOnClickListener {
+            //TODO: show previous colors
         }
 
         view.redSeekBar.setOnSeekBarChangeListener(object :
@@ -52,7 +62,7 @@ class LightsDetailsFragment : Fragment() {
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 greenValue = progress
-                val greenText = "R: $greenValue"
+                val greenText = "G: $greenValue"
                 view.greenTextView.text = greenText
                 setCurrentColor()
             }
@@ -64,7 +74,7 @@ class LightsDetailsFragment : Fragment() {
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 blueValue = progress
-                val blueText = "R: $blueValue"
+                val blueText = "B: $blueValue"
                 view.blueTextView.text = blueText
                 setCurrentColor()
             }
@@ -73,6 +83,22 @@ class LightsDetailsFragment : Fragment() {
         })
 
         return view
+    }
+
+    fun convertRGBtoHSV() {
+        val hsv = FloatArray(3)
+        Color.RGBToHSV(redValue, greenValue, blueValue, hsv)
+        Log.d("HUE", hsv[0].toString())
+        Log.d("SATURATION", hsv[1].toString())
+        Log.d("VALUE", hsv[2].toString())
+    }
+
+    fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int) {
+        val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat(), value.toFloat())
+        val rgb = Color.HSVToColor(hsv)
+        /*redValue = rgb.red
+        greenValue = rgb.green
+        blueValue = rgb.blue*/
     }
 
     fun setCurrentColor() {

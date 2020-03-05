@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 //TODO: add service to constructor
-class LightsDetailsViewModel() : ViewModel() {
+class LightsDetailsViewModel : ViewModel() {
 
     // just for now
     data class LightsData(val id: Int, val type: String, val hue: Int, val saturation: Int, val value: Int)
@@ -21,10 +21,10 @@ class LightsDetailsViewModel() : ViewModel() {
     }
 
     private fun loadLights() {
-        //TODO: fetch data
+        //TODO: fetch data from service
     }
 
-    // button on click methods
+    // buttons on click methods
     fun onCancelClicked() {
         //TODO: reset seek bar state to previous
     }
@@ -34,6 +34,10 @@ class LightsDetailsViewModel() : ViewModel() {
             - change view color on seek bar swipe
             - send data to API
          */
+    }
+
+    fun onAppbarBackButtonClicked() {
+        //TODO: implement navigator
     }
 
     override fun onCleared() {

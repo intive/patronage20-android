@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="lightDetailsViewModel"
+            type="com.intive.patronage.smarthome.viewmodel.LightsDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:background="@color/colorPrimary"
+            android:id="@+id/colorView"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:weightSum="7"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <TextView
+                        android:padding="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:text="@string/red"
+                        android:id="@+id/redTextView"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"/>
+
+                    <SeekBar
+                        android:progress="98"
+                        android:max="255"
+                        android:layout_toEndOf="@+id/redTextView"
+                        android:id="@+id/redSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <TextView
+                        android:padding="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:text="@string/green"
+                        android:id="@+id/greenTextView"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"/>
+
+                    <SeekBar
+                        android:progress="0"
+                        android:max="255"
+                        android:layout_toEndOf="@+id/greenTextView"
+                        android:id="@+id/greenSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <TextView
+                        android:padding="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:text="@string/blue"
+                        android:id="@+id/blueTextView"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"/>
+
+                    <SeekBar
+                        android:progress="238"
+                        android:max="255"
+                        android:layout_toEndOf="@+id/blueTextView"
+                        android:id="@+id/blueSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <Button
+                        android:background="@color/colorAccent"
+                        android:text="@string/ok"
+                        android:id="@+id/okButton"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+
+                    <Button
+                        android:background="@color/colorAccent"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/cancel"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/okButton"
+                        android:id="@+id/cancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
