@@ -11,71 +11,62 @@ import android.widget.SeekBar
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.databinding.FragmentLightsDetailsBinding
 import com.intive.patronage.smarthome.viewmodel.LightsDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_lights_details.*
 import kotlinx.android.synthetic.main.fragment_lights_details.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LightsDetailsFragment : Fragment() {
 
-    var redValue = 98
-    var greenValue = 0
-    var blueValue = 238
+    private val lightDetailsViewModel by lazy { ViewModelProviders.of(this).get(LightsDetailsViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_lights_details, container, false)
 
-        val lightsDetailsViewModel = ViewModelProviders.of(this).get(LightsDetailsViewModel::class.java)
+        activity?.setTitle(R.string.lights_details_appbar)
 
-        lightsDetailsViewModel.getLights().observe(viewLifecycleOwner, Observer {
-            convertHSVtoRGB(it.hue, it.saturation, it.value)
-            //TODO: update UI
-        })
+        val binding: FragmentLightsDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
+        binding.lifecycleOwner = this
+        binding.lightDetailsViewModel = lightDetailsViewModel
+        val view = binding.root
 
-        view.okButton.setOnClickListener {
-            convertRGBtoHSV()
-            //TODO: send data to API
-        }
+        view.okButton.setOnClickListener { lightDetailsViewModel.onOkClicked() }
 
         view.cancelButton.setOnClickListener {
-            //TODO: show previous colors
+            //TODO: show previous state
         }
 
-        view.redSeekBar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        view.redSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                redValue = progress
-                val redText = "R: $redValue"
-                view.redTextView.text = redText
+                lightDetailsViewModel.redValue = progress
+                view.redValueTextView.text = progress.toString()
                 setCurrentColor()
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
             override fun onStopTrackingTouch(seek: SeekBar) {}
         })
 
-        view.greenSeekBar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        view.greenSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                greenValue = progress
-                val greenText = "G: $greenValue"
-                view.greenTextView.text = greenText
+                lightDetailsViewModel.greenValue = progress
+                view.greenValueTextView.text = progress.toString()
                 setCurrentColor()
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
             override fun onStopTrackingTouch(seek: SeekBar) {}
         })
 
-        view.blueSeekBar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        view.blueSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                blueValue = progress
-                val blueText = "B: $blueValue"
-                view.blueTextView.text = blueText
+                lightDetailsViewModel.blueValue = progress
+                view.blueValueTextView.text = progress.toString()
                 setCurrentColor()
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
@@ -85,24 +76,8 @@ class LightsDetailsFragment : Fragment() {
         return view
     }
 
-    fun convertRGBtoHSV() {
-        val hsv = FloatArray(3)
-        Color.RGBToHSV(redValue, greenValue, blueValue, hsv)
-        Log.d("HUE", hsv[0].toString())
-        Log.d("SATURATION", hsv[1].toString())
-        Log.d("VALUE", hsv[2].toString())
-    }
-
-    fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int) {
-        val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat(), value.toFloat())
-        val rgb = Color.HSVToColor(hsv)
-        /*redValue = rgb.red
-        greenValue = rgb.green
-        blueValue = rgb.blue*/
-    }
-
     fun setCurrentColor() {
-        val color = Color.rgb(redValue, greenValue, blueValue)
+        val color = Color.rgb(lightDetailsViewModel.redValue, lightDetailsViewModel.greenValue, lightDetailsViewModel.blueValue)
         colorView.setBackgroundColor(color)
     }
 }

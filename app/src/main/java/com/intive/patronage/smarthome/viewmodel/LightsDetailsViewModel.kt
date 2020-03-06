@@ -1,5 +1,10 @@
 package com.intive.patronage.smarthome.viewmodel
 
+import android.graphics.Color
+import android.util.Log
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +14,10 @@ class LightsDetailsViewModel : ViewModel() {
 
     // just for now
     data class LightsData(val id: Int, val type: String, val hue: Int, val saturation: Int, val value: Int)
+
+    var redValue = 98
+    var greenValue = 0
+    var blueValue = 238
 
     private val lights: MutableLiveData<LightsData> by lazy {
         MutableLiveData<LightsData>().also {
@@ -30,14 +39,28 @@ class LightsDetailsViewModel : ViewModel() {
     }
 
     fun onOkClicked() {
-        /*TODO:
-            - change view color on seek bar swipe
-            - send data to API
-         */
+        convertRGBtoHSV()
+        //TODO: send data to API
     }
 
     fun onAppbarBackButtonClicked() {
         //TODO: implement navigator
+    }
+
+    fun convertRGBtoHSV() {
+        val hsv = FloatArray(3)
+        Color.RGBToHSV(redValue, greenValue, blueValue, hsv)
+        Log.d("HUE", hsv[0].toString())
+        Log.d("SATURATION", hsv[1].toString())
+        Log.d("VALUE", hsv[2].toString())
+    }
+
+    fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int) {
+        val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat(), value.toFloat())
+        val rgb = Color.HSVToColor(hsv)
+        redValue = rgb.red
+        greenValue = rgb.green
+        blueValue = rgb.blue
     }
 
     override fun onCleared() {
