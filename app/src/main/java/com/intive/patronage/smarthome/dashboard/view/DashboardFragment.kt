@@ -4,30 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.dashboard.viewmodel.DashboardViewModel
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import com.intive.patronage.smarthome.databinding.DashboardFragmentBinding
 
-class DashboardFragment : Fragment() {
+class DashboardFragment() : Fragment() {
+
+    private val dashboardViewModel: DashboardViewModel by viewModel()
+    private val sensorsListAdapter: SensorsListAdapter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // inflate with FRAGMENT LAYOUT
-        return inflater.inflate(R.layout.dashboard_fragment, container)
+        val binding: DashboardFragmentBinding =
+            DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false)
+        binding.lifecycleOwner = this
+        binding.dashboardViewModelDataBind = dashboardViewModel
+        val recyclerView: RecyclerView = binding.sensorRecyclerView
+        setupRecyclerView(recyclerView)
+        return binding.root
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        activity?.setTitle(R.string.dashboard_appbar)
-//    }
+    private fun setupRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(activity)
+            adapter = sensorsListAdapter
+        }
+    }
 
-    // i'm overriding onResume() because if the title is changed somewhere else
-    // i can get it back on user input(e.g. back pressed)
     override fun onResume() {
         super.onResume()
         activity?.setTitle(R.string.dashboard_appbar)
     }
-
 }
