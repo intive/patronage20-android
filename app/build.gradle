@@ -42,6 +42,7 @@ dependencies {
     implementation projectDependencies.retrofit_rx_java
     implementation projectDependencies.rx_java_2
     implementation projectDependencies.rx_java_2_android
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation projectDependencies.junit
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso
