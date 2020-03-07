@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.model
+package com.intive.patronage.smarthome.dashboard.model
 
 import com.squareup.moshi.Json
 
