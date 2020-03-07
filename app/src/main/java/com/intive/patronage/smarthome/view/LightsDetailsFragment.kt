@@ -1,25 +1,19 @@
 package com.intive.patronage.smarthome.view
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.core.graphics.blue
-import androidx.core.graphics.green
-import androidx.core.graphics.red
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.FragmentLightsDetailsBinding
 import com.intive.patronage.smarthome.viewmodel.LightsDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_lights_details.*
 import kotlinx.android.synthetic.main.fragment_lights_details.view.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import kotlinx.android.synthetic.main.fragment_lights_details.view.redSeekBar
 
 class LightsDetailsFragment : Fragment() {
 
@@ -38,16 +32,11 @@ class LightsDetailsFragment : Fragment() {
         val view = binding.root
 
         view.okButton.setOnClickListener { lightDetailsViewModel.onOkClicked() }
-
-        view.cancelButton.setOnClickListener {
-            //TODO: show previous state
-        }
+        view.cancelButton.setOnClickListener { lightDetailsViewModel.onCancelClicked() }
 
         view.redSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                lightDetailsViewModel.redValue = progress
-                view.redValueTextView.text = progress.toString()
-                setCurrentColor()
+                setCurrentColor(redSeekBar, progress)
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
             override fun onStopTrackingTouch(seek: SeekBar) {}
@@ -55,9 +44,7 @@ class LightsDetailsFragment : Fragment() {
 
         view.greenSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                lightDetailsViewModel.greenValue = progress
-                view.greenValueTextView.text = progress.toString()
-                setCurrentColor()
+                setCurrentColor(greenSeekBar, progress)
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
             override fun onStopTrackingTouch(seek: SeekBar) {}
@@ -65,9 +52,7 @@ class LightsDetailsFragment : Fragment() {
 
         view.blueSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                lightDetailsViewModel.blueValue = progress
-                view.blueValueTextView.text = progress.toString()
-                setCurrentColor()
+                setCurrentColor(blueSeekBar, progress)
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
             override fun onStopTrackingTouch(seek: SeekBar) {}
@@ -76,8 +61,21 @@ class LightsDetailsFragment : Fragment() {
         return view
     }
 
-    fun setCurrentColor() {
-        val color = Color.rgb(lightDetailsViewModel.redValue, lightDetailsViewModel.greenValue, lightDetailsViewModel.blueValue)
-        colorView.setBackgroundColor(color)
+    fun setCurrentColor(seekBar: SeekBar, progress: Int) {
+        when(seekBar) {
+            redSeekBar -> {
+                lightDetailsViewModel.redValue = progress
+                redValueTextView.text = progress.toString()
+            }
+            greenSeekBar -> {
+                lightDetailsViewModel.greenValue = progress
+                greenValueTextView.text = progress.toString()
+            }
+            blueSeekBar -> {
+                lightDetailsViewModel.blueValue = progress
+                blueValueTextView.text = progress.toString()
+            }
+        }
+        colorView.setBackgroundColor(lightDetailsViewModel.setCurrentColor())
     }
 }

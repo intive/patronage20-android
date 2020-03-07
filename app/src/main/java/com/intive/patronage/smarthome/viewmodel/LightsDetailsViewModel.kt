@@ -14,10 +14,9 @@ class LightsDetailsViewModel : ViewModel() {
 
     // just for now
     data class LightsData(val id: Int, val type: String, val hue: Int, val saturation: Int, val value: Int)
-
-    var redValue = 98
-    var greenValue = 0
-    var blueValue = 238
+    var redValue = 4
+    var greenValue = 138
+    var blueValue = 191
 
     private val lights: MutableLiveData<LightsData> by lazy {
         MutableLiveData<LightsData>().also {
@@ -61,6 +60,10 @@ class LightsDetailsViewModel : ViewModel() {
         redValue = rgb.red
         greenValue = rgb.green
         blueValue = rgb.blue
+    }
+
+    fun setCurrentColor(): Int {
+        return Color.rgb(redValue, greenValue, blueValue)
     }
 
     override fun onCleared() {

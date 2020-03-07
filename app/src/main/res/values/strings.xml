@@ -5,5 +5,5 @@
     <string name="red">R</string>
     <string name="green">G</string>
     <string name="blue">B</string>
-    <string name="lights_details_appbar">Lights</string>
+    <string name="lights_details_appbar">LED lights</string>
 </resources>
