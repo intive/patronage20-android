@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.dashboard.viewmodel
 
 import android.graphics.Color
+import android.util.Log
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
@@ -49,6 +50,9 @@ class LightsDetailsViewModel : ViewModel() {
     private fun convertRGBtoHSV(): FloatArray {
         val hsv = FloatArray(3)
         Color.RGBToHSV(redValue, greenValue, blueValue, hsv)
+        Log.d("hue", hsv[0].toString())
+        Log.d("saturation", hsv[1].toString())
+        Log.d("value", hsv[2].toString())
         return hsv
     }
 
