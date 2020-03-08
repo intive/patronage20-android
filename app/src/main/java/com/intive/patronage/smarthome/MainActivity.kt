@@ -15,11 +15,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startKoin {
-            androidLogger(Level.DEBUG)
-            androidContext(this@MainActivity)
-            modules(dashboardModule)
-        }
         startActivity(Intent(this, SmartHomeActivity::class.java))
         finish()
     }
