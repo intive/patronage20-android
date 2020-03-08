@@ -3,7 +3,7 @@
     <data>
         <variable
             name="lightDetailsViewModel"
-            type="com.intive.patronage.smarthome.viewmodel.LightsDetailsViewModel" />
+            type="com.intive.patronage.smarthome.dashboard.viewmodel.LightsDetailsViewModel" />
     </data>
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
@@ -14,10 +14,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:weightSum="14"
-        tools:context=".view.LightsDetailsFragment">
+        tools:context=".dashboard.view.LightsDetailsFragment">
 
         <View
-            android:background="@color/colorPrimary"
+            android:background="@{lightDetailsViewModel.currentColor}"
             android:id="@+id/colorView"
             android:layout_weight="7"
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"/>
 
             <SeekBar
-                android:progress="4"
+                android:progress="@{lightDetailsViewModel.redValue}"
                 android:max="255"
                 android:layout_toEndOf="@+id/redTextView"
                 android:layout_toStartOf="@id/redValueTextView"
@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"/>
 
             <SeekBar
-                android:progress="138"
+                android:progress="@{lightDetailsViewModel.greenValue}"
                 android:max="255"
                 android:layout_toEndOf="@+id/greenTextView"
                 android:layout_toStartOf="@id/greenValueTextView"
@@ -116,7 +116,7 @@
                 android:layout_height="match_parent"/>
 
             <SeekBar
-                android:progress="191"
+                android:progress="@{lightDetailsViewModel.blueValue}"
                 android:max="255"
                 android:layout_toEndOf="@+id/blueTextView"
                 android:layout_toStartOf="@id/blueValueTextView"
@@ -145,10 +145,10 @@
 
             <Button
                 android:layout_margin="4dp"
-                android:background="@drawable/ok_button"
-                android:text="@string/ok"
+                android:background="@drawable/rounded_button"
+                android:text="@string/apply"
                 android:textColor="#2e2d32"
-                android:id="@+id/okButton"
+                android:id="@+id/applyButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="wrap_content"
@@ -158,11 +158,11 @@
                 android:layout_margin="4dp"
                 android:background="#00000000"
                 android:layout_marginEnd="16dp"
-                android:text="@string/cancel"
-                android:textColor="@color/colorPrimary"
+                android:text="@string/reset"
+                android:textColor="@color/colorAccent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/okButton"
-                android:id="@+id/cancelButton"
+                app:layout_constraintEnd_toStartOf="@+id/applyButton"
+                android:id="@+id/resetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
 

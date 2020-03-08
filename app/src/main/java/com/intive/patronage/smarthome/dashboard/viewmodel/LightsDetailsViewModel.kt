@@ -1,60 +1,58 @@
-package com.intive.patronage.smarthome.viewmodel
+package com.intive.patronage.smarthome.dashboard.viewmodel
 
 import android.graphics.Color
-import android.util.Log
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.intive.patronage.smarthome.dashboard.model.Light
 
 //TODO: add service to constructor
 class LightsDetailsViewModel : ViewModel() {
 
     // just for now
-    data class LightsData(val id: Int, val type: String, val hue: Int, val saturation: Int, val value: Int)
-    var redValue = 4
-    var greenValue = 138
-    var blueValue = 191
+    var redValue = 78
+    var greenValue = 77
+    var blueValue = 83
+    var currentColor = Color.rgb(redValue, greenValue, blueValue)
 
-    private val lights: MutableLiveData<LightsData> by lazy {
-        MutableLiveData<LightsData>().also {
-            loadLights()
+    private val light: MutableLiveData<Light> by lazy {
+        MutableLiveData<Light>().also {
+            loadLight()
         }
     }
 
-    fun getLights(): LiveData<LightsData> {
-        return lights
+    fun getLight(): LiveData<Light> {
+        return light
     }
 
-    private fun loadLights() {
+    private fun loadLight() {
         //TODO: fetch data from service
     }
 
     // buttons on click methods
-    fun onCancelClicked() {
+    fun onResetClicked() {
         //TODO: reset seek bar state to previous
     }
 
-    fun onOkClicked() {
-        convertRGBtoHSV()
+    fun onApplyClicked(): FloatArray {
         //TODO: send data to API
+        return convertRGBtoHSV()
     }
 
-    fun onAppbarBackButtonClicked() {
+    fun onActionBarBackButtonClicked() {
         //TODO: implement navigator
     }
 
-    fun convertRGBtoHSV() {
+    private fun convertRGBtoHSV(): FloatArray {
         val hsv = FloatArray(3)
         Color.RGBToHSV(redValue, greenValue, blueValue, hsv)
-        Log.d("HUE", hsv[0].toString())
-        Log.d("SATURATION", hsv[1].toString())
-        Log.d("VALUE", hsv[2].toString())
+        return hsv
     }
 
-    fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int) {
+    private fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int) {
         val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat(), value.toFloat())
         val rgb = Color.HSVToColor(hsv)
         redValue = rgb.red

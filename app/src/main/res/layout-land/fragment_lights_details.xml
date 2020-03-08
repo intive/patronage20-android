@@ -5,7 +5,7 @@
     <data>
         <variable
             name="lightDetailsViewModel"
-            type="com.intive.patronage.smarthome.viewmodel.LightsDetailsViewModel" />
+            type="com.intive.patronage.smarthome.dashboard.viewmodel.LightsDetailsViewModel" />
     </data>
 
     <LinearLayout
@@ -16,15 +16,15 @@
         android:layout_height="match_parent">
 
         <View
-            android:background="@color/colorPrimary"
+            android:background="@{lightDetailsViewModel.currentColor}"
             android:id="@+id/colorView"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
 
         <LinearLayout
-            android:weightSum="7"
             android:orientation="vertical"
+            android:weightSum="7"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
@@ -46,7 +46,7 @@
                     android:layout_height="match_parent"/>
 
                 <SeekBar
-                    android:progress="98"
+                    android:progress="@{lightDetailsViewModel.redValue}"
                     android:max="255"
                     android:layout_toEndOf="@+id/redTextView"
                     android:layout_toStartOf="@id/redValueTextView"
@@ -84,7 +84,7 @@
                     android:layout_height="match_parent"/>
 
                 <SeekBar
-                    android:progress="0"
+                    android:progress="@{lightDetailsViewModel.greenValue}"
                     android:max="255"
                     android:layout_toEndOf="@+id/greenTextView"
                     android:layout_toStartOf="@id/greenValueTextView"
@@ -122,7 +122,7 @@
                     android:layout_height="match_parent"/>
 
                 <SeekBar
-                    android:progress="238"
+                    android:progress="@{lightDetailsViewModel.blueValue}"
                     android:max="255"
                     android:layout_toEndOf="@+id/blueTextView"
                     android:layout_toStartOf="@id/blueValueTextView"
@@ -143,36 +143,36 @@
 
             </RelativeLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
-                    <Button
-                        android:layout_margin="4dp"
-                        android:background="@drawable/ok_button"
-                        android:text="@string/ok"
-                        android:textColor="#fff"
-                        android:id="@+id/okButton"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
+                <Button
+                    android:layout_margin="4dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="@string/apply"
+                    android:textColor="#2e2d32"
+                    android:id="@+id/applyButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
 
-                    <Button
-                        android:layout_margin="4dp"
-                        android:background="#00000000"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/cancel"
-                        android:textColor="@color/colorPrimary"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/okButton"
-                        android:id="@+id/cancelButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
+                <Button
+                    android:layout_margin="4dp"
+                    android:background="#00000000"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/reset"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/applyButton"
+                    android:id="@+id/resetButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
