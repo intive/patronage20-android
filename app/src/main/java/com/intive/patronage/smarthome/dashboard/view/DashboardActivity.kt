@@ -12,5 +12,12 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
 
         setSupportActionBar(toolbar)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_layout, LightsDetailsFragment()).addToBackStack(null)
+            .commit()
+
+        toolbar.setNavigationOnClickListener {
+            //TODO: implement navigator
+        }
     }
 }
