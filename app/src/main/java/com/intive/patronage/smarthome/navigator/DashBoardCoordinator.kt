@@ -3,14 +3,14 @@ package com.intive.patronage.smarthome.navigator
 import android.os.Bundle
 import com.intive.patronage.smarthome.*
 
-class DashBoardCoordinator(private val navigator: Navigator) {
+class DashboardCoordinator(private val navigator: Navigator) {
 
-    fun goToLedDetailScreen(bundle: Bundle? = null) {
+    fun goToLightsDetailsScreen(bundle: Bundle? = null) {
         //uncomment and replace Fragment::class
         //navigator.goToScreen(FragmentEvent(LedFragment::class.java, bundle))
     }
 
-    fun goToDashBoard() {
+    fun goToDashboard() {
         //uncomment and replace Fragment::class
         //navigator.goToScreen(FragmentEvent(DashBoardFragment::class.java, null))
     }
