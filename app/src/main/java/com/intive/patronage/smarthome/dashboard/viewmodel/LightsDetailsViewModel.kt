@@ -7,18 +7,18 @@ import androidx.core.graphics.red
 import androidx.databinding.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.BR
+import com.intive.patronage.smarthome.dashboard.logic.ObservableViewModel
+import com.intive.patronage.smarthome.dashboard.logic.convertHSVtoRGB
+import com.intive.patronage.smarthome.dashboard.logic.convertRGBtoHSV
 import com.intive.patronage.smarthome.dashboard.model.Light
 
 //TODO: add service to constructor
-class LightsDetailsViewModel : ViewModel(), Observable {
+class LightsDetailsViewModel : ObservableViewModel() {
 
-    private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
-    // this values will be fetched from service
-    private var redProgress = 78
-    private var greenProgress = 77
-    private var blueProgress = 83
+    private var redProgress: Int = 0
+    private var greenProgress: Int = 0
+    private var blueProgress: Int = 0
     private var currentColor: Int = Color.rgb(redProgress, greenProgress, blueProgress)
 
     private val light: MutableLiveData<Light> by lazy {
@@ -31,7 +31,10 @@ class LightsDetailsViewModel : ViewModel(), Observable {
 
     private fun loadLight() {
         //TODO: fetch data from service
-        //convertHSVtoRGB(hue, saturation, value)
+        val rgb = convertHSVtoRGB(0, 0, 0)
+        setRedProgress(rgb.red)
+        setGreenProgress(rgb.green)
+        setBlueProgress(rgb.blue)
     }
 
     @InverseMethod("convertIntToString")
@@ -76,35 +79,7 @@ class LightsDetailsViewModel : ViewModel(), Observable {
     }
 
     fun onApplyClicked() {
-        val hsv = convertRGBtoHSV()
+        val hsv = convertRGBtoHSV(redProgress, greenProgress, blueProgress)
         //TODO: send data to API
-    }
-
-    private fun convertRGBtoHSV(): FloatArray {
-        val hsv = FloatArray(3)
-        Color.RGBToHSV(redProgress, greenProgress, blueProgress, hsv)
-        return hsv
-    }
-
-    private fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int) {
-        val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat(), value.toFloat())
-        val rgb = Color.HSVToColor(hsv)
-        redProgress = rgb.red
-        greenProgress = rgb.green
-        blueProgress = rgb.blue
-    }
-
-    override fun addOnPropertyChangedCallback(
-        callback: Observable.OnPropertyChangedCallback) {
-        callbacks.add(callback)
-    }
-
-    override fun removeOnPropertyChangedCallback(
-        callback: Observable.OnPropertyChangedCallback) {
-        callbacks.remove(callback)
-    }
-
-    private fun notifyPropertyChanged(fieldId: Int) {
-        callbacks.notifyCallbacks(this, fieldId, null)
     }
 }

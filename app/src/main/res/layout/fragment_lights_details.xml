@@ -11,7 +11,7 @@
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#2e2d32"
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,22 +23,22 @@
             android:id="@+id/colorView"
             android:layout_weight="7"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="@dimen/none"/>
 
         <RelativeLayout
             android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="@dimen/none">
 
             <TextView
-                android:padding="16dp"
+                android:padding="@dimen/standard_break"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@string/red"
                 android:textColor="#fff"
                 android:id="@+id/redTextView"
                 android:layout_alignParentStart="true"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/text_view_width"
                 android:layout_height="match_parent"/>
 
             <SeekBar
@@ -47,18 +47,18 @@
                 android:layout_toEndOf="@+id/redTextView"
                 android:layout_toStartOf="@id/redValueTextView"
                 android:id="@+id/redSeekBar"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:padding="16dp"
+                android:padding="@dimen/standard_break"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.redProgress)}"
                 android:textColor="#fff"
                 android:id="@+id/redValueTextView"
                 android:layout_alignParentEnd="true"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/text_view_width"
                 android:layout_height="match_parent"/>
 
         </RelativeLayout>
@@ -66,17 +66,17 @@
         <RelativeLayout
             android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="@dimen/none">
 
             <TextView
-                android:padding="16dp"
+                android:padding="@dimen/standard_break"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@string/green"
                 android:textColor="#fff"
                 android:id="@+id/greenTextView"
                 android:layout_alignParentStart="true"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/text_view_width"
                 android:layout_height="match_parent"/>
 
             <SeekBar
@@ -85,18 +85,18 @@
                 android:layout_toEndOf="@+id/greenTextView"
                 android:layout_toStartOf="@id/greenValueTextView"
                 android:id="@+id/greenSeekBar"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:padding="16dp"
+                android:padding="@dimen/standard_break"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.greenProgress)}"
                 android:textColor="#fff"
                 android:id="@+id/greenValueTextView"
                 android:layout_alignParentEnd="true"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/text_view_width"
                 android:layout_height="match_parent"/>
 
         </RelativeLayout>
@@ -104,17 +104,17 @@
         <RelativeLayout
             android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="@dimen/none">
 
             <TextView
-                android:padding="16dp"
+                android:padding="@dimen/standard_break"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@string/blue"
                 android:textColor="#fff"
                 android:id="@+id/blueTextView"
                 android:layout_alignParentStart="true"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/text_view_width"
                 android:layout_height="match_parent"/>
 
             <SeekBar
@@ -123,18 +123,18 @@
                 android:layout_toEndOf="@+id/blueTextView"
                 android:layout_toStartOf="@id/blueValueTextView"
                 android:id="@+id/blueSeekBar"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:padding="16dp"
+                android:padding="@dimen/standard_break"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.blueProgress)}"
                 android:textColor="#fff"
                 android:id="@+id/blueValueTextView"
                 android:layout_alignParentEnd="true"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/text_view_width"
                 android:layout_height="match_parent"/>
 
         </RelativeLayout>
@@ -143,14 +143,14 @@
             android:orientation="horizontal"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="@dimen/none">
 
             <Button
                 android:onClick="@{() -> lightDetailsViewModel.onApplyClicked()}"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/button_margin"
                 android:background="@drawable/rounded_button"
                 android:text="@string/apply"
-                android:textColor="#2e2d32"
+                android:textColor="@color/backgroundColor"
                 android:id="@+id/applyButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,9 +159,9 @@
 
             <Button
                 android:onClick="@{() -> lightDetailsViewModel.onResetClicked()}"
-                android:layout_margin="4dp"
-                android:background="#00000000"
-                android:layout_marginEnd="16dp"
+                android:layout_margin="@dimen/button_margin"
+                android:background="@color/transparent"
+                android:layout_marginEnd="@dimen/standard_break"
                 android:text="@string/reset"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintTop_toTopOf="parent"
