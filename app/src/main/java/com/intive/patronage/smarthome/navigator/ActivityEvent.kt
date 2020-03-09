@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 
-class ActivityEvent(clazz: Class<*>, bundle: Bundle?) : NavigationEvent(clazz, bundle){
+class ActivityEvent(clazz: Class<*>, bundle: Bundle? = null) : NavigationEvent(clazz, bundle){
 
     fun createIntent(activity: Activity) : Intent {
         return Intent(activity, clazz).apply {

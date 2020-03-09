@@ -5,7 +5,7 @@ import com.intive.patronage.smarthome.*
 
 class DashBoardCoordinator(private val navigator: Navigator) {
 
-    fun goToLedDetailScreen(bundle: Bundle?) {
+    fun goToLedDetailScreen(bundle: Bundle? = null) {
         //uncomment and replace Fragment::class
         //navigator.goToScreen(FragmentEvent(LedFragment::class.java, bundle))
     }
