@@ -7,13 +7,6 @@ class SplashScreenCoordinator(private val navigator: Navigator, private val bund
 
     fun goToMainScreen() {
         navigator.goToScreen(ActivityEvent(MainActivity::class.java, bundle))
-    }
-
-    fun goBack() {
-        navigator.goBack()
-    }
-
-    fun close() {
         navigator.close()
     }
 }

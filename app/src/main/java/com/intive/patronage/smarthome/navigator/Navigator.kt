@@ -11,14 +11,13 @@ class Navigator(private val activity: AppCompatActivity) {
                 val fragment = event.buildFragment()
                 activity.supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.main,fragment)
+                    .replace(event.containerId,fragment)
                     .addToBackStack(null)
                     .commit()
             }
             is ActivityEvent -> {
                 val intent = event.createIntent(activity)
                 activity.startActivity(intent)
-                close()
             }
         }
     }
