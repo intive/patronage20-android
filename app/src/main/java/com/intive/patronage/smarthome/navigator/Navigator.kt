@@ -9,23 +9,27 @@ class Navigator(private val activity: AppCompatActivity) {
         when(event) {
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
-                val manager = activity.supportFragmentManager
-                val transaction = activity.supportFragmentManager
-                transaction.beginTransaction().replace(R.id.main,fragment).addToBackStack(null).commit()
+                activity.supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main,fragment)
+                    .addToBackStack(null)
+                    .commit()
             }
             is ActivityEvent -> {
                 val intent = event.createIntent(activity)
                 activity.startActivity(intent)
-                activity.finish()
+                close()
             }
         }
     }
 
     fun goBack() {
-        if (activity.supportFragmentManager.beginTransaction().isEmpty) {
-            activity.onBackPressed()
-        } else {
-            activity.supportFragmentManager.popBackStack()
+        activity.supportFragmentManager.beginTransaction().also {
+            if (it.isEmpty) {
+                activity.onBackPressed()
+            } else {
+                activity.supportFragmentManager.popBackStack()
+            }
         }
     }
 
