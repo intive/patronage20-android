@@ -8,12 +8,14 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.viewmodel.LightsDetailsViewModel
 import com.intive.patronage.smarthome.databinding.FragmentLightsDetailsBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LightsDetailsFragment : Fragment() {
+
+    val lightsDetailsViewModel by viewModel<LightsDetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +28,7 @@ class LightsDetailsFragment : Fragment() {
 
         val binding: FragmentLightsDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
         binding.lifecycleOwner = this
-        binding.lightDetailsViewModel = ViewModelProviders.of(this).get(LightsDetailsViewModel::class.java)
+        binding.lightDetailsViewModel = lightsDetailsViewModel
         return binding.root
     }
 }

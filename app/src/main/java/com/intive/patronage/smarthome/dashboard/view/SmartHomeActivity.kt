@@ -3,13 +3,13 @@ package com.intive.patronage.smarthome.dashboard.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.intive.patronage.smarthome.R
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_smart_home.*
 
-class DashboardActivity : AppCompatActivity() {
+class SmartHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        setContentView(R.layout.activity_smart_home)
 
         setSupportActionBar(toolbar)
         supportFragmentManager.beginTransaction()
