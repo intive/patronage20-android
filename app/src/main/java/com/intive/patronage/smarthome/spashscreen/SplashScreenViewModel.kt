@@ -15,7 +15,11 @@ class SplashScreenViewModel : ViewModel() {
 
     private val minWaitTime = 5L
     private val maxWaitTime = 30L
+
+    //For test
     private lateinit var api: PostApi
+
+    //For test
     private val postFeather = PostFetcher()
     private var sensorsList = MutableLiveData<List<Post>>()
     var error = MutableLiveData<Boolean>().apply { value = false }

@@ -10,7 +10,7 @@ import org.koin.core.logger.Level
 class SmartHomeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin{
+        startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@SmartHomeApplication)
             modules(listOf(splashScreenModule))
