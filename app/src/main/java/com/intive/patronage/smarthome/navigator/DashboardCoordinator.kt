@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.navigator
 
 import android.os.Bundle
-import com.intive.patronage.smarthome.*
 
 class DashboardCoordinator(private val navigator: Navigator) {
 
