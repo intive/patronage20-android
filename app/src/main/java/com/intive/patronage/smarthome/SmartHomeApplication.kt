@@ -1,10 +1,10 @@
-package com.intive.patronage.smarthome.dashboard
+package com.intive.patronage.smarthome
 
 import android.app.Application
+import com.intive.patronage.smarthome.dashboard.dashboardModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 import org.koin.core.logger.Level
 
 class SmartHomeApplication() : Application() {
@@ -16,11 +16,6 @@ class SmartHomeApplication() : Application() {
             androidContext(this@SmartHomeApplication)
             modules(dashboardModule)
         }
-    }
-
-    override fun onTerminate() {
-        super.onTerminate()
-        stopKoin()
     }
 
 }

@@ -28,12 +28,12 @@ class DashboardFragment() : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false)
         binding.lifecycleOwner = this
         binding.dashboardViewModelDataBind = dashboardViewModel
-        val recyclerView: RecyclerView = binding.sensorRecyclerView
-        setupRecyclerView(recyclerView)
+        setupRecyclerView(binding)
         return binding.root
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
+    private fun setupRecyclerView(binding: DashboardFragmentBinding) {
+        val recyclerView: RecyclerView = binding.sensorRecyclerView
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
