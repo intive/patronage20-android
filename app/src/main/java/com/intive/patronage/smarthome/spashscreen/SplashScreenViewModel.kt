@@ -24,11 +24,11 @@ class SplashScreenViewModel : ViewModel() {
     private var sensorsList = MutableLiveData<List<Post>>()
     var error = MutableLiveData<Boolean>().apply { value = false }
     var complete = MutableLiveData<Boolean>().apply { value = false }
-    private var dashBoardCall: Disposable? = null
+    private var dashboardCall: Disposable? = null
 
     fun getSensors() {
         api = postFeather.fetchPosts()
-        dashBoardCall = api.getPosts().toObservable()
+        dashboardCall = api.getPosts().toObservable()
             .delay(minWaitTime, TimeUnit.SECONDS, true)
             .timeout(maxWaitTime, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
@@ -41,7 +41,7 @@ class SplashScreenViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        dashBoardCall?.dispose()
+        dashboardCall?.dispose()
     }
 
 

@@ -5,8 +5,8 @@ import com.intive.patronage.smarthome.SplashScreenActivity
 
 class SplashScreenCoordinator(private val navigator: Navigator) {
 
-    fun goToSplashScreen() {
-        navigator.goToScreen(ActivityEvent(SplashScreenActivity::class.java))
+    fun goToMainScreen() {
+        navigator.goToScreen(ActivityEvent(MainActivity::class.java))
         navigator.close()
     }
 }

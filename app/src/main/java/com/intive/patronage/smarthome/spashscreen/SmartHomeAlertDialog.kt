@@ -3,7 +3,7 @@ package com.intive.patronage.smarthome.spashscreen
 import android.app.Activity
 import android.app.AlertDialog
 
-class CustomAlertDialog {
+class SmartHomeAlertDialog {
 
     fun connectionError(activity: Activity) {
         AlertDialog.Builder(activity)
