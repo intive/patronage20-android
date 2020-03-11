@@ -54,4 +54,5 @@ dependencies {
     testImplementation projectDependencies.junit
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

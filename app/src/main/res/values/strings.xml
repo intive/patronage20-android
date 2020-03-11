@@ -1,9 +1,4 @@
 <resources>
     <string name="app_name">SmartHome</string>
-    <string name="reset">Reset</string>
-    <string name="apply">Apply</string>
-    <string name="red">R</string>
-    <string name="green">G</string>
-    <string name="blue">B</string>
-    <string name="lights_details_appbar">LED lights</string>
+    <string name="dashboard_appbar">Dashboard</string>
 </resources>
