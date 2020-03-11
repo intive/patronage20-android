@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.spashscreen
+package com.intive.patronage.smarthome.splashscreen
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -7,7 +7,7 @@ import com.intive.patronage.smarthome.R
 
 import kotlinx.android.synthetic.main.activity_test.*
 
-class testActivity : AppCompatActivity() {
+class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

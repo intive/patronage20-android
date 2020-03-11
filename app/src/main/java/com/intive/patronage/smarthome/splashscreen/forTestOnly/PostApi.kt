@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.spashscreen.forTestOnly
+package com.intive.patronage.smarthome.splashscreen.forTestOnly
 
 import io.reactivex.Flowable
 import retrofit2.http.GET

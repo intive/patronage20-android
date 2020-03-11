@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.spashscreen.forTestOnly
+package com.intive.patronage.smarthome.splashscreen.forTestOnly
 
 
 import okhttp3.OkHttpClient
