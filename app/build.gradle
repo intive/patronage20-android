@@ -46,6 +46,9 @@ dependencies {
     implementation projectDependencies.retrofit_rx_java
     implementation projectDependencies.rx_java_2
     implementation projectDependencies.rx_java_2_android
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.0.0'
     testImplementation projectDependencies.junit
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso

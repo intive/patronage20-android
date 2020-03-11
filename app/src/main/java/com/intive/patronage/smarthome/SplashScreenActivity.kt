@@ -6,16 +6,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
+import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import com.intive.patronage.smarthome.spashscreen.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.spashscreen.SplashScreenViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SplashScreenActivity : AppCompatActivity() {
 
     private val alertDialog: SmartHomeAlertDialog by inject()
     private val splashScreenViewModel: SplashScreenViewModel by viewModel()
-   // private val dashboardCoordinator: DashboardCoordinator by inject()
+    private val splashScreenCoordinator: SplashScreenCoordinator by inject{parametersOf(this)}
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +40,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
         })
         splashScreenViewModel.complete.observe(this, Observer { complete ->
-            if (complete) Toast.makeText(this, "Next Activity", Toast.LENGTH_LONG).show()
-           // dashboardCoordinator.goToDashboard()
+            if (complete)  splashScreenCoordinator.goToMainScreen()
+
 
         })
     }

@@ -1,12 +1,12 @@
 package com.intive.patronage.smarthome.navigator
 
-import android.os.Bundle
-import com.intive.patronage.smarthome.SplashScreenActivity
+import com.intive.patronage.smarthome.spashscreen.testActivity
+
 
 class SplashScreenCoordinator(private val navigator: Navigator) {
 
     fun goToMainScreen() {
-        navigator.goToScreen(ActivityEvent(MainActivity::class.java))
+         navigator.goToScreen(ActivityEvent(testActivity::class.java))
         navigator.close()
     }
 }
