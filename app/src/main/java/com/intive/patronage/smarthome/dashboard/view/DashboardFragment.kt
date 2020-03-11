@@ -18,11 +18,6 @@ class DashboardFragment : Fragment() {
         return inflater.inflate(R.layout.dashboard_fragment, container)
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        activity?.setTitle(R.string.dashboard_appbar)
-//    }
-
     // i'm overriding onResume() because if the title is changed somewhere else
     // i can get it back on user input(e.g. back pressed)
     override fun onResume() {

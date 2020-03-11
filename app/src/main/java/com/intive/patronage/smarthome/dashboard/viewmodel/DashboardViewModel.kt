@@ -11,18 +11,7 @@ class DashboardViewModel : ViewModel() {
     val error = MutableLiveData<Boolean>().apply { value = false }
     private var sensorList: Disposable? = null
 
-
-    // tbd when API delivered(retrofit)
-//    init {
-//        itemsCall = matchResultService.fetchMatchResults()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                items.value = it
-//            }, {
-//                error.value = true
-//            })
-//    }
+    
 
 //    override fun onCleared() {
 //        super.onCleared()
