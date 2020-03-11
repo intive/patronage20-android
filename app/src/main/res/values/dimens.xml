@@ -4,4 +4,5 @@
     <dimen name="none">0dp</dimen>
     <dimen name="text_view_width">64dp</dimen>
     <dimen name="button_margin">4dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
 </resources>

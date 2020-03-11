@@ -13,7 +13,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_layout, LightsDetailsFragment()).addToBackStack(null)
+            .replace(R.id.lights_details_fragment, LightsDetailsFragment()).addToBackStack(null)
             .commit()
 
         toolbar.setNavigationOnClickListener {

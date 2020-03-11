@@ -25,6 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/none"
         tools:layout="@layout/fragment_lights_details"
-        android:id="@+id/fragment_layout" />
+        android:id="@+id/lights_details_fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
