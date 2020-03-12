@@ -45,4 +45,5 @@ class DashboardFragment() : Fragment() {
         super.onResume()
         activity?.setTitle(R.string.dashboard_appbar)
     }
+
 }
