@@ -22,14 +22,14 @@ class LightsDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        /*val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
+        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = resources.getString(R.string.lights_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
 
         val binding: FragmentLightsDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
         binding.lifecycleOwner = this
         binding.lightDetailsViewModel = lightsDetailsViewModel
-        return binding.root*/
-        return null
+        return binding.root
+
     }
 }
