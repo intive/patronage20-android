@@ -18,7 +18,7 @@ class Navigator(private val activity: AppCompatActivity) {
                 val fragment = event.buildFragment()
                 val fragments = activity.supportFragmentManager.fragments
 
-                if (activity.supportFragmentManager.backStackEntryCount > 0) {
+                if (activity.supportFragmentManager.backStackEntryCount > 1) {
                     val lastFragmentOnStack = fragments[activity.supportFragmentManager.backStackEntryCount - 1]
 
                     if(lastFragmentOnStack::class.java !== fragment::class.java){
