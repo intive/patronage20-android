@@ -1,19 +1,32 @@
 package com.intive.patronage.smarthome.navigator
 
 import androidx.appcompat.app.AppCompatActivity
-import com.intive.patronage.smarthome.R
 
 class Navigator(private val activity: AppCompatActivity) {
 
     fun goToScreen(event: NavigationEvent) {
         when(event) {
-            is FragmentEvent -> {
-                val fragment = event.buildFragment()
-                activity.supportFragmentManager
+            /*Old solution
+            val fragment = event.buildFragment()
+            activity.supportFragmentManager
                     .beginTransaction()
                     .replace(event.containerId,fragment)
                     .addToBackStack(null)
                     .commit()
+             */
+            is FragmentEvent -> {
+                val fragment = event.buildFragment()
+                val fragments = activity.supportFragmentManager.fragments
+
+                if (activity.supportFragmentManager.backStackEntryCount > 0) {
+                    val f = fragments[activity.supportFragmentManager.backStackEntryCount - 1]
+
+                    if(f::class.java !== fragment::class.java){
+                        activity.supportFragmentManager.beginTransaction().add(event.containerId, fragment).addToBackStack(null).commit()
+                    }
+                } else {
+                    activity.supportFragmentManager.beginTransaction().add(event.containerId, fragment).addToBackStack(null).commit()
+                }
             }
             is ActivityEvent -> {
                 val intent = event.createIntent(activity)
@@ -25,7 +38,7 @@ class Navigator(private val activity: AppCompatActivity) {
     fun goBack() {
         activity.supportFragmentManager.beginTransaction().also {
             if (it.isEmpty) {
-                activity.onBackPressed()
+                activity.finish()
             } else {
                 activity.supportFragmentManager.popBackStack()
             }
