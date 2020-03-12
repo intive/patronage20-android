@@ -8,6 +8,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
     defaultConfig {
         applicationId "com.intive.patronage.smarthome"
         minSdkVersion 23
@@ -51,8 +56,9 @@ dependencies {
     implementation projectDependencies.retrofit_rx_java
     implementation projectDependencies.rx_java_2
     implementation projectDependencies.rx_java_2_android
+    implementation projectDependencies.recyclerview
     testImplementation projectDependencies.junit
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    kapt projectDependencies.databinding
 }

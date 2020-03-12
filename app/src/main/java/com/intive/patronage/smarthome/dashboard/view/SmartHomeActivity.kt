@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.intive.patronage.smarthome.R
 import kotlinx.android.synthetic.main.smart_home_activity.*
 
+
 class SmartHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +20,7 @@ class SmartHomeActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             //TODO: implement navigator
         }
+
     }
 
     override fun onBackPressed() {
