@@ -19,9 +19,9 @@ class Navigator(private val activity: AppCompatActivity) {
                 val fragments = activity.supportFragmentManager.fragments
 
                 if (activity.supportFragmentManager.backStackEntryCount > 0) {
-                    val f = fragments[activity.supportFragmentManager.backStackEntryCount - 1]
+                    val lastFragmentOnStack = fragments[activity.supportFragmentManager.backStackEntryCount - 1]
 
-                    if(f::class.java !== fragment::class.java){
+                    if(lastFragmentOnStack::class.java !== fragment::class.java){
                         activity.supportFragmentManager.beginTransaction().add(event.containerId, fragment).addToBackStack(null).commit()
                     }
                 } else {
