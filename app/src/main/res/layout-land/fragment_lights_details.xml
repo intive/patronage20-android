@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="lightDetailsViewModel"
+            type="com.intive.patronage.smarthome.dashboard.viewmodel.LightsDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:background="@color/backgroundColor"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:background="@{lightDetailsViewModel.currentColor}"
+            android:id="@+id/colorView"
+            android:layout_weight="1"
+            android:layout_width="@dimen/none"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:weightSum="7"
+            android:layout_weight="1"
+            android:layout_width="@dimen/none"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/none">
+
+                <TextView
+                    android:padding="@dimen/standard_break"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/red"
+                    android:textColor="#fff"
+                    android:id="@+id/redTextView"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="@dimen/text_view_width"
+                    android:layout_height="match_parent"/>
+
+                <SeekBar
+                    android:progress="@={lightDetailsViewModel.redProgress}"
+                    android:max="255"
+                    android:layout_toEndOf="@+id/redTextView"
+                    android:layout_toStartOf="@id/redValueTextView"
+                    android:id="@+id/redSeekBar"
+                    android:layout_width="@dimen/none"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:padding="@dimen/standard_break"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.redProgress)}"
+                    android:textColor="#fff"
+                    android:id="@+id/redValueTextView"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/text_view_width"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/none">
+
+                <TextView
+                    android:padding="@dimen/standard_break"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/green"
+                    android:textColor="#fff"
+                    android:id="@+id/greenTextView"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="@dimen/text_view_width"
+                    android:layout_height="match_parent"/>
+
+                <SeekBar
+                    android:progress="@={lightDetailsViewModel.greenProgress}"
+                    android:max="255"
+                    android:layout_toEndOf="@+id/greenTextView"
+                    android:layout_toStartOf="@id/greenValueTextView"
+                    android:id="@+id/greenSeekBar"
+                    android:layout_width="@dimen/none"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:padding="@dimen/standard_break"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.greenProgress)}"
+                    android:textColor="#fff"
+                    android:id="@+id/greenValueTextView"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/text_view_width"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/none">
+
+                <TextView
+                    android:padding="@dimen/standard_break"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/blue"
+                    android:textColor="#fff"
+                    android:id="@+id/blueTextView"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="@dimen/text_view_width"
+                    android:layout_height="match_parent"/>
+
+                <SeekBar
+                    android:progress="@={lightDetailsViewModel.blueProgress}"
+                    android:max="255"
+                    android:layout_toEndOf="@+id/blueTextView"
+                    android:layout_toStartOf="@id/blueValueTextView"
+                    android:id="@+id/blueSeekBar"
+                    android:layout_width="@dimen/none"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:padding="@dimen/standard_break"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.blueProgress)}"
+                    android:textColor="#fff"
+                    android:id="@+id/blueValueTextView"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/text_view_width"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/none">
+
+                <Button
+                    android:onClick="@{() -> lightDetailsViewModel.onApplyClicked()}"
+                    android:layout_margin="@dimen/button_margin"
+                    android:background="@drawable/rounded_button"
+                    android:text="@string/apply"
+                    android:textColor="@color/backgroundColor"
+                    android:id="@+id/applyButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+                <Button
+                    android:onClick="@{() -> lightDetailsViewModel.onResetClicked()}"
+                    android:layout_margin="@dimen/button_margin"
+                    android:background="@color/transparent"
+                    android:layout_marginEnd="@dimen/standard_break"
+                    android:text="@string/reset"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/applyButton"
+                    android:id="@+id/resetButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
