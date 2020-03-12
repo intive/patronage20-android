@@ -20,9 +20,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".dashboard.view.SmartHomeActivity">
-        </activity>
-
     </application>
 
 </manifest>
