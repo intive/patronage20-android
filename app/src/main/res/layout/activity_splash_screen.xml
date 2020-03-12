@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" android:background="@color/backgroundColor"
     tools:context=".SplashScreenActivity">
 
     <ImageView android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:src="@drawable/smart_home_logo"
+               android:src="@drawable/smart_home_logo_4" android:background="@color/backgroundColor"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintBottom_toBottomOf="parent"
@@ -19,10 +19,8 @@
                  android:layout_height="wrap_content"
                  android:id="@+id/splashScreenProgressBar"
                  android:progress="25"
-                 android:theme="@style/circleProgressBar"
                  app:layout_constraintBottom_toBottomOf="parent"
                  app:layout_constraintStart_toStartOf="parent"
-                 app:layout_constraintTop_toBottomOf="@+id/splashScreenLogo"
-                 app:layout_constraintEnd_toEndOf="parent"/>
+                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="64dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

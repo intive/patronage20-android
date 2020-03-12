@@ -10,7 +10,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val splashScreenModule: Module = module {
-    single { (activity: Activity) -> SmartHomeAlertDialog(activity) }
+    single { SmartHomeAlertDialog() }
     single { PostFetcher() }
     viewModel { SplashScreenViewModel() }
     single { Navigator(get()) }
