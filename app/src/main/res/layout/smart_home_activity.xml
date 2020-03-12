@@ -10,16 +10,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".dashboard.view.SmartHomeActivity">
 
-           <fragment
-               android:id="@+id/fragment"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               app:layout_constraintBottom_toBottomOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintHorizontal_bias="0.0"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toTopOf="parent" />
-
            <androidx.appcompat.widget.Toolbar
                android:theme="@style/ToolbarTheme"
                android:background="@color/colorPrimary"
@@ -38,6 +28,6 @@
                android:layout_width="match_parent"
                android:layout_height="@dimen/none"
                tools:layout="@layout/fragment_lights_details"
-               android:id="@+id/lights_details_fragment" />
+               android:id="@+id/fragment" />
 
    </androidx.constraintlayout.widget.ConstraintLayout>
