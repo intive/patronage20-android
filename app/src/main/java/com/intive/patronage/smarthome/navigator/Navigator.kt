@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.navigator
 
 import androidx.appcompat.app.AppCompatActivity
-import com.intive.patronage.smarthome.R
 
 class Navigator(private val activity: AppCompatActivity) {
 
@@ -9,11 +8,23 @@ class Navigator(private val activity: AppCompatActivity) {
         when(event) {
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
-                activity.supportFragmentManager
-                    .beginTransaction()
-                    .replace(event.containerId,fragment)
-                    .addToBackStack(null)
-                    .commit()
+
+                activity.supportFragmentManager.also {
+                    val topFragment = it.findFragmentByTag("${fragment.javaClass}")
+
+                    if(topFragment == null) {
+                        it.beginTransaction()
+                            .add(event.containerId, fragment, "${fragment.javaClass}")
+                            .addToBackStack(null)
+                            .commit();
+                    } else {
+                        it.popBackStack()
+                        it.beginTransaction()
+                            .add(event.containerId, fragment, "${fragment.javaClass}")
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                }
             }
             is ActivityEvent -> {
                 val intent = event.createIntent(activity)
@@ -24,11 +35,10 @@ class Navigator(private val activity: AppCompatActivity) {
 
     fun goBack() {
         activity.supportFragmentManager.beginTransaction().also {
-            if (it.isEmpty) {
+            if (it.isEmpty)
                 activity.onBackPressed()
-            } else {
+            else
                 activity.supportFragmentManager.popBackStack()
-            }
         }
     }
 
