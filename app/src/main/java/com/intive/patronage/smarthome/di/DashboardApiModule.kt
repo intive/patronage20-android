@@ -5,7 +5,7 @@ import com.intive.patronage.smarthome.dashboard.model.api.respository.LocalDashb
 import com.intive.patronage.smarthome.dashboard.model.api.service.DashboardService
 import org.koin.dsl.module
 
-val dashboardModule = module {
+val dashboardApiModule = module {
 
     single<DashboardRepositoryAPI> { LocalDashboardRepository() }
 

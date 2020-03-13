@@ -3,6 +3,9 @@ package com.intive.patronage.smarthome
 import android.app.Application
 import com.intive.patronage.smarthome.dashboard.dashboardModule
 import com.intive.patronage.smarthome.dashboard.di.lightsDetailsModule
+import com.intive.patronage.smarthome.di.dashboardApiModule
+import com.intive.patronage.smarthome.di.networkApiModule
+import com.intive.patronage.smarthome.di.smartHomeAPIModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,7 +18,13 @@ class SmartHomeApplication() : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@SmartHomeApplication)
-            modules(dashboardModule, lightsDetailsModule)
+            modules(
+                dashboardModule,
+                lightsDetailsModule,
+                networkApiModule,
+                smartHomeAPIModule,
+                dashboardApiModule
+            )
         }
     }
 
