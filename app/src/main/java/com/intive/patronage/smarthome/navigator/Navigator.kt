@@ -6,26 +6,24 @@ class Navigator(private val activity: AppCompatActivity) {
 
     fun goToScreen(event: NavigationEvent) {
         when(event) {
-            /*Old solution
-            val fragment = event.buildFragment()
-            activity.supportFragmentManager
-                    .beginTransaction()
-                    .replace(event.containerId,fragment)
-                    .addToBackStack(null)
-                    .commit()
-             */
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
-                val fragments = activity.supportFragmentManager.fragments
 
-                if (activity.supportFragmentManager.backStackEntryCount > 1) {
-                    val lastFragmentOnStack = fragments[activity.supportFragmentManager.backStackEntryCount - 1]
+                activity.supportFragmentManager.also {
+                    val topFragment = it.findFragmentByTag("${fragment.javaClass}")
 
-                    if(lastFragmentOnStack::class.java !== fragment::class.java){
-                        activity.supportFragmentManager.beginTransaction().add(event.containerId, fragment).addToBackStack(null).commit()
+                    if(topFragment == null) {
+                        it.beginTransaction()
+                            .add(event.containerId, fragment, "${fragment.javaClass}")
+                            .addToBackStack(null)
+                            .commit();
+                    } else {
+                        it.popBackStack()
+                        it.beginTransaction()
+                            .add(event.containerId, fragment, "${fragment.javaClass}")
+                            .addToBackStack(null)
+                            .commit()
                     }
-                } else {
-                    activity.supportFragmentManager.beginTransaction().add(event.containerId, fragment).addToBackStack(null).commit()
                 }
             }
             is ActivityEvent -> {
@@ -37,11 +35,10 @@ class Navigator(private val activity: AppCompatActivity) {
 
     fun goBack() {
         activity.supportFragmentManager.beginTransaction().also {
-            if (it.isEmpty) {
-                activity.finish()
-            } else {
+            if (it.isEmpty)
+                activity.onBackPressed()
+            else
                 activity.supportFragmentManager.popBackStack()
-            }
         }
     }
 
