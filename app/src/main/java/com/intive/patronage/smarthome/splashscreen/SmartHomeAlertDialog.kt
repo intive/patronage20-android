@@ -4,14 +4,15 @@ import android.app.Activity
 import android.app.AlertDialog
 import com.intive.patronage.smarthome.R
 
+
 class SmartHomeAlertDialog {
 
 
-    fun showSmartHomeDialog(activity: Activity, onClose: () -> Unit) {
+    fun showSmartHomeDialog(activity: Activity, titleId:Int, messageId:Int, onClose: () -> Unit) {
         AlertDialog.Builder(activity)
-            .setTitle(R.string.error_title)
-            .setMessage(R.string.connection_error_message)
-            .setNegativeButton((R.string.quit)) { _, _ -> onClose() }
+            .setTitle(titleId)
+            .setMessage(messageId)
+            .setNegativeButton(R.string.quit) { _, _ -> onClose() }
             .setCancelable(false)
             .show()
     }
