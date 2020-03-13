@@ -30,5 +30,6 @@ class LightsDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.lightDetailsViewModel = lightsDetailsViewModel
         return binding.root
+
     }
 }
