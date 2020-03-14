@@ -6,6 +6,7 @@ import com.intive.patronage.smarthome.dashboard.di.lightsDetailsModule
 import com.intive.patronage.smarthome.di.dashboardApiModule
 import com.intive.patronage.smarthome.di.networkApiModule
 import com.intive.patronage.smarthome.di.smartHomeAPIModule
+import com.intive.patronage.smarthome.splashscreen.splashScreenModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -7,4 +7,7 @@
     <string name="green">G</string>
     <string name="blue">B</string>
     <string name="lights_details_appbar">LED lights</string>
+    <string name="error_title">Error</string>
+    <string name="connection_error_message">Unable to connect with smart home</string>
+    <string name="quit">Quit</string>
 </resources>
