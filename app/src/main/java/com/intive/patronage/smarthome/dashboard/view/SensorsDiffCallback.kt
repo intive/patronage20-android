@@ -1,9 +1,9 @@
 package com.intive.patronage.smarthome.dashboard.view
 
 import androidx.recyclerview.widget.DiffUtil
-import com.intive.patronage.smarthome.dashboard.model.SensorMock
+import com.intive.patronage.smarthome.dashboard.model.Dashboard
 
-class SensorsDiffCallback : DiffUtil.ItemCallback<SensorMock>() {
-    override fun areItemsTheSame(oldItem: SensorMock, newItem: SensorMock) = oldItem == newItem
-    override fun areContentsTheSame(oldItem: SensorMock, newItem: SensorMock) = oldItem == newItem
+class SensorsDiffCallback : DiffUtil.ItemCallback<Dashboard>() {
+    override fun areItemsTheSame(oldItem: Dashboard, newItem: Dashboard) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Dashboard, newItem: Dashboard) = oldItem == newItem
 }
