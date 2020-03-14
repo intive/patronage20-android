@@ -2,16 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../dependencies.gradle'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
 
     defaultConfig {
         applicationId "com.intive.patronage.smarthome"
@@ -21,10 +15,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    dataBinding {
-        enabled = true
     }
 
     buildTypes {
@@ -52,9 +42,8 @@ dependencies {
     implementation projectDependencies.retrofit_rx_java
     implementation projectDependencies.rx_java_2
     implementation projectDependencies.rx_java_2_android
-    implementation projectDependencies.recyclerview
     testImplementation projectDependencies.junit
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso
-    kapt projectDependencies.databinding
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
