@@ -21,6 +21,7 @@ class SmartHomeApplication() : Application() {
             androidContext(this@SmartHomeApplication)
             modules(
                 dashboardModule,
+                splashScreenModule,
                 lightsDetailsModule,
                 networkApiModule,
                 smartHomeAPIModule,
