@@ -9,7 +9,10 @@ import com.intive.patronage.smarthome.dashboard.model.api.respository.DashboardR
 import com.intive.patronage.smarthome.di.dashboardApiModule
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.internal.operators.single.SingleInternalHelper.toObservable
+import io.reactivex.rxkotlin.toObservable
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,
@@ -25,83 +28,41 @@ class DashboardService(
         }
     }
 
-    @SuppressLint("CheckResult")
-    fun getDashboardSensors(): List<DashboardSensor> {
+//    fun getDashboardSensors(): Observable<List<DashboardSensor>> {
+//        val sensors = mutableListOf<DashboardSensor>()
+//        dashboardRepository.getDashboard()
+//            .map {
+//                sensors.addAll(transformFromLights(it.lights))
+//                sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
+//                sensors.addAll(transformFromSmokeSensors(it.smokeSensors))
+//                sensors.addAll(transformFromWindowBlinds(it.windowBlinds))
+//                sensors.addAll(transfromFromWindowSensors(it.windowSensors))
+//                sensors.addAll(transformFromRFIDSensors(it.RFIDSensors))
+//                sensors.addAll(transformFromHVACRooms(it.HVACRooms))
+//                //add hvac status
+//            }.subscribe()
+//        Log.d("getDashboardSensors()", sensors.toString())
+//        return Observable.just(sensors)
+//    }
+
+    fun getDashboardSensors(): Observable<List<DashboardSensor>> {
         val sensors = mutableListOf<DashboardSensor>()
         dashboardRepository.getDashboard()
             .map {
-                it.lights.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.hue.toString() //change to hex value
-                        )
-                    )
-                }
-
-                it.temperatureSensors.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.value.toString()
-                        )
-                    )
-                }
-
-                it.smokeSensors.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.isSmokeDetected.toString()
-                        )
-                    )
-                }
-
-                it.windowBlinds.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.position.toString()
-                        )
-                    )
-                }
-
-                it.windowSensors.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.status.toString()
-                        )
-                    )
-                }
-
-                it.RFIDSensors.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.lastTag.toString()
-                        )
-                    )
-                }
-
-                it.HVACRooms.forEach {
-                    sensors.add(
-                        DashboardSensor(
-                            it.id.toString(),
-                            it.type,
-                            it.heatingTemperature.toString() // tbd
-                        )
-                    )
-                }
-
+                sensors.addAll(transformFromLights(it.lights))
+                sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
+                sensors.addAll(transformFromSmokeSensors(it.smokeSensors))
+                sensors.addAll(transformFromWindowBlinds(it.windowBlinds))
+                sensors.addAll(transfromFromWindowSensors(it.windowSensors))
+                sensors.addAll(transformFromRFIDSensors(it.RFIDSensors))
+                sensors.addAll(transformFromHVACRooms(it.HVACRooms))
                 //add hvac status
             }.subscribe()
-        return sensors
+        Log.d("getDashboardSensors()", sensors.toString())
+        return Observable.just(sensors)
     }
+
+    fun updateSensors(): Observable<List<DashboardSensor>> =
+        Observable.interval(1, 10, TimeUnit.SECONDS)
+            .map { getDashboardSensors().toList().blockingGet().single() }
 }

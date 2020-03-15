@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.dashboard.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
@@ -18,21 +19,19 @@ class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
     private var sensorList: Disposable? = null
 
     init {
-        sensorList = dashboardService.getDashboard()
+        sensorList = dashboardService.getDashboardSensors()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                items.value = dashboardService.getDashboardSensors()
+                items.value = it
+                Log.d("VM sensor list", it.toString())
             }, {
                 error.value = true
             })
-        updateSensors(dashboardService)
+        dashboardService.updateSensors().subscribe()
     }
 
-    fun updateSensors(dashboardService: DashboardService): Observable<DashboardSensor> = Observable.interval(5, 10, TimeUnit.SECONDS)
-        .flatMap {
-            dashboardService.getDashboardSensors().toObservable()
-        }
+
 
     override fun onCleared() {
         super.onCleared()

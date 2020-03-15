@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.dashboard.view
 
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.intive.patronage.smarthome.dashboard.model.SensorMock
 import androidx.databinding.BindingAdapter
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
 

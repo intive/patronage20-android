@@ -20,12 +20,12 @@ class SmartHomeApplication() : Application() {
             androidLogger(Level.DEBUG)
             androidContext(this@SmartHomeApplication)
             modules(
-                dashboardModule,
                 splashScreenModule,
-                lightsDetailsModule,
                 networkApiModule,
                 smartHomeAPIModule,
-                dashboardApiModule
+                dashboardModule,
+                dashboardApiModule,
+                lightsDetailsModule
             )
         }
     }

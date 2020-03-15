@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
-import com.intive.patronage.smarthome.dashboard.model.SensorMock
 import com.intive.patronage.smarthome.replace
 
 class SensorsListAdapter : ListAdapter<DashboardSensor, SensorsViewHolder>(SensorsDiffCallback()) {
@@ -27,6 +26,5 @@ class SensorsListAdapter : ListAdapter<DashboardSensor, SensorsViewHolder>(Senso
     fun update(sensorsList: List<DashboardSensor>) {
         this.sensorsList.replace(sensorsList)
         notifyDataSetChanged()
-        Log.d("XD", "1")
     }
 }
