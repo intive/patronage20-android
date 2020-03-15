@@ -49,8 +49,7 @@ class DashboardFragment() : Fragment() {
             val orientation = resources.configuration.orientation
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                 layoutManager = LinearLayoutManager(activity)
-            }
-            else {
+            } else {
                 layoutManager = GridLayoutManager(activity, 2)
             }
             adapter = sensorsListAdapter

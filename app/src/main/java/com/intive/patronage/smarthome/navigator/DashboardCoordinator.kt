@@ -8,7 +8,13 @@ import com.intive.patronage.smarthome.dashboard.view.LightsDetailsFragment
 class DashboardCoordinator(private val navigator: Navigator) {
 
     fun goToLightsDetailsScreen(bundle: Bundle? = null) {
-        navigator.goToScreen(FragmentEvent(LightsDetailsFragment::class.java, bundle, R.id.fragment))
+        navigator.goToScreen(
+            FragmentEvent(
+                LightsDetailsFragment::class.java,
+                bundle,
+                R.id.fragment
+            )
+        )
     }
 
     fun goToDashboard() {

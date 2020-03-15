@@ -8,7 +8,8 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.replace
 
-class SensorsListAdapter : ListAdapter<List<DashboardSensor>, SensorsViewHolder>(SensorsDiffCallback()) {
+class SensorsListAdapter :
+    ListAdapter<List<DashboardSensor>, SensorsViewHolder>(SensorsDiffCallback()) {
 
     private val sensorsList = mutableListOf<DashboardSensor>()
 

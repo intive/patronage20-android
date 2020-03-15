@@ -30,7 +30,6 @@ class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
     }
 
 
-
     override fun onCleared() {
         super.onCleared()
         sensorList?.dispose()
