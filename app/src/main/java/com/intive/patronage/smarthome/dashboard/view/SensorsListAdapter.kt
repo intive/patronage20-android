@@ -1,15 +1,17 @@
 package com.intive.patronage.smarthome.dashboard.view
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.dashboard.model.Dashboard
+import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
+import com.intive.patronage.smarthome.dashboard.model.SensorMock
 import com.intive.patronage.smarthome.replace
 
-class SensorsListAdapter : ListAdapter<Dashboard, SensorsViewHolder>(SensorsDiffCallback()) {
+class SensorsListAdapter : ListAdapter<DashboardSensor, SensorsViewHolder>(SensorsDiffCallback()) {
 
-    private val sensorsList = mutableListOf<Dashboard>()
+    private val sensorsList = mutableListOf<DashboardSensor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SensorsViewHolder =
         SensorsViewHolder(
@@ -22,9 +24,9 @@ class SensorsListAdapter : ListAdapter<Dashboard, SensorsViewHolder>(SensorsDiff
 
     override fun getItemCount() = sensorsList.size
 
-    fun update(sensorsList: Dashboard) {
-        this.sensorsList.clear()
-        this.sensorsList.add(sensorsList)
+    fun update(sensorsList: List<DashboardSensor>) {
+        this.sensorsList.replace(sensorsList)
         notifyDataSetChanged()
+        Log.d("XD", "1")
     }
 }
