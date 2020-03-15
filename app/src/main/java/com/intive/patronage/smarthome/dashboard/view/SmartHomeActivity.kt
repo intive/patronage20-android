@@ -30,9 +30,6 @@ class SmartHomeActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             dashboardCoordinator.goToDashboard()
         }
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.fragment, DashboardFragment()).addToBackStack(null)
-//            .commit()
 
         val dashboardService = get<DashboardService>()
         dashboardService.getDashboard()
@@ -52,7 +49,6 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         dashboardCoordinator.goBack()
     }
 

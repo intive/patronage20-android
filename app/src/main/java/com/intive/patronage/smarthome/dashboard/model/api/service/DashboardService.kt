@@ -28,27 +28,10 @@ class DashboardService(
         }
     }
 
-//    fun getDashboardSensors(): Observable<List<DashboardSensor>> {
-//        val sensors = mutableListOf<DashboardSensor>()
-//        dashboardRepository.getDashboard()
-//            .map {
-//                sensors.addAll(transformFromLights(it.lights))
-//                sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
-//                sensors.addAll(transformFromSmokeSensors(it.smokeSensors))
-//                sensors.addAll(transformFromWindowBlinds(it.windowBlinds))
-//                sensors.addAll(transfromFromWindowSensors(it.windowSensors))
-//                sensors.addAll(transformFromRFIDSensors(it.RFIDSensors))
-//                sensors.addAll(transformFromHVACRooms(it.HVACRooms))
-//                //add hvac status
-//            }.subscribe()
-//        Log.d("getDashboardSensors()", sensors.toString())
-//        return Observable.just(sensors)
-//    }
-
     fun getDashboardSensors(): Observable<List<DashboardSensor>> {
-        val sensors = mutableListOf<DashboardSensor>()
-        dashboardRepository.getDashboard()
+        return dashboardRepository.getDashboard()
             .map {
+                val sensors = mutableListOf<DashboardSensor>()
                 sensors.addAll(transformFromLights(it.lights))
                 sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
                 sensors.addAll(transformFromSmokeSensors(it.smokeSensors))
@@ -57,11 +40,11 @@ class DashboardService(
                 sensors.addAll(transformFromRFIDSensors(it.RFIDSensors))
                 sensors.addAll(transformFromHVACRooms(it.HVACRooms))
                 //add hvac status
-            }.subscribe()
-        return Observable.just(sensors)
+                sensors.toList()
+            }.toObservable()
     }
 
     fun updateSensors(): Observable<List<DashboardSensor>> =
         Observable.interval(1, 10, TimeUnit.SECONDS)
-            .map { getDashboardSensors().toList().blockingGet().single() }
+            .flatMap { getDashboardSensors() }
 }
