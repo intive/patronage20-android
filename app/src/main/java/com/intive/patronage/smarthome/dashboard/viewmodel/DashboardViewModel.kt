@@ -19,16 +19,14 @@ class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
     private var sensorList: Disposable? = null
 
     init {
-        sensorList = dashboardService.getDashboardSensors()
+        sensorList = dashboardService.updateSensors()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 items.value = it
-                Log.d("VM sensor list", it.toString())
             }, {
                 error.value = true
             })
-        dashboardService.updateSensors().subscribe()
     }
 
 

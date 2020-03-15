@@ -58,11 +58,10 @@ class DashboardService(
                 sensors.addAll(transformFromHVACRooms(it.HVACRooms))
                 //add hvac status
             }.subscribe()
-        Log.d("getDashboardSensors()", sensors.toString())
         return Observable.just(sensors)
     }
 
     fun updateSensors(): Observable<List<DashboardSensor>> =
-        Observable.interval(1, 10, TimeUnit.SECONDS)
+        Observable.interval(0, 10, TimeUnit.SECONDS)
             .map { getDashboardSensors().toList().blockingGet().single() }
 }
