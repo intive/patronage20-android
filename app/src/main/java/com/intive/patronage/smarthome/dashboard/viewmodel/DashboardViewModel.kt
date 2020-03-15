@@ -1,16 +1,12 @@
 package com.intive.patronage.smarthome.dashboard.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.dashboard.model.api.service.DashboardService
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
 

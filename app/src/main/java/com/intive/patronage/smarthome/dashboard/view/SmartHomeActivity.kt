@@ -11,8 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.smart_home_activity.*
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
 
 
 class SmartHomeActivity : AppCompatActivity() {
@@ -30,9 +28,6 @@ class SmartHomeActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             dashboardCoordinator.goToDashboard()
         }
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.fragment, DashboardFragment()).addToBackStack(null)
-//            .commit()
 
         val dashboardService = get<DashboardService>()
         dashboardService.getDashboard()

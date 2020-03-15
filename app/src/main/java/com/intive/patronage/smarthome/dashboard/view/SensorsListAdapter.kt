@@ -1,6 +1,5 @@
 package com.intive.patronage.smarthome.dashboard.view
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter

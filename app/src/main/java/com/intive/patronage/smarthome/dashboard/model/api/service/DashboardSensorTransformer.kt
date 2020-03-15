@@ -1,6 +1,5 @@
 package com.intive.patronage.smarthome.dashboard.model.api.service
 
-import android.util.Log
 import com.intive.patronage.smarthome.dashboard.model.*
 
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
