@@ -62,6 +62,6 @@ class DashboardService(
     }
 
     fun updateSensors(): Observable<List<DashboardSensor>> =
-        Observable.interval(0, 10, TimeUnit.SECONDS)
+        Observable.interval(1, 10, TimeUnit.SECONDS)
             .map { getDashboardSensors().toList().blockingGet().single() }
 }
