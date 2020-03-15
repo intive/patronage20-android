@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.dashboard.model.api.service
 
 import android.util.Log
+import com.intive.patronage.smarthome.dashboard.logic.convertHSVtoRGB
 import com.intive.patronage.smarthome.dashboard.model.*
 
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
@@ -10,11 +11,10 @@ fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.hue.toString() //change to hex value
+                convertHSVtoRGB(it.hue, it.saturation, it.value).toString() //change to hex value
             )
         )
     }
-//    Log.d("XDD", sensors.toString())
     return sensors
 }
 

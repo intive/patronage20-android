@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.dashboard.view
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
@@ -44,7 +46,13 @@ class DashboardFragment() : Fragment() {
         val recyclerView: RecyclerView = binding.sensorRecyclerView
         recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(activity)
+            val orientation = resources.configuration.orientation
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                layoutManager = LinearLayoutManager(activity)
+            }
+            else {
+                layoutManager = GridLayoutManager(activity, 2)
+            }
             adapter = sensorsListAdapter
         }
     }
