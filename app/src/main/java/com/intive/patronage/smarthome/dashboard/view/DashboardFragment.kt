@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +21,7 @@ class DashboardFragment() : Fragment() {
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val sensorsListAdapter: SensorsListAdapter by inject()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +32,11 @@ class DashboardFragment() : Fragment() {
         binding.lifecycleOwner = this
         binding.dashboardViewModelDataBind = dashboardViewModel
         setupRecyclerView(binding)
+
+        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
+        toolbar.title = resources.getString(R.string.dashboard_appbar)
+        toolbar.setDisplayHomeAsUpEnabled(false)
+
         return binding.root
     }
 
@@ -39,11 +47,6 @@ class DashboardFragment() : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             adapter = sensorsListAdapter
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.setTitle(R.string.dashboard_appbar)
     }
 
 }

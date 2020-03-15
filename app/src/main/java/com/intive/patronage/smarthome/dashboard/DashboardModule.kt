@@ -7,5 +7,5 @@ import org.koin.android.viewmodel.dsl.viewModel
 
 val dashboardModule = module {
     factory { SensorsListAdapter() }
-    viewModel { DashboardViewModel() }
+    viewModel { DashboardViewModel(get()) }
 }

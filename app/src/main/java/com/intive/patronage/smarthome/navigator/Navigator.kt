@@ -16,7 +16,7 @@ class Navigator(private val activity: AppCompatActivity) {
                         it.beginTransaction()
                             .add(event.containerId, fragment, "${fragment.javaClass}")
                             .addToBackStack(null)
-                            .commit();
+                            .commit()
                     } else {
                         it.popBackStack()
                         it.beginTransaction()
