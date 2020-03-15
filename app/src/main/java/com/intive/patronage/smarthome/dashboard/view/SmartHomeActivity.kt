@@ -52,7 +52,6 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         dashboardCoordinator.goBack()
     }
 
