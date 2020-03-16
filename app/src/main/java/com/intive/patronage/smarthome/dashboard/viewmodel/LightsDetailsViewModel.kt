@@ -1,37 +1,47 @@
 package com.intive.patronage.smarthome.dashboard.viewmodel
 
 import android.graphics.Color
+import android.util.Log
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.databinding.*
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.intive.patronage.smarthome.BR
 import com.intive.patronage.smarthome.dashboard.logic.ObservableViewModel
 import com.intive.patronage.smarthome.dashboard.logic.convertHSVtoRGB
 import com.intive.patronage.smarthome.dashboard.logic.convertRGBtoHSV
 import com.intive.patronage.smarthome.dashboard.model.Light
+import com.intive.patronage.smarthome.dashboard.model.api.service.DashboardService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
-//TODO: add service to constructor
-class LightsDetailsViewModel : ObservableViewModel() {
+class LightsDetailsViewModel(private var dashboardService: DashboardService, private val id: Int) : ObservableViewModel() {
 
-    private var redProgress: Int = 0
-    private var greenProgress: Int = 0
-    private var blueProgress: Int = 0
+    private var redProgress: Int = 46
+    private var greenProgress: Int = 45
+    private var blueProgress: Int = 50
     private var currentColor: Int = Color.rgb(redProgress, greenProgress, blueProgress)
+    private var disposable: Disposable? = null
 
-    private val light: MutableLiveData<Light> by lazy {
-        MutableLiveData<Light>().also {
-            loadLight()
-        }
+    init {
+        loadLight()
     }
 
-    fun getLight(): LiveData<Light> = light
-
     private fun loadLight() {
-        //TODO: fetch data from service
-        val rgb = convertHSVtoRGB(0, 0, 0)
+        disposable = dashboardService.getLightById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                if (it != null) loadColor(it)
+                else Log.d("Exception", "NULL")
+            },{
+                Log.d("Exception", "ERROR")
+            })
+    }
+
+    private fun loadColor(light: Light) {
+        val rgb = convertHSVtoRGB(light.hue, light.saturation, light.value)
         setRedProgress(rgb.red)
         setGreenProgress(rgb.green)
         setBlueProgress(rgb.blue)
@@ -86,5 +96,10 @@ class LightsDetailsViewModel : ObservableViewModel() {
     fun onApplyClicked() {
         val hsv = convertRGBtoHSV(redProgress, greenProgress, blueProgress)
         //TODO: send data to API
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
     }
 }

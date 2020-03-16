@@ -14,13 +14,13 @@ class Navigator(private val activity: AppCompatActivity) {
 
                     if (topFragment == null) {
                         it.beginTransaction()
-                            .add(event.containerId, fragment, "${fragment.javaClass}")
+                            .replace(event.containerId, fragment, "${fragment.javaClass}")
                             .addToBackStack(null)
                             .commit()
                     } else {
                         it.popBackStack()
                         it.beginTransaction()
-                            .add(event.containerId, fragment, "${fragment.javaClass}")
+                            .replace(event.containerId, fragment, "${fragment.javaClass}")
                             .addToBackStack(null)
                             .commit()
                     }
