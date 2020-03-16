@@ -2,6 +2,8 @@ package com.intive.patronage.smarthome.dashboard.view
 
 import android.graphics.Color
 import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
@@ -10,8 +12,11 @@ import java.util.*
 
 class SensorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bindTo(sensor: DashboardSensor) {
+    fun bindTo(sensor: DashboardSensor, onDashboardClickListener:(sensor: DashboardSensor)-> Unit) {
         with(itemView) {
+            itemView.setOnClickListener {
+                onDashboardClickListener(sensor)
+            }
             when (sensor.type) {
                 "RGBLight" -> {
                     sensorName.text = context.getString(R.string.light_sensor_name)

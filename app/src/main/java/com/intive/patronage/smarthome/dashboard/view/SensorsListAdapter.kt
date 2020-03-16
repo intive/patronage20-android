@@ -2,13 +2,16 @@ package com.intive.patronage.smarthome.dashboard.view
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.ListAdapter
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.replace
+import org.koin.ext.getOrCreateScope
 
-class SensorsListAdapter :
+class SensorsListAdapter(val onDashboardClickListener: (sensor: DashboardSensor)-> Unit):
     ListAdapter<List<DashboardSensor>, SensorsViewHolder>(SensorsDiffCallback()) {
 
     private val sensorsList = mutableListOf<DashboardSensor>()
@@ -19,7 +22,7 @@ class SensorsListAdapter :
         )
 
     override fun onBindViewHolder(holder: SensorsViewHolder, position: Int) {
-        holder.bindTo(sensorsList[position])
+        holder.bindTo(sensorsList[position], onDashboardClickListener)
     }
 
     override fun getItemCount() = sensorsList.size
@@ -28,4 +31,8 @@ class SensorsListAdapter :
         this.sensorsList.replace(sensorsList)
         notifyDataSetChanged()
     }
+    fun onClick(){
+
+    }
+
 }
