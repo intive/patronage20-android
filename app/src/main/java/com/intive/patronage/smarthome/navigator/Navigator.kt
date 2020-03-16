@@ -34,11 +34,12 @@ class Navigator(private val activity: AppCompatActivity) {
     }
 
     fun goBack() {
-        activity.supportFragmentManager.beginTransaction().also {
-            if (it.isEmpty)
-                activity.onBackPressed()
-            else
+        activity.supportFragmentManager.also {
+            if (it.backStackEntryCount == 1) {
+                activity.finish()
+            } else {
                 activity.supportFragmentManager.popBackStack()
+            }
         }
     }
 
