@@ -17,10 +17,7 @@ import org.koin.core.parameter.parametersOf
 
 class SmartHomeActivity : AppCompatActivity() {
 
-
-    private val navigator = Navigator(this)
-    private val dashboardCoordinator = DashboardCoordinator(navigator)
-
+    private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
