@@ -23,7 +23,7 @@ class DashboardService(
     }
 
     fun getDashboardSensors(): Observable<List<DashboardSensor>> {
-        return dashboardRepository.getDashboard()
+        return smartHomeAPI.getDashboard()
             .map {
                 val sensors = mutableListOf<DashboardSensor>()
                 sensors.addAll(transformFromLights(it.lights))
@@ -39,6 +39,6 @@ class DashboardService(
     }
 
     fun updateSensors(): Observable<List<DashboardSensor>> =
-        Observable.interval(1, 10, TimeUnit.SECONDS)
+        Observable.interval(0, 10, TimeUnit.SECONDS)
             .flatMap { getDashboardSensors() }
 }
