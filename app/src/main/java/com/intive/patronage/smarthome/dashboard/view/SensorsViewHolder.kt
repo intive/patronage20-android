@@ -39,7 +39,7 @@ class SensorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                         sensorDetalis.visibility = View.VISIBLE
                         sensorDetalis.text = context.getString(R.string.smoke_detected)
                         resources.getDrawable(R.drawable.smoke_detector)
-                            .setTint(Color.parseColor("#FF8C0000"))
+                            .setTint(resources.getColor(R.color.alert))
                     }
                     sensorImage.setImageDrawable(resources.getDrawable(R.drawable.smoke_detector))
                 }

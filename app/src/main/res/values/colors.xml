@@ -6,4 +6,5 @@
     <color name="backgroundColor">#2e2d32</color>
     <color name="transparent">#00000000</color>
     <color name="splashScreenProgressbar">#413F3F</color>
+    <color name="alert">#FF8C0000</color>
 </resources>
