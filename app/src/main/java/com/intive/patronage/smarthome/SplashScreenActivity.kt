@@ -32,13 +32,16 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         splashScreenViewModel.error.observe(this, Observer { error ->
-            if (error) alertDialog.showSmartHomeDialog(this, R.string.error_title,
-                R.string.connection_error_message) { finish() }
+            if (error) alertDialog.showSmartHomeDialog(
+                this, R.string.error_title,
+                R.string.connection_error_message
+            ) { finish() }
         })
         splashScreenViewModel.complete.observe(this, Observer { complete ->
             if (complete) splashScreenCoordinator.goToMainScreen()
         })
     }
+
     // Setting fullscreen
     private fun fullScreen() {
         window.decorView.systemUiVisibility = (

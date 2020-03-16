@@ -14,7 +14,7 @@ val splashScreenModule: Module = module {
     single { PostFetcher() }
     viewModel { SplashScreenViewModel() }
     single { Navigator(get()) }
-    single {(activity:AppCompatActivity ) -> SplashScreenCoordinator(Navigator(activity)) }
+    single { (activity: AppCompatActivity) -> SplashScreenCoordinator(Navigator(activity)) }
 }
 
 
