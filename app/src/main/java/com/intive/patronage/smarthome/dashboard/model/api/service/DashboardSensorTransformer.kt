@@ -1,8 +1,9 @@
 package com.intive.patronage.smarthome.dashboard.model.api.service
 
-import android.util.Log
+import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.logic.convertHSVtoRGB
 import com.intive.patronage.smarthome.dashboard.model.*
+import java.lang.StringBuilder
 
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
@@ -11,7 +12,7 @@ fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                convertHSVtoRGB(it.hue, it.saturation, it.value).toString() //change to hex value
+                convertHSVtoRGB(it.hue, it.saturation, it.value).toString()
             )
         )
     }
@@ -81,7 +82,7 @@ fun transformFromRFIDSensors(rfidSensors: List<RFIDSensor>): List<DashboardSenso
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.lastTag.toString()
+                ""
             )
         )
     }
@@ -91,15 +92,42 @@ fun transformFromRFIDSensors(rfidSensors: List<RFIDSensor>): List<DashboardSenso
 fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
     hvacRooms.forEach {
+        val details = StringBuilder()
         sensors.add(
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.heatingTemperature.toString() // tbd
+                details.append(R.string.hvac_room_heating_temperature)
+                    .append(it.heatingTemperature)
+                    .append(R.string.transformer_separator)
+                    .append(R.string.hvac_room_cooling_temperature)
+                    .append(it.coolingTemperature)
+                    .append(R.string.transformer_separator)
+                    .append(R.string.hvac_room_hysteresis)
+                    .append(it.hysteresis)
+                    .toString()
             )
         )
     }
     return sensors
 }
 
-//hvac status
+fun transfromFromHVACStatus(hvaStatus: List<HVACStatus>): List<DashboardSensor> {
+    val sensors = mutableListOf<DashboardSensor>()
+    hvaStatus.forEach {
+        val details = StringBuilder()
+        if (it.heating) {
+            details.append(R.string.hvac_status_heating)
+        } else {
+            details.append(R.string.hvac_status_cooling)
+        }
+        sensors.add(
+            DashboardSensor(
+                0.toString(),
+                it.type,
+                details.toString()
+            )
+        )
+    }
+    return sensors
+}
