@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">SmartHome</string>
+    <string name="dashboard_appbar">Dashboard</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="red">R</string>
+    <string name="green">G</string>
+    <string name="blue">B</string>
+    <string name="lights_details_appbar">LED lights</string>
+    <string name="error_title">Error</string>
+    <string name="connection_error_message">Unable to connect with smart home</string>
+    <string name="quit">Quit</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="light_sensor_name">Light</string>
+    <string name="temperature_sensor_name">Temperature</string>
+    <string name="smoke_sensor_name">Smoke sensor</string>
+    <string name="blinds_sensor_name">Window blinds</string>
+    <string name="window_sensor_name">Window</string>
+    <string name="RFID_sensor_name">RFID sensor</string>
+    <string name="HVAC_sensor_name">HVAC</string>
+    <string name="temperature_details">%1$s°C</string>
+    <string name="window_blinds_details">%1$s%%</string>
+    <string name="smoke_detected">Smoke detected</string>
 </resources>

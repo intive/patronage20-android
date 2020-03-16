@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_break">16dp</dimen>
+    <dimen name="none">0dp</dimen>
+    <dimen name="text_view_width">64dp</dimen>
+    <dimen name="button_margin">4dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="dashboard_text_size">20sp</dimen>
+    <dimen name="dashboard_details_text_size">16sp</dimen>
+</resources>
