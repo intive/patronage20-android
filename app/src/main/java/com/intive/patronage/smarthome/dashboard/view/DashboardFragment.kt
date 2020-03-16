@@ -28,6 +28,9 @@ class DashboardFragment : Fragment() {
     private val sensorsListAdapter: SensorsListAdapter by inject {
         parametersOf(::onItemClick)
     }
+    private val dashboardCoordinator: DashboardCoordinator by inject {
+        parametersOf(activity)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,10 +51,6 @@ class DashboardFragment : Fragment() {
     }
 
     private fun onItemClick(sensor: DashboardSensor){
-        val activity: AppCompatActivity = activity as AppCompatActivity
-        val navigator = Navigator(activity)
-        val dashboardCoordinator = DashboardCoordinator(navigator)
-
         if (sensor.type == "RGBLight") {
             val bundle = Bundle()
             bundle.putInt("ID", sensor.id.toInt())

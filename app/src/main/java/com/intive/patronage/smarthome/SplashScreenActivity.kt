@@ -17,7 +17,6 @@ class SplashScreenActivity : AppCompatActivity() {
     private val splashScreenViewModel: SplashScreenViewModel by viewModel()
     private val splashScreenCoordinator: SplashScreenCoordinator by inject { parametersOf(this) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -53,6 +52,5 @@ class SplashScreenActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_FULLSCREEN)
 
     }
-
 
 }
