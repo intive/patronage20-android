@@ -39,10 +39,12 @@ class LightsDetailsViewModel : ObservableViewModel() {
 
     @InverseMethod("convertIntToString")
     fun convertStringToInt(value: String) = value.toInt()
+
     fun convertIntToString(value: Int) = value.toString()
 
     @Bindable
     fun getCurrentColor() = this.currentColor
+
     fun setCurrentColor(value: Int) {
         if (this.currentColor != value) this.currentColor = value
         notifyPropertyChanged(BR.currentColor)
@@ -55,6 +57,7 @@ class LightsDetailsViewModel : ObservableViewModel() {
 
     @Bindable
     fun getRedProgress() = setColor(this.redProgress)
+
     fun setRedProgress(value: Int) {
         if (this.redProgress != value) this.redProgress = value
         notifyPropertyChanged(BR.redProgress)
@@ -62,6 +65,7 @@ class LightsDetailsViewModel : ObservableViewModel() {
 
     @Bindable
     fun getGreenProgress() = setColor(this.greenProgress)
+
     fun setGreenProgress(value: Int) {
         if (this.greenProgress != value) this.greenProgress = value
         notifyPropertyChanged(BR.greenProgress)
@@ -69,6 +73,7 @@ class LightsDetailsViewModel : ObservableViewModel() {
 
     @Bindable
     fun getBlueProgress() = setColor(this.blueProgress)
+
     fun setBlueProgress(value: Int) {
         if (this.blueProgress != value) this.blueProgress = value
         notifyPropertyChanged(BR.blueProgress)

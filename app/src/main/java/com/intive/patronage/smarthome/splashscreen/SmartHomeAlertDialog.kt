@@ -8,7 +8,7 @@ import com.intive.patronage.smarthome.R
 class SmartHomeAlertDialog {
 
 
-    fun showSmartHomeDialog(activity: Activity, titleId:Int, messageId:Int, onClose: () -> Unit) {
+    fun showSmartHomeDialog(activity: Activity, titleId: Int, messageId: Int, onClose: () -> Unit) {
         AlertDialog.Builder(activity)
             .setTitle(titleId)
             .setMessage(messageId)

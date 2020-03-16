@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 class Navigator(private val activity: AppCompatActivity) {
 
     fun goToScreen(event: NavigationEvent) {
-        when(event) {
+        when (event) {
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
 
                 activity.supportFragmentManager.also {
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
 
-                    if(topFragment == null) {
+                    if (topFragment == null) {
                         it.beginTransaction()
                             .add(event.containerId, fragment, "${fragment.javaClass}")
                             .addToBackStack(null)

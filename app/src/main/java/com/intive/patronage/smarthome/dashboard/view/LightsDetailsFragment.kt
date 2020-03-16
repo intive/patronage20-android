@@ -26,7 +26,8 @@ class LightsDetailsFragment : Fragment() {
         toolbar.title = resources.getString(R.string.lights_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
 
-        val binding: FragmentLightsDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
+        val binding: FragmentLightsDetailsBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
         binding.lifecycleOwner = this
         binding.lightDetailsViewModel = lightsDetailsViewModel
         return binding.root
