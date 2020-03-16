@@ -17,7 +17,6 @@ import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.dashboard.viewmodel.DashboardViewModel
 import com.intive.patronage.smarthome.databinding.DashboardFragmentBinding
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
-import com.intive.patronage.smarthome.navigator.Navigator
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf

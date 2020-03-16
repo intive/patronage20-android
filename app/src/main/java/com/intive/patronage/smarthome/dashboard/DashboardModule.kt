@@ -12,5 +12,5 @@ import org.koin.android.viewmodel.dsl.viewModel
 val dashboardModule = module {
     factory { (onItemClickListener: (sensor: DashboardSensor)-> Unit) -> SensorsListAdapter(onItemClickListener) }
     viewModel { DashboardViewModel(get()) }
-    single { (activity: AppCompatActivity) -> DashboardCoordinator(Navigator(activity)) }
+    factory { (activity: AppCompatActivity) -> DashboardCoordinator(Navigator(activity)) }
 }
