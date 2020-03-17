@@ -28,7 +28,7 @@ deploy:
   provider: releases
   api_key:
     secure: hnU6PlAZd4yd7FOfimI1IqyymVyLl8azXwY03xiPbave9frzW8WJ+KCyP3M3EebPnFfv+G3J7jfRqghhFBB59/bsdeJwKRIjiGjg2GR12iaTvJvz1eVk7lkEQpmpcwj8AevAgpdvhbr3ljBqVtPysOM/qqL2mtb+ocsPItAArZ7uBFwRv2GJGyRCaQhQIYcA32XrN4ygfJAnjRKXG4GUR64W0gnuBxkwQxHFKsoZurCdNGjnHF8lQgkXBk4R2DZRy6srb31D3HB/ZiUPkNvxKX4HXKF6+Gd8qXPoYE+7hNPU465GlvipLnlf20C/6Y2TVchXzx1qWvH5OWp1/xR1VRwREm528Es8uI0mXVOhosk2huHH2zrxOZJCFo1dHIi29KL0gyj7wQw6AZKxF+hL+jRFc9ZZKEbA5K0sPBd5ekQRaI85EfLroVG0IPlKQXmwrFGAnonBlPhYbL+K5FR/dLaN51OhlvSFQY7MjA+xnNi7n+Wi+A2sc6/CWZuOkLOesUFCawMasx9w7FM0Fy7y2yTZIxpAoDfMfljKuVqsJ5Ir1Y0R3g0E26IDW0B3fgSilyGgm9+U1N2nlxwbHaDy4LSucshFK6N0+VcTNz0ZUZ7QIbVCibInwEGgWnmlvIwan7svSqOfty7D8SjNXfoN0TKfSgR7O63Z+NH4L1lhylM=
-  file: "{$TRAVIS_BUILD_DIR}/app/build/outputs/apk/app-debug.apk"
+  file: "app/build/outputs/apk/app-release-unsigned.apk"
   file_glob: true
   cleanup: true
   on:
