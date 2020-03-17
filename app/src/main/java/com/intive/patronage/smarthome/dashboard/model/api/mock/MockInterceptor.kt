@@ -104,7 +104,21 @@ const val getListOfReposBeingStarredJson = """
     {
       "id": 0,
       "type": "RGBLight",
+      "hue": 100,
+      "saturation": 50,
+      "value": 50
+    },
+    {
+      "id": 1,
+      "type": "RGBLight",
       "hue": 200,
+      "saturation": 50,
+      "value": 50
+    },
+    {
+      "id": 2,
+      "type": "RGBLight",
+      "hue": 300,
       "saturation": 50,
       "value": 50
     }

@@ -1,14 +1,10 @@
 package com.intive.patronage.smarthome.dashboard.view
 
-import android.graphics.Color
 import android.view.View
-import android.widget.AdapterView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.model.DashboardSensor
 import kotlinx.android.synthetic.main.sensor_list_item.view.*
-import java.util.*
 
 class SensorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

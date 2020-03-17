@@ -12,10 +12,13 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.viewmodel.LightsDetailsViewModel
 import com.intive.patronage.smarthome.databinding.FragmentLightsDetailsBinding
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class LightsDetailsFragment : Fragment() {
 
-    val lightsDetailsViewModel by viewModel<LightsDetailsViewModel>()
+    private val lightsDetailsViewModel by viewModel<LightsDetailsViewModel>() {
+        parametersOf(this.arguments?.getInt("ID"))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +34,5 @@ class LightsDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.lightDetailsViewModel = lightsDetailsViewModel
         return binding.root
-
     }
 }

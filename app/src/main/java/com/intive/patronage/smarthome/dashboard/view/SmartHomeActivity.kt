@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
-import com.intive.patronage.smarthome.navigator.Navigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.smart_home_activity.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
-
 
 class SmartHomeActivity : AppCompatActivity() {
 
@@ -39,7 +37,6 @@ class SmartHomeActivity : AppCompatActivity() {
             })
 
         toolbar.setNavigationOnClickListener {
-            //TODO: implement navigator
             onBackPressed()
         }
 
