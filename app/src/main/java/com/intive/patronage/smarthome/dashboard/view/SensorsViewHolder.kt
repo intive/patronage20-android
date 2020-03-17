@@ -19,7 +19,7 @@ class SensorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     resources.getDrawable(R.drawable.light_bulb_inside)
                         .setTint(sensor.details.toInt())
                     sensorDetalis.visibility = View.GONE
-                    sensorImage.setImageDrawable(resources.getDrawable(R.drawable.light))
+                    sensorImage.setImageDrawable(resources.getDrawable(R.drawable.light).mutate())
                 }
                 "temperatureSensor" -> {
                     sensorName.text = context.getString(R.string.temperature_sensor_name)
