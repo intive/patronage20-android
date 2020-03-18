@@ -15,7 +15,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".SplashScreenActivity"
+                android:name=".feature.splashcreen.SplashScreenActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".dashboard.view.SmartHomeActivity"/>
+        <activity android:name="com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity"/>
 
     </application>
 

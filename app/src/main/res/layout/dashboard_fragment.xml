@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dashboardViewModelDataBind"
-            type="com.intive.patronage.smarthome.dashboard.viewmodel.DashboardViewModel" />
+            type="com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

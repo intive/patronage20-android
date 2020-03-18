@@ -1,6 +1,6 @@
 package com.intive.patronage.smarthome.navigator
 
-import com.intive.patronage.smarthome.dashboard.view.SmartHomeActivity
+import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 
 
 class SplashScreenCoordinator(private val navigator: Navigator) {

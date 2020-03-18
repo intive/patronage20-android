@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".dashboard.view.SmartHomeActivity">
+    tools:context=".feature.dashboard.view.SmartHomeActivity">
 
            <androidx.appcompat.widget.Toolbar
                android:theme="@style/ToolbarTheme"
