@@ -1,6 +1,6 @@
 package com.intive.patronage.smarthome.di
 
-import com.intive.patronage.smarthome.dashboard.model.api.mock.MockInterceptor
+import com.intive.patronage.smarthome.feature.dashboard.model.api.mock.MockInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
