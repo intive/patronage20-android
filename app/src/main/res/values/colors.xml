@@ -7,4 +7,5 @@
     <color name="transparent">#00000000</color>
     <color name="splashScreenProgressbar">#413F3F</color>
     <color name="alert">#FF8C0000</color>
+    <color name="glass">#4007affc</color>
 </resources>

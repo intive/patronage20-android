@@ -61,7 +61,17 @@ const val getListOfReposBeingStarredJson = """
     {
       "id": 0,
       "type": "windowBlind",
+      "position": 20
+    },
+    {
+      "id": 1,
+      "type": "windowBlind",
       "position": 50
+    },
+    {
+      "id": 2,
+      "type": "windowBlind",
+      "position": 80
     }
   ],
   "RFIDSensors": [

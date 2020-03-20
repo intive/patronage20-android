@@ -27,4 +27,5 @@
     <string name="hvac_room_hysteresis">Hysteresis: </string>
     <string name="hvac_status_heating">Heating</string>
     <string name="hvac_status_cooling">Cooling</string>
+    <string name="blind_details_appbar">Blind</string>
 </resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="blindDetailsViewModel"
+            type="com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        tools:context=".BlindDetailsFragment"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <com.intive.patronage.smarthome.feature.blind.view.BlindView
+            app:onTouch="@{blindDetailsViewModel}"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/blindView"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:weightSum="7"
+            android:id="@+id/rightLayout"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:id="@+id/buttonsLayout"
+                android:layout_weight="6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:onClick="@{() -> blindDetailsViewModel.blindUp()}"
+                        android:background="@drawable/arrow_up_white"
+                        android:id="@+id/upButton"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/percent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"/>
+
+                    <TextView
+                        android:textSize="24sp"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="@={blindDetailsViewModel.percent}"
+                        android:id="@+id/percent"
+                        app:layout_constraintTop_toBottomOf="@+id/upButton"
+                        app:layout_constraintBottom_toTopOf="@+id/downButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"/>
+
+                    <Button
+                        android:onClick="@{() -> blindDetailsViewModel.blindDown()}"
+                        android:background="@drawable/arrow_down_white"
+                        android:id="@+id/downButton"
+                        app:layout_constraintTop_toBottomOf="@+id/percent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+            <Button
+                android:layout_margin="4dp"
+                android:background="@drawable/rounded_button"
+                android:text="Apply"
+                android:textColor="@color/backgroundColor"
+                android:id="@+id/applyButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:layout_margin="4dp"
+                android:background="@color/transparent"
+                android:layout_marginEnd="16dp"
+                android:text="Reset"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/applyButton"
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
