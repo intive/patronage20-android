@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.blind.view
 
+import android.util.Log
 import android.view.MotionEvent
 import androidx.databinding.BindingAdapter
 import com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel

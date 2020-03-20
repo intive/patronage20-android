@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.blind.view
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import com.intive.patronage.smarthome.R
 

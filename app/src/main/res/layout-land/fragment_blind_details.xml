@@ -17,6 +17,7 @@
         android:orientation="horizontal">
 
         <com.intive.patronage.smarthome.feature.blind.view.BlindView
+            app:onLayoutChange="@{blindDetailsViewModel}"
             app:onTouch="@{blindDetailsViewModel}"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
