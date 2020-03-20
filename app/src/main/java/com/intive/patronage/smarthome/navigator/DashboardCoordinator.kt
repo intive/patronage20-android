@@ -3,7 +3,7 @@ package com.intive.patronage.smarthome.navigator
 import android.os.Bundle
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
-import com.intive.patronage.smarthome.feature.dashboard.view.LightsDetailsFragment
+import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 
 class DashboardCoordinator(private val navigator: Navigator) {
 

@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.dashboard.viewmodel
+package com.intive.patronage.smarthome.feature.light.viewmodel
 
 import android.graphics.Color
 import android.util.Log
