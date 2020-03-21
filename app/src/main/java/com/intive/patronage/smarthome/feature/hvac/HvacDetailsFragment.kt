@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
+import kotlinx.android.synthetic.main.fragent_hvac_details.*
 
 class HvacDetailsFragment : Fragment() {
 
@@ -27,6 +28,15 @@ class HvacDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragent_hvac_details, container, false)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val hvacCircle = havacCircle
+        temp_up.setOnClickListener { hvacCircle.teperaturaDodanie() }
+        temp_down.setOnClickListener { hvacCircle.temperaturaMinus() }
+        hist_up.setOnClickListener { hvacCircle.histUp() }
+        hist_down.setOnClickListener { hvacCircle.histDown() }
+    }
+
 
 }
 
@@ -35,10 +45,8 @@ class HvacCircle @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    override fun isInEditMode(): Boolean {
-        return true
-    }
-
+    private var temperaturaFloat: Float = 22.5F
+    private var hysteresis = 60
 
     private val paint = Paint().apply {
         isAntiAlias = true
@@ -81,10 +89,11 @@ class HvacCircle @JvmOverloads constructor(
             bottom = top + radius
         }
 
+        val sweepAngle = 45 + tempInt * 4.5F
 
 
         canvas?.drawArc(circle, 180f, 270f, false, paintBackground)
-        canvas?.drawArc(circle, 180f, 110f, false, paint)
+        canvas?.drawArc(circle, 180f, sweepAngle, false, paint)
         canvas?.drawText(
             tempString,
             width / 4f - textPaint.measureText(tempString) / 2,
@@ -115,8 +124,10 @@ class HvacCircle @JvmOverloads constructor(
             bottom = top + radius
         }
 
+        val sweepAngle = hysteresis * 2.7F
+
         canvas?.drawArc(circle, 180f, 270f, false, paintBackground)
-        canvas?.drawArc(circle, 180f, 190f, false, paint)
+        canvas?.drawArc(circle, 180f, sweepAngle, false, paint)
         canvas?.drawText(
             histValueString,
             width * 0.75f - textPaint.measureText(histValueString) / 2,
@@ -136,11 +147,31 @@ class HvacCircle @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        val temperaturaInt: Float = 24.5F
+
 
         Log.d("testowanie", "draw withd = $width, height = $height")
-        drawCircleTemp(canvas, temperaturaInt)
-        drawCircleHysteresis(canvas, 68)
+        drawCircleTemp(canvas, temperaturaFloat)
+        drawCircleHysteresis(canvas, hysteresis)
 
+    }
+
+    fun teperaturaDodanie() {
+        temperaturaFloat += 1
+        postInvalidate()
+    }
+
+    fun temperaturaMinus() {
+        temperaturaFloat -= 1
+        postInvalidate()
+    }
+
+    fun histUp() {
+        hysteresis += 1
+        postInvalidate()
+    }
+
+    fun histDown() {
+        hysteresis -= 1
+        postInvalidate()
     }
 }
