@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.navigator
 import android.os.Bundle
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
+import com.intive.patronage.smarthome.feature.hvac.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.LightsDetailsFragment
 
 class DashboardCoordinator(private val navigator: Navigator) {
@@ -15,6 +16,15 @@ class DashboardCoordinator(private val navigator: Navigator) {
                 R.id.fragment
             )
         )
+    }
+
+    fun goToHvacDetalisScreen (bundle: Bundle? = null){
+        navigator.goToScreen(
+            FragmentEvent(
+                HvacDetailsFragment::class.java,
+            bundle,
+            R.id.fragment
+        ))
     }
 
     fun goToDashboard() {

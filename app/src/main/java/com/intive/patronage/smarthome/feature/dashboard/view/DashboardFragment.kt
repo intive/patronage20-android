@@ -55,6 +55,11 @@ class DashboardFragment : Fragment() {
             bundle.putInt("ID", sensor.id.toInt())
             dashboardCoordinator.goToLightsDetailsScreen(bundle)
         }
+        if(sensor.type == "HVACRoom"){
+            val bundle = Bundle()
+            bundle.putInt("ID", sensor.id.toInt())
+            dashboardCoordinator.goToHvacDetalisScreen(bundle)
+        }
     }
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class SplashScreenViewModel(private val dashboardService: DashboardService) : ViewModel() {
 
-    private val minWaitTime = 5L
+    private val minWaitTime = 0L
     private val maxWaitTime = 30L
 
     private var dashboard = MutableLiveData<Dashboard>()
