@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:onClick="@{() -> blindDetailsViewModel.blindUp()}"
+                        app:onBlindUp="@{blindDetailsViewModel}"
                         android:background="@drawable/arrow_up_white"
                         android:id="@+id/upButton"
                         app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +69,7 @@
                         android:layout_height="72dp"/>
 
                     <Button
-                        android:onClick="@{() -> blindDetailsViewModel.blindDown()}"
+                        app:onBlindDown="@{blindDetailsViewModel}"
                         android:background="@drawable/arrow_down_white"
                         android:id="@+id/downButton"
                         app:layout_constraintTop_toBottomOf="@+id/percent"

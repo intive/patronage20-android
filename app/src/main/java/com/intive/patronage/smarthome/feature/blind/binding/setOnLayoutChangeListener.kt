@@ -1,7 +1,7 @@
-package com.intive.patronage.smarthome.feature.blind.view
+package com.intive.patronage.smarthome.feature.blind.binding
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
+import com.intive.patronage.smarthome.feature.blind.view.BlindView
 import com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel
 
 @BindingAdapter("onLayoutChange")
