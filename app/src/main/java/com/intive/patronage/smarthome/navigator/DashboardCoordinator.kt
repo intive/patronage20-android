@@ -12,14 +12,14 @@ class DashboardCoordinator(private val navigator: Navigator) {
             FragmentEvent(
                 LightsDetailsFragment::class.java,
                 bundle,
-                R.id.fragment
+                R.id.dashboardViewPager
             )
         )
     }
 
     fun goToDashboard() {
         //uncomment and replace Fragment::class
-        navigator.goToScreen(FragmentEvent(DashboardFragment::class.java, null, R.id.fragment))
+        navigator.goToScreen(FragmentEvent(DashboardFragment::class.java, null, R.id.dashboardViewPager))
     }
 
     fun goBack() {

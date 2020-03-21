@@ -57,4 +57,5 @@ dependencies {
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso
     kapt projectDependencies.databinding
+    implementation 'com.android.support:design:23.1.1'
 }
