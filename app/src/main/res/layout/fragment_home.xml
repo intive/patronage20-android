@@ -7,8 +7,8 @@
     tools:context=".feature.dashboard.view.HomeFragment">
 
 
-    <ImageView
-        android:id="@+id/hose"
+    <com.intive.patronage.smarthome.feature.dashboard.view.HomeLayoutView
+        android:id="@+id/home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_house"
