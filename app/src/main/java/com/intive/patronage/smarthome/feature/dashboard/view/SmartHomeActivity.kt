@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View.SYSTEM_UI_FLAG_VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -42,17 +43,20 @@ class SmartHomeActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val pagerAdapter = DashboardViewPagerAdapter(supportFragmentManager)
-        val viewPager = findViewById<ViewPager>(R.id.dashboardViewPager)
-        val tabView = findViewById<TabLayout>(R.id.dashboardTabLayout)
-        viewPager.adapter = pagerAdapter
-        tabView.addTab(tabView.newTab().setText("dashboard"))
-        tabView.setupWithViewPager(viewPager)
+        setupTabs()
 
     }
 
     override fun onBackPressed() {
         dashboardCoordinator.goBack()
+    }
+
+    fun setupTabs() {
+        val pagerAdapter = DashboardViewPagerAdapter(supportFragmentManager)
+        val viewPager = findViewById<ViewPager>(R.id.dashboardViewPager)
+        val tabView = findViewById<TabLayout>(R.id.dashboardTabLayout)
+        viewPager.adapter = pagerAdapter
+        tabView.setupWithViewPager(viewPager)
     }
 
 }

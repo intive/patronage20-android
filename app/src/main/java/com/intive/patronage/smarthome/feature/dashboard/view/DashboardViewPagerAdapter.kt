@@ -11,10 +11,26 @@ class DashboardViewPagerAdapter(fragmentManager: FragmentManager) :
     
 
     override fun getItem(position: Int): Fragment {
-        return DashboardFragment()
+        return when (position) {
+            0 -> DashboardFragment()
+            // add cases for other screens
+            else -> {
+                DashboardFragment()
+            }
+        }
     }
 
     override fun getCount(): Int {
-        return 1
+        return 2
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when (position) {
+            // add to strings.xml
+            0 -> "DashboardFragment()"
+            else -> {
+                "DashboardFragment()"
+            }
+        }
     }
 }
