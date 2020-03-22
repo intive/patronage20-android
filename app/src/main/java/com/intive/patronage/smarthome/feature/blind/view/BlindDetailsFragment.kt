@@ -11,13 +11,16 @@ import androidx.databinding.DataBindingUtil
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.FragmentBlindDetailsBinding
 import com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel
+import kotlinx.android.synthetic.main.fragment_blind_details.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class BlindDetailsFragment : Fragment() {
+class BlindDetailsFragment : Fragment(), BlindViewEventListener {
+
+    private lateinit var binding: FragmentBlindDetailsBinding
 
     val blindDetailsViewModel by viewModel<BlindDetailsViewModel> {
-        parametersOf(this.arguments?.getInt("ID"))
+        parametersOf(this ,this.arguments?.getInt("ID"))
     }
 
     override fun onCreateView(
@@ -29,10 +32,32 @@ class BlindDetailsFragment : Fragment() {
         toolbar.title = resources.getString(R.string.blind_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
 
-        val binding: FragmentBlindDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind_details, container, false)
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind_details, container, false)
         binding.lifecycleOwner = this
         binding.blindDetailsViewModel = blindDetailsViewModel
         return binding.root
+    }
+
+    override fun blindUp() {
+        with(binding.blindView) {
+            if (this.position >= this.onePercent) this.position -= this.onePercent
+            else this.position = 0F
+            this.invalidate()
+        }
+    }
+
+    override fun blindDown() {
+        with(binding.blindView) {
+            if (this.position < (this.maxPosition - this.onePercent)) this.position += this.onePercent
+            else this.position = this.maxPosition
+            this.invalidate()
+        }
+    }
+
+    override fun setStartingPosition(percentPosition: Int) {
+        with(binding.blindView) {
+            this.position = this.onePercent * percentPosition
+            this.invalidate()
+        }
     }
 }

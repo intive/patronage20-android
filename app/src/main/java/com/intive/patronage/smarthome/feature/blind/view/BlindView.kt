@@ -6,12 +6,12 @@ import android.util.AttributeSet
 import android.view.View
 import com.intive.patronage.smarthome.R
 
-class BlindView(context: Context?, attrs: AttributeSet?) : View(context, attrs), BlindViewEventListener {
+class BlindView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private lateinit var canvas: Canvas
     var position: Float = 0F
     var onePercent: Float = 0F
-    private var maxPosition: Float = 0F
+    var maxPosition: Float = 0F
     private val canvasX = 65
     private var canvasY: Float = 0F
     private val frameSize: Float = 15F
@@ -87,18 +87,6 @@ class BlindView(context: Context?, attrs: AttributeSet?) : View(context, attrs),
             this.isAntiAlias = true
             this.isDither = true
         }
-    }
-
-    override fun blindUp() {
-        if (position >= onePercent) position -= onePercent
-        else position = 0F
-        invalidate()
-    }
-
-    override fun blindDown() {
-        if (position < (maxPosition - onePercent)) position += onePercent
-        else position = maxPosition
-        invalidate()
     }
 
     fun changePosition(currentY: Float): Int {

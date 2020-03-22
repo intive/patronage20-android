@@ -30,6 +30,7 @@ class BlindDetailsViewModel(
             .subscribe({
                 if (it != null) {
                     position = it.position
+                    blindViewEventListener.setStartingPosition(position)
                     setPercent("$position %")
                 }
                 else Log.d("Exception", "NULL")
