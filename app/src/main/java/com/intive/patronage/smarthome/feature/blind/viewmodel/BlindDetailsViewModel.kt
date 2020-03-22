@@ -23,7 +23,7 @@ class BlindDetailsViewModel(
         loadBlind()
     }
 
-    private fun loadBlind() {
+    fun loadBlind() {
         disposable = dashboardService.getBlindById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

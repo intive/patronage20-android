@@ -8,4 +8,5 @@
     <color name="splashScreenProgressbar">#413F3F</color>
     <color name="alert">#FF8C0000</color>
     <color name="glass">#4007affc</color>
+    <color name="white">#fff</color>
 </resources>

@@ -19,21 +19,21 @@
         <RelativeLayout
             android:layout_weight="13"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="@dimen/none">
 
             <com.intive.patronage.smarthome.feature.blind.view.BlindView
                 app:onLayoutChange="@{blindDetailsViewModel}"
                 app:onTouch="@{blindDetailsViewModel}"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="@dimen/standard_break"
+                android:layout_marginBottom="@dimen/standard_break"
                 android:id="@+id/blindView"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/buttonsLayout"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"/>
 
             <RelativeLayout
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="@dimen/standard_break"
                 android:gravity="center"
                 android:id="@+id/buttonsLayout"
                 android:layout_alignParentEnd="true"
@@ -51,11 +51,11 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/percent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"/>
+                        android:layout_width="@dimen/blind_arrow_button_size"
+                        android:layout_height="@dimen/blind_arrow_button_size"/>
 
                     <TextView
-                        android:textSize="24sp"
+                        android:textSize="@dimen/blind_percent_text_size"
                         android:textColor="#fff"
                         android:gravity="center"
                         android:text="@={blindDetailsViewModel.percent}"
@@ -63,8 +63,8 @@
                         app:layout_constraintTop_toBottomOf="@+id/upButton"
                         app:layout_constraintBottom_toTopOf="@+id/downButton"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"/>
+                        android:layout_width="@dimen/blind_arrow_button_size"
+                        android:layout_height="@dimen/blind_arrow_button_size"/>
 
                     <Button
                         app:onBlindDown="@{blindDetailsViewModel}"
@@ -73,8 +73,8 @@
                         app:layout_constraintTop_toBottomOf="@+id/percent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp" />
+                        android:layout_width="@dimen/blind_arrow_button_size"
+                        android:layout_height="@dimen/blind_arrow_button_size" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,12 +86,12 @@
             android:orientation="horizontal"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="@dimen/none">
 
             <Button
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/button_margin"
                 android:background="@drawable/rounded_button"
-                android:text="Apply"
+                android:text="@string/apply"
                 android:textColor="@color/backgroundColor"
                 android:id="@+id/applyButton"
                 app:layout_constraintTop_toTopOf="parent"
@@ -100,10 +100,11 @@
                 android:layout_height="match_parent"/>
 
             <Button
-                android:layout_margin="4dp"
+                android:onClick="@{() -> blindDetailsViewModel.loadBlind()}"
+                android:layout_margin="@dimen/button_margin"
                 android:background="@color/transparent"
-                android:layout_marginEnd="16dp"
-                android:text="Reset"
+                android:layout_marginEnd="@dimen/standard_break"
+                android:text="@string/reset"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/applyButton"

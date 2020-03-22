@@ -53,7 +53,7 @@ dependencies {
     implementation projectDependencies.rx_java_2
     implementation projectDependencies.rx_java_2_android
     implementation projectDependencies.recyclerview
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation projectDependencies.legacy_support
     testImplementation projectDependencies.junit
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso

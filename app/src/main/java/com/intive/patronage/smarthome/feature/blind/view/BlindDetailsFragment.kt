@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.FragmentBlindDetailsBinding
 import com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel
-import kotlinx.android.synthetic.main.fragment_blind_details.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
