@@ -1,6 +1,6 @@
 package com.intive.patronage.smarthome.di
 
-import com.intive.patronage.smarthome.feature.dashboard.viewmodel.LightsDetailsViewModel
+import com.intive.patronage.smarthome.feature.light.viewmodel.LightsDetailsViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

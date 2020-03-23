@@ -5,6 +5,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.HVACRoom
 import com.intive.patronage.smarthome.feature.dashboard.model.Light
+import com.intive.patronage.smarthome.feature.dashboard.model.WindowBlind
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -62,5 +63,16 @@ class DashboardService(
                listHVACRoom
            }.toSingle()
 
+    }
+
+    fun getBlindById(id: Int): Single<WindowBlind?> {
+        return dashboardRepository.getDashboard()
+            .map { dashboard ->
+                var singleBlind: WindowBlind? = null
+                dashboard.windowBlinds.forEach { blind ->
+                    if (blind.id == id) singleBlind = blind
+                }
+                singleBlind
+            }.toSingle()
     }
 }

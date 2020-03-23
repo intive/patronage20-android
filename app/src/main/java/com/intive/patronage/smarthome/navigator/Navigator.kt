@@ -11,19 +11,12 @@ class Navigator(private val activity: AppCompatActivity) {
 
                 activity.supportFragmentManager.also {
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
+                    if (topFragment != null) it.popBackStack()
 
-                    if (topFragment == null) {
-                        it.beginTransaction()
-                            .replace(event.containerId, fragment, "${fragment.javaClass}")
-                            .addToBackStack(null)
-                            .commit()
-                    } else {
-                        it.popBackStack()
-                        it.beginTransaction()
-                            .replace(event.containerId, fragment, "${fragment.javaClass}")
-                            .addToBackStack(null)
-                            .commit()
-                    }
+                    it.beginTransaction()
+                        .replace(event.containerId, fragment, "${fragment.javaClass}")
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
             is ActivityEvent -> {

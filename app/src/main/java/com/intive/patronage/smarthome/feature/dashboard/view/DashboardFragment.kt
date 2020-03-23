@@ -60,6 +60,11 @@ class DashboardFragment : Fragment() {
             bundle.putInt("ID", sensor.id.toInt())
             dashboardCoordinator.goToHvacDetalisScreen(bundle)
         }
+        if (sensor.type == "windowBlind") {
+            val bundle = Bundle()
+            bundle.putInt("ID", sensor.id.toInt())
+            dashboardCoordinator.goToBlindDetailsScreen(bundle)
+        }
     }
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {
