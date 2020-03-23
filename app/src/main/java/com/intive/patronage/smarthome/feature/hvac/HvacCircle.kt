@@ -10,13 +10,13 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.intive.patronage.smarthome.R
+import org.koin.ext.getScopeName
 
-class HvacCircle @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
 
-    private var temperaturaFloat: Float = 22.5F
-    private var hysteresis = 60
+class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+
+    var temperatureFloat: Float = 0F
+    var hysteresis = 60F
     private val paint = Paint().apply {
         isAntiAlias = true
         color = resources.getColor(R.color.colorAccent)
@@ -48,8 +48,6 @@ class HvacCircle @JvmOverloads constructor(
         val tempString = "$tempInt C°"
 
         val radius = if (width / 2 < height) width / 2f - padding * 2 else height / 2f - padding * 2
-        //     Log.d("testowanie",data?.size.toString())
-        Log.d("testowanie", "radius Temp = $radius , padding = $padding, withd = $width, height = $height")
 
         val circle = RectF().apply {
             top = height / 2 - radius / 2
@@ -78,13 +76,10 @@ class HvacCircle @JvmOverloads constructor(
         )
     }
 
-
-    private fun drawCircleHysteresis(canvas: Canvas?, hysteresis: Int) {
+    private fun drawCircleHysteresis(canvas: Canvas?, hysteresis: Float) {
         val histLabel = "Hysteresis"
         val histValueString = "$hysteresis %"
         val radius = if (width / 2 < height) width / 2 - padding * 2 else height / 2 - padding * 2
-
-        // Log.d("testowanie","radius heig = $radius , padding = $padding, withd = $width, height = $height")
 
         val circle = RectF().apply {
             top = height / 2 - radius / 2
@@ -113,35 +108,16 @@ class HvacCircle @JvmOverloads constructor(
 
     }
 
+    fun changeTemperature (temp:Float){
+        temperatureFloat = temp
+        postInvalidate()
+
+    }
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
 
-
-        Log.d("testowanie", "draw withd = $width, height = $height")
-        drawCircleTemp(canvas, temperaturaFloat)
+        drawCircleTemp(canvas, temperatureFloat)
         drawCircleHysteresis(canvas, hysteresis)
-
     }
 
-    fun teperaturaDodanie() {
-
-        temperaturaFloat += 1
-        postInvalidate()
-    }
-
-    fun temperaturaMinus() {
-        temperaturaFloat -= 1
-        postInvalidate()
-    }
-
-    fun histUp() {
-        hysteresis += 1
-        postInvalidate()
-    }
-
-    fun histDown() {
-        hysteresis -= 1
-        postInvalidate()
-    }
-}/**/
+}

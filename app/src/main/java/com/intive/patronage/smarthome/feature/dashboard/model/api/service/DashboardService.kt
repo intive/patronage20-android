@@ -1,11 +1,7 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
 import com.intive.patronage.smarthome.api.SmartHomeAPI
-import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
-import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
-import com.intive.patronage.smarthome.feature.dashboard.model.HVACRoom
-import com.intive.patronage.smarthome.feature.dashboard.model.Light
-import com.intive.patronage.smarthome.feature.dashboard.model.WindowBlind
+import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -56,12 +52,15 @@ class DashboardService(
             }.toSingle()
     }
 
-    fun getHVAC(): Single<List<HVACRoom>>{
+    fun getHVACById(id: Int): Single<HVACRoom?> {
         return dashboardRepository.getDashboard()
-           .map { d ->
-               val listHVACRoom = d.HVACRooms
-               listHVACRoom
-           }.toSingle()
+            .map { dashboard ->
+                var singleHVACRoom: HVACRoom? = null
+                dashboard.HVACRooms.forEach { room ->
+                    if (room.id == id) singleHVACRoom = room
+                }
+                singleHVACRoom
+            }.toSingle()
 
     }
 
@@ -73,6 +72,17 @@ class DashboardService(
                     if (blind.id == id) singleBlind = blind
                 }
                 singleBlind
+            }.toSingle()
+    }
+
+    fun getTemperatureSensorById(id: Int): Single<TemperatureSensor?> {
+        return dashboardRepository.getDashboard()
+            .map { dashboard ->
+                var singleTemeraureSensor: TemperatureSensor? = null
+                dashboard.temperatureSensors.forEach { senor ->
+                    if (senor.id == id) singleTemeraureSensor = senor
+                }
+                singleTemeraureSensor
             }.toSingle()
     }
 }
