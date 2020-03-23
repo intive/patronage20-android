@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.dashboard.view
+package com.intive.patronage.smarthome.feature.light.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.feature.dashboard.viewmodel.LightsDetailsViewModel
+import com.intive.patronage.smarthome.feature.light.viewmodel.LightsDetailsViewModel
 import com.intive.patronage.smarthome.databinding.FragmentLightsDetailsBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf

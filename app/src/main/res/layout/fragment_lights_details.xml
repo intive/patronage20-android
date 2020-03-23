@@ -5,7 +5,7 @@
     <data>
         <variable
             name="lightDetailsViewModel"
-            type="com.intive.patronage.smarthome.feature.dashboard.viewmodel.LightsDetailsViewModel" />
+            type="com.intive.patronage.smarthome.feature.light.viewmodel.LightsDetailsViewModel" />
     </data>
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="14"
-        tools:context=".feature.dashboard.view.LightsDetailsFragment">
+        tools:context=".feature.light.view.LightsDetailsFragment">
 
         <View
             android:background="@{lightDetailsViewModel.currentColor}"

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="blindDetailsViewModel"
+            type="com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        tools:context=".BlindDetailsFragment"
+        android:weightSum="14"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_weight="13"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/none">
+
+            <com.intive.patronage.smarthome.feature.blind.view.BlindView
+                app:onLayoutChange="@{blindDetailsViewModel}"
+                app:onTouch="@{blindDetailsViewModel}"
+                android:layout_marginEnd="@dimen/standard_break"
+                android:layout_marginBottom="@dimen/standard_break"
+                android:id="@+id/blindView"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/buttonsLayout"
+                android:layout_width="@dimen/none"
+                android:layout_height="match_parent"/>
+
+            <RelativeLayout
+                android:layout_marginBottom="@dimen/standard_break"
+                android:gravity="center"
+                android:id="@+id/buttonsLayout"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        app:onBlindUp="@{blindDetailsViewModel}"
+                        android:background="@drawable/arrow_up_white"
+                        android:id="@+id/upButton"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/percent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="@dimen/blind_arrow_button_size"
+                        android:layout_height="@dimen/blind_arrow_button_size"/>
+
+                    <TextView
+                        android:textSize="@dimen/blind_percent_text_size"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="@={blindDetailsViewModel.percent}"
+                        android:id="@+id/percent"
+                        app:layout_constraintTop_toBottomOf="@+id/upButton"
+                        app:layout_constraintBottom_toTopOf="@+id/downButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="@dimen/blind_arrow_button_size"
+                        android:layout_height="@dimen/blind_arrow_button_size"/>
+
+                    <Button
+                        app:onBlindDown="@{blindDetailsViewModel}"
+                        android:background="@drawable/arrow_down_white"
+                        android:id="@+id/downButton"
+                        app:layout_constraintTop_toBottomOf="@+id/percent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="@dimen/blind_arrow_button_size"
+                        android:layout_height="@dimen/blind_arrow_button_size" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/none">
+
+            <Button
+                android:layout_margin="@dimen/button_margin"
+                android:background="@drawable/rounded_button"
+                android:text="@string/apply"
+                android:textColor="@color/backgroundColor"
+                android:id="@+id/applyButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:onClick="@{() -> blindDetailsViewModel.loadBlind()}"
+                android:layout_margin="@dimen/button_margin"
+                android:background="@color/transparent"
+                android:layout_marginEnd="@dimen/standard_break"
+                android:text="@string/reset"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/applyButton"
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>
