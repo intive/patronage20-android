@@ -1,7 +1,10 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
+import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
@@ -46,4 +49,22 @@ class SmartHomeActivity : AppCompatActivity() {
         dashboardCoordinator.goBack()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val isDebuggable =
+            0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
+        if (isDebuggable) {
+            menuInflater.inflate(R.menu.menu_developer_settings, menu)
+            return true
+        }
+        return false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.developer_settings -> {
+                dashboardCoordinator.goToDeveloperSettings()
+            }
+        }
+        return true
+    }
 }
