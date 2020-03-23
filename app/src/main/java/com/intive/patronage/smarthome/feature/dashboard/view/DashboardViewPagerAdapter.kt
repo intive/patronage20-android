@@ -1,31 +1,35 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
-import androidx.fragment.app.*
-import androidx.lifecycle.Lifecycle
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 
 
-class DashboardViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
+class DashboardViewPagerAdapter(fragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(fragmentManager) {
 
-    private val mFragmentList = mutableListOf<Fragment>()
-    private val mTitleList = mutableListOf<String>()
+    
 
-    fun addFragment(fragment: Fragment, title: String) {
-        mFragmentList.add(fragment)
-        mTitleList.add(title)
-    }
-
-    override fun getItemCount(): Int {
-        return mFragmentList.size
-    }
-
-    override fun createFragment(position: Int): Fragment {
+    override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> mFragmentList[position]
+            0 -> DashboardFragment()
             // add cases for other screens
             else -> {
-                mFragmentList.last()
+                DashboardFragment()
+            }
+        }
+    }
+
+    override fun getCount(): Int {
+        return 2
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when (position) {
+            // add to strings.xml
+            0 -> "DashboardFragment()"
+            else -> {
+                "DashboardFragment()"
             }
         }
     }
