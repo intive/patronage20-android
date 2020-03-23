@@ -5,8 +5,15 @@ import android.util.Log
 import android.view.View.SYSTEM_UI_FLAG_VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,11 +59,19 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     fun setupTabs() {
-        val pagerAdapter = DashboardViewPagerAdapter(supportFragmentManager)
-        val viewPager = findViewById<ViewPager>(R.id.dashboardViewPager)
-        val tabView = findViewById<TabLayout>(R.id.dashboardTabLayout)
+//        val pagerAdapter = DashboardViewPagerAdapter(supportFragmentManager)
+//        val viewPager = findViewById<ViewPager2>(R.id.dashboardViewPager)
+//        val tabView = findViewById<TabLayout>(R.id.dashboardTabLayout)
+//        viewPager.adapter = pagerAdapter
+//        tabView.setupWithViewPager(viewPager)
+
+        val pagerAdapter = DashboardViewPagerAdapter(supportFragmentManager, lifecycle)
+        pagerAdapter.addFragment(DashboardFragment(), "Dashboard")
+        val viewPager = findViewById<ViewPager2>(R.id.dashboardViewPager)
         viewPager.adapter = pagerAdapter
-        tabView.setupWithViewPager(viewPager)
+
     }
+
+
 
 }
