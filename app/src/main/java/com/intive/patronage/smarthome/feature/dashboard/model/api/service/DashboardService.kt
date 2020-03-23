@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
+import com.intive.patronage.smarthome.feature.dashboard.model.HVACRoom
 import com.intive.patronage.smarthome.feature.dashboard.model.Light
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
 import io.reactivex.Observable
@@ -52,5 +53,14 @@ class DashboardService(
                 }
                 singleLight
             }.toSingle()
+    }
+
+    fun getHVAC(): Single<List<HVACRoom>>{
+        return dashboardRepository.getDashboard()
+           .map { d ->
+               val listHVACRoom = d.HVACRooms
+               listHVACRoom
+           }.toSingle()
+
     }
 }
