@@ -4,10 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
-import kotlinx.android.synthetic.main.home_fragment.*
-
-
-
 
 class SensorMock(val x: Float, val y: Float)
 

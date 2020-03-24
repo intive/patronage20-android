@@ -13,7 +13,8 @@ import com.intive.patronage.smarthome.R
 
 const val SENSOR_SIZE: Float = 30f
 
-class HomeLayoutView(context: Context, attrs: AttributeSet?): androidx.appcompat.widget.AppCompatImageView(context, attrs) {
+class HomeLayoutView(context: Context, attrs: AttributeSet?) :
+    androidx.appcompat.widget.AppCompatImageView(context, attrs) {
 
     private lateinit var bitmap: Bitmap
     private lateinit var cvs: Canvas
@@ -25,15 +26,17 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?): androidx.appcompat
         val drawable = ContextCompat.getDrawable(context!!, R.drawable.ic_house)
         bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
         cvs = Canvas(bitmap)
-        drawable!!.setBounds(0, 0, cvs.width, cvs.height)
-        drawable.draw(cvs)
+        drawable?.let {
+            it.setBounds(0, 0, cvs.width, cvs.height)
+            it.draw(cvs)
+        }
         this.setImageBitmap(bitmap)
         paint = Paint()
         paint.isAntiAlias = true
         setup = true
     }
 
-    fun create(sensList: MutableList<SensorMock>){
+    fun create(sensList: MutableList<SensorMock>) {
         this.sensList.addAll(sensList)
         val gesture = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent?) {
@@ -55,16 +58,20 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?): androidx.appcompat
         }
         if (checkForSensors(x, y)) {
             drawSensor(x, y)
-            sensList.add(SensorMock(x,y))
+            sensList.add(SensorMock(x, y))
             this.setImageBitmap(bitmap)
-            Toast.makeText(
-                context,
-                context.getString(R.string.sensor_add_success),
-                Toast.LENGTH_SHORT
-            ).show()
+            showMessage(R.string.sensor_add_success)
         } else {
-            Toast.makeText(context, context.getString(R.string.sensor_add_failure), Toast.LENGTH_SHORT).show()
+            showMessage(R.string.sensor_add_failure)
         }
+    }
+
+    private fun showMessage(textId: Int) {
+        Toast.makeText(
+            context,
+            context.getString(textId),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun drawSensor(x: Float, y: Float) {
@@ -74,8 +81,8 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?): androidx.appcompat
 
     private fun checkForSensors(x: Float, y: Float): Boolean {
         if (!sensList.isNullOrEmpty()) {
-            sensList.forEach lit@{
-                if (it.x >= x - SENSOR_SIZE && it.x <= x + SENSOR_SIZE && it.y >= y - SENSOR_SIZE && it.y <= y + SENSOR_SIZE)
+            for (sensor in sensList) {
+                if (sensor.x >= x - SENSOR_SIZE && sensor.x <= x + SENSOR_SIZE && sensor.y >= y - SENSOR_SIZE && sensor.y <= y + SENSOR_SIZE)
                     return false
             }
         }
