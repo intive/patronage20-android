@@ -23,7 +23,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         if (savedInstanceState == null) {
-            dashboardCoordinator.goToHome()
+            dashboardCoordinator.goToSmartHome()
         }
 
         val dashboardService = get<DashboardService>()
