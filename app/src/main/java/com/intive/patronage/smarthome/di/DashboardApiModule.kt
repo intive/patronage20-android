@@ -9,5 +9,5 @@ val dashboardApiModule = module {
 
     single<DashboardRepositoryAPI> { LocalDashboardRepository() }
 
-    single { DashboardService(get(), get()) }
+    single { DashboardService(get(), get(), get()) }
 }
