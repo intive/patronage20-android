@@ -31,6 +31,8 @@ class BlindDetailsFragment : Fragment(), BlindViewEventListener {
         toolbar.title = resources.getString(R.string.blind_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
 
+        blindDetailsViewModel.blindViewEventListener = this
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind_details, container, false)
         binding.lifecycleOwner = this
         binding.blindDetailsViewModel = blindDetailsViewModel

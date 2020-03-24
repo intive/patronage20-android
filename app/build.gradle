@@ -59,4 +59,7 @@ dependencies {
     androidTestImplementation projectDependencies.test_espresso
     kapt projectDependencies.databinding
     implementation projectDependencies.material
+    implementation projectDependencies.room_runtime
+    implementation projectDependencies.room_rx_java
+    kapt projectDependencies.room_compiler
 }
