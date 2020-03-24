@@ -58,5 +58,5 @@ dependencies {
     androidTestImplementation projectDependencies.test_ext
     androidTestImplementation projectDependencies.test_espresso
     kapt projectDependencies.databinding
-    implementation 'com.google.android.material:material:1.2.0-alpha01'
+    implementation projectDependencies.material
 }
