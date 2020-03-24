@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
+import com.intive.patronage.smarthome.feature.dashboard.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 
 class DashboardCoordinator(private val navigator: Navigator) {
@@ -31,6 +32,10 @@ class DashboardCoordinator(private val navigator: Navigator) {
     fun goToDashboard() {
         //uncomment and replace Fragment::class
         navigator.goToScreen(FragmentEvent(DashboardFragment::class.java, null, R.id.fragment))
+    }
+
+    fun goToHome(){
+        navigator.goToScreen(FragmentEvent(HomeFragment::class.java, null, R.id.fragment))
     }
 
     fun goBack() {
