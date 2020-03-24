@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.intive.patronage.smarthome.R
 
 
-class SmartHomeFragmentViewPagerAdapter(val fragmentManager: FragmentManager) :
+class SmartHomeFragmentViewPagerAdapter(fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager) {
 
 

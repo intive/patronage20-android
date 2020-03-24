@@ -30,5 +30,5 @@
     <string name="sensor_add_success">Sensor został dodany</string>
     <string name="sensor_add_failure">W tym miejscu istnieje już sensor</string>
     <string name="blind_details_appbar">Blind</string>
-    <string name="home_appbar">Home</string>
+    <string name="home_appbar">Rooms</string>
 </resources>
