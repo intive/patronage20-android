@@ -1,7 +1,7 @@
 package com.intive.patronage.smarthome.feature.hvac
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.databinding.FragmentHvacDetailsBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -27,7 +28,7 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hvac_details, container, false)
         binding.lifecycleOwner = this
         binding.hvacViewModel = hvacViewModel
-        Log.d("testowanie ", "Start")
+
 
         return binding.root
     }
@@ -35,12 +36,21 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
 
     override fun setTemperature(temperature: Float) {
         binding.hvacCircle.changeTemperature(temperature)
-
     }
 
     override fun setHysteresis(hysteresis: Float) {
         binding.hvacCircle.hysteresis = hysteresis
         binding.hvacCircle.postInvalidate()
+    }
+
+    override fun connectionError(error: Boolean) {
+        if (error) {
+            SmartHomeAlertDialog().showSmartHomeDialog(
+                activity as Activity, R.string.error_title
+                , R.string.hvac_details_connecting_error
+            )
+            { activity?.onBackPressed() }
+        }
     }
 
 

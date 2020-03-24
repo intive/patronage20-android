@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.feature.hvac
 
 import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -28,20 +27,13 @@ fun setOnTemperatureUp(view: Button, hvacViewModel: HvacViewModel) {
 
 @BindingAdapter("textChangeListener")
 fun textChangeListener(view: EditText, hvacViewModel: HvacViewModel) {
-    view.addTextChangedListener(object : TextWatcher {
+
+    view.addTextChangedListener(object : MyTextWatcher() {
         override fun afterTextChanged(s: Editable?) {
             if (!s.isNullOrBlank()) {
                 val temperatureFromView = s.toString().toFloat()
                 hvacViewModel.temperatureFromView = temperatureFromView
             }
         }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
-
     })
 }

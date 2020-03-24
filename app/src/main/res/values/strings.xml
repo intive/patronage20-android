@@ -29,4 +29,7 @@
     <string name="hvac_status_heating">Heating</string>
     <string name="hvac_status_cooling">Cooling</string>
     <string name="blind_details_appbar">Blind</string>
+    <string name="hvac_details_temp_label">Set temp:</string>
+    <string name="hvac_datails_hint">...</string>
+    <string name="hvac_details_connecting_error">Unable to load HVAC System</string>
 </resources>

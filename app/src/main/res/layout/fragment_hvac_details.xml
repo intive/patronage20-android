@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-        xmlns:tools="http://schemas.android.com/tools"
+
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -16,13 +16,13 @@
 
         <com.intive.patronage.smarthome.feature.hvac.HvacCircle
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/none"
                 android:layout_weight="8"
                 android:id="@+id/hvac_circle"
                 app:onLayout="@{hvacViewModel}"
                 />
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/hvac_layout_margin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/none"
                 android:layout_weight="1.5"
@@ -31,8 +31,8 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="20sp"
-                    android:text="Set Temp:"
+                    android:textSize="@dimen/hvac_text_size"
+                    android:text="@string/hvac_details_temp_label"
                     android:textColor="#fff"
                     android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
@@ -42,17 +42,19 @@
                     app:textChangeListener="@{hvacViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/hvac_text_size"
                     android:text=""
                     android:inputType="number"
                     android:textColor="#fff"
                     android:textColorHint="#fff"
-                    android:hint="..."
-                    android:layout_marginBottom="-8dp"
+                    android:hint="@string/hvac_datails_hint"
+                    android:layout_marginBottom="@dimen/hvac_layout_negative_margin"
                     app:layout_constraintTop_toTopOf="parent"
                     android:id="@+id/tampValueEditView"
                     app:layout_constraintStart_toEndOf="@+id/tempLabel"
-                    android:layout_marginStart="5dp" android:textIsSelectable="false" android:singleLine="false"/>
+                    android:layout_marginStart="@dimen/hvac_layout_margin"
+                    android:textIsSelectable="false"
+                    android:singleLine="false" android:importantForAutofill="no"/>
             <Button
                     android:text="@string/apply"
                     app:tempUp="@{hvacViewModel}"
@@ -61,7 +63,7 @@
                     android:id="@+id/tempApplyButton"
                     android:background="@drawable/rounded_button"
                     android:textColor="@color/backgroundColor" app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tempReset" android:layout_marginEnd="5dp"/>
+                    app:layout_constraintEnd_toStartOf="@+id/tempReset" android:layout_marginEnd="@dimen/hvac_layout_margin"/>
             <Button
                     android:text="@string/reset"
                     android:layout_width="wrap_content"

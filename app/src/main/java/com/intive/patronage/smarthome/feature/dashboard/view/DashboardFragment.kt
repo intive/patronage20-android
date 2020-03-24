@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.databinding.DashboardFragmentBinding
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
-import com.intive.patronage.smarthome.databinding.DashboardFragmentBinding
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -49,23 +49,16 @@ class DashboardFragment : Fragment() {
         return binding.root
     }
 
-    private fun onItemClick(sensor: DashboardSensor){
-        if (sensor.type == "RGBLight") {
-            val bundle = Bundle()
-            bundle.putInt("ID", sensor.id.toInt())
-            dashboardCoordinator.goToLightsDetailsScreen(bundle)
-        }
-        if(sensor.type == "HVACRoom"){
-            val bundle = Bundle()
-            bundle.putInt("ID", sensor.id.toInt())
-            dashboardCoordinator.goToHvacDetalisScreen(bundle)
-        }
-        if (sensor.type == "windowBlind") {
-            val bundle = Bundle()
-            bundle.putInt("ID", sensor.id.toInt())
-            dashboardCoordinator.goToBlindDetailsScreen(bundle)
+    private fun onItemClick(sensor: DashboardSensor) {
+        val bundle = Bundle()
+        bundle.putInt("ID", sensor.id.toInt())
+        when (sensor.type) {
+            "RGBLight" -> dashboardCoordinator.goToLightsDetailsScreen(bundle)
+            "HVACRoom" -> dashboardCoordinator.goToHvacDetalisScreen(bundle)
+            "windowBlind" -> dashboardCoordinator.goToBlindDetailsScreen(bundle)
         }
     }
+
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {
         val recyclerView: RecyclerView = binding.sensorRecyclerView

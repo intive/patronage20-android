@@ -17,45 +17,43 @@ class HvacViewModel(
     private var disposable: Disposable? = null
     var temperature: Float = 0F
     var hysteresis: Float = 0F
-    var temperatureSensorId = 0
     var temperatureFromView = temperature
 
     init {
         loadHvac()
     }
 
-    private fun loadTemperatureSensor() {
-        disposable = dashboardService.getTemperatureSensorById(temperatureSensorId)
+    private fun loadHvac() {
+        disposable = dashboardService.getHVACById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it?.temperatureSensorId?.let { it1 -> getTemperatureFromSensor(it1) }
+                it?.hysteresis?.let { it1 -> getHysteresisFromSensor(it1) }
+            },
+                {
+                    hvacViewEventListener.connectionError(true)
+                    Log.d("Error", "error loadhvac")
+                })
+    }
+
+    private fun getTemperatureFromSensor(id: Int) {
+        disposable = dashboardService.getTemperatureSensorById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it != null) {
                     temperature = it.value.toFloat()
                     hvacViewEventListener.setTemperature(temperature)
-                } else {
-                    Log.d("testowanie model", "ERROR")
                 }
             },
                 { Log.d("Error", "error") })
+
     }
 
-    private fun loadHvac() {
-
-        disposable = dashboardService.getHVACById(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (it != null) {
-                    hvacViewEventListener.setTemperature(temperature)
-                    hysteresis = it.hysteresis.toFloat()
-                    temperatureSensorId = it.temperatureSensorId
-                    loadTemperatureSensor()
-                    hvacViewEventListener.setHysteresis(hysteresis)
-                } else {
-                    Log.d("testowanie model", "ERROR")
-                }
-            },
-                { Log.d("Error", "error") })
+    private fun getHysteresisFromSensor(value: Int) {
+        hysteresis = value.toFloat()
+        hvacViewEventListener.setHysteresis(hysteresis)
     }
 
 

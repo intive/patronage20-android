@@ -5,15 +5,19 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Message
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.intive.patronage.smarthome.R
+import kotlinx.android.synthetic.main.fragment_hvac_details.view.*
 import org.koin.ext.getScopeName
 
 
-class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs){
 
     var temperatureFloat: Float = 0F
     var hysteresis = 60F
@@ -42,7 +46,6 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         textSize = 50f
     }
     private val padding = 20f
-
     private fun drawCircleTemp(canvas: Canvas?, tempInt: Float) {
         val tempLabel = "Temperatura"
         val tempString = "$tempInt C°"
@@ -113,11 +116,16 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         postInvalidate()
 
     }
+    init {
+        setWillNotDraw(false)
+    }
+
 
     override fun onDraw(canvas: Canvas?) {
-
+        super.onDraw(canvas)
         drawCircleTemp(canvas, temperatureFloat)
         drawCircleHysteresis(canvas, hysteresis)
+
     }
 
 }

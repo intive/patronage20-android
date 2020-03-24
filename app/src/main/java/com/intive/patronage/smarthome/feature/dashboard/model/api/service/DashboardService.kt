@@ -54,14 +54,9 @@ class DashboardService(
 
     fun getHVACById(id: Int): Single<HVACRoom?> {
         return dashboardRepository.getDashboard()
-            .map { dashboard ->
-                var singleHVACRoom: HVACRoom? = null
-                dashboard.HVACRooms.forEach { room ->
-                    if (room.id == id) singleHVACRoom = room
-                }
-                singleHVACRoom
-            }.toSingle()
-
+            .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
+            .filter{it.id == id}
+            .firstOrError()
     }
 
     fun getBlindById(id: Int): Single<WindowBlind?> {
@@ -78,11 +73,11 @@ class DashboardService(
     fun getTemperatureSensorById(id: Int): Single<TemperatureSensor?> {
         return dashboardRepository.getDashboard()
             .map { dashboard ->
-                var singleTemeraureSensor: TemperatureSensor? = null
+                var singleTemperatureSensor: TemperatureSensor? = null
                 dashboard.temperatureSensors.forEach { senor ->
-                    if (senor.id == id) singleTemeraureSensor = senor
+                    if (senor.id == id) singleTemperatureSensor = senor
                 }
-                singleTemeraureSensor
+                singleTemperatureSensor
             }.toSingle()
     }
 }
