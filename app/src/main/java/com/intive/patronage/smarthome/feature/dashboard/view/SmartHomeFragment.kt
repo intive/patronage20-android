@@ -11,8 +11,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.intive.patronage.smarthome.R
 import kotlinx.android.synthetic.main.smart_home_fragment.*
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class SmartHomeFragment : Fragment() {
+
+    private val viewPagerAdapter: SmartHomeFragmentViewPagerAdapter
+            by inject { parametersOf(childFragmentManager) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,8 +33,7 @@ class SmartHomeFragment : Fragment() {
     }
 
     fun setupTabLayout() {
-        val pagerAdapter = SmartHomeFragmentViewPagerAdapter(childFragmentManager)
-        smartHomeViewPager.adapter = pagerAdapter
+        smartHomeViewPager.adapter = viewPagerAdapter
         smartHomeTabLayout.setupWithViewPager(smartHomeViewPager)
 
         val toolbar = setupToolbar()

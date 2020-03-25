@@ -37,7 +37,7 @@ ext {
             recyclerview            : "androidx.recyclerview:recyclerview:$recyclerview_version",
             databinding             : "com.android.databinding:compiler:$databinding_version",
             legacy_support          : "androidx.legacy:legacy-support-v4:$legacy_support_version",
-            material                : "com.google.android.material:material:$material_version"
+            material                : "com.google.android.material:material:$material_version",
             room_runtime            : "androidx.room:room-runtime:$room_version",
             room_compiler           : "androidx.room:room-compiler:$room_version",
             room_rx_java            : "androidx.room:room-rxjava2:$room_version"
