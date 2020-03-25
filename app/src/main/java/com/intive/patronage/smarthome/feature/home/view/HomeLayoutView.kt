@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.dashboard.view
+package com.intive.patronage.smarthome.feature.home.view
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -58,7 +58,12 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         }
         if (checkForSensors(x, y)) {
             drawSensor(x, y)
-            sensList.add(SensorMock(x, y))
+            sensList.add(
+                SensorMock(
+                    x,
+                    y
+                )
+            )
             this.setImageBitmap(bitmap)
             showMessage(R.string.sensor_add_success)
         } else {
@@ -76,7 +81,8 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
 
     private fun drawSensor(x: Float, y: Float) {
         paint.color = ContextCompat.getColor(context!!, R.color.colorAccent)
-        cvs.drawCircle(x, y, SENSOR_SIZE, paint)
+        cvs.drawCircle(x, y,
+            SENSOR_SIZE, paint)
     }
 
     private fun checkForSensors(x: Float, y: Float): Boolean {
