@@ -6,7 +6,9 @@ import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.databinding.*
+import androidx.lifecycle.MutableLiveData
 import com.intive.patronage.smarthome.BR
+import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.common.convertHSVtoRGB
 import com.intive.patronage.smarthome.common.convertRGBtoHSV
@@ -23,6 +25,7 @@ class LightsDetailsViewModel(private var dashboardService: DashboardService, pri
     private var blueProgress: Int = 50
     private var currentColor: Int = Color.rgb(redProgress, greenProgress, blueProgress)
     private var disposable: Disposable? = null
+    val toastMessage = MutableLiveData<Int>()
 
     init {
         loadLight()
@@ -104,6 +107,7 @@ class LightsDetailsViewModel(private var dashboardService: DashboardService, pri
             blueProgress
         )
         //TODO: send data to API
+        toastMessage.value = R.string.apply_toast
     }
 
     override fun onCleared() {
