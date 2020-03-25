@@ -89,6 +89,7 @@
             android:layout_height="@dimen/none">
 
             <Button
+                android:onClick="@{() -> blindDetailsViewModel.onApplyClicked()}"
                 android:layout_margin="@dimen/button_margin"
                 android:background="@drawable/rounded_button"
                 android:text="@string/apply"
