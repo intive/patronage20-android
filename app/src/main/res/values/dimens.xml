@@ -9,6 +9,4 @@
     <dimen name="dashboard_details_text_size">16sp</dimen>
     <dimen name="blind_arrow_button_size">72dp</dimen>
     <dimen name="blind_percent_text_size">24sp</dimen>
-    <dimen name="developer_settings_text_size">30sp</dimen>
-    <dimen name="developer_settings_margin_top">24sp</dimen>
 </resources>

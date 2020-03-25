@@ -4,12 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewmodel"
+            name="developerSettingsViewModel"
             type="com.intive.patronage.smarthome.developer.settings.viewmodel.DeveloperSettingsViewModel" />
-
-        <variable
-            name="developer"
-            type="com.intive.patronage.smarthome.developer.settings.DeveloperSettings" />
 
     </data>
 
@@ -17,6 +13,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundColorForDeveloperSettings"
         tools:context=".developer.settings.view.DeveloperSettingsActivity">
 
         <TextView
@@ -26,7 +23,8 @@
             android:layout_marginTop="@dimen/developer_settings_margin_top"
             android:textAlignment="center"
             android:textSize="@dimen/developer_settings_text_size"
-            android:text="@{developer.versionApp}"
+            android:textColor="@color/fontForDeveloperSettings"
+            android:text="@{@string/Version(@{developerSettingsViewModel.version})}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

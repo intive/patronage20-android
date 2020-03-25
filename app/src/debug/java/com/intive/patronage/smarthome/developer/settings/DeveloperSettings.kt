@@ -4,5 +4,7 @@ import com.intive.patronage.smarthome.BuildConfig
 
 class DeveloperSettings {
 
-    val versionApp = "Version: ${BuildConfig.VERSION_NAME}"
+    fun getVersion() = BuildConfig.VERSION_NAME
+
+    fun isDebugMode() = BuildConfig.DEBUG
 }

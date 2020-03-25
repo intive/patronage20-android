@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome
 
 import android.app.Application
 import com.intive.patronage.smarthome.di.*
+import com.intive.smarthome.di.developerSettingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

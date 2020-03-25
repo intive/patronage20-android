@@ -1,12 +1,12 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
-import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.developer.settings.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,6 +19,7 @@ import org.koin.core.parameter.parametersOf
 class SmartHomeActivity : AppCompatActivity() {
 
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
+    private val developerSettingsViewModel : DeveloperSettingsViewModel = get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +51,12 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val isDebuggable =
-            0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
-        if (isDebuggable) {
+        return if (developerSettingsViewModel.isDebugMode()) {
             menuInflater.inflate(R.menu.menu_developer_settings, menu)
-            return true
+            true
+        } else {
+            false
         }
-        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
