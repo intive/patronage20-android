@@ -1,14 +1,17 @@
 package com.intive.patronage.smarthome.feature.home.view
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.R
 
 const val SENSOR_SIZE: Float = 30f
@@ -19,7 +22,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     private lateinit var bitmap: Bitmap
     private lateinit var cvs: Canvas
     private lateinit var paint: Paint
-    private val sensList: MutableList<SensorMock> = mutableListOf()
+    private val sensList: MutableList<DialogSensorMock> = mutableListOf()
     private var setup = false
 
     private fun setupBitmap() {
@@ -36,13 +39,16 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         setup = true
     }
 
-    fun create(sensList: MutableList<SensorMock>) {
+    fun create(sensList: MutableList<DialogSensorMock>, fragmentManager: FragmentManager) {
         this.sensList.addAll(sensList)
         val gesture = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent?) {
                 super.onLongPress(e)
                 val x = e!!.x.toInt()
                 val y = e.y.toInt()
+                val sensorDialog = SensorDialog()
+                sensorDialog.setPosition(((Resources.getSystem().displayMetrics.widthPixels - this@HomeLayoutView.width)/2 + x).toFloat(), y.toFloat())
+                sensorDialog.show(fragmentManager, "SensorList")
                 addSensor(x.toFloat(), y.toFloat())
             }
         })
@@ -59,7 +65,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         if (checkForSensors(x, y)) {
             drawSensor(x, y)
             sensList.add(
-                SensorMock(
+                DialogSensorMock(
                     x,
                     y
                 )
