@@ -34,3 +34,20 @@ Examples:
   docs: update readme for new commit syntax
   feature: add support for light endpoint #PATRON2020-34
 ```
+
+## Creating build for testing
+```
+In order to create build for testing you have to:
+1. Checkout proper branch
+2. Create tag
+  Template: 
+    git tag v0.<sprint_number>-<JIRA-NUMBER>
+  Example:
+    git tag v0.2-PATRON2020-34
+3. Push tag to origin
+  git push origin <tag>
+
+
+You can also check all already created tags using this command:
+  git tag
+```
