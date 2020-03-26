@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.dashboard.view
+package com.intive.patronage.smarthome.feature.home.view
 
 import android.os.Bundle
 import android.view.*

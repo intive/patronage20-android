@@ -2,6 +2,8 @@ package com.intive.patronage.smarthome.feature.blind.viewmodel
 
 import android.util.Log
 import androidx.databinding.Bindable
+import androidx.lifecycle.MutableLiveData
+import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.feature.blind.view.BlindViewEventListener
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
@@ -18,6 +20,7 @@ class BlindDetailsViewModel(
     var position: Int = 0
     private var percent: String = "$position %"
     private var disposable: Disposable? = null
+    val toastMessage = MutableLiveData<Int>()
 
     init {
         loadBlind()
@@ -45,6 +48,11 @@ class BlindDetailsViewModel(
     fun setPercent(value: String) {
         if (this.percent != value) this.percent = value
         notifyPropertyChanged(0)
+    }
+
+    fun onApplyClicked() {
+        //TODO: send data to API
+        toastMessage.value = R.string.apply_toast
     }
 
     override fun onCleared() {

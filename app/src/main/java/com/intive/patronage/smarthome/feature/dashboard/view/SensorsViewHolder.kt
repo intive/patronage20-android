@@ -64,6 +64,7 @@ class SensorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "HVACRoom" -> {
                     sensorName.text = context.getString(R.string.HVAC_sensor_name)
                     sensorDetalis.visibility = View.GONE
+                    sensorImage.setImageDrawable(resources.getDrawable(R.drawable.hvac))
                 }
                 else -> sensorName.text = sensor.type
             }
