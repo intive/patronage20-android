@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 
 
 class SmartHomeFragmentViewPagerAdapter(fragmentManager: FragmentManager,
