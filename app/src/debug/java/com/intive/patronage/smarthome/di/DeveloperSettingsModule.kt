@@ -12,11 +12,9 @@ import org.koin.dsl.module
 val developerSettingsModule = module {
     viewModel {
         DeveloperSettingsViewModel(
-            get(),
             get()
         )
     }
     single { DeveloperSettings() }
-    single<ObservableField<String>> { ObservableField() }
     factory { (activity : AppCompatActivity) -> DeveloperSettingsCoordinator(Navigator(activity)) }
 }
