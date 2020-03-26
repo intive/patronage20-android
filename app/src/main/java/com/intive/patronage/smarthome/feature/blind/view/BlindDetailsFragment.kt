@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.FragmentBlindDetailsBinding
 import com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel
@@ -30,6 +32,15 @@ class BlindDetailsFragment : Fragment(), BlindViewEventListener {
         val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = resources.getString(R.string.blind_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
+
+        blindDetailsViewModel.blindViewEventListener = this
+
+        blindDetailsViewModel.toastMessage.observe(this, Observer {
+            if (it != null) {
+                val message = getString(it)
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+            }
+        })
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind_details, container, false)
         binding.lifecycleOwner = this

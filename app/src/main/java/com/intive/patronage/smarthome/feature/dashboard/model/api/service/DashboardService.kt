@@ -3,13 +3,16 @@ package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
+import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepository
+import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,
-    private val dashboardRepository: DashboardRepositoryAPI
+    private val dashboardRepository: DashboardRepositoryAPI,
+    private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
 
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
@@ -18,6 +21,7 @@ class DashboardService(
     private fun getDashboardFromNetwork(): Single<Dashboard> {
         return smartHomeAPI.getDashboard().doOnSuccess {
             dashboardRepository.setDashboard(it)
+            dashboardRoomRepository.insertDashboard(it)
         }
     }
 

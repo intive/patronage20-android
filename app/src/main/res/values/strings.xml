@@ -28,10 +28,14 @@
     <string name="hvac_room_hysteresis">Hysteresis: </string>
     <string name="hvac_status_heating">Heating</string>
     <string name="hvac_status_cooling">Cooling</string>
+    <string name="sensor_add_success">Sensor został dodany</string>
+    <string name="sensor_add_failure">W tym miejscu istnieje już sensor</string>
     <string name="blind_details_appbar">Blind</string>
     <string name="hvac_details_temp_label">Set temp:</string>
     <string name="hvac_datails_hint">...</string>
     <string name="hvac_details_connecting_error">Unable to load HVAC System</string>
     <string name="hvac_hysteresis_label">Hysteresis</string>
     <string name="hvac_temperature_label">Temperature</string>
+    <string name="home_appbar">Home</string>
+    <string name="apply_toast">Successfully applied</string>
 </resources>

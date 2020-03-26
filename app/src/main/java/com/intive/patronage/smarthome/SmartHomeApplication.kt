@@ -18,11 +18,13 @@ class SmartHomeApplication() : Application() {
                 splashScreenModule,
                 networkApiModule,
                 smartHomeAPIModule,
+                dashboardRoomModule,
                 dashboardModule,
                 dashboardApiModule,
                 lightsDetailsModule,
                 blindDetailsModule,
-                hvacDetailsModule
+                hvacDetailsModule,
+                viewPagerModule
             )
         }
     }
