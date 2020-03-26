@@ -16,7 +16,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="14"
-        tools:context=".feature.light.view.LightsDetailsFragment">
+        tools:context=".feature.light.view.LightsDetailsFragment"
+        android:layout_margin="@dimen/standard_break">
 
         <View
             android:background="@{lightDetailsViewModel.currentColor}"
