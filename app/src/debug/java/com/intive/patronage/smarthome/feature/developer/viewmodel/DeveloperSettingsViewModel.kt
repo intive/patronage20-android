@@ -1,8 +1,8 @@
-package com.intive.patronage.smarthome.developer.settings.viewmodel
+package com.intive.patronage.smarthome.feature.developer.viewmodel
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import com.intive.patronage.smarthome.developer.settings.DeveloperSettings
+import com.intive.patronage.smarthome.DeveloperSettings
 
 class DeveloperSettingsViewModel(
     private val developerSettings: DeveloperSettings,

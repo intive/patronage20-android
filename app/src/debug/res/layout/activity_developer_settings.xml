@@ -5,7 +5,7 @@
     <data>
         <variable
             name="developerSettingsViewModel"
-            type="com.intive.patronage.smarthome.developer.settings.viewmodel.DeveloperSettingsViewModel" />
+            type="com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel" />
 
     </data>
 
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundColorForDeveloperSettings"
-        tools:context=".developer.settings.view.DeveloperSettingsActivity">
+        tools:context=".feature.developer.view.DeveloperSettingsActivity">
 
         <TextView
             android:id="@+id/app_version"

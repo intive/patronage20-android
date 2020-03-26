@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.developer.settings
+package com.intive.patronage.smarthome
 
 import com.intive.patronage.smarthome.BuildConfig
 

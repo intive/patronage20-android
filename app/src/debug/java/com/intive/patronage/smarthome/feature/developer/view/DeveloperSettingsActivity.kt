@@ -1,11 +1,11 @@
-package com.intive.patronage.smarthome.developer.settings.view
+package com.intive.patronage.smarthome.feature.developer.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.ActivityDeveloperSettingsBinding
-import com.intive.patronage.smarthome.developer.settings.viewmodel.DeveloperSettingsViewModel
+import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.navigator.DeveloperSettingsCoordinator
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel

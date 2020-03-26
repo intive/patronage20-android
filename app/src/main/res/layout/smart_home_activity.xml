@@ -28,4 +28,4 @@
                tools:layout="@layout/fragment_lights_details"
                android:id="@+id/fragment" />
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
