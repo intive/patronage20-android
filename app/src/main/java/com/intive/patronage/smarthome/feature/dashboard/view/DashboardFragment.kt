@@ -42,10 +42,6 @@ class DashboardFragment : Fragment() {
         binding.dashboardViewModelDataBind = dashboardViewModel
         setupRecyclerView(binding)
 
-        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
-        toolbar.title = resources.getString(R.string.dashboard_appbar)
-        toolbar.setDisplayHomeAsUpEnabled(false)
-
         return binding.root
     }
 
