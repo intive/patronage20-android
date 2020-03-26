@@ -17,47 +17,20 @@
         <com.intive.patronage.smarthome.feature.hvac.HvacCircle
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/none"
-                android:layout_weight="8"
+                android:layout_weight="12"
                 android:id="@+id/hvac_circle"
                 app:onLayout="@{hvacViewModel}"
+                app:setTemperature="@{hvacViewModel}"
                 />
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_margin="@dimen/hvac_layout_margin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/none"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:id="@+id/tempButtonLayout">
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/hvac_text_size"
-                    android:text="@string/hvac_details_temp_label"
-                    android:textColor="#fff"
-                    android:gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" android:id="@+id/tempLabel"/>
-
-            <EditText
-                    app:textChangeListener="@{hvacViewModel}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/hvac_text_size"
-                    android:text=""
-                    android:inputType="number"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
-                    android:hint="@string/hvac_datails_hint"
-                    android:layout_marginBottom="@dimen/hvac_layout_negative_margin"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:id="@+id/tampValueEditView"
-                    app:layout_constraintStart_toEndOf="@+id/tempLabel"
-                    android:layout_marginStart="@dimen/hvac_layout_margin"
-                    android:textIsSelectable="false"
-                    android:singleLine="false" android:importantForAutofill="no"/>
             <Button
                     android:text="@string/apply"
-                    app:tempUp="@{hvacViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/tempApplyButton"
@@ -75,13 +48,6 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-        />
-
 
     </LinearLayout>
 

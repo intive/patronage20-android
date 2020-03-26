@@ -35,7 +35,8 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
 
 
     override fun setTemperature(temperature: Float) {
-        binding.hvacCircle.changeTemperature(temperature)
+        binding.hvacCircle.temperatureFloat = temperature
+        binding.hvacCircle.postInvalidate()
     }
 
     override fun setHysteresis(hysteresis: Float) {
@@ -51,6 +52,18 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
             )
             { activity?.onBackPressed() }
         }
+    }
+
+    override fun setHeatingTemperature(heatingTemperature: Int) {
+       binding.hvacCircle.minTemperature = heatingTemperature
+        binding.hvacCircle.postInvalidate()
+    }
+
+
+
+    override fun setCoolingTemperature(coolingTemperature: Int) {
+        binding.hvacCircle.maxTemperature = coolingTemperature
+        binding.hvacCircle.postInvalidate()
     }
 
 

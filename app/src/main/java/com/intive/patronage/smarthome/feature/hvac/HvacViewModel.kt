@@ -17,6 +17,9 @@ class HvacViewModel(
     private var disposable: Disposable? = null
     var temperature: Float = 0F
     var hysteresis: Float = 0F
+    var coolingTemperature = 200
+    var heatingTemperature = 120
+
     var temperatureFromView = temperature
 
     init {
@@ -30,6 +33,8 @@ class HvacViewModel(
             .subscribe({
                 it?.temperatureSensorId?.let { it1 -> getTemperatureFromSensor(it1) }
                 it?.hysteresis?.let { it1 -> getHysteresisFromSensor(it1) }
+                it?.coolingTemperature?.let { it1 ->getCoolingTemperature(200) }
+                it?.heatingTemperature?.let { it1 -> getHeatingTemperature(120) }
             },
                 {
                     hvacViewEventListener.connectionError(true)
@@ -54,6 +59,16 @@ class HvacViewModel(
     private fun getHysteresisFromSensor(value: Int) {
         hysteresis = value.toFloat()
         hvacViewEventListener.setHysteresis(hysteresis)
+    }
+
+    private fun getCoolingTemperature(value: Int) {
+        coolingTemperature = value
+        hvacViewEventListener.setCoolingTemperature(coolingTemperature)
+    }
+
+    private fun getHeatingTemperature(value: Int) {
+        heatingTemperature = value
+        hvacViewEventListener.setHeatingTemperature(heatingTemperature)
     }
 
 

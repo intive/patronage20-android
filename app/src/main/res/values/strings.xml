@@ -32,4 +32,6 @@
     <string name="hvac_details_temp_label">Set temp:</string>
     <string name="hvac_datails_hint">...</string>
     <string name="hvac_details_connecting_error">Unable to load HVAC System</string>
+    <string name="hvac_hysteresis_label">Hysteresis</string>
+    <string name="hvac_temperature_label">Temperature</string>
 </resources>
