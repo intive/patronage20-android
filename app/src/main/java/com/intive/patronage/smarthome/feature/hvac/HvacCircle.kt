@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.*
 import android.text.TextPaint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import com.intive.patronage.smarthome.R
 import kotlin.math.*
@@ -128,15 +127,26 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         hotSweepAngle = (350 - maxTemperature).toFloat() / 10 * oneDegree
 
         canvas?.drawArc(tempCircle, startAngle, sweepAngle, false, paint)
-        canvas?.drawArc(coldCircle, startAngle, coldSweepAngle, false, coldPaint.apply { style =Paint.Style.STROKE })
-        canvas?.drawArc(hotCircle, tempOffset, (hotSweepAngle * (-1)), false, hotPaint.apply { style =Paint.Style.STROKE })
+        canvas?.drawArc(coldCircle, startAngle, coldSweepAngle, false, coldPaint.apply { style = Paint.Style.STROKE })
+        canvas?.drawArc(
+            hotCircle,
+            tempOffset,
+            (hotSweepAngle * (-1)),
+            false,
+            hotPaint.apply { style = Paint.Style.STROKE })
         canvas?.drawCircle(
             coldPoint.x.toFloat(),
             coldPoint.y.toFloat(),
             coldCircleRadius,
-            coldPaint.apply { textSize = 20f
-            style =Paint.Style.FILL})
-        canvas?.drawCircle(hotPoint.x.toFloat(), hotPoint.y.toFloat(), hotCircleRadius, hotPaint.apply { style =Paint.Style.FILL })
+            coldPaint.apply {
+                textSize = 20f
+                style = Paint.Style.FILL
+            })
+        canvas?.drawCircle(
+            hotPoint.x.toFloat(),
+            hotPoint.y.toFloat(),
+            hotCircleRadius,
+            hotPaint.apply { style = Paint.Style.FILL })
 
 
         canvas?.drawText(tempString,
@@ -318,13 +328,13 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun setHotAngle(angle: Float, evenX: Float): Float {
         var value = 0f
         when {
-            angle in 0.1..109.0 && evenX > centerOfTemperatureCircle.x -> {
+            angle in 0.1..110.0 && evenX >= centerOfTemperatureCircle.x -> {
                 value = angle
             }
             evenX < centerOfTemperatureCircle.x -> {
-                value = 109.1f
+                value = 109.0f
             }
-            angle > 0 -> {
+            angle < 0 -> {
                 value = 0f
             }
         }
@@ -334,37 +344,38 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun setColdAngle(angle: Float, evenX: Float): Float {
         var value = 0f
         when {
-            angle in 0.1..109.0 && evenX < centerOfTemperatureCircle.x -> {
+            angle in 0.1..109.5 && evenX <= centerOfTemperatureCircle.x -> {
                 value = angle
             }
             evenX > centerOfTemperatureCircle.x -> {
-                value = 109.1f
+                value = 109.0f
             }
-            angle > 0 -> {
+            angle < 0 -> {
                 value = 0f
             }
         }
         return value
     }
 
-    private fun hysteresisCalculation():Int{
-        var value =0
+    private fun hysteresisCalculation(): Int {
+        var value = 0
         val maxValue = maxTemperature - minTemperature
-        val currentValue = ((temperatureFloat*10).toInt()) - minTemperature
-        val percent = if (maxValue>0) {
+        val currentValue = ((temperatureFloat * 10).toInt()) - minTemperature
+        val percent = if (maxValue > 0) {
             currentValue * 100 / maxValue
-        }else 100
+        } else 100
 
-        if (percent in 1.0..100.0){
-            value = percent
-        }else if (percent>100){
-            value =100
-        }else if(percent<0){
-            value =0
+        when {
+            percent in 100 downTo 1 -> {
+                value = percent
+            }
+            percent > 100 -> {
+                value = 100
+            }
+            percent < 0 -> {
+                value = 0
+            }
         }
-        Log.d("testowanie max", maxValue.toString())
-        Log.d("testowanie curent", currentValue.toString())
-        Log.d("testowanie percent", percent.toString())
         return value
     }
 

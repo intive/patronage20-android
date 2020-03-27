@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.feature.hvac
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +42,6 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
     }
 
     override fun setHysteresis(hysteresis: Int) {
-        Log.d("testowanie fragment", hysteresis.toString())
         binding.hvacCircle.hysteresis = hysteresis
         binding.hvacCircle.postInvalidate()
     }
@@ -59,7 +57,7 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
     }
 
     override fun setHeatingTemperature(heatingTemperature: Int) {
-       binding.hvacCircle.minTemperature = heatingTemperature
+        binding.hvacCircle.minTemperature = heatingTemperature
         binding.hvacCircle.postInvalidate()
     }
 

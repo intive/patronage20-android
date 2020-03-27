@@ -33,7 +33,7 @@ class HvacViewModel(
             .subscribe({
                 it?.temperatureSensorId?.let { it1 -> getTemperatureFromSensor(it1) }
                 it?.hysteresis?.let { it1 -> getHysteresisFromSensor(it1) }
-                it?.coolingTemperature?.let { it1 ->getCoolingTemperature(220) }
+                it?.coolingTemperature?.let { it1 -> getCoolingTemperature(220) }
                 it?.heatingTemperature?.let { it1 -> getHeatingTemperature(120) }
             },
                 {
@@ -58,7 +58,6 @@ class HvacViewModel(
 
     private fun getHysteresisFromSensor(value: Int) {
         hysteresis = value
-        Log.d("testowanie model", hysteresis.toString())
         hvacViewEventListener.setHysteresis(hysteresis)
     }
 
@@ -72,10 +71,11 @@ class HvacViewModel(
         hvacViewEventListener.setHeatingTemperature(heatingTemperature)
     }
 
-    fun saveSettings(){
+    fun saveSettings() {
         hvacViewEventListener.saveSetting()
     }
-    fun resetSetting(){
+
+    fun resetSetting() {
         loadHvac()
         hvacViewEventListener.resetSetting()
     }
