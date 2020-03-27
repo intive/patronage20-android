@@ -16,8 +16,8 @@ class HvacViewModel(
 
     private var disposable: Disposable? = null
     var temperature: Float = 0F
-    var hysteresis: Float = 0F
-    var coolingTemperature = 200
+    var hysteresis: Int = 0
+    var coolingTemperature = 220
     var heatingTemperature = 120
 
     var temperatureFromView = temperature
@@ -26,14 +26,14 @@ class HvacViewModel(
         loadHvac()
     }
 
-    private fun loadHvac() {
+    fun loadHvac() {
         disposable = dashboardService.getHVACById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it?.temperatureSensorId?.let { it1 -> getTemperatureFromSensor(it1) }
                 it?.hysteresis?.let { it1 -> getHysteresisFromSensor(it1) }
-                it?.coolingTemperature?.let { it1 ->getCoolingTemperature(200) }
+                it?.coolingTemperature?.let { it1 ->getCoolingTemperature(220) }
                 it?.heatingTemperature?.let { it1 -> getHeatingTemperature(120) }
             },
                 {
@@ -57,7 +57,8 @@ class HvacViewModel(
     }
 
     private fun getHysteresisFromSensor(value: Int) {
-        hysteresis = value.toFloat()
+        hysteresis = value
+        Log.d("testowanie model", hysteresis.toString())
         hvacViewEventListener.setHysteresis(hysteresis)
     }
 
@@ -71,6 +72,13 @@ class HvacViewModel(
         hvacViewEventListener.setHeatingTemperature(heatingTemperature)
     }
 
+    fun saveSettings(){
+        hvacViewEventListener.saveSetting()
+    }
+    fun resetSetting(){
+        loadHvac()
+        hvacViewEventListener.resetSetting()
+    }
 
     override fun onCleared() {
         super.onCleared()

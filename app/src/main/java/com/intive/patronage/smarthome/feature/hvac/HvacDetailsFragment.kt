@@ -2,9 +2,11 @@ package com.intive.patronage.smarthome.feature.hvac
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -25,11 +27,12 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
         toolbar.title = resources.getString(R.string.hvac_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
 
+
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hvac_details, container, false)
         binding.lifecycleOwner = this
         binding.hvacViewModel = hvacViewModel
-
-
+        hvacViewModel.hvacViewEventListener = this
         return binding.root
     }
 
@@ -39,7 +42,8 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
         binding.hvacCircle.postInvalidate()
     }
 
-    override fun setHysteresis(hysteresis: Float) {
+    override fun setHysteresis(hysteresis: Int) {
+        Log.d("testowanie fragment", hysteresis.toString())
         binding.hvacCircle.hysteresis = hysteresis
         binding.hvacCircle.postInvalidate()
     }
@@ -59,10 +63,17 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
         binding.hvacCircle.postInvalidate()
     }
 
-
-
     override fun setCoolingTemperature(coolingTemperature: Int) {
         binding.hvacCircle.maxTemperature = coolingTemperature
+        binding.hvacCircle.postInvalidate()
+    }
+
+    override fun saveSetting() {
+
+        Toast.makeText(activity, "Setting saved", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun resetSetting() {
         binding.hvacCircle.postInvalidate()
     }
 

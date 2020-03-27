@@ -31,6 +31,7 @@
 
             <Button
                     android:text="@string/apply"
+                    android:onClick="@{()->hvacViewModel.saveSettings()}"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/tempApplyButton"
@@ -39,6 +40,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/tempReset" android:layout_marginEnd="@dimen/hvac_layout_margin"/>
             <Button
                     android:text="@string/reset"
+                    android:onClick="@{()->hvacViewModel.resetSetting()}"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/tempReset"
