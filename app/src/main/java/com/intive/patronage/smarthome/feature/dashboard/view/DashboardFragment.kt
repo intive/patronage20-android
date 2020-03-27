@@ -56,6 +56,9 @@ class DashboardFragment : Fragment() {
             bundle.putInt("ID", sensor.id.toInt())
             dashboardCoordinator.goToBlindDetailsScreen(bundle)
         }
+        if (sensor.type == "temperatureSensor") {
+            dashboardCoordinator.goToTemperatureDetailsScreen()
+        }
     }
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {

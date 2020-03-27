@@ -23,7 +23,8 @@ class SmartHomeApplication() : Application() {
                 dashboardApiModule,
                 lightsDetailsModule,
                 blindDetailsModule,
-                viewPagerModule
+                viewPagerModule,
+                temperatureDetailsModule
             )
         }
     }
