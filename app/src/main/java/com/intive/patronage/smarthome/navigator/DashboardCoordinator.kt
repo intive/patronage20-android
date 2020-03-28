@@ -5,6 +5,7 @@ import com.intive.patronage.smarthome.R
 
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
+import com.intive.patronage.smarthome.feature.hvac.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.developer.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragmentViewPagerAdapter
@@ -21,6 +22,15 @@ class DashboardCoordinator(private val navigator: Navigator) {
                 R.id.fragment
             )
         )
+    }
+
+    fun goToHvacDetalisScreen (bundle: Bundle? = null){
+        navigator.goToScreen(
+            FragmentEvent(
+                HvacDetailsFragment::class.java,
+            bundle,
+            R.id.fragment
+        ))
     }
 
     fun goToBlindDetailsScreen(bundle: Bundle? = null) {
