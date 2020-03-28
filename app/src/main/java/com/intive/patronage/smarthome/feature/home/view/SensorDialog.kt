@@ -1,47 +1,31 @@
 package com.intive.patronage.smarthome.feature.home.view
 
-import android.app.Dialog
-import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
-import androidx.annotation.ContentView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.coordinateToPercentX
+import com.intive.patronage.smarthome.common.coordinateToPercentY
+import com.intive.patronage.smarthome.common.percentToCoordinateX
+import com.intive.patronage.smarthome.common.percentToCoordinateY
 import com.intive.patronage.smarthome.databinding.SensorDialogFragmentBinding
 import com.intive.patronage.smarthome.feature.home.viewmodel.SensorDialogViewModel
-import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.home_fragment.view.*
-import kotlinx.android.synthetic.main.sensor_list_item.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class SensorDialog: DialogFragment() {
+class SensorDialog : DialogFragment() {
     private val sensorDialogListAdapter: SensorDialogListAdapter by inject {
         parametersOf(::onItemClick)
     }
     private val dialogViewModel: SensorDialogViewModel by viewModel()
 
-    private var x = 0f
-    private var y = 0f
-
-    fun setPosition(x:Float, y:Float){
-        this.x = x
-        this.y = y
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState)
-    }
+    private lateinit var image: HomeLayoutView
+    private var actualSensorX = 0f
+    private var actualSensorY = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,32 +33,33 @@ class SensorDialog: DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: SensorDialogFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.sensor_dialog_fragment, container,  false)
+            DataBindingUtil.inflate(inflater, R.layout.sensor_dialog_fragment, container, false)
+        if (savedInstanceState != null) {
+            actualSensorX = savedInstanceState.getFloat("SENSOR_X")
+            actualSensorY = savedInstanceState.getFloat("SENSOR_Y")
+        }
         binding.lifecycleOwner = this
         binding.homeViewModelDataBind = dialogViewModel
         setupRecyclerView(binding)
-
+        image = activity!!.findViewById(R.id.home)
         return binding.root
+    }
+
+    fun setSensorPosition(x: Float, y: Float) {
+        actualSensorX = x
+        actualSensorY = y
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putFloat("SENSOR_X", actualSensorX)
+        outState.putFloat("SENSOR_Y", actualSensorY)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {
         super.onResume()
         val window = dialog?.window
-        window?.setGravity(Gravity.TOP + Gravity.START)
-        val params = window?.attributes
-        Log.d("XD", params!!.width.toString())
-        val orientation = resources.configuration.orientation
-        params?.x = this.x.toInt()
-        params?.y = this.y.toInt()
-        window?.attributes = params
-        val displayMetrics = DisplayMetrics()
-        activity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            window?.setLayout(displayMetrics.widthPixels/2, displayMetrics.heightPixels/2)
-        }
-        else {
-            window?.setLayout(displayMetrics.widthPixels/4, displayMetrics.heightPixels/2)
-        }
+        window?.setGravity(Gravity.CENTER)
     }
 
     private fun setupRecyclerView(binding: SensorDialogFragmentBinding) {
@@ -86,7 +71,24 @@ class SensorDialog: DialogFragment() {
         }
     }
 
-    fun onItemClick(){
-
+    private fun onItemClick(sensor: DialogSensorMock) {
+        if (sensor.added) {
+            sensor.added = false
+            image.removeSensor(
+                percentToCoordinateX(sensor.x, image.width),
+                percentToCoordinateY(sensor.y, image.height)
+            )
+            sensor.x = -1f
+            sensor.y = -1f
+        } else {
+            if (image.addSensor(actualSensorX, actualSensorY)) {
+                sensor.added = true
+                sensor.x = coordinateToPercentX(actualSensorX, image.width)
+                sensor.y = coordinateToPercentY(actualSensorY, image.height)
+            }
+        }
+        dialog?.dismiss()
     }
+
+
 }

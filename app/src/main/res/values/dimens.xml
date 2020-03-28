@@ -9,4 +9,6 @@
     <dimen name="dashboard_details_text_size">16sp</dimen>
     <dimen name="blind_arrow_button_size">72dp</dimen>
     <dimen name="blind_percent_text_size">24sp</dimen>
+    <dimen name="dialog_sensor_image_size">25dp</dimen>
+    <dimen name="dialog_sensor_text_width">200dp</dimen>
 </resources>

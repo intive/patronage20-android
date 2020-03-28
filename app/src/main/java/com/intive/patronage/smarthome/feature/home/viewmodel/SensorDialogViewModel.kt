@@ -1,23 +1,16 @@
 package com.intive.patronage.smarthome.feature.home.viewmodel
 
-import android.app.Dialog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.intive.patronage.smarthome.feature.home.view.DialogSensorMock
+import com.intive.patronage.smarthome.feature.home.model.HomeRepository
+import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import io.reactivex.disposables.Disposable
+import org.koin.core.context.KoinContextHandler.get
+import org.koin.java.KoinJavaComponent.inject
 
-class SensorDialogViewModel() : ViewModel() {
-    val items  = mutableListOf(DialogSensorMock(123f, 12f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f)
-        , DialogSensorMock(13f, 153f))//= MutableLiveData<List<DialogSensorMock>>()
+class SensorDialogViewModel(repo: HomeRepository) : ViewModel() {
+
+    val items = repo.sensorList
     val error = MutableLiveData<Boolean>().apply { value = false }
     private var sensorList: Disposable? = null
 
