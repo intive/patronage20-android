@@ -20,8 +20,6 @@ class DashboardService(
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
 
-    private var repoCall = false
-
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
@@ -32,23 +30,19 @@ class DashboardService(
         }
     }
 
-    private fun getDashboardSensorsFromNetwork(): Observable<List<DashboardSensor>> {
-        return smartHomeAPI.getDashboard()
-            .map {
-                transformSensors(it)
-            }.toObservable()
-    }
-
-    fun getDashboardSensorsFromRepository(): Observable<List<DashboardSensor>> {
-        return dashboardRepository.getDashboard()
-            .map {
-                transformSensors(it)
-            }.toObservable()
+    fun getDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
+        return source.map { transformSensors(it) }
+            .toObservable()
     }
 
     fun updateSensors(): Observable<List<DashboardSensor>> =
-        Observable.interval(10, 10, TimeUnit.SECONDS)
-            .switchMap { getDashboardSensorsFromNetwork() }
+        Observable.interval(0, 10, TimeUnit.SECONDS)
+            .flatMap { getDashboardSensors(smartHomeAPI.getDashboard()) }
+
+    fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
+        updateSensors().startWith( getDashboardSensors(
+            dashboardRepository.getDashboard().toSingle()) )
+
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
         val sensors = mutableListOf<DashboardSensor>()

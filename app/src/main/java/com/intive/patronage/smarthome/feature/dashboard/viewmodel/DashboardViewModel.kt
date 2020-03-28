@@ -14,24 +14,15 @@ class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
 
     val items = MutableLiveData<List<DashboardSensor>>()
     val error = MutableLiveData<Boolean>().apply { value = false }
-    var complete = MutableLiveData<Boolean>().apply { value = false }
     private var sensorList: Disposable? = null
 
     init {
-        sensorList = dashboardService.getDashboardSensorsFromRepository()
-            .take(1)
+        sensorList = dashboardService.fetchSensorsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 items.value = it
-            }, { error.value = true }, { complete.value = true })
-
-        sensorList = dashboardService.updateSensors()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                items.value = it
-            }, { error.value = true }, { complete.value = true })
+            }, { error.value = true })
     }
 
     override fun onCleared() {
