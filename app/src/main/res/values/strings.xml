@@ -38,4 +38,6 @@
     <string name="hvac_temperature_label">Temperature</string>
     <string name="home_appbar">Home</string>
     <string name="apply_toast">Successfully applied</string>
+    <string name="channel_name">name</string>
+    <string name="channel_description">description</string>
 </resources>

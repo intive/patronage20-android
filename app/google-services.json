@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "925008104072",
+    "firebase_url": "https://patronage2020-android.firebaseio.com",
+    "project_id": "patronage2020-android",
+    "storage_bucket": "patronage2020-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925008104072:android:a6f36a59787c97186dad3d",
+        "android_client_info": {
+          "package_name": "com.intive.patronage.smarthome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTQrLKXBI9QXGmbghpD8P7S_HQUvw9Uz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

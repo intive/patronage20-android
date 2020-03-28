@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../dependencies.gradle'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -32,8 +33,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
     }
-
 }
 
 dependencies {
@@ -62,4 +66,6 @@ dependencies {
     implementation projectDependencies.room_runtime
     implementation projectDependencies.room_rx_java
     kapt projectDependencies.room_compiler
+    implementation projectDependencies.firebase_core
+    implementation projectDependencies.firebase_messaging
 }

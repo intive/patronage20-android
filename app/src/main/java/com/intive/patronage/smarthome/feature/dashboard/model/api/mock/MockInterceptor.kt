@@ -54,7 +54,7 @@ const val getListOfReposBeingStarredJson = """
     {
       "id": 0,
       "type": "windowSensor",
-      "status": "open"
+      "isOpen": true
     }
   ],
   "windowBlinds": [
@@ -93,7 +93,6 @@ const val getListOfReposBeingStarredJson = """
     }
   ],
   "HVACStatus": {
-    "type": "HVACStatus",
     "heating": true,
     "cooling": true
   },

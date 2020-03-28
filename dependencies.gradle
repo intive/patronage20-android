@@ -16,6 +16,7 @@ ext {
     legacy_support_version = "1.0.0"
     material_version = "1.2.0-alpha01"
     room_version = "2.2.5"
+    firebase_version = "9.2.0"
 
     projectDependencies = [
             koin                    : "org.koin:koin-android:$koin_version",
@@ -40,6 +41,8 @@ ext {
             material                : "com.google.android.material:material:$material_version",
             room_runtime            : "androidx.room:room-runtime:$room_version",
             room_compiler           : "androidx.room:room-compiler:$room_version",
-            room_rx_java            : "androidx.room:room-rxjava2:$room_version"
+            room_rx_java            : "androidx.room:room-rxjava2:$room_version",
+            firebase_core           : "com.google.firebase:firebase-core:$firebase_version",
+            firebase_messaging      : "com.google.firebase:firebase-messaging:$firebase_version",
     ]
 }
