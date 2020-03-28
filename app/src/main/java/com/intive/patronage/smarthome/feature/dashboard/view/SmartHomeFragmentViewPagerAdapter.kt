@@ -19,9 +19,7 @@ class SmartHomeFragmentViewPagerAdapter(fragmentManager: FragmentManager,
         }
     }
 
-    override fun getCount(): Int {
-        return 2
-    }
+    override fun getCount(): Int = 2
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {

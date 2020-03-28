@@ -8,8 +8,10 @@ import com.intive.patronage.smarthome.feature.dashboard.model.WindowBlind
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepository
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
 class DashboardService(
@@ -17,6 +19,8 @@ class DashboardService(
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
+
+    private var repoCall = false
 
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
@@ -28,25 +32,36 @@ class DashboardService(
         }
     }
 
-    private fun getDashboardSensors(): Observable<List<DashboardSensor>> {
+    private fun getDashboardSensorsFromNetwork(): Observable<List<DashboardSensor>> {
         return smartHomeAPI.getDashboard()
             .map {
-                val sensors = mutableListOf<DashboardSensor>()
-                sensors.addAll(transformFromLights(it.lights))
-                sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
-                sensors.addAll(transformFromSmokeSensors(it.smokeSensors))
-                sensors.addAll(transformFromWindowBlinds(it.windowBlinds))
-                sensors.addAll(transfromFromWindowSensors(it.windowSensors))
-                sensors.addAll(transformFromRFIDSensors(it.RFIDSensors))
-                sensors.addAll(transformFromHVACRooms(it.HVACRooms))
-                //add hvac status
-                sensors.toList()
+                transformSensors(it)
+            }.toObservable()
+    }
+
+    fun getDashboardSensorsFromRepository(): Observable<List<DashboardSensor>> {
+        return dashboardRepository.getDashboard()
+            .map {
+                transformSensors(it)
             }.toObservable()
     }
 
     fun updateSensors(): Observable<List<DashboardSensor>> =
-        Observable.interval(0, 10, TimeUnit.SECONDS)
-            .flatMap { getDashboardSensors() }
+        Observable.interval(10, 10, TimeUnit.SECONDS)
+            .switchMap { getDashboardSensorsFromNetwork() }
+
+    private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
+        val sensors = mutableListOf<DashboardSensor>()
+        sensors.addAll(transformFromLights(dashboard.lights))
+        sensors.addAll(transformFromTemperatureSensors(dashboard.temperatureSensors))
+        sensors.addAll(transformFromSmokeSensors(dashboard.smokeSensors))
+        sensors.addAll(transformFromWindowBlinds(dashboard.windowBlinds))
+        sensors.addAll(transfromFromWindowSensors(dashboard.windowSensors))
+        sensors.addAll(transformFromRFIDSensors(dashboard.RFIDSensors))
+        sensors.addAll(transformFromHVACRooms(dashboard.HVACRooms))
+        sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
+        return sensors.toList()
+    }
 
     fun getLightById(id: Int): Single<Light?> {
         return dashboardRepository.getDashboard()
