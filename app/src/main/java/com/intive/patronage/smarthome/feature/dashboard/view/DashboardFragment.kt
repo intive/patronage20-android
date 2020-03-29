@@ -53,6 +53,9 @@ class DashboardFragment : Fragment() {
             "HVACRoom" -> dashboardCoordinator.goToHvacDetalisScreen(bundle)
             "windowBlind" -> dashboardCoordinator.goToBlindDetailsScreen(bundle)
         }
+        if (sensor.type == "temperatureSensor") {
+            dashboardCoordinator.goToTemperatureDetailsScreen()
+        }
     }
 
 
