@@ -24,7 +24,9 @@ class SmartHomeApplication() : Application() {
                 lightsDetailsModule,
                 blindDetailsModule,
                 viewPagerModule,
-                temperatureDetailsModule
+                temperatureDetailsModule,
+                hvacDetailsModule,
+                developerSettingsModule
             )
         }
     }

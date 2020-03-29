@@ -28,7 +28,7 @@ class Navigator(private val activity: AppCompatActivity) {
 
     fun goBack() {
         activity.supportFragmentManager.also {
-            if (it.backStackEntryCount == 1) {
+            if ((it.backStackEntryCount == 1) or (it.backStackEntryCount == 0)) {
                 activity.finish()
             } else {
                 activity.supportFragmentManager.popBackStack()
