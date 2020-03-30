@@ -9,6 +9,8 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
+const val intervalDelay = 10L
+
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,
     private val dashboardRepository: DashboardRepositoryAPI,
@@ -31,15 +33,15 @@ class DashboardService(
             .zipWith(Observable.timer(minWaitTime, TimeUnit.SECONDS))
             .timeout(maxWaitTime, TimeUnit.SECONDS)
 
-    fun getDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
+    private fun provideDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
         return source.map { transformSensors(it) }
             .toObservable()
     }
 
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
-        Observable.interval(10, 10, TimeUnit.SECONDS)
-            .flatMap { getDashboardSensors(getDashboardFromNetwork()) }
-            .startWith( getDashboardSensors( getDashboard()) )
+        Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
+            .flatMap { provideDashboardSensors(getDashboardFromNetwork()) }
+            .startWith( provideDashboardSensors( getDashboard()) )
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
