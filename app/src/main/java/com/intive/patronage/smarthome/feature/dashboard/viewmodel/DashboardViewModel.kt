@@ -15,14 +15,12 @@ class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
     private var sensorList: Disposable? = null
 
     init {
-        sensorList = dashboardService.updateSensors()
+        sensorList = dashboardService.fetchSensorsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 items.value = it
-            }, {
-                error.value = true
-            })
+            }, { error.value = true })
     }
 
     override fun onCleared() {

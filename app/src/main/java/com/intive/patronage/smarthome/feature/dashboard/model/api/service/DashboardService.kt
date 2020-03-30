@@ -1,12 +1,8 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
 import com.intive.patronage.smarthome.api.SmartHomeAPI
-import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
-import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
-import com.intive.patronage.smarthome.feature.dashboard.model.Light
-import com.intive.patronage.smarthome.feature.dashboard.model.WindowBlind
+import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
-import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepository
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -28,45 +24,56 @@ class DashboardService(
         }
     }
 
-    private fun getDashboardSensors(): Observable<List<DashboardSensor>> {
-        return smartHomeAPI.getDashboard()
-            .map {
-                val sensors = mutableListOf<DashboardSensor>()
-                sensors.addAll(transformFromLights(it.lights))
-                sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
-                sensors.addAll(transformFromSmokeSensors(it.smokeSensors))
-                sensors.addAll(transformFromWindowBlinds(it.windowBlinds))
-                sensors.addAll(transfromFromWindowSensors(it.windowSensors))
-                sensors.addAll(transformFromRFIDSensors(it.RFIDSensors))
-                sensors.addAll(transformFromHVACRooms(it.HVACRooms))
-                //add hvac status
-                sensors.toList()
-            }.toObservable()
+    fun getDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
+        return source.map { transformSensors(it) }
+            .toObservable()
     }
 
-    fun updateSensors(): Observable<List<DashboardSensor>> =
+    fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
         Observable.interval(0, 10, TimeUnit.SECONDS)
-            .flatMap { getDashboardSensors() }
+            .flatMap { getDashboardSensors(smartHomeAPI.getDashboard()) }
+            .startWith( getDashboardSensors( dashboardRepository.getDashboard().toSingle()) )
+
+
+    private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
+        val sensors = mutableListOf<DashboardSensor>()
+        sensors.addAll(transformFromLights(dashboard.lights))
+        sensors.addAll(transformFromTemperatureSensors(dashboard.temperatureSensors))
+        sensors.addAll(transformFromSmokeSensors(dashboard.smokeSensors))
+        sensors.addAll(transformFromWindowBlinds(dashboard.windowBlinds))
+        sensors.addAll(transfromFromWindowSensors(dashboard.windowSensors))
+        sensors.addAll(transformFromRFIDSensors(dashboard.RFIDSensors))
+        sensors.addAll(transformFromHVACRooms(dashboard.HVACRooms))
+        sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
+        return sensors.toList()
+    }
 
     fun getLightById(id: Int): Single<Light?> {
         return dashboardRepository.getDashboard()
-            .map { dashboard ->
-                var singleLight: Light? = null
-                dashboard.lights.forEach { light ->
-                    if (light.id == id) singleLight = light
-                }
-                singleLight
-            }.toSingle()
+            .flatMapObservable { Observable.fromIterable(it.lights) }
+            .filter { it.id == id }
+            .firstOrError()
+    }
+
+    fun getHVACById(id: Int): Single<HVACRoom?> {
+        return dashboardRepository.getDashboard()
+            .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
+            .filter{it.id == id}
+            .firstOrError()
     }
 
     fun getBlindById(id: Int): Single<WindowBlind?> {
         return dashboardRepository.getDashboard()
-            .map { dashboard ->
-                var singleBlind: WindowBlind? = null
-                dashboard.windowBlinds.forEach { blind ->
-                    if (blind.id == id) singleBlind = blind
-                }
-                singleBlind
-            }.toSingle()
+            .flatMapObservable { Observable.fromIterable(it.windowBlinds) }
+            .filter { it.id == id }
+            .firstOrError()
+    }
+
+    fun getTemperatureSensorById(id: Int): Single<TemperatureSensor?> {
+        return dashboardRepository.getDashboard()
+            .flatMapObservable { Observable.fromIterable(it.temperatureSensors) }
+            .filter { it.id==id }
+            .firstOrError()
+
     }
 }

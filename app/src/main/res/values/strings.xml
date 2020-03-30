@@ -7,6 +7,7 @@
     <string name="green">G</string>
     <string name="blue">B</string>
     <string name="lights_details_appbar">LED lights</string>
+    <string name="hvac_details_appbar">HVAC</string>
     <string name="error_title">Error</string>
     <string name="connection_error_message">Unable to connect with smart home</string>
     <string name="quit">Quit</string>
@@ -31,6 +32,18 @@
     <string name="sensor_add_failure">W tym miejscu istnieje już sensor</string>
     <string name="sensor_removed">Sensor został usunięty</string>
     <string name="blind_details_appbar">Blind</string>
+    <string name="hvac_details_temp_label">Set temp:</string>
+    <string name="hvac_datails_hint">...</string>
+    <string name="hvac_details_connecting_error">Unable to load HVAC System</string>
+    <string name="hvac_hysteresis_label">Hysteresis</string>
+    <string name="hvac_temperature_label">Temperature</string>
     <string name="home_appbar">Home</string>
     <string name="apply_toast">Successfully applied</string>
+    <string name="graph_1_min">1 min</string>
+    <string name="graph_30_min">30 min</string>
+    <string name="graph_1_h">1 h</string>
+    <string name="graph_12_h">12 h</string>
+    <string name="graph_1_d">1 d</string>
+    <string name="channel_name">name</string>
+    <string name="channel_description">description</string>
 </resources>

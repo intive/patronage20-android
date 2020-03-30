@@ -14,4 +14,7 @@
     <dimen name="dialog_item_image_margin">8dp</dimen>
     <dimen name="dialog_item_padding">20dp</dimen>
     <dimen name="dialog_item_text_margin">16dp</dimen>
+    <dimen name="hvac_layout_margin">5dp</dimen>
+    <dimen name="hvac_text_size">20sp</dimen>
+    <dimen name="hvac_layout_negative_margin">-8dp</dimen>
 </resources>

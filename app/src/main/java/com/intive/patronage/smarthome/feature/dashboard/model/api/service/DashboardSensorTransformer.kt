@@ -72,7 +72,7 @@ fun transfromFromWindowSensors(windowSensors: List<WindowSensor>): List<Dashboar
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.status.toString()
+                ""
             )
         )
     }
@@ -116,11 +116,10 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
     return sensors
 }
 
-fun transfromFromHVACStatus(hvaStatus: List<HVACStatus>): List<DashboardSensor> {
+fun transfromFromHVACStatus(hvacStatus: HVACStatus): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
-    hvaStatus.forEach {
         val details = StringBuilder()
-        if (it.heating) {
+        if (hvacStatus.heating) {
             details.append(R.string.hvac_status_heating)
         } else {
             details.append(R.string.hvac_status_cooling)
@@ -128,10 +127,9 @@ fun transfromFromHVACStatus(hvaStatus: List<HVACStatus>): List<DashboardSensor> 
         sensors.add(
             DashboardSensor(
                 0.toString(),
-                it.type,
+                "",
                 details.toString()
             )
         )
-    }
     return sensors
 }
