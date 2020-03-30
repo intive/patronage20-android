@@ -3,7 +3,6 @@ package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
-import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepository
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -21,13 +20,15 @@ class DashboardService(
     private fun getDashboardFromNetwork(): Single<Dashboard> {
         return smartHomeAPI.getDashboard().doOnSuccess {
             dashboardRepository.setDashboard(it)
-            dashboardRoomRepository.insertDashboard(it)
         }
     }
+
+    fun getRoomDashboards() = dashboardRoomRepository.getAllDashboards()
 
     private fun getDashboardSensors(): Observable<List<DashboardSensor>> {
         return smartHomeAPI.getDashboard()
             .map {
+                dashboardRoomRepository.insertDashboard(it)
                 val sensors = mutableListOf<DashboardSensor>()
                 sensors.addAll(transformFromLights(it.lights))
                 sensors.addAll(transformFromTemperatureSensors(it.temperatureSensors))
