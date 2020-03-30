@@ -6,12 +6,9 @@ import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.Light
 import com.intive.patronage.smarthome.feature.dashboard.model.WindowBlind
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
-import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepository
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
 class DashboardService(
@@ -35,13 +32,10 @@ class DashboardService(
             .toObservable()
     }
 
-    fun updateSensors(): Observable<List<DashboardSensor>> =
+    fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
         Observable.interval(0, 10, TimeUnit.SECONDS)
             .flatMap { getDashboardSensors(smartHomeAPI.getDashboard()) }
-
-    fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
-        updateSensors().startWith( getDashboardSensors(
-            dashboardRepository.getDashboard().toSingle()) )
+            .startWith( getDashboardSensors( dashboardRepository.getDashboard().toSingle()) )
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
