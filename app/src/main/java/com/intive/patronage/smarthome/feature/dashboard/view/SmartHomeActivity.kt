@@ -45,7 +45,7 @@ class SmartHomeActivity : AppCompatActivity() {
         dashboardViewModel.error.observe(this, Observer { error ->
             if (error) alertDialog.showSmartHomeDialog(
                 this, R.string.error_title,
-                R.string.error_title
+                R.string.connection_error_message
             ) { finish() }
         })
     }
