@@ -6,6 +6,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.Da
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
 class DashboardService(
@@ -24,15 +25,21 @@ class DashboardService(
         }
     }
 
+    fun fetchDashboardWithDelay(minWaitTime: Long, maxWaitTime: Long)
+            : Observable<Pair<Dashboard, Long>> =
+        getDashboardFromNetwork().toObservable()
+            .zipWith(Observable.timer(minWaitTime, TimeUnit.SECONDS))
+            .timeout(maxWaitTime, TimeUnit.SECONDS)
+
     fun getDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
         return source.map { transformSensors(it) }
             .toObservable()
     }
 
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
-        Observable.interval(0, 10, TimeUnit.SECONDS)
-            .flatMap { getDashboardSensors(smartHomeAPI.getDashboard()) }
-            .startWith( getDashboardSensors( dashboardRepository.getDashboard().toSingle()) )
+        Observable.interval(10, 10, TimeUnit.SECONDS)
+            .flatMap { getDashboardSensors(getDashboardFromNetwork()) }
+            .startWith( getDashboardSensors( getDashboard()) )
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
