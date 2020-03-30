@@ -1,15 +1,18 @@
 package com.intive.patronage.smarthome.feature.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
-
-class SensorMock(val x: Float, val y: Float)
+import com.intive.patronage.smarthome.common.replace
+import com.intive.patronage.smarthome.feature.home.viewmodel.SensorDialogViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private val sensList: MutableList<SensorMock> = mutableListOf()
+    private val dialogViewModel: SensorDialogViewModel by viewModel()
+    lateinit var image: HomeLayoutView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,8 +20,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val myView = inflater.inflate(R.layout.home_fragment, container, false)
-        val image = myView.findViewById<HomeLayoutView>(R.id.home)
-        image.create(sensList)
+        image = myView.findViewById(R.id.home)
+        image.create(dialogViewModel.items, fragmentManager!!)
         return myView
     }
 
