@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.home.view
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.SensorDialogType
 import kotlinx.android.synthetic.main.dialog_sensor_list_item.view.*
 
 class SensorDialogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -17,29 +18,14 @@ class SensorDialogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             if (sensor.added) {
                 dialogSensorImage.visibility = View.VISIBLE
             }
-            when (sensor.type) {
-                "RGBLight" -> {
-                    dialogSensorName.text = context.getString(R.string.light_sensor_name)
+            val findSensor = SensorDialogType.values().find {
+                it.type == sensor.type
+            }
+
+            for (sensorType in SensorDialogType.values()) {
+                if (sensorType == findSensor) {
+                    sensorType.setAttributes(sensor, itemView)
                 }
-                "temperatureSensor" -> {
-                    dialogSensorName.text = context.getString(R.string.temperature_sensor_name)
-                }
-                "smokeSensor" -> {
-                    dialogSensorName.text = context.getString(R.string.smoke_sensor_name)
-                }
-                "windowBlind" -> {
-                    dialogSensorName.text = context.getString(R.string.blinds_sensor_name)
-                }
-                "windowSensor" -> {
-                    dialogSensorName.text = context.getString(R.string.window_sensor_name)
-                }
-                "RFIDSensor" -> {
-                    dialogSensorName.text = context.getString(R.string.RFID_sensor_name)
-                }
-                "HVACRoom" -> {
-                    dialogSensorName.text = context.getString(R.string.HVAC_sensor_name)
-                }
-                else -> dialogSensorName.text = sensor.type
             }
         }
     }
