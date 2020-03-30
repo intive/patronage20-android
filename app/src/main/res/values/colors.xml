@@ -9,4 +9,5 @@
     <color name="alert">#FF8C0000</color>
     <color name="glass">#4007affc</color>
     <color name="white">#fff</color>
+    <color name="transparentAccentColor">#40D69C1E</color>
 </resources>

@@ -2,10 +2,13 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
+import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
@@ -23,7 +26,7 @@ class SmartHomeActivity : AppCompatActivity() {
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val alertDialog: SmartHomeAlertDialog by inject()
-
+    private val developerSettingsViewModel : DeveloperSettingsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,4 +57,21 @@ class SmartHomeActivity : AppCompatActivity() {
         dashboardCoordinator.goBack()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return if (developerSettingsViewModel.isDebugMode()) {
+            menuInflater.inflate(R.menu.menu_developer_settings, menu)
+            true
+        } else {
+            false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.developer_settings -> {
+                dashboardCoordinator.goToDeveloperSettings()
+            }
+        }
+        return true
+    }
 }

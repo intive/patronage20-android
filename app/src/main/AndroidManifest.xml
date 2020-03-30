@@ -26,6 +26,13 @@
 
         <activity android:name="com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity"/>
 
+        <service android:name=".firebase.SmartHomeMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+
     </application>
 
 </manifest>

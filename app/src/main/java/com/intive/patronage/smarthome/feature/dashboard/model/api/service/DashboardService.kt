@@ -1,10 +1,7 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
 import com.intive.patronage.smarthome.api.SmartHomeAPI
-import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
-import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
-import com.intive.patronage.smarthome.feature.dashboard.model.Light
-import com.intive.patronage.smarthome.feature.dashboard.model.WindowBlind
+import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
 import io.reactivex.Observable
@@ -53,23 +50,30 @@ class DashboardService(
 
     fun getLightById(id: Int): Single<Light?> {
         return dashboardRepository.getDashboard()
-            .map { dashboard ->
-                var singleLight: Light? = null
-                dashboard.lights.forEach { light ->
-                    if (light.id == id) singleLight = light
-                }
-                singleLight
-            }.toSingle()
+            .flatMapObservable { Observable.fromIterable(it.lights) }
+            .filter { it.id == id }
+            .firstOrError()
+    }
+
+    fun getHVACById(id: Int): Single<HVACRoom?> {
+        return dashboardRepository.getDashboard()
+            .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
+            .filter{it.id == id}
+            .firstOrError()
     }
 
     fun getBlindById(id: Int): Single<WindowBlind?> {
         return dashboardRepository.getDashboard()
-            .map { dashboard ->
-                var singleBlind: WindowBlind? = null
-                dashboard.windowBlinds.forEach { blind ->
-                    if (blind.id == id) singleBlind = blind
-                }
-                singleBlind
-            }.toSingle()
+            .flatMapObservable { Observable.fromIterable(it.windowBlinds) }
+            .filter { it.id == id }
+            .firstOrError()
+    }
+
+    fun getTemperatureSensorById(id: Int): Single<TemperatureSensor?> {
+        return dashboardRepository.getDashboard()
+            .flatMapObservable { Observable.fromIterable(it.temperatureSensors) }
+            .filter { it.id==id }
+            .firstOrError()
+
     }
 }
