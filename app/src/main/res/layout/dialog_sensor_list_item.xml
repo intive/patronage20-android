@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_sensor_background"
-    android:padding="20dp">
+    android:padding="@dimen/dialog_item_padding">
 
     <TextView
         android:id="@+id/dialogSensorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/dialog_item_text_margin"
         android:width="@dimen/dialog_sensor_text_width"
         android:text="@string/placeholder"
         android:textAlignment="center"
@@ -26,7 +26,7 @@
         android:id="@+id/dialogSensorImage"
         android:layout_width="@dimen/dialog_sensor_image_size"
         android:layout_height="@dimen/dialog_sensor_image_size"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/dialog_item_image_margin"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
