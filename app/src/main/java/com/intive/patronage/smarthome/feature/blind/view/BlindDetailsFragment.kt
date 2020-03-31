@@ -32,6 +32,7 @@ class BlindDetailsFragment : Fragment(), BlindViewEventListener {
         val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = resources.getString(R.string.blind_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
+        toolbar.setDisplayUseLogoEnabled(false)
 
         blindDetailsViewModel.blindViewEventListener = this
 

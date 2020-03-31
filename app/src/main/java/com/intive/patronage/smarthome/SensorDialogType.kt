@@ -12,38 +12,61 @@ enum class SensorDialogType(val type: String) {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.light_sensor_name)
         }
+        override fun getPaintColor(): Int {
+            return R.color.lightSensor
+        }
     },
     TEMPERATURE_SENSOR("temperatureSensor") {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.temperature_sensor_name)
+        }
+        override fun getPaintColor(): Int {
+            return R.color.temperatureSensor
         }
     },
     SMOKE_SENSOR("smokeSensor") {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.smoke_sensor_name)
         }
+        override fun getPaintColor(): Int {
+            return R.color.smokeSensor
+        }
     },
     WINDOW_BLIND("windowBlind") {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.blinds_sensor_name)
+        }
+        override fun getPaintColor(): Int {
+            return R.color.windowBlindsSensor
         }
     },
     WINDOW_SENSOR("windowSensor") {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.window_sensor_name)
         }
+        override fun getPaintColor(): Int {
+            return R.color.windowSensor
+        }
     },
     RFID_SENSOR("RFIDSensor") {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.RFID_sensor_name)
+        }
+        override fun getPaintColor(): Int {
+            return R.color.rfidSensor
         }
     },
     HVAC_ROOM("HVACRoom") {
         override fun setAttributes(sensor: DialogSensorMock, view: View) {
             setText(view, R.string.HVAC_sensor_name)
         }
+
+        override fun getPaintColor(): Int {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
     };
 
+    abstract fun getPaintColor(): Int
     abstract fun setAttributes(sensor: DialogSensorMock, view: View)
     fun setText(view: View, nameSensor: Int) {
         view.dialogSensorName.text = view.context.getString(nameSensor)
