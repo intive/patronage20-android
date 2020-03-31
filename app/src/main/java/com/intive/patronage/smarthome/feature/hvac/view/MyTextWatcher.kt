@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.hvac
+package com.intive.patronage.smarthome.feature.hvac.view
 
 import android.text.Editable
 import android.text.TextWatcher

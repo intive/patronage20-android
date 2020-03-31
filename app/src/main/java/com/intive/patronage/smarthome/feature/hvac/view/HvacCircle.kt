@@ -1,18 +1,19 @@
-package com.intive.patronage.smarthome.feature.hvac
+package com.intive.patronage.smarthome.feature.hvac.view
 
 import android.content.Context
 import android.graphics.*
 import android.text.TextPaint
 import android.util.AttributeSet
-import android.util.Log
+import android.util.DisplayMetrics
 import android.view.View
 import com.intive.patronage.smarthome.R
 import kotlin.math.*
 
 
+@Suppress("DEPRECATION")
 class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private val rangeOffset =0
+    private val rangeOffset = 0
     private val range = 35 - rangeOffset
     var temperatureFloat: Float = 0F
     var hysteresis = 0
@@ -36,8 +37,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private lateinit var coldCircle: RectF
     private lateinit var hotCircle: RectF
     private var touchRadius = 100.0
-
-
+    private var metrics: DisplayMetrics = resources.displayMetrics
     private val paint = Paint().apply {
         isAntiAlias = true
         color = resources.getColor(R.color.colorAccent)
@@ -105,6 +105,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             }
 
         }
+        postInvalidate()
     }
 
     private fun drawCircleTemp(canvas: Canvas?, tempInt: Float) {
@@ -121,11 +122,11 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         }
         coldCircle = RectF(tempCircle)
         hotCircle = RectF(tempCircle)
-        
+
         coldPoint = getPoint(coldCircle.centerX(), coldCircle.centerY(), radius / 2, startAngle + coldSweepAngle)
         hotPoint = getPoint(hotCircle.centerX(), hotCircle.centerY(), radius / 2, tempOffset + (hotSweepAngle * (-1)))
         coldSweepAngle = minTemperature.toFloat() / 10 * oneDegree
-        hotSweepAngle = (range*10 - maxTemperature).toFloat() / 10 * oneDegree
+        hotSweepAngle = (range * 10 - maxTemperature).toFloat() / 10 * oneDegree
 
         canvas?.drawArc(tempCircle, startAngle, sweepAngle, false, paint)
         canvas?.drawArc(coldCircle, startAngle, coldSweepAngle, false, coldPaint.apply { style = Paint.Style.STROKE })
@@ -153,11 +154,12 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             textPaint.apply { color = resources.getColor(R.color.colorAccent) }
         )
 
+        val offsetLength: Float = ((90f / 360f) * 2 * Math.PI * (radius / 2f)).toFloat()
         canvas?.drawTextOnPath(
             tempLabel,
-            Path().apply { addArc(tempCircle, 130f, -90f) },
-            20f,
-            20f,
+            Path().apply { addArc(tempCircle, 135f, -90f) },
+            offsetLength / 2 - textLabelPaint.measureText(tempLabel) / 2,
+            textLabelPaint.textSize / 2,
             textLabelPaint
         )
     }
@@ -252,11 +254,12 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             centerOfHysteresisCircle.y + textPaint.textSize / 2,
             textPaint
         )
+        val offsetLength: Float = ((90f / 360f) * 2 * Math.PI * (radius / 2f)).toFloat()
         canvas?.drawTextOnPath(
             histLabel,
             Path().apply { addArc(circle, 180f, -90f) },
-            60f,
-            20f,
+            offsetLength / 2 - textLabelPaint.measureText(histLabel) / 2,
+            textLabelPaint.textSize / 2,
             textLabelPaint
         )
     }
@@ -291,21 +294,19 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             hotCircleRadius = 30f
             touchRadius = 300.0
             hotSweepAngle = setHotAngle(eventAngleDegrees.toFloat() + tempOffset, eventX)
-            maxTemperature = range *10 - ((hotSweepAngle / oneDegree) * 10).toInt()
+            maxTemperature = range * 10 - ((hotSweepAngle / oneDegree) * 10).toInt()
             invalidate()
         }
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        setTextSizeFromDPI()
         hysteresis = hysteresisCalculation()
         drawCircleTemp(canvas, temperatureFloat)
         drawCircleHysteresis(canvas, hysteresis)
         drawMinTemperatureLabel(canvas)
         drawMaxTemperatureLabel(canvas)
-        Log.d("testowanie min", minTemperature.toString())
-        Log.d("testowanie hot", maxTemperature.toString())
-
     }
 
     fun reset() {
@@ -377,6 +378,28 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             }
         }
         return value
+    }
+
+    private fun setTextSizeFromDPI() {
+        when (metrics.densityDpi) {
+            240 -> {
+                textPaint.textSize = 30f
+                textLabelPaint.textSize = 30f
+                coldPaint.strokeWidth = 10f
+                hotPaint.strokeWidth = 10f
+                paintBackground.strokeWidth = 10f
+                paint.strokeWidth = 10f
+                hotCircleRadius = 10f
+                coldCircleRadius = 10f
+                touchRadius = 50.0
+            }
+
+            320 -> {
+                textPaint.textSize = 45f
+                textLabelPaint.textSize = 40f
+            }
+
+        }
     }
 
 
