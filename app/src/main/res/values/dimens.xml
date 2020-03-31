@@ -17,4 +17,11 @@
     <dimen name="hvac_layout_margin">5dp</dimen>
     <dimen name="hvac_text_size">20sp</dimen>
     <dimen name="hvac_layout_negative_margin">-8dp</dimen>
+    <dimen name="tab_indicator_height">5dp</dimen>
+    <dimen name="toolbar_margin">10dp</dimen>
+    <dimen name="sensor_flag_width">30dp</dimen>
+    <dimen name="sensor_flag_height">90dp</dimen>
+    <dimen name="sensor_flag_elevation">15dp</dimen>
+    <dimen name="sensor_item_side_margin">30dp</dimen>
+    <dimen name="sensor_item_topbottom_margin">10dp</dimen>
 </resources>

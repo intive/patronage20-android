@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.SensorDialogType
 import com.intive.patronage.smarthome.common.percentToCoordinateX
 import com.intive.patronage.smarthome.common.percentToCoordinateY
 import com.intive.patronage.smarthome.common.replace
@@ -53,7 +54,8 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             if (sensor.added)
                 drawSensor(
                     percentToCoordinateX(sensor.x, this.width),
-                    percentToCoordinateY(sensor.y, this.height)
+                    percentToCoordinateY(sensor.y, this.height),
+                    sensor.type
                 )
         }
     }
@@ -76,9 +78,9 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    fun addSensor(x: Float, y: Float): Boolean {
+    fun addSensor(x: Float, y: Float, sensorType: String): Boolean {
         if (checkForSensors(x, y)) {
-            drawSensor(x, y)
+            drawSensor(x, y, sensorType)
             this.setImageBitmap(bitmap)
             showMessage(R.string.sensor_add_success)
             return true
@@ -96,8 +98,17 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         ).show()
     }
 
-    private fun drawSensor(x: Float, y: Float) {
-        paint.color = ContextCompat.getColor(context!!, R.color.colorAccent)
+    private fun drawSensor(x: Float, y: Float, sensorType: String) {
+        val findSensor = SensorDialogType.values().find {
+            it.type == sensorType
+        }
+        var color = R.color.colorAccent
+        for (sensorT in SensorDialogType.values()) {
+            if (sensorT == findSensor) {
+                color = sensorT.getPaintColor()
+            }
+        }
+        paint.color = ContextCompat.getColor(context!!, color)
         cvs.drawCircle(x, y, SENSOR_SIZE, paint)
         this.setImageBitmap(bitmap)
     }
@@ -110,7 +121,8 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             if (sensor.added)
                 drawSensor(
                     percentToCoordinateX(sensor.x, this.width),
-                    percentToCoordinateY(sensor.y, this.height)
+                    percentToCoordinateY(sensor.y, this.height),
+                    sensor.type
                 )
         }
         showMessage(R.string.sensor_removed)

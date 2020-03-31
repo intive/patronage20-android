@@ -81,7 +81,7 @@ class SensorDialog : DialogFragment() {
             sensor.x = -1f
             sensor.y = -1f
         } else {
-            if (image.addSensor(actualSensorX, actualSensorY)) {
+            if (image.addSensor(actualSensorX, actualSensorY, sensor.type)) {
                 sensor.added = true
                 sensor.x = coordinateToPercentX(actualSensorX, image.width)
                 sensor.y = coordinateToPercentY(actualSensorY, image.height)

@@ -53,7 +53,8 @@ class DashboardService(
         sensors.addAll(transfromFromWindowSensors(dashboard.windowSensors))
         sensors.addAll(transformFromRFIDSensors(dashboard.RFIDSensors))
         sensors.addAll(transformFromHVACRooms(dashboard.HVACRooms))
-        sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
+        // TODO: verify when API ready
+        // sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
         return sensors.toList()
     }
 

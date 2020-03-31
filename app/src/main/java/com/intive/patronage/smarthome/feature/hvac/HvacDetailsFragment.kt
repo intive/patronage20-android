@@ -25,7 +25,7 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
         val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = resources.getString(R.string.hvac_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
-
+        toolbar.setDisplayUseLogoEnabled(false)
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hvac_details, container, false)

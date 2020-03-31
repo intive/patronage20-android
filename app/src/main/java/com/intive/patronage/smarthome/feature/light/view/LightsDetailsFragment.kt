@@ -30,6 +30,7 @@ class LightsDetailsFragment : Fragment() {
         val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = resources.getString(R.string.lights_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
+        toolbar.setDisplayUseLogoEnabled(false)
 
         lightsDetailsViewModel.toastMessage.observe(this, Observer {
             if (it != null) {

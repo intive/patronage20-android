@@ -72,7 +72,7 @@ fun transfromFromWindowSensors(windowSensors: List<WindowSensor>): List<Dashboar
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                ""
+                it.isOpen.toString()
             )
         )
     }
