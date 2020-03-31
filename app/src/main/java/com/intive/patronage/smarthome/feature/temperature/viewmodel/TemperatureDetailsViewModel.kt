@@ -14,19 +14,34 @@ class TemperatureDetailsViewModel(private val dashboardService: DashboardService
 
     val data = MutableLiveData<List<Point>>()
     private var disposable: Disposable? = null
+    val values = mutableListOf<Int>()
 
     init {
-        loadData()
+// te dane ustawiają się wcześniej niż tworzy się widok więc jest git
+        // dodałem żeby działało chwilowo
+        val random = Random()
+        data.value = (1..11).map {
+            Point(it, random.nextInt(21) + 10)
+        }
+        // =========
+
 
         disposable = dashboardService.getRoomDashboards()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 if (list != null) {
+                    val size: Int = list.lastIndex
                     list.forEach { dashboard ->
-                        dashboard.temperatureSensors.forEach {
-                            Log.d("Temperature:", it.value.toString())
+                        if (dashboard.id > size - 10) {
+                            dashboard.temperatureSensors.forEach { sensor ->
+                                values.add(sensor.value)
+                            }
                         }
+                    }
+// te dane ustawiają się później niż tworzy się widok więc leci crash
+                    data.value = (1 until values.size + 1).map {
+                        Point(it, values[it - 1])
                     }
                     disposable?.dispose()
                 }
@@ -34,12 +49,5 @@ class TemperatureDetailsViewModel(private val dashboardService: DashboardService
             },{
                 Log.d("Exception", "ERROR")
             })
-    }
-
-    fun loadData() {
-        val random = Random()
-        data.value = (1..10).map {
-            Point(it, random.nextInt(21) + 10)
-        }
     }
 }

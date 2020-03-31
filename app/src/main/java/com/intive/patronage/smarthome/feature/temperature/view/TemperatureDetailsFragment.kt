@@ -1,6 +1,8 @@
 package com.intive.patronage.smarthome.feature.temperature.view
 
+import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_temperature_details.*
 import kotlinx.android.synthetic.main.fragment_temperature_details.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class TemperatureDetailsFragment : Fragment() {
+class TemperatureDetailsFragment : Fragment(){
 
     private val temperatureDetailsViewModel by viewModel<TemperatureDetailsViewModel>()
 
@@ -56,7 +58,6 @@ class TemperatureDetailsFragment : Fragment() {
     }
 
     private fun setIsEnabled(it: View) {
-        temperatureDetailsViewModel.loadData()
         for (button in buttonsLayout) {
             button.isEnabled = button != it
         }

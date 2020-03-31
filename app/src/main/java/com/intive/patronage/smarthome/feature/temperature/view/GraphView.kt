@@ -13,6 +13,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     private var distanceBetweenTextValues: Int = 1
     private var elementsWidth: Float = 8f
 
+// lista
     private val data = mutableListOf<Point>()
     private lateinit var canvas: Canvas
     private var minValue: Int = 0
@@ -29,6 +30,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
         data.clear()
         connectionPoints1.clear()
         connectionPoints2.clear()
+// ustawianie listy
         data.addAll(newData)
 
         this.distanceBetweenLines = distanceBetweenLines
@@ -120,6 +122,9 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
 
         fillPath.reset()
         fillPath.moveTo(degree + elementsWidth, height.toFloat())
+// tutaj mam dzielenie przez rozmiar
+        // jak lista nie jest sworzona to size - 1 daje crash
+        // to jest w wielu miejscach w tym pliku
         fillPath.lineTo((data[0].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree + elementsWidth, (maxValue - data[0].y.toFloat()) * degree)
 
         for (i in 1 until data.size) {
