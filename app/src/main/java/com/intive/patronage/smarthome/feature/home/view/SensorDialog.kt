@@ -45,9 +45,9 @@ class SensorDialog : DialogFragment() {
         return binding.root
     }
 
-    fun setSensorPosition(x: Float, y: Float) {
-        actualSensorX = x
-        actualSensorY = y
+    fun setSensorPosition(x: Float, y: Float, imageWidth: Int, imageHeight: Int) {
+        actualSensorX = coordinateToPercentX(x, imageWidth)
+        actualSensorY = coordinateToPercentY(y, imageHeight)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -81,10 +81,10 @@ class SensorDialog : DialogFragment() {
             sensor.x = -1f
             sensor.y = -1f
         } else {
-            if (image.addSensor(actualSensorX, actualSensorY, sensor.type)) {
+            if (image.addSensor(percentToCoordinateX(actualSensorX, image.width), percentToCoordinateY(actualSensorY, image.height), sensor.type)) {
                 sensor.added = true
-                sensor.x = coordinateToPercentX(actualSensorX, image.width)
-                sensor.y = coordinateToPercentY(actualSensorY, image.height)
+                sensor.x = actualSensorX
+                sensor.y = actualSensorY
             }
         }
         dialog?.dismiss()
