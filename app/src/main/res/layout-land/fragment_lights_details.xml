@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
         <variable
             name="lightDetailsViewModel"
@@ -11,27 +12,30 @@
     <LinearLayout
         android:background="@color/backgroundColor"
         android:orientation="horizontal"
-        android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/standard_break">
 
         <View
-            android:background="@{lightDetailsViewModel.currentColor}"
+            android:elevation="8dp"
+            android:layout_margin="@dimen/standard_break"
+            android:backgroundTint="@{lightDetailsViewModel.currentColor}"
+            android:background="@drawable/rounded_button"
             android:id="@+id/colorView"
             android:layout_weight="1"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"/>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="vertical"
-            android:weightSum="7"
             android:layout_weight="1"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent">
 
             <RelativeLayout
-                android:layout_weight="2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/greenRelativeLayout"
+                android:id="@+id/redRelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/none">
 
@@ -69,7 +73,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_weight="2"
+                app:layout_constraintTop_toBottomOf="@id/redRelativeLayout"
+                app:layout_constraintBottom_toTopOf="@id/blueRelativeLayout"
+                android:id="@+id/greenRelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/none">
 
@@ -107,7 +113,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_weight="2"
+                app:layout_constraintTop_toBottomOf="@id/greenRelativeLayout"
+                app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
+                android:id="@+id/blueRelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/none">
 
@@ -145,10 +153,11 @@
             </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonsLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:orientation="horizontal"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/none">
+                android:layout_height="wrap_content">
 
                 <Button
                     android:onClick="@{() -> lightDetailsViewModel.onApplyClicked()}"
@@ -177,7 +186,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

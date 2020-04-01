@@ -56,7 +56,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     }
 
     private val gridLinePaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.colorPrimary)
+        color = ContextCompat.getColor(context, R.color.colorAccentLightDark)
         strokeWidth = elementsWidth / 2
     }
 
