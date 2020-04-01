@@ -68,7 +68,9 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                 val x = e!!.x.toInt()
                 val y = e.y.toInt()
                 val sensorDialog = SensorDialog()
-                sensorDialog.setSensorPosition(x.toFloat(), y.toFloat())
+                sensorDialog.setSensorPosition(x.toFloat(), y.toFloat(), this@HomeLayoutView.width, this@HomeLayoutView.height)
+                Log.d("XD", this@HomeLayoutView.width.toString())
+                Log.d("XD", this@HomeLayoutView.height.toString())
                 sensorDialog.show(fragmentManager, "SensorList")
             }
         })
