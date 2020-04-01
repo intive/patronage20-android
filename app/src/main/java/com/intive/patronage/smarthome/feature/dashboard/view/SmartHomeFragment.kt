@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.intive.patronage.smarthome.R
 import kotlinx.android.synthetic.main.smart_home_activity.*
+import kotlinx.android.synthetic.main.smart_home_activity.view.*
 import kotlinx.android.synthetic.main.smart_home_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -62,8 +63,7 @@ class SmartHomeFragment : Fragment() {
         toolbar.title = ""
         toolbar.setDisplayHomeAsUpEnabled(false)
         toolbar.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.backgroundColor)))
-        toolbar.setLogo(ContextCompat.getDrawable(context!!, R.drawable.logo))
-        toolbar.setDisplayUseLogoEnabled(true)
+        (activity as SmartHomeActivity).showLogo()
         return toolbar
     }
 
