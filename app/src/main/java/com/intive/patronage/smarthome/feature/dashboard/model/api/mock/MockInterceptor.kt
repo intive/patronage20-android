@@ -13,7 +13,7 @@ class MockInterceptor : Interceptor {
 
             val random = Random()
             val responseString = when {
-                uri.endsWith("dashboard") -> getListOfReposBeingStarredJson(random.nextInt(21) + 10)
+                uri.endsWith("dashboard") -> getListOfReposBeingStarredJson(random.nextInt(6) + 20)
                 else -> ""
             }
 

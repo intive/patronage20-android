@@ -17,15 +17,6 @@ class TemperatureDetailsViewModel(private val dashboardService: DashboardService
     val values = mutableListOf<Int>()
 
     init {
-// te dane ustawiają się wcześniej niż tworzy się widok więc jest git
-        // dodałem żeby działało chwilowo
-        val random = Random()
-        data.value = (1..11).map {
-            Point(it, random.nextInt(21) + 10)
-        }
-        // =========
-
-
         disposable = dashboardService.getRoomDashboards()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -33,13 +24,12 @@ class TemperatureDetailsViewModel(private val dashboardService: DashboardService
                 if (list != null) {
                     val size: Int = list.lastIndex
                     list.forEach { dashboard ->
-                        if (dashboard.id > size - 10) {
+                        if (dashboard.id > size - 99) {
                             dashboard.temperatureSensors.forEach { sensor ->
                                 values.add(sensor.value)
                             }
                         }
                     }
-// te dane ustawiają się później niż tworzy się widok więc leci crash
                     data.value = (1 until values.size + 1).map {
                         Point(it, values[it - 1])
                     }
