@@ -10,14 +10,25 @@
 
            <androidx.appcompat.widget.Toolbar
                android:theme="@style/ToolbarTheme"
-               android:background="@color/colorPrimary"
+               android:background="@color/backgroundColor"
                app:titleTextColor="@color/colorAccent"
                app:layout_constraintTop_toTopOf="parent"
                app:layout_constraintStart_toStartOf="parent"
                android:id="@+id/toolbar"
                android:layout_width="match_parent"
                android:layout_height="?attr/actionBarSize"
-               app:title="@string/app_name" />
+               app:title=""
+               android:layout_marginTop="@dimen/toolbar_margin"
+               android:layout_marginBottom="@dimen/toolbar_margin">
+               <ImageView
+                   android:id="@+id/toolbarLogo"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:adjustViewBounds='true'
+                   android:src="@drawable/logo"
+                   android:visibility="visible"/>
+           </androidx.appcompat.widget.Toolbar>
 
            <FrameLayout
                app:layout_constraintTop_toBottomOf="@+id/toolbar"

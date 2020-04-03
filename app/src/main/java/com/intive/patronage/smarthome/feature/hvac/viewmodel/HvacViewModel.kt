@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.hvac
+package com.intive.patronage.smarthome.feature.hvac.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

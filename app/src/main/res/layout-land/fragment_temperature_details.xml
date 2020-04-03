@@ -28,31 +28,11 @@
         android:layout_height="match_parent">
 
         <Button
-            android:enabled="true"
-            android:textColor="@color/time_stamp_button_text"
-            android:background="@drawable/time_stamp_button_background"
-            android:layout_weight="1"
-            android:id="@+id/btn1"
-            android:text="@string/graph_1_min"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/none"/>
-
-        <Button
-            android:enabled="true"
-            android:textColor="@color/time_stamp_button_text"
-            android:background="@drawable/time_stamp_button_background"
-            android:layout_weight="1"
-            android:id="@+id/btn2"
-            android:text="@string/graph_30_min"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/none"/>
-
-        <Button
             android:enabled="false"
             android:textColor="@color/time_stamp_button_text"
             android:background="@drawable/time_stamp_button_background"
             android:layout_weight="1"
-            android:id="@+id/btn3"
+            android:id="@+id/button1h"
             android:text="@string/graph_1_h"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/none"/>
@@ -62,7 +42,27 @@
             android:textColor="@color/time_stamp_button_text"
             android:background="@drawable/time_stamp_button_background"
             android:layout_weight="1"
-            android:id="@+id/btn4"
+            android:id="@+id/button3h"
+            android:text="@string/graph_3_h"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/none"/>
+
+        <Button
+            android:enabled="true"
+            android:textColor="@color/time_stamp_button_text"
+            android:background="@drawable/time_stamp_button_background"
+            android:layout_weight="1"
+            android:id="@+id/button6h"
+            android:text="@string/graph_6_h"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/none"/>
+
+        <Button
+            android:enabled="true"
+            android:textColor="@color/time_stamp_button_text"
+            android:background="@drawable/time_stamp_button_background"
+            android:layout_weight="1"
+            android:id="@+id/button12h"
             android:text="@string/graph_12_h"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/none"/>
@@ -72,8 +72,8 @@
             android:textColor="@color/time_stamp_button_text"
             android:background="@drawable/time_stamp_button_background"
             android:layout_weight="1"
-            android:id="@+id/btn5"
-            android:text="@string/graph_1_d"
+            android:id="@+id/button24h"
+            android:text="@string/graph_24_h"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/none"/>
 

@@ -6,23 +6,26 @@
     android:layout_height="match_parent">
 
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/smartHomeViewPager"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/smartHomeViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColor"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/smartHomeTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:background="@color/backgroundColor"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:tabMode="fixed"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tabTextColor="@color/white"
+            app:tabIndicatorHeight="@dimen/tab_indicator_height"
+            app:tabSelectedTextColor="@color/colorAccent"/>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/smartHomeTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@color/colorPrimary"
-                app:tabMode="fixed"
-                app:layout_scrollFlags="scroll|enterAlways"></com.google.android.material.tabs.TabLayout>
-
-        </androidx.viewpager.widget.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
 
 

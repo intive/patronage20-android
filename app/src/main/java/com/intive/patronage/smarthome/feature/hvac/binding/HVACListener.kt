@@ -1,12 +1,10 @@
-package com.intive.patronage.smarthome.feature.hvac
+package com.intive.patronage.smarthome.feature.hvac.binding
 
 import android.annotation.SuppressLint
-import android.text.Editable
 import android.view.MotionEvent
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
+import com.intive.patronage.smarthome.feature.hvac.view.HvacCircle
+import com.intive.patronage.smarthome.feature.hvac.viewmodel.HvacViewModel
 
 @BindingAdapter("onLayout")
 fun setLayout(view: HvacCircle, hvacViewModel: HvacViewModel) {

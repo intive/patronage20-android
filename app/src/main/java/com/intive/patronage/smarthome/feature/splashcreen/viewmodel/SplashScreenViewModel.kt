@@ -7,12 +7,11 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.service.Dashbo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 
-class SplashScreenViewModel(private val dashboardService: DashboardService) : ViewModel() {
+class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
 
-    private val minWaitTime = 0L
+    private val minWaitTime = 5L
     private val maxWaitTime = 30L
 
     private var dashboard = MutableLiveData<Dashboard>()
@@ -20,16 +19,14 @@ class SplashScreenViewModel(private val dashboardService: DashboardService) : Vi
     var complete = MutableLiveData<Boolean>().apply { value = false }
     private var dashboardCall: Disposable? = null
 
-    fun getSensors() {
-
-        dashboardCall = dashboardService.getDashboard().toObservable()
-            .delay(minWaitTime, TimeUnit.SECONDS, true)
-            .timeout(maxWaitTime, TimeUnit.SECONDS)
+    init {
+        dashboardCall = dashboardService.fetchDashboardWithDelay(minWaitTime, maxWaitTime)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                dashboard.value = it
-            }, { error.value = true }, { complete.value = true })
+                dashboard.value = it.first
+                complete.value = true
+            }, { error.value = true })
     }
 
 

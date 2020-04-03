@@ -12,11 +12,11 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     private var distanceBetweenLines: Int = 1
     private var distanceBetweenTextValues: Int = 1
     private var elementsWidth: Float = 8f
+    private var minValue: Int = 10
+    private var maxValue: Int = 40
 
     private val data = mutableListOf<Point>()
     private lateinit var canvas: Canvas
-    private var minValue: Int = 0
-    private var maxValue: Int = 0
     private var degree: Float = 0f
     private var centerLineY: Float = 0f
     private var centerValue: Int = 0
@@ -25,7 +25,14 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     private val connectionPoints1 = mutableListOf<PointF>()
     private val connectionPoints2 = mutableListOf<PointF>()
 
-    fun setData(newData: List<Point>, distanceBetweenLines: Int, distanceBetweenTextValues: Int, elementsWidth: Float) {
+    fun setData(
+        newData: List<Point>,
+        distanceBetweenLines: Int,
+        distanceBetweenTextValues: Int,
+        elementsWidth: Float,
+        minValue: Int,
+        maxValue: Int
+    ) {
         data.clear()
         connectionPoints1.clear()
         connectionPoints2.clear()
@@ -34,12 +41,12 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
         this.distanceBetweenLines = distanceBetweenLines
         this.distanceBetweenTextValues = distanceBetweenTextValues
         this.elementsWidth = elementsWidth
+        this.minValue = minValue
+        this.maxValue = maxValue
 
-        minValue = newData.minBy { it.y }?.y ?: 0
-        minValue -= 2
-        maxValue = newData.maxBy { it.y }?.y ?: 0
-        maxValue += 2
-        centerValue = (maxValue - minValue) / 2 + minValue
+        this.minValue++
+        this.maxValue++
+        centerValue = (this.maxValue - this.minValue) / 2 + this.minValue
 
         invalidate()
     }
@@ -56,7 +63,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     }
 
     private val gridLinePaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.colorPrimary)
+        color = ContextCompat.getColor(context, R.color.colorAccentLightDark)
         strokeWidth = elementsWidth / 2
     }
 
@@ -74,7 +81,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
             if (data.isNotEmpty()) {
                 drawCurvedLines()
                 fillBackgroundUnderLines()
-                drawPoints()
+                //drawPoints()
             }
 
         }
@@ -147,7 +154,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
         canvas.drawPath(fillPath, fillPathPaint)
     }
 
-    private fun drawPoints() {
+    /*private fun drawPoints() {
         var distance = degree
 
         data.forEachIndexed { index, point ->
@@ -163,7 +170,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
 
             distance = degree
         }
-    }
+    }*/
 
     private fun drawTextValues() {
         val text = Paint().apply {

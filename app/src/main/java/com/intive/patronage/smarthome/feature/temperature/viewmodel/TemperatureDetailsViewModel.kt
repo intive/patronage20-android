@@ -8,7 +8,6 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.service.Dashbo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 class TemperatureDetailsViewModel(private val dashboardService: DashboardService) : ObservableViewModel() {
 
@@ -17,22 +16,32 @@ class TemperatureDetailsViewModel(private val dashboardService: DashboardService
     val values = mutableListOf<Int>()
 
     init {
+        loadData(60)
+    }
+
+    fun loadData(requestCount: Int) {
         disposable = dashboardService.getRoomDashboards()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 if (list != null) {
                     val size: Int = list.lastIndex
+                    var counter = requestCount / 100
                     list.forEach { dashboard ->
-                        if (dashboard.id > size - 99) {
-                            dashboard.temperatureSensors.forEach { sensor ->
-                                values.add(sensor.value)
+                        if (dashboard.id > (size - requestCount - 1)) {
+                            if (counter == (requestCount / 100)) {
+                                dashboard.temperatureSensors.forEach { sensor ->
+                                    values.add(sensor.value)
+                                }
+                                counter = 0
                             }
+                            counter++
                         }
                     }
                     data.value = (1 until values.size + 1).map {
                         Point(it, values[it - 1])
                     }
+                    values.clear()
                     disposable?.dispose()
                 }
                 else Log.d("Exception", "NULL")

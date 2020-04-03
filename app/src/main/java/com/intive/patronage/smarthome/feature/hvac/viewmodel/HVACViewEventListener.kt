@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.hvac
+package com.intive.patronage.smarthome.feature.hvac.viewmodel
 
 interface HVACViewEventListener {
     fun setTemperature(temperature :Float)

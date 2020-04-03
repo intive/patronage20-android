@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.hvac
+package com.intive.patronage.smarthome.feature.hvac.view
 
 import android.app.Activity
 import android.os.Bundle
@@ -13,10 +13,15 @@ import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.databinding.FragmentHvacDetailsBinding
+import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
+import com.intive.patronage.smarthome.feature.hvac.viewmodel.HVACViewEventListener
+import com.intive.patronage.smarthome.feature.hvac.viewmodel.HvacViewModel
+import kotlinx.android.synthetic.main.smart_home_activity.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class HvacDetailsFragment : Fragment(), HVACViewEventListener {
+class HvacDetailsFragment : Fragment(),
+    HVACViewEventListener {
 
     private val hvacViewModel by viewModel<HvacViewModel> { parametersOf(this, this.arguments?.getInt("ID")) }
     lateinit var binding: FragmentHvacDetailsBinding
@@ -25,7 +30,7 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
         val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = resources.getString(R.string.hvac_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
-
+        (activity as SmartHomeActivity).hideLogo()
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hvac_details, container, false)

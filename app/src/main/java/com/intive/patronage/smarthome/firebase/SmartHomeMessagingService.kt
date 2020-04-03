@@ -13,20 +13,19 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SmartHomeApplication
-import java.util.*
 
 private const val TAG = "FCM_SERVICE"
-private const val CHANNEL_ID = "0"
+private const val CHANNEL_ID = "default"
 
 class SmartHomeMessagingService : FirebaseMessagingService() {
 
-    override fun onMessageReceived(message: RemoteMessage?) {
+    override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        message?.let {
-            sendNotification(it)
-            Log.d(TAG, "From: ${it.from}")
-            Log.d(TAG, "Notification: id: ${it.messageId}, body: ${it.notification.body}")
+        message.data.isNotEmpty().let {
+            sendNotification(message)
+            Log.d(TAG, "From: ${message.from}")
+            Log.d(TAG, "Notification: id: ${message.messageId}, body: ${message.notification?.body}")
         }
     }
 
@@ -38,13 +37,13 @@ class SmartHomeMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(getPendingIntent())
             .setStyle(
-                NotificationCompat.BigTextStyle().bigText(message.notification.body)
-                    .setBigContentTitle(message.notification.title)
+                NotificationCompat.BigTextStyle().bigText(message.notification?.body)
+                    .setBigContentTitle(message.notification?.title)
             )
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(UUID.randomUUID().variant(), builder.build())
+            notify(0, builder.build())
         }
 
     }
@@ -64,9 +63,7 @@ class SmartHomeMessagingService : FirebaseMessagingService() {
     }
 
     private fun getPendingIntent(): PendingIntent {
-        val intent = Intent(this, SmartHomeApplication::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        return PendingIntent.getActivity(this, 0, intent, 0)
+        val intent = Intent(this, SmartHomeApplication::class.java)
+        return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 }

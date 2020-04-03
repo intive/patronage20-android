@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.feature.temperature.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +34,14 @@ class TemperatureDetailsFragment : Fragment(){
 
         temperatureDetailsViewModel.data.observe(this, Observer {
             if (it != null) {
-                view.graphView.setData(it, 1,1, 8f)
+                view.graphView.setData(
+                    it,
+                    1,
+                    1,
+                    resources.displayMetrics.density * 2,
+                    10,
+                    40
+                )
             }
         })
 
@@ -58,6 +66,14 @@ class TemperatureDetailsFragment : Fragment(){
     private fun setIsEnabled(it: View) {
         for (button in buttonsLayout) {
             button.isEnabled = button != it
+        }
+
+        when(it) {
+            button1h -> temperatureDetailsViewModel.loadData(60)
+            button3h -> temperatureDetailsViewModel.loadData(180)
+            button6h -> temperatureDetailsViewModel.loadData(360)
+            button12h -> temperatureDetailsViewModel.loadData(720)
+            button24h -> temperatureDetailsViewModel.loadData(1440)
         }
     }
 

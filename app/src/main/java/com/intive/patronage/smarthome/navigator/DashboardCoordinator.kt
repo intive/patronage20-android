@@ -5,10 +5,9 @@ import com.intive.patronage.smarthome.R
 
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
-import com.intive.patronage.smarthome.feature.hvac.HvacDetailsFragment
+import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.developer.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
-import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragmentViewPagerAdapter
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment

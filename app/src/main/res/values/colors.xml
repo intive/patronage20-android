@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4e4d53</color>
-    <color name="colorPrimaryDark">#4e4d53</color>
+    <color name="colorPrimary">#2e2d32</color>
+    <color name="colorPrimaryDark">#2e2d32</color>
     <color name="colorAccent">#D69C1E</color>
+    <color name="colorAccentLightDark">#696969</color>
     <color name="backgroundColor">#2e2d32</color>
     <color name="transparent">#00000000</color>
     <color name="splashScreenProgressbar">#413F3F</color>
@@ -10,4 +11,11 @@
     <color name="glass">#4007affc</color>
     <color name="white">#fff</color>
     <color name="transparentAccentColor">#40D69C1E</color>
+    <color name="lightSensor">#6CBA72</color>
+    <color name="smokeSensor">#D69C1E</color>
+    <color name="temperatureSensor">#3A5C9E</color>
+    <color name="windowSensor">#B34E3E</color>
+    <color name="rfidSensor">#6C3A9E</color>
+    <color name="hvacSensor">#913F86</color>
+    <color name="windowBlindsSensor">#3FA194</color>
 </resources>
