@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "925008104072-fq578m5hoqdq7855vid823mqc0skn2ip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.intive.patronage.smarthome",
+            "certificate_hash": "a3ac38270fed1374ad9f780c55f75e8c8ea6223a"
+          }
+        },
+        {
           "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
           "client_type": 3
         }
