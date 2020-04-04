@@ -59,7 +59,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
     private val paintBackground = Paint().apply {
         isAntiAlias = true
-        color = ContextCompat.getColor(context!!, R.color.colorPrimary)
+        color = ContextCompat.getColor(context!!, R.color.splashScreenProgressbar)
         style = Paint.Style.STROKE
         strokeWidth = 20f
     }
@@ -386,8 +386,8 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     private fun setTextSizeFromDPI() {
         when (metrics.densityDpi) {
-            120, 160 -> {
-                textPaint.textSize = 13f
+            in 1..160 -> {
+                textPaint.textSize = 12f
                 textLabelPaint.textSize = 15f
                 coldPaint.strokeWidth = 6f
                 hotPaint.strokeWidth = 6f
@@ -396,12 +396,12 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 hotCircleRadius = 6f
                 coldCircleRadius = 6f
                 touchRadius = 20.0
-                heightOffset = 100
-                widthOffset = 20
+                heightOffset = 110
+                widthOffset = 30
             }
-            240 -> {
-                textPaint.textSize = 30f
-                textLabelPaint.textSize = 30f
+            in 161..240 -> {
+                textPaint.textSize = 25f
+                textLabelPaint.textSize = 25f
                 coldPaint.strokeWidth = 10f
                 hotPaint.strokeWidth = 10f
                 paintBackground.strokeWidth = 10f
@@ -409,7 +409,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 hotCircleRadius = 10f
                 coldCircleRadius = 10f
                 touchRadius = 50.0
-                heightOffset = 50
+                heightOffset = 60
             }
             320 -> {
                 textPaint.textSize = 45f
