@@ -33,8 +33,8 @@ class HvacViewModel(
             .subscribe({
                 it?.temperatureSensorId?.let { it1 -> getTemperatureFromSensor(it1) }
                 it?.hysteresis?.let { it1 -> getHysteresisFromSensor(it1) }
-                it?.coolingTemperature?.let { it1 -> getCoolingTemperature(220) }
-                it?.heatingTemperature?.let { it1 -> getHeatingTemperature(120) }
+                it?.coolingTemperature?.let { it1 -> getCoolingTemperature(it1) }
+                it?.heatingTemperature?.let { it1 -> getHeatingTemperature(it1) }
             },
                 {
                     hvacViewEventListener.connectionError(true)
