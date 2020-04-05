@@ -13,7 +13,7 @@ class MockInterceptor : Interceptor {
 
             val random = Random()
             val responseString = when {
-                uri.endsWith("dashboard") -> getListOfReposBeingStarredJson(random.nextInt(6) + 20)
+                uri.endsWith("dashboard") -> getListOfReposBeingStarredJson(random)
                 else -> ""
             }
 
@@ -43,13 +43,23 @@ class MockInterceptor : Interceptor {
 
 }
 
-fun getListOfReposBeingStarredJson(temperature: Int) = """
+fun getListOfReposBeingStarredJson(random: Random) = """
 {
   "temperatureSensors": [
     {
       "id": 0,
       "type": "temperatureSensor",
-      "value": $temperature
+      "value": ${random.nextInt(31) + 10}
+    },
+    {
+      "id": 1,
+      "type": "temperatureSensor",
+      "value": ${random.nextInt(31) + 10}
+    },
+    {
+      "id": 2,
+      "type": "temperatureSensor",
+      "value": ${random.nextInt(31) + 10}
     }
   ],
   "windowSensors": [

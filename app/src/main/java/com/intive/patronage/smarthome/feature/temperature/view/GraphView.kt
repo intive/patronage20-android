@@ -6,16 +6,17 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.feature.temperature.utilities.GraphPoint
 
 class GraphView(context: Context, attributeSet: AttributeSet): View(context, attributeSet) {
 
     private var distanceBetweenLines: Int = 1
     private var distanceBetweenTextValues: Int = 1
     private var elementsWidth: Float = 8f
-    private var minValue: Int = 10
-    private var maxValue: Int = 40
+    private var minValue: Int = 9
+    private var maxValue: Int = 41
 
-    private val data = mutableListOf<Point>()
+    private val data = mutableListOf<GraphPoint>()
     private lateinit var canvas: Canvas
     private var degree: Float = 0f
     private var centerLineY: Float = 0f
@@ -25,35 +26,15 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     private val connectionPoints1 = mutableListOf<PointF>()
     private val connectionPoints2 = mutableListOf<PointF>()
 
-    fun setData(
-        newData: List<Point>,
-        distanceBetweenLines: Int,
-        distanceBetweenTextValues: Int,
-        elementsWidth: Float,
-        minValue: Int,
-        maxValue: Int
-    ) {
+    fun setData(newData: List<GraphPoint>) {
         data.clear()
         connectionPoints1.clear()
         connectionPoints2.clear()
         data.addAll(newData)
 
-        this.distanceBetweenLines = distanceBetweenLines
-        this.distanceBetweenTextValues = distanceBetweenTextValues
-        this.elementsWidth = elementsWidth
-        this.minValue = minValue
-        this.maxValue = maxValue
-
-        this.minValue++
-        this.maxValue++
-        centerValue = (this.maxValue - this.minValue) / 2 + this.minValue
+        centerValue = (maxValue - minValue) / 2 + minValue
 
         invalidate()
-    }
-
-    private val point = Paint().apply {
-        color = Color.WHITE
-        isAntiAlias = true
     }
 
     private val fillPathPaint = Paint().apply {
@@ -81,9 +62,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
             if (data.isNotEmpty()) {
                 drawCurvedLines()
                 fillBackgroundUnderLines()
-                //drawPoints()
             }
-
         }
     }
 
@@ -97,12 +76,12 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
 
         data.forEachIndexed { index, point ->
             var startX = (point.x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree
-            val startY = (maxValue - point.y.toFloat()) * degree
+            val startY = (maxValue - point.y) * degree
 
             if (index < data.size - 1) {
                 val nextPoint = data[index + 1]
                 var endX = (nextPoint.x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree
-                val endY = (maxValue - nextPoint.y.toFloat()) * degree
+                val endY = (maxValue - nextPoint.y) * degree
 
                 val firstConnectionPoint = PointF(((endX + startX) / 2), startY)
                 val secondConnectionPoint = PointF(((endX + startX) / 2), endY)
@@ -131,20 +110,20 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
 
         fillPath.reset()
         fillPath.moveTo(degree + elementsWidth, height.toFloat())
-        fillPath.lineTo((data[0].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree + elementsWidth, (maxValue - data[0].y.toFloat()) * degree)
+        fillPath.lineTo((data[0].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree + elementsWidth, (maxValue - data[0].y) * degree)
 
         for (i in 1 until data.size) {
             if (i == data.size - 1) {
                 fillPath.cubicTo(
                     connectionPoints1[i - 1].x, connectionPoints1[i - 1].y,
                     connectionPoints2[i - 1].x, connectionPoints2[i - 1].y,
-                    (data[i].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree - elementsWidth, (maxValue - data[i].y.toFloat()) * degree
+                    (data[i].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree - elementsWidth, (maxValue - data[i].y) * degree
                 )
             } else {
                 fillPath.cubicTo(
                     connectionPoints1[i - 1].x, connectionPoints1[i - 1].y,
                     connectionPoints2[i - 1].x, connectionPoints2[i - 1].y,
-                    (data[i].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree, (maxValue - data[i].y.toFloat()) * degree
+                    (data[i].x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + degree, (maxValue - data[i].y) * degree
                 )
             }
         }
@@ -153,24 +132,6 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
 
         canvas.drawPath(fillPath, fillPathPaint)
     }
-
-    /*private fun drawPoints() {
-        var distance = degree
-
-        data.forEachIndexed { index, point ->
-            if (index == 0) distance += elementsWidth
-            else if (index == data.size - 1) distance -= elementsWidth
-
-            canvas.drawCircle(
-                (point.x.toFloat() - 1) * ((width - degree) / (data.size - 1)) + distance,
-                (maxValue - point.y.toFloat()) * degree,
-                elementsWidth,
-                this.point
-            )
-
-            distance = degree
-        }
-    }*/
 
     private fun drawTextValues() {
         val text = Paint().apply {

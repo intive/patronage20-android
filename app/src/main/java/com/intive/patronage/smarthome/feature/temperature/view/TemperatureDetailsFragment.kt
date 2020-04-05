@@ -16,10 +16,13 @@ import com.intive.patronage.smarthome.feature.temperature.viewmodel.TemperatureD
 import kotlinx.android.synthetic.main.fragment_temperature_details.*
 import kotlinx.android.synthetic.main.fragment_temperature_details.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class TemperatureDetailsFragment : Fragment(){
 
-    private val temperatureDetailsViewModel by viewModel<TemperatureDetailsViewModel>()
+    private val temperatureDetailsViewModel by viewModel<TemperatureDetailsViewModel> {
+        parametersOf(this.arguments?.getInt("ID"))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,14 +37,7 @@ class TemperatureDetailsFragment : Fragment(){
 
         temperatureDetailsViewModel.data.observe(this, Observer {
             if (it != null) {
-                view.graphView.setData(
-                    it,
-                    1,
-                    1,
-                    resources.displayMetrics.density * 2,
-                    10,
-                    40
-                )
+                view.graphView.setData(it)
             }
         })
 
@@ -69,11 +65,11 @@ class TemperatureDetailsFragment : Fragment(){
         }
 
         when(it) {
-            button1h -> temperatureDetailsViewModel.loadData(60)
-            button3h -> temperatureDetailsViewModel.loadData(180)
-            button6h -> temperatureDetailsViewModel.loadData(360)
-            button12h -> temperatureDetailsViewModel.loadData(720)
-            button24h -> temperatureDetailsViewModel.loadData(1440)
+            button1h -> temperatureDetailsViewModel.subscribe(60, 3)
+            button3h -> temperatureDetailsViewModel.subscribe(180, 6)
+            button6h -> temperatureDetailsViewModel.subscribe(360, 12)
+            //button12h -> temperatureDetailsViewModel.subscribe(720, 24)
+            //button24h -> temperatureDetailsViewModel.subscribe(1440, 48)
         }
     }
 
