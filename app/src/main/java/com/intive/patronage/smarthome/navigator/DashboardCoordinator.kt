@@ -10,6 +10,7 @@ import com.intive.patronage.smarthome.feature.developer.view.DeveloperSettingsAc
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
+import com.intive.patronage.smarthome.feature.login.LoginActivity
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 
 class DashboardCoordinator(private val navigator: Navigator) {
@@ -73,4 +74,10 @@ class DashboardCoordinator(private val navigator: Navigator) {
     fun goToDeveloperSettings() {
         navigator.goToScreen(ActivityEvent(DeveloperSettingsActivity::class.java))
     }
+
+    fun goToLogin() {
+        navigator.goToScreen(ActivityEvent(LoginActivity::class.java))
+        navigator.close()
+    }
+
 }

@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
@@ -59,18 +60,21 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (developerSettingsViewModel.isDebugMode()) {
+        if (developerSettingsViewModel.isDebugMode()) {
             menuInflater.inflate(R.menu.menu_developer_settings, menu)
-            true
-        } else {
-            false
         }
+        menuInflater.inflate(R.menu.sign_in, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.developer_settings -> {
                 dashboardCoordinator.goToDeveloperSettings()
+            }
+            R.id.log_out_google -> {
+                FirebaseAuth.getInstance().signOut()
+                dashboardCoordinator.goToLogin()
             }
         }
         return true
