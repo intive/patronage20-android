@@ -6,13 +6,13 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.feature.temperature.utilities.GraphPoint
+import com.intive.patronage.smarthome.feature.temperature.utils.GraphPoint
 
 class GraphView(context: Context, attributeSet: AttributeSet): View(context, attributeSet) {
 
     private var distanceBetweenLines: Int = 1
     private var distanceBetweenTextValues: Int = 1
-    private var elementsWidth: Float = 8f
+    private var elementsWidth: Float = 4f
     private var minValue: Int = 9
     private var maxValue: Int = 41
 
@@ -35,17 +35,6 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
         centerValue = (maxValue - minValue) / 2 + minValue
 
         invalidate()
-    }
-
-    private val fillPathPaint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
-        color = ContextCompat.getColor(context, R.color.transparentAccentColor)
-    }
-
-    private val gridLinePaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.colorAccentLightDark)
-        strokeWidth = elementsWidth / 2
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -106,6 +95,12 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     }
 
     private fun fillBackgroundUnderLines() {
+        val fillPathPaint = Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL
+            color = ContextCompat.getColor(context, R.color.transparentAccentColor)
+        }
+
         val fillPath = Path()
 
         fillPath.reset()
@@ -166,6 +161,11 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
     }
 
     private fun drawHorizontalGrid() {
+        val gridLinePaint = Paint().apply {
+            color = ContextCompat.getColor(context, R.color.colorAccentLightDark)
+            strokeWidth = elementsWidth / 2
+        }
+
         canvas.drawLine(degree + elementsWidth, centerLineY, width.toFloat() - elementsWidth, centerLineY, gridLinePaint)
 
         var i = 1

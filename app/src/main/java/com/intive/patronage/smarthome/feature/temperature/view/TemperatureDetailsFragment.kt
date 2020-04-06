@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.feature.temperature.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -68,8 +67,8 @@ class TemperatureDetailsFragment : Fragment(){
             button1h -> temperatureDetailsViewModel.subscribe(60, 3)
             button3h -> temperatureDetailsViewModel.subscribe(180, 6)
             button6h -> temperatureDetailsViewModel.subscribe(360, 12)
-            //button12h -> temperatureDetailsViewModel.subscribe(720, 24)
-            //button24h -> temperatureDetailsViewModel.subscribe(1440, 48)
+            button12h -> temperatureDetailsViewModel.subscribe(720, 24)
+            button24h -> temperatureDetailsViewModel.subscribe(1440, 48)
         }
     }
 
