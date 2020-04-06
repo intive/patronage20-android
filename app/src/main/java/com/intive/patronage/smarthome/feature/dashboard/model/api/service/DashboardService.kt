@@ -10,17 +10,13 @@ import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
 const val intervalDelay = 100L
-const val valuesAmount = 10 // 600
 
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
-    private var requestCounter: Int = 0
-    private val sumOfTemperatureValues = mutableMapOf<Int, Int>()
-
-    fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
+    private fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
     fun getRoomDashboards() = dashboardRoomRepository.getAllDashboards()
@@ -28,37 +24,9 @@ class DashboardService(
     private fun getDashboardFromNetwork(): Single<Dashboard> {
         return smartHomeAPI.getDashboard().doOnSuccess { dashboard ->
             dashboardRepository.setDashboard(dashboard)
-            requestCounter++
-            if (requestCounter == (valuesAmount + 1)) {
-                dashboard.temperatureSensors.forEach {
-                    it.value = if (sumOfTemperatureValues.contains(it.id)) {
-                        sumOfTemperatureValues.getValue(it.id) / valuesAmount
-                    } else {
-                        it.value
-                    }
-                }
 
-                dashboardRoomRepository.insertDashboard(dashboard)
-
-                requestCounter = 0
-                sumOfTemperatureValues.forEach {
-                    sumOfTemperatureValues[it.key] = 0
-                }
-            } else {
-                dashboard.temperatureSensors.forEach {
-                    val sum: Int? = if (sumOfTemperatureValues.contains(it.id)) {
-                        sumOfTemperatureValues.getValue(it.id)
-                    } else {
-                        0
-                    }
-
-                    if (sum != null) {
-                        sumOfTemperatureValues[it.id] = sum + it.value
-                    } else {
-                        sumOfTemperatureValues[it.id] = it.value
-                    }
-                }
-            }
+            val aggregatedDashboard: Dashboard? = aggregateRequests(dashboard)
+            if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(aggregatedDashboard)
         }
     }
 
@@ -103,7 +71,7 @@ class DashboardService(
     fun getHVACById(id: Int): Single<HVACRoom?> {
         return dashboardRepository.getDashboard()
             .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
-            .filter{it.id == id}
+            .filter{ it.id == id }
             .firstOrError()
     }
 
@@ -117,7 +85,7 @@ class DashboardService(
     fun getTemperatureSensorById(id: Int): Single<TemperatureSensor?> {
         return dashboardRepository.getDashboard()
             .flatMapObservable { Observable.fromIterable(it.temperatureSensors) }
-            .filter { it.id==id }
+            .filter { it.id == id }
             .firstOrError()
 
     }
