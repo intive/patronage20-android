@@ -31,10 +31,10 @@ class HvacViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                it?.temperatureSensorId?.let { it1 -> getTemperatureFromSensor(it1) }
-                it?.hysteresis?.let { it1 -> getHysteresisFromSensor(it1) }
-                it?.coolingTemperature?.let { it1 -> getCoolingTemperature(220) }
-                it?.heatingTemperature?.let { it1 -> getHeatingTemperature(120) }
+                it?.temperatureSensorId?.let { sensor -> getTemperatureFromSensor(sensor) }
+                it?.hysteresis?.let { sensor -> getHysteresisFromSensor(sensor) }
+                it?.coolingTemperature?.let { sensor -> getCoolingTemperature(sensor) }
+                it?.heatingTemperature?.let { sensor -> getHeatingTemperature(sensor) }
             },
                 {
                     hvacViewEventListener.connectionError(true)
