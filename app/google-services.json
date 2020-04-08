@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "925008104072-fq578m5hoqdq7855vid823mqc0skn2ip.apps.googleusercontent.com",
+          "client_id": "925008104072-g6153v91s7rbpvdfak9ct5fkaa4fvp59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.intive.patronage.smarthome",
-            "certificate_hash": "a3ac38270fed1374ad9f780c55f75e8c8ea6223a"
+            "certificate_hash": "26b7ad352b7c6a38d3bc357fe76b7f8b3cb42123"
           }
         },
         {
@@ -36,7 +36,36 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
+              "client_id": "925008104072-0rm2dhoj9k1qn75e7dqcp06htkbjtib0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925008104072:android:bf85ec6578adf4736dad3d",
+        "android_client_info": {
+          "package_name": "com.intive.patronage.smarthome.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTQrLKXBI9QXGmbghpD8P7S_HQUvw9Uz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925008104072-0rm2dhoj9k1qn75e7dqcp06htkbjtib0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,18 +1,21 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
+import android.R.attr.name
+import android.app.Application
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.SmartHomeApplication
 import com.intive.patronage.smarthome.databinding.DashboardFragmentBinding
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
@@ -21,8 +24,8 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class DashboardFragment : Fragment() {
 
+class DashboardFragment : Fragment() {
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val sensorsListAdapter: SensorsListAdapter by inject {
         parametersOf(::onItemClick)

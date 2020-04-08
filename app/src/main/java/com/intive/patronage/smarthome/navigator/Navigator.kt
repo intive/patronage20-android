@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 class Navigator(private val activity: AppCompatActivity) {
 
     fun goToScreen(event: NavigationEvent) {
+
         when (event) {
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
