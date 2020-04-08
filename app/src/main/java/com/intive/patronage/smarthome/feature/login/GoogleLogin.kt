@@ -1,0 +1,65 @@
+package com.intive.patronage.smarthome.feature.login
+
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.navigator.LoginCoordinator
+
+class GoogleLogin(private val appCompatActivity: AppCompatActivity, private val loginCoordinator: LoginCoordinator): LoginServices() {
+
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    val RC_SIGN_IN: Int = 1
+
+    fun initialGoogleSignIn() {
+        mGoogleSignInOptions = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(appCompatActivity.applicationContext.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(appCompatActivity.applicationContext, mGoogleSignInOptions)
+    }
+
+    fun initialAuthFirebase() {
+        mAuth = FirebaseAuth.getInstance()
+    }
+
+    fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful) {
+                loginCoordinator.goToSplashScreen()
+            } else {
+                Toast.makeText(appCompatActivity.applicationContext, "Google sign in failed", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun signIn() {
+        appCompatActivity.startActivityForResult(mGoogleSignInClient.signInIntent, RC_SIGN_IN)
+    }
+
+    fun signOut() {
+
+        mAuth.signOut()
+
+        mGoogleSignInClient.signOut().addOnCompleteListener {
+            loginCoordinator.goToLoginScreen()
+        }
+    }
+
+    fun userIsLogged() {
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
+            loginCoordinator.goToMainScreen()
+        }
+    }
+}

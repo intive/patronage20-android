@@ -19,7 +19,7 @@
         <activity android:name=".feature.splashcreen.SplashScreenActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".feature.login.LoginActivity">
+            android:name=".feature.login.LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

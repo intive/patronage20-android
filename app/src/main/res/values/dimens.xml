@@ -24,4 +24,8 @@
     <dimen name="sensor_flag_elevation">15dp</dimen>
     <dimen name="sensor_item_side_margin">30dp</dimen>
     <dimen name="sensor_item_topbottom_margin">10dp</dimen>
+    <dimen name="house_image_layout_width">0dp</dimen>
+    <dimen name="house_image_layout_height">400dp</dimen>
+    <dimen name="application_logo_layout_width">0dp</dimen>
+    <dimen name="application_logo_layout_height">160dp</dimen>
 </resources>

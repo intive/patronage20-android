@@ -1,25 +1,18 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
-import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
-import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
-import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
+import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
+import com.intive.patronage.smarthome.feature.login.GoogleLogin
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.smart_home_activity.*
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -29,7 +22,8 @@ class SmartHomeActivity : AppCompatActivity() {
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val alertDialog: SmartHomeAlertDialog by inject()
-    private val developerSettingsViewModel : DeveloperSettingsViewModel by viewModel()
+    private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
+    private val googleLogin: GoogleLogin by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +38,8 @@ class SmartHomeActivity : AppCompatActivity() {
         }
 
         observeViewModel()
+        googleLogin.initialAuthFirebase()
+        googleLogin.initialGoogleSignIn()
     }
 
     private fun observeViewModel() {
@@ -73,8 +69,7 @@ class SmartHomeActivity : AppCompatActivity() {
                 dashboardCoordinator.goToDeveloperSettings()
             }
             R.id.log_out_google -> {
-                FirebaseAuth.getInstance().signOut()
-                dashboardCoordinator.goToLogin()
+                googleLogin.signOut()
             }
         }
         return true
