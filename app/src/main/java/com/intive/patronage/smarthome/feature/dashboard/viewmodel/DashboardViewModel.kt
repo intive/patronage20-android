@@ -13,12 +13,13 @@ class DashboardViewModel(val dashboardService: DashboardService) : ViewModel() {
     val items = MutableLiveData<List<DashboardSensor>>()
     val error = MutableLiveData<Boolean>().apply { value = false }
     private var sensorList: Disposable? = null
+    val connectionError = MutableLiveData<Boolean>().apply { value = false }
 
     init {
         fetchSensors()
     }
 
-    fun fetchSensors(){
+    fun fetchSensors() {
         sensorList = dashboardService.fetchSensorsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

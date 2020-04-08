@@ -9,7 +9,7 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
-const val intervalDelay = 10L
+const val intervalDelay = 1L
 
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,

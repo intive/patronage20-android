@@ -2,7 +2,10 @@ package com.intive.patronage.smarthome.common
 
 import android.app.Activity
 import android.graphics.Color
+import android.view.Gravity
+import android.widget.FrameLayout
 import com.google.android.material.snackbar.Snackbar
+import com.intive.patronage.smarthome.R
 
 
 class SmartHomeErrorSnackbar(activity: Activity) {
@@ -13,7 +16,7 @@ class SmartHomeErrorSnackbar(activity: Activity) {
     fun showSnackbar(message: String) {
 //        val params = snackBar.view.layoutParams as FrameLayout.LayoutParams
 //        params.gravity = Gravity.TOP
-//        params.topMargin = 132
+//        params.topMargin = R.attr.actionBarSize
 //        snackBar.view.layoutParams = params
 
         snackBar.setText(message)
