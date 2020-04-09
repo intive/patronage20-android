@@ -46,4 +46,6 @@
     <string name="graph_1_d">1 d</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
+    <string name="dahboard_fragment_class_name">DashboardFragment</string>
+    <string name="home_fragment_class_name">HomeFragment</string>
 </resources>
