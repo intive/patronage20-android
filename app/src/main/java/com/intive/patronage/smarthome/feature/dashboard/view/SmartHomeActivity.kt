@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -8,9 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
+import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
 import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
+import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.smart_home_activity.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -21,7 +26,9 @@ class SmartHomeActivity : AppCompatActivity() {
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this)}
-    private val developerSettingsViewModel : DeveloperSettingsViewModel by viewModel()
+    private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
+    private val networkConnectionService: NetworkConnectionService by inject { parametersOf(this) }
+    private val smartHomeActivityViewModel: SmartHomeActivityViewModel by viewModel { parametersOf(networkConnectionService)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +46,17 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        var networkError = false
+        smartHomeActivityViewModel.networkConnection.observe(this, Observer {
+                networkConnection ->
+            if (!networkConnection) {
+                alertSnackbar.showSnackbar("No internet connection")
+                smartHomeActivityViewModel.fetchConnectionStatus()
+                networkError = true
+            }
+        })
         dashboardViewModel.error.observe(this, Observer { error ->
-            if (error) {
+            if (error && !networkError) {
                 alertSnackbar.showSnackbar("Unable to connect with Smart Home")
                 dashboardViewModel.fetchSensors()
             }
