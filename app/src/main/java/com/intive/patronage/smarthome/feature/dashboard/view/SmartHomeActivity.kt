@@ -63,6 +63,10 @@ class SmartHomeActivity : AppCompatActivity() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     override fun onBackPressed() {
         dashboardCoordinator.goBack()
     }

@@ -20,7 +20,7 @@ class SmartHomeActivityViewModel(private val networkConnectionService: NetworkCo
         networkState = networkConnectionService.subject
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            //doOnUnsubscribe(networkConnectionService.unregisterCallback())
+            .doOnDispose { networkConnectionService.unregisterCallback() }
             .subscribe {
                 networkConnection.value = it
             }
