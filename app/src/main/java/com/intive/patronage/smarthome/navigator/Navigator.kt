@@ -9,7 +9,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class Navigator(private val activity: AppCompatActivity, private val mFirebaseAnalytics: AnalyticsWrapper): KoinComponent {
+class Navigator(private val activity: AppCompatActivity, private val analytics: AnalyticsWrapper): KoinComponent {
 
     fun goToScreen(event: NavigationEvent) {
 
@@ -18,7 +18,7 @@ class Navigator(private val activity: AppCompatActivity, private val mFirebaseAn
                 val fragment = event.buildFragment()
 
                 activity.supportFragmentManager.also {
-                    mFirebaseAnalytics.switchScreenEvent(activity, fragment.javaClass.simpleName)
+                    analytics.switchScreenEvent(activity, fragment.javaClass.simpleName)
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
                     if (topFragment != null) it.popBackStack()
 

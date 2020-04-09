@@ -28,7 +28,7 @@ import org.koin.core.parameter.parametersOf
 
 
 class DashboardFragment : Fragment() {
-    private val mFirebaseAnalytics: AnalyticsWrapper by inject()
+    private val analytics: AnalyticsWrapper by inject()
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val sensorsListAdapter: SensorsListAdapter by inject {
         parametersOf(::onItemClick)
@@ -58,15 +58,15 @@ class DashboardFragment : Fragment() {
         when (sensor.type) {
             "RGBLight" -> {
                 dashboardCoordinator.goToLightsDetailsScreen(bundle)
-                mFirebaseAnalytics.ledColorEvent(sensor.details.toInt())
+                analytics.ledColorEvent(sensor.details.toInt())
             }
             "HVACRoom" -> {
                 dashboardCoordinator.goToHvacDetalisScreen(bundle)
-                mFirebaseAnalytics.hvacEvent(sensor.details.split(TRANSFORMER_SEPARATOR))
+                analytics.hvacEvent(sensor.details.split(TRANSFORMER_SEPARATOR))
             }
             "windowBlind" -> {
                 dashboardCoordinator.goToBlindDetailsScreen(bundle)
-                mFirebaseAnalytics.blindLevelEvent(sensor.details.toInt())
+                analytics.blindLevelEvent(sensor.details.toInt())
             }
         }
         if (sensor.type == "temperatureSensor") {

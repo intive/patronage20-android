@@ -7,26 +7,26 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class AnalyticsWrapper(appContext : Context){
 
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    private var firebaseAnalytics: FirebaseAnalytics? = null
 
     init {
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(appContext)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(appContext)
     }
 
     fun switchScreenEvent(activity: Activity?, name: String){
-        mFirebaseAnalytics?.setCurrentScreen(activity!!, name, name)
+        firebaseAnalytics?.setCurrentScreen(activity!!, name, name)
     }
 
     fun ledColorEvent(color: Int){
         val params = Bundle()
         params.putString("color", String.format("#%06X", 0xFFFFFF and color))
-        mFirebaseAnalytics?.logEvent("led_color", params)
+        firebaseAnalytics?.logEvent("led_color", params)
     }
 
     fun blindLevelEvent(position: Int){
         val params = Bundle()
         params.putInt("blind_position", position)
-        mFirebaseAnalytics?.logEvent("blind_position", params)
+        firebaseAnalytics?.logEvent("blind_position", params)
     }
 
     fun hvacEvent(details: List<String>){
@@ -34,6 +34,6 @@ class AnalyticsWrapper(appContext : Context){
         params.putFloat("heating_temperature", details[0].toInt()/10f)
         params.putFloat("cooling_temperature", details[1].toInt()/10f)
         params.putInt("hysteresis", details[2].toInt())
-        mFirebaseAnalytics?.logEvent("hvac_status", params)
+        firebaseAnalytics?.logEvent("hvac_status", params)
     }
 }
