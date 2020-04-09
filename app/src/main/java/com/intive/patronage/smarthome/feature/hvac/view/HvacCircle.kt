@@ -6,11 +6,11 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 import kotlin.math.*
 
 
-@Suppress("DEPRECATION")
 class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private val rangeOffset = 0
@@ -37,10 +37,12 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private lateinit var coldCircle: RectF
     private lateinit var hotCircle: RectF
     private var touchRadius = 100.0
+    private var heightOffset = 0
+    private var widthOffset = 0
     private var metrics: DisplayMetrics = resources.displayMetrics
     private val paint = Paint().apply {
         isAntiAlias = true
-        color = resources.getColor(R.color.colorAccent)
+        color = ContextCompat.getColor(context!!, R.color.colorAccent)
         style = Paint.Style.STROKE
         strokeWidth = 20f
     }
@@ -57,19 +59,19 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
     private val paintBackground = Paint().apply {
         isAntiAlias = true
-        color = resources.getColor(R.color.colorPrimary)
+        color = ContextCompat.getColor(context!!, R.color.splashScreenProgressbar)
         style = Paint.Style.STROKE
         strokeWidth = 20f
     }
     private val textPaint = TextPaint().apply {
         isAntiAlias = true
-        style = Paint.Style.STROKE
+        style = Paint.Style.FILL_AND_STROKE
         textSize = 70f
     }
     private val textLabelPaint = TextPaint().apply {
         isAntiAlias = true
-        color = resources.getColor(R.color.colorAccent)
-        style = Paint.Style.STROKE
+        color = ContextCompat.getColor(context!!, R.color.colorAccent)
+        style = Paint.Style.FILL_AND_STROKE
         textSize = 50f
     }
 
@@ -78,8 +80,9 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        setTextSizeFromDPI()
         if (width < height) {
-            radius = width / 2 + 20
+            radius = width / 2 + 20 - widthOffset
             mWidth = width
             mHeight = height
             centerOfTemperatureCircle = Point().apply {
@@ -92,7 +95,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             }
 
         } else {
-            radius = height / 2 + 150
+            radius = height / 2 + 150 - heightOffset
             mWidth = height
             mHeight = width
             centerOfTemperatureCircle = Point().apply {
@@ -112,7 +115,6 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         val tempLabel = resources.getString(R.string.hvac_temperature_label)
         val tempString = "$tempInt C°"
 
-
         val tempCircle = RectF().apply {
             top = centerOfTemperatureCircle.y - radius / 2f
             bottom = centerOfTemperatureCircle.y + radius / 2f
@@ -128,6 +130,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         coldSweepAngle = minTemperature.toFloat() / 10 * oneDegree
         hotSweepAngle = (range * 10 - maxTemperature).toFloat() / 10 * oneDegree
 
+        catchTemperature()
         canvas?.drawArc(tempCircle, startAngle, sweepAngle, false, paint)
         canvas?.drawArc(coldCircle, startAngle, coldSweepAngle, false, coldPaint.apply { style = Paint.Style.STROKE })
         canvas?.drawArc(hotCircle, tempOffset, (hotSweepAngle * (-1)), false,
@@ -151,7 +154,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         canvas?.drawText(tempString,
             centerOfTemperatureCircle.x - textPaint.measureText(tempString) / 2,
             centerOfTemperatureCircle.y + textPaint.textSize / 2,
-            textPaint.apply { color = resources.getColor(R.color.colorAccent) }
+            textPaint.apply { color = ContextCompat.getColor(context!!, R.color.colorAccent) }
         )
 
         val offsetLength: Float = ((90f / 360f) * 2 * Math.PI * (radius / 2f)).toFloat()
@@ -171,7 +174,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         if (width < height) {
             canvas?.drawText(
                 tempString,
-                40F,
+                textPaint.measureText(minTempLabel) / 2 - textPaint.measureText(tempString) / 2,
                 height / 2 + textPaint.textSize,
                 textPaint
             )
@@ -205,7 +208,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         if (width < height) {
             canvas?.drawText(
                 tempString,
-                width.toFloat() - textPaint.measureText(tempString),
+                width.toFloat() - textPaint.measureText(tempLabel) / 2 - textPaint.measureText(tempString) / 2,
                 height / 2 + textPaint.textSize,
                 textPaint
             )
@@ -297,12 +300,13 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             maxTemperature = range * 10 - ((hotSweepAngle / oneDegree) * 10).toInt()
             invalidate()
         }
+
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        setTextSizeFromDPI()
         hysteresis = hysteresisCalculation()
+        setTextSizeFromDPI()
         drawCircleTemp(canvas, temperatureFloat)
         drawCircleHysteresis(canvas, hysteresis)
         drawMinTemperatureLabel(canvas)
@@ -335,8 +339,8 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             evenX < centerOfTemperatureCircle.x -> {
                 value = 129.0f
             }
-            angle < 0 -> {
-                value = 0f
+            angle < 0.1 -> {
+                value = 0.1f
             }
         }
         return value
@@ -351,8 +355,8 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             evenX > centerOfTemperatureCircle.x -> {
                 value = 129.0f
             }
-            angle < 0 -> {
-                value = 0f
+            angle < 0.1 -> {
+                value = 0.1f
             }
         }
         return value
@@ -382,9 +386,22 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     private fun setTextSizeFromDPI() {
         when (metrics.densityDpi) {
-            240 -> {
-                textPaint.textSize = 30f
-                textLabelPaint.textSize = 30f
+            in 1..160 -> {
+                textPaint.textSize = 12f
+                textLabelPaint.textSize = 15f
+                coldPaint.strokeWidth = 6f
+                hotPaint.strokeWidth = 6f
+                paintBackground.strokeWidth = 6f
+                paint.strokeWidth = 6f
+                hotCircleRadius = 6f
+                coldCircleRadius = 6f
+                touchRadius = 20.0
+                heightOffset = 110
+                widthOffset = 30
+            }
+            in 161..240 -> {
+                textPaint.textSize = 25f
+                textLabelPaint.textSize = 25f
                 coldPaint.strokeWidth = 10f
                 hotPaint.strokeWidth = 10f
                 paintBackground.strokeWidth = 10f
@@ -392,13 +409,21 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 hotCircleRadius = 10f
                 coldCircleRadius = 10f
                 touchRadius = 50.0
+                heightOffset = 60
             }
-
             320 -> {
                 textPaint.textSize = 45f
                 textLabelPaint.textSize = 40f
             }
+        }
+    }
 
+    private fun catchTemperature() {
+        if (coldSweepAngle < 1) {
+            coldSweepAngle = 1F
+        }
+        if (hotSweepAngle < 1) {
+            hotSweepAngle = 1f
         }
     }
 
