@@ -29,10 +29,11 @@ class AnalyticsWrapper(appContext : Context){
         mFirebaseAnalytics?.logEvent("blind_position", params)
     }
 
-    fun hvacTempEvent(coolingTemp: Int, heatingTemp: Int){
+    fun hvacEvent(details: List<String>){
         val params = Bundle()
-        params.putFloat("cooling_temperature", coolingTemp/10f)
-        params.putFloat("heating_temperature", heatingTemp/10f)
+        params.putFloat("heating_temperature", details[0].toInt()/10f)
+        params.putFloat("cooling_temperature", details[1].toInt()/10f)
+        params.putInt("hysteresis", details[2].toInt())
         mFirebaseAnalytics?.logEvent("hvac_status", params)
     }
 }

@@ -5,6 +5,11 @@ import com.intive.patronage.smarthome.common.convertHSVtoRGB
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import java.lang.StringBuilder
 
+const val TRANSFORMER_SEPARATOR = ","
+const val COOLING_TEMPERATURE = "Cooling temperature:"
+const val HEATING_TEMPERATURE = "Heating temperature:"
+const val HYSTERESIS = "Hysteresis:"
+
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
     lights.forEach {
@@ -101,13 +106,10 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                details.append(R.string.hvac_room_heating_temperature)
-                    .append(it.heatingTemperature)
-                    .append(R.string.transformer_separator)
-                    .append(R.string.hvac_room_cooling_temperature)
+                details.append(it.heatingTemperature)
+                    .append(TRANSFORMER_SEPARATOR)
                     .append(it.coolingTemperature)
-                    .append(R.string.transformer_separator)
-                    .append(R.string.hvac_room_hysteresis)
+                    .append(TRANSFORMER_SEPARATOR)
                     .append(it.hysteresis)
                     .toString()
             )
