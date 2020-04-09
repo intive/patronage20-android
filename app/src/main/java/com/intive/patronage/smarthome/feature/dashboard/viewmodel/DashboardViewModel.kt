@@ -16,7 +16,7 @@ class DashboardViewModel(dashboardService: DashboardService) : ViewModel() {
 
     init {
         sensorList = dashboardService.fetchSensorsInInterval()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.trampoline())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 items.value = it
