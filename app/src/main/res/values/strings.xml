@@ -46,4 +46,6 @@
     <string name="graph_24_h">24 h</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
+    <string name="network_connection_error">No internet connection</string>
+    <string name="api_connection_error">Unable to connect with Smart Home</string>
 </resources>
