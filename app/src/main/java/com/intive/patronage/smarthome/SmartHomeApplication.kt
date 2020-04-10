@@ -35,7 +35,8 @@ class SmartHomeApplication() : Application() {
                 hvacDetailsModule,
                 developerSettingsModule,
                 homeModule,
-                analyticsModule
+                analyticsModule,
+                smartHomeActivityModule
             )
         }
     }
