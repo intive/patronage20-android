@@ -1,13 +1,8 @@
 package com.intive.patronage.smarthome.navigator
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.intive.patronage.smarthome.AnalyticsWrapper
-import kotlinx.android.synthetic.main.smart_home_activity.*
-import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 class Navigator(private val activity: AppCompatActivity, private val analytics: AnalyticsWrapper): KoinComponent {
 
