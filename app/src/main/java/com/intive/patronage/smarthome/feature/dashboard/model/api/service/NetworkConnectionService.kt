@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
 import android.content.Context
 import android.net.*
-import io.reactivex.functions.Action
 import io.reactivex.subjects.BehaviorSubject
 
 

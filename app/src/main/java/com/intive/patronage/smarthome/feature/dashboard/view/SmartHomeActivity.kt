@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,8 +13,6 @@ import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSetti
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.smart_home_activity.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
