@@ -47,24 +47,21 @@ class SmartHomeActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         var networkError = false
-        smartHomeActivityViewModel.networkConnection.observe(this, Observer {
-                networkConnection ->
-            if (!networkConnection) {
-                alertSnackbar.showSnackbar("No internet connection")
-                smartHomeActivityViewModel.fetchConnectionStatus()
-                networkError = true
-            }
-        })
+        smartHomeActivityViewModel.networkConnection.observe(
+            this,
+            Observer { networkConnection ->
+                if (!networkConnection) {
+                    alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
+                    networkError = true
+                } else
+                    alertSnackbar.hideSnackbar()
+            })
         dashboardViewModel.error.observe(this, Observer { error ->
-            if (error && !networkError) {
-                alertSnackbar.showSnackbar("Unable to connect with Smart Home")
-                dashboardViewModel.fetchSensors()
-            }
+            if (error && !networkError)
+                alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
+             else
+                alertSnackbar.hideSnackbar()
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onBackPressed() {
