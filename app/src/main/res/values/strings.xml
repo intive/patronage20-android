@@ -39,11 +39,11 @@
     <string name="hvac_temperature_label">Temperature</string>
     <string name="home_appbar">Home</string>
     <string name="apply_toast">Successfully applied</string>
-    <string name="graph_1_min">1 min</string>
-    <string name="graph_30_min">30 min</string>
     <string name="graph_1_h">1 h</string>
+    <string name="graph_3_h">3 h</string>
+    <string name="graph_6_h">6 h</string>
     <string name="graph_12_h">12 h</string>
-    <string name="graph_1_d">1 d</string>
+    <string name="graph_24_h">24 h</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
 </resources>
