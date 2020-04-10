@@ -9,7 +9,7 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
-const val intervalDelay = 100L
+const val intervalDelay = 10L
 
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,
@@ -42,7 +42,7 @@ class DashboardService(
     }
 
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
-        Observable.interval(intervalDelay, intervalDelay, TimeUnit.MILLISECONDS)
+        Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideDashboardSensors(getDashboardFromNetwork()) }
             .startWith( provideDashboardSensors( getDashboard()) )
 
@@ -87,6 +87,5 @@ class DashboardService(
             .flatMapObservable { Observable.fromIterable(it.temperatureSensors) }
             .filter { it.id == id }
             .firstOrError()
-
     }
 }
