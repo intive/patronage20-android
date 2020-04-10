@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.light.viewmodel.LightsDetailsViewModel
 import com.intive.patronage.smarthome.databinding.FragmentLightsDetailsBinding
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import kotlinx.android.synthetic.main.smart_home_activity.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

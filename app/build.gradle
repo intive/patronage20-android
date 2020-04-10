@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../dependencies.gradle'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -67,4 +68,5 @@ dependencies {
     kapt projectDependencies.room_compiler
     implementation projectDependencies.firebase_core
     implementation projectDependencies.firebase_messaging
+    implementation projectDependencies.firebase_analytics
 }

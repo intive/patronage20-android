@@ -18,8 +18,8 @@ val splashScreenModule: Module = module {
             get()
         )
     }
-    factory { Navigator(get()) }
-    factory { (activity: AppCompatActivity) -> SplashScreenCoordinator(Navigator(activity)) }
+    factory { Navigator(get(), get()) }
+    factory { (activity: AppCompatActivity) -> SplashScreenCoordinator(Navigator(activity, get())) }
 }
 
 

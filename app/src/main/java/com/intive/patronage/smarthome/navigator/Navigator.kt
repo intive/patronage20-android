@@ -1,15 +1,19 @@
 package com.intive.patronage.smarthome.navigator
 
 import androidx.appcompat.app.AppCompatActivity
+import com.intive.patronage.smarthome.AnalyticsWrapper
+import org.koin.core.KoinComponent
 
-class Navigator(private val activity: AppCompatActivity) {
+class Navigator(private val activity: AppCompatActivity, private val analytics: AnalyticsWrapper): KoinComponent {
 
     fun goToScreen(event: NavigationEvent) {
+
         when (event) {
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
 
                 activity.supportFragmentManager.also {
+                    analytics.switchScreenEvent(activity, fragment.javaClass.simpleName)
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
                     if (topFragment != null) it.popBackStack()
 
