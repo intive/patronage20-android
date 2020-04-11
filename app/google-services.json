@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "925008104072-57t0f60q168a0obdjv5utkdrp0p5jndn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.intive.patronage.smarthome",
+            "certificate_hash": "b2f378563a3f8810b638c6031287b94321af6b4f"
+          }
+        },
+        {
           "client_id": "925008104072-g6153v91s7rbpvdfak9ct5fkaa4fvp59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -51,6 +59,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "925008104072-4htr0s64ouj89cpgnmho33onbv18t6nk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.intive.patronage.smarthome.debug",
+            "certificate_hash": "b2f378563a3f8810b638c6031287b94321af6b4f"
+          }
+        },
+        {
+          "client_id": "925008104072-49v4vmt36iog7067f32eo9tbks4ud8ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.intive.patronage.smarthome.debug",
+            "certificate_hash": "26b7ad352b7c6a38d3bc357fe76b7f8b3cb42123"
+          }
+        },
         {
           "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
           "client_type": 3
