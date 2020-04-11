@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
+import android.util.Log
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
@@ -9,7 +10,8 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
-const val intervalDelay = 10L
+//TODO: change interval
+const val intervalDelay = 1L
 
 class DashboardService(
     private val smartHomeAPI: SmartHomeAPI,
@@ -29,9 +31,9 @@ class DashboardService(
 
     fun fetchDashboardWithDelay(minWaitTime: Long, maxWaitTime: Long)
             : Observable<Pair<Dashboard, Long>> =
-        getDashboardFromNetwork().toObservable()
+        getDashboard().toObservable()
+            .retryWhen { Observable.timer(maxWaitTime, TimeUnit.SECONDS) }
             .zipWith(Observable.timer(minWaitTime, TimeUnit.SECONDS))
-            .timeout(maxWaitTime, TimeUnit.SECONDS)
 
     private fun provideDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
         return source.map { transformSensors(it) }

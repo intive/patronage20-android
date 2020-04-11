@@ -20,13 +20,13 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
     private var dashboardCall: Disposable? = null
 
     init {
-        dashboardCall = dashboardService.fetchDashboardWithDelay(minWaitTime, maxWaitTime)
+        //TODO: change wait times
+        dashboardCall = dashboardService.fetchDashboardWithDelay(2L, 3L)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 dashboard.value = it.first
-                complete.value = true
-            }, { error.value = true })
+            }, { error.value = true }, { complete.value = true })
     }
 
 

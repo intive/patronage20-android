@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -47,16 +48,18 @@ class SmartHomeActivity : AppCompatActivity() {
         smartHomeActivityViewModel.networkConnection.observe(
             this,
             Observer { networkConnection ->
-                if (!networkConnection) {
+                networkError = if (!networkConnection) {
                     alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
-                    networkError = true
-                } else
+                    true
+                } else {
                     alertSnackbar.hideSnackbar()
+                    false
+                }
             })
         dashboardViewModel.error.observe(this, Observer { error ->
             if (error && !networkError)
                 alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-             else
+            else if(!error && !networkError)
                 alertSnackbar.hideSnackbar()
         })
     }

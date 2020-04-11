@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 
 class SmartHomeActivityViewModel(private val networkConnectionService: NetworkConnectionService) : ViewModel() {
 
-    val networkConnection = MutableLiveData<Boolean>()
+    val networkConnection = MutableLiveData<Boolean>().apply { value = false }
     private var networkState: Disposable? = null
 
     init {
@@ -24,6 +24,7 @@ class SmartHomeActivityViewModel(private val networkConnectionService: NetworkCo
             .subscribe {
                 networkConnection.value = it
             }
+
     }
 
     override fun onCleared() {
