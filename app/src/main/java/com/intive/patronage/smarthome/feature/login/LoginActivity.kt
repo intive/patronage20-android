@@ -9,27 +9,27 @@ import org.koin.core.parameter.parametersOf
 
 class LoginActivity : AppCompatActivity() {
 
-    private val googleLogin: GoogleLogin by inject { parametersOf(this) }
+    private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        googleLogin.initialAuthFirebase()
-        googleLogin.initialGoogleSignIn()
+        loginGoogle.initialAuthFirebase()
+        loginGoogle.initialGoogleSignIn()
 
         findViewById<com.google.android.gms.common.SignInButton>(R.id.sign_in_button).setOnClickListener {
-            googleLogin.signIn()
+            loginGoogle.signIn()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        googleLogin.userIsLogged()
+        loginGoogle.userIsLogged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        googleLogin.accountVerification(requestCode, data)
+        loginGoogle.accountVerification(requestCode, data)
     }
 }

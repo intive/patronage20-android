@@ -70,4 +70,5 @@ dependencies {
     implementation projectDependencies.firebase_messaging
     implementation projectDependencies.firebase_auth
     implementation projectDependencies.play_services_auth
+    implementation projectDependencies.firebase_analytics
 }

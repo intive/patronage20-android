@@ -16,5 +16,5 @@ val developerSettingsModule = module {
         )
     }
     single { DeveloperSettings() }
-    factory { (activity : AppCompatActivity) -> DeveloperSettingsCoordinator(Navigator(activity)) }
+    factory { (activity : AppCompatActivity) -> DeveloperSettingsCoordinator(Navigator(activity, get())) }
 }

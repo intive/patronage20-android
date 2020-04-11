@@ -15,7 +15,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.navigator.LoginCoordinator
 
-class GoogleLogin(private val appCompatActivity: AppCompatActivity, private val loginCoordinator: LoginCoordinator): LoginServices() {
+class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val loginCoordinator: LoginCoordinator): LoginServices() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mGoogleSignInOptions: GoogleSignInOptions
@@ -62,7 +62,7 @@ class GoogleLogin(private val appCompatActivity: AppCompatActivity, private val 
     fun userIsLogged() {
         val currentUser = mAuth.currentUser
         if (currentUser != null) {
-            loginCoordinator.goToMainScreen()
+            loginCoordinator.goToSplashScreen()
         }
     }
 

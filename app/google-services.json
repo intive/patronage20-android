@@ -42,6 +42,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925008104072:android:bf85ec6578adf4736dad3d",
+        "android_client_info": {
+          "package_name": "com.intive.patronage.smarthome.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925008104072-uoiaa7b4nb5gdmufkvchbka5rfavt785.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTQrLKXBI9QXGmbghpD8P7S_HQUvw9Uz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925008104072-0rm2dhoj9k1qn75e7dqcp06htkbjtib0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
