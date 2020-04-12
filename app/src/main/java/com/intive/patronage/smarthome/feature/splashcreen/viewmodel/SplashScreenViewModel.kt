@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.splashcreen.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
@@ -24,8 +25,12 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 dashboard.value = it.first
+                Log.d("REQUEST", it.first.toString())
                 complete.value = true
-            }, { error.value = true })
+            }, {
+                Log.d("REQUEST", "ERROR")
+                error.value = true
+            })
     }
 
     override fun onCleared() {
