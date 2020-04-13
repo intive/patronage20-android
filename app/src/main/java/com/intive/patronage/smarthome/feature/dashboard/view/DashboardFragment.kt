@@ -1,7 +1,10 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
+import android.R.attr.name
+import android.app.Application
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.SmartHomeApplication
 import com.intive.patronage.smarthome.databinding.DashboardFragmentBinding
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.TRANSFORMER_SEPARATOR
