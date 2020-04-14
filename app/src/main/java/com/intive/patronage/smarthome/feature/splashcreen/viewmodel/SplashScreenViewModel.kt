@@ -31,5 +31,4 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
         super.onCleared()
         dashboardCall?.dispose()
     }
-
 }

@@ -26,7 +26,6 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-
 class DashboardFragment : Fragment() {
     private val analytics: AnalyticsWrapper by inject()
     private val dashboardViewModel: DashboardViewModel by viewModel()
@@ -68,12 +67,11 @@ class DashboardFragment : Fragment() {
                 dashboardCoordinator.goToBlindDetailsScreen(bundle)
                 analytics.blindLevelEvent(sensor.details.toInt())
             }
-        }
-        if (sensor.type == "temperatureSensor") {
-            dashboardCoordinator.goToTemperatureDetailsScreen()
+            "temperatureSensor" -> {
+                dashboardCoordinator.goToTemperatureDetailsScreen(bundle)
+            }
         }
     }
-
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {
         val recyclerView: RecyclerView = binding.sensorRecyclerView
@@ -88,5 +86,4 @@ class DashboardFragment : Fragment() {
             adapter = sensorsListAdapter
         }
     }
-
 }
