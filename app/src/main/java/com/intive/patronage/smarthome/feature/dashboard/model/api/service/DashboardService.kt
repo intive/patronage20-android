@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
 
 const val intervalDelay = 10L
 
@@ -44,7 +45,7 @@ class DashboardService(
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
         Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideDashboardSensors(getDashboardFromNetwork()) }
-            .startWith( provideDashboardSensors( getDashboard()) )
+            .startWith( provideDashboardSensors( getDashboard()))
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
