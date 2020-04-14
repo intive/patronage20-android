@@ -312,7 +312,6 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         drawCircleHysteresis(canvas, hysteresis)
         drawMinTemperatureLabel(canvas)
         drawMaxTemperatureLabel(canvas)
-        Log.d("testowanie", metrics.densityDpi.toString())
     }
 
     fun reset() {
