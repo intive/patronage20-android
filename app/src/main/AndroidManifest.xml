@@ -20,9 +20,15 @@
         <activity
                 android:name=".feature.splashcreen.SplashScreenActivity"
                 android:screenOrientation="portrait">
+            <intent-filter android:label="@string/filter_view_http_splash">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="smart.home" android:host="open.app" />
+                <data android:scheme="smart.home" android:host="open.app" android:pathPrefix="/specific" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

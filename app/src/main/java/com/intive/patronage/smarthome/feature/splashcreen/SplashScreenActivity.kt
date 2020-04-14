@@ -1,6 +1,8 @@
 package com.intive.patronage.smarthome.feature.splashcreen
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,6 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private val alertDialog: SmartHomeAlertDialog by inject()
     private val splashScreenViewModel: SplashScreenViewModel by viewModel()
     private val splashScreenCoordinator: SplashScreenCoordinator by inject { parametersOf(this) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +39,25 @@ class SplashScreenActivity : AppCompatActivity() {
                 R.string.connection_error_message
             ) { finish() }
         })
+
+        val data = intent?.data
         splashScreenViewModel.complete.observe(this, Observer { complete ->
-            if (complete) splashScreenCoordinator.goToMainScreen()
+            if (complete)
+                data?.let {
+                    goToScreenBasedOnDeeplink(data)
+                } ?: run {
+                    splashScreenCoordinator.goToMainScreen()
+                }
         })
+    }
+
+    private fun goToScreenBasedOnDeeplink(data: Uri) {
+        when(data.getQueryParameter("screen")) {
+            "dashboard" -> splashScreenCoordinator.goToMainScreen()
+            "home" -> splashScreenCoordinator.goToHome()
+            "developer_settings" -> splashScreenCoordinator.goToDeveloperSettings()
+        }
+
     }
 
     // Setting fullscreen
