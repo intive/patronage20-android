@@ -1,18 +1,18 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
+import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
-import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.login.LoginGoogle
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.smart_home_activity.*
@@ -24,7 +24,6 @@ class SmartHomeActivity : AppCompatActivity() {
 
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val dashboardViewModel: DashboardViewModel by viewModel()
-    private val alertDialog: SmartHomeAlertDialog by inject()
     private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
     private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this)}
     private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
@@ -53,17 +52,22 @@ class SmartHomeActivity : AppCompatActivity() {
         smartHomeActivityViewModel.networkConnection.observe(
             this,
             Observer { networkConnection ->
-                if (!networkConnection) {
+                networkError = if (!networkConnection) {
                     alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
-                    networkError = true
-                } else
+                    true
+                } else {
                     alertSnackbar.hideSnackbar()
+                    false
+                }
             })
         dashboardViewModel.error.observe(this, Observer { error ->
-            if (error && !networkError)
+            if (error && !networkError) {
                 alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-             else
+
+            }
+            else if(!error && !networkError) {
                 alertSnackbar.hideSnackbar()
+            }
         })
     }
 

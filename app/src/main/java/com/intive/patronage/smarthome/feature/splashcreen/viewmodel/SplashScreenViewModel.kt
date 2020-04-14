@@ -24,10 +24,7 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 dashboard.value = it.first
-                complete.value = true
-            }, {
-                error.value = true
-            })
+            }, { error.value = true }, { complete.value = true })
     }
 
     override fun onCleared() {

@@ -33,8 +33,8 @@ class DashboardService(
     fun fetchDashboardWithDelay(minWaitTime: Long, maxWaitTime: Long)
             : Observable<Pair<Dashboard, Long>> =
         getDashboardFromNetwork().toObservable()
+            .retryWhen { Observable.timer(maxWaitTime, TimeUnit.SECONDS) }
             .zipWith(Observable.timer(minWaitTime, TimeUnit.SECONDS))
-            .timeout(maxWaitTime, TimeUnit.SECONDS)
 
     private fun provideDashboardSensors(source: Single<Dashboard>): Observable<List<DashboardSensor>> {
         return source.map { transformSensors(it) }
