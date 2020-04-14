@@ -25,12 +25,13 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
             .subscribe({
                 dashboard.value = it.first
                 complete.value = true
-            }, { error.value = true })
+            }, {
+                error.value = true
+            })
     }
 
     override fun onCleared() {
         super.onCleared()
         dashboardCall?.dispose()
     }
-
 }

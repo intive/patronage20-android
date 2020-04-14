@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface SmartHomeAPI {
 
-    @GET("/dashboard")
+    @GET("/api/v1/dashboard")
     fun getDashboard(): Single<Dashboard>
 }
