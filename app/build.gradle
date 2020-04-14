@@ -8,7 +8,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\Konrad\\Desktop\\log\\patronage20-android\\debug.keystore')
+            storeFile file('../debug.keystore')
         }
     }
     compileSdkVersion 29
