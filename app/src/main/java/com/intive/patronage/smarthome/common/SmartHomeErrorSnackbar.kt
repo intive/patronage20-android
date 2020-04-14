@@ -21,5 +21,6 @@ class SmartHomeErrorSnackbar(val activity: Activity) {
     fun hideSnackbar() {
         if (snackbar.isShown) snackbar.dismiss()
     }
+    fun hideSnackbar() = snackbar.dismiss()
 
 }

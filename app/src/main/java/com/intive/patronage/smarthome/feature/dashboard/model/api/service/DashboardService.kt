@@ -16,14 +16,17 @@ class DashboardService(
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
-
-    fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
+    private fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
+    fun getRoomDashboards() = dashboardRoomRepository.getAllDashboards()
+
     private fun getDashboardFromNetwork(): Single<Dashboard> {
-        return smartHomeAPI.getDashboard().doOnSuccess {
-            dashboardRepository.setDashboard(it)
-            dashboardRoomRepository.insertDashboard(it)
+        return smartHomeAPI.getDashboard().doOnSuccess { dashboard ->
+            dashboardRepository.setDashboard(dashboard)
+
+            val aggregatedDashboard: Dashboard? = aggregateRequests(dashboard)
+            if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(aggregatedDashboard)
         }
     }
 
@@ -68,7 +71,7 @@ class DashboardService(
     fun getHVACById(id: Int): Single<HVACRoom?> {
         return dashboardRepository.getDashboard()
             .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
-            .filter{it.id == id}
+            .filter{ it.id == id }
             .firstOrError()
     }
 
@@ -82,8 +85,7 @@ class DashboardService(
     fun getTemperatureSensorById(id: Int): Single<TemperatureSensor?> {
         return dashboardRepository.getDashboard()
             .flatMapObservable { Observable.fromIterable(it.temperatureSensors) }
-            .filter { it.id==id }
+            .filter { it.id == id }
             .firstOrError()
-
     }
 }

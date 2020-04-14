@@ -20,7 +20,7 @@ class DashboardViewModel(val dashboardService: DashboardService) : ViewModel() {
 
     fun fetchSensors() {
         sensorList = dashboardService.fetchSensorsInInterval()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.trampoline())
             .observeOn(AndroidSchedulers.mainThread())
             .retry()
             .subscribe({

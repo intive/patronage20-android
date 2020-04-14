@@ -24,7 +24,6 @@ class SmartHomeActivityViewModel(private val networkConnectionService: NetworkCo
             .subscribe {
                 networkConnection.value = it
             }
-
     }
 
     override fun onCleared() {
