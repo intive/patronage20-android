@@ -11,7 +11,6 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
 import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
-import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.feature.login.LoginGoogle
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
@@ -23,7 +22,6 @@ import org.koin.core.parameter.parametersOf
 class SmartHomeActivity : AppCompatActivity() {
 
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
-    private val dashboardViewModel: DashboardViewModel by viewModel()
     private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
     private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this)}
     private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
@@ -48,27 +46,13 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        var networkError = false
         smartHomeActivityViewModel.networkConnection.observe(
-            this,
-            Observer { networkConnection ->
-                networkError = if (!networkConnection) {
+            this, Observer { networkConnection ->
+                if (!networkConnection)
                     alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
-                    true
-                } else {
+                 else
                     alertSnackbar.hideSnackbar()
-                    false
-                }
             })
-        dashboardViewModel.error.observe(this, Observer { error ->
-            if (error && !networkError) {
-                alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-
-            }
-            else if(!error && !networkError) {
-                alertSnackbar.hideSnackbar()
-            }
-        })
     }
 
     override fun onBackPressed() {
