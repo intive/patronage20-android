@@ -68,9 +68,9 @@ class DashboardFragment : Fragment() {
                 dashboardCoordinator.goToBlindDetailsScreen(bundle)
                 analytics.blindLevelEvent(sensor.details.toInt())
             }
-        }
-        if (sensor.type == "temperatureSensor") {
-            dashboardCoordinator.goToTemperatureDetailsScreen()
+            "temperatureSensor" -> {
+                dashboardCoordinator.goToTemperatureDetailsScreen(bundle)
+            }
         }
     }
 
