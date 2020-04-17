@@ -28,14 +28,29 @@ class SmartHomeActivity : AppCompatActivity() {
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val dashboardViewModel: DashboardViewModel by viewModel()
     private val alertDialog: SmartHomeAlertDialog by inject()
-    private val developerSettingsViewModel : DeveloperSettingsViewModel by viewModel()
+    private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
-        if (savedInstanceState == null) {
-            dashboardCoordinator.goToSmartHome()
+
+        when (intent.getStringExtra(getString(R.string.deeplink_destination))) {
+            getString(R.string.deeplink_destination_dashboard) -> dashboardCoordinator.goToDashboard()
+            getString(R.string.deeplink_destination_home) -> dashboardCoordinator.goToHome()
+            getString(R.string.deeplink_destination_blinds) -> dashboardCoordinator.goToBlindDetailsScreen(
+                intent.extras
+            )
+            getString(R.string.deeplink_destination_light) -> dashboardCoordinator.goToLightsDetailsScreen(
+                intent.extras
+            )
+            getString(R.string.deeplink_destination_hvac) -> dashboardCoordinator.goToHvacDetalisScreen(
+                intent.extras
+            )
+            getString(R.string.deeplink_destination_temperature) -> dashboardCoordinator.goToTemperatureDetailsScreen(
+                intent.extras
+            )
+            else -> dashboardCoordinator.goToSmartHome()
         }
 
         toolbar.setNavigationOnClickListener {
@@ -68,7 +83,7 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.developer_settings -> {
                 dashboardCoordinator.goToDeveloperSettings()
             }
@@ -76,11 +91,11 @@ class SmartHomeActivity : AppCompatActivity() {
         return true
     }
 
-    fun hideLogo(){
+    fun hideLogo() {
         toolbarLogo.visibility = View.GONE
     }
 
-    fun showLogo(){
+    fun showLogo() {
         toolbarLogo.visibility = View.VISIBLE
     }
 }
