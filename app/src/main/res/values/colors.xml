@@ -19,4 +19,5 @@
     <color name="hvacSensor">#913F86</color>
     <color name="windowBlindsSensor">#3FA194</color>
     <color name="error">#B00020</color>
+    <color name="black">#000</color>
 </resources>
