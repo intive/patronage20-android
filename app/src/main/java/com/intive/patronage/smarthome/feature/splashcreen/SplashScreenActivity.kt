@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
@@ -29,7 +30,11 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         splashScreenViewModel.complete.observe(this, Observer { complete ->
-            if (complete) splashScreenCoordinator.goToMainScreen()
+            if (complete && FirebaseAuth.getInstance().currentUser != null) {
+                splashScreenCoordinator.goToMainScreen()
+            } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
+                splashScreenCoordinator.goToLoginScreen()
+            }
         })
     }
 
@@ -42,7 +47,5 @@ class SplashScreenActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN)
-
     }
-
 }

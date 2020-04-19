@@ -18,10 +18,10 @@
         android:theme="@style/AppTheme"
         android:networkSecurityConfig="@xml/network_security_config">
         <activity
-            android:name=".feature.splashcreen.SplashScreenActivity"
+            android:name=".feature.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".feature.login.LoginActivity"
+            android:name=".feature.splashcreen.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
