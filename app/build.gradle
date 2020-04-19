@@ -76,4 +76,5 @@ dependencies {
     implementation projectDependencies.firebase_auth
     implementation projectDependencies.play_services_auth
     implementation projectDependencies.firebase_analytics
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 }

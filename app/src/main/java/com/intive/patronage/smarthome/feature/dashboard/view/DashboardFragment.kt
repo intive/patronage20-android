@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,10 @@ class DashboardFragment : Fragment() {
         parametersOf(activity)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,9 +50,8 @@ class DashboardFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false)
         binding.lifecycleOwner = this
         binding.dashboardViewModelDataBind = dashboardViewModel
-        setupRecyclerView(binding)
-        observeViewModel()
 
+        setupRecyclerView(binding)
         return binding.root
     }
 
@@ -98,5 +102,4 @@ class DashboardFragment : Fragment() {
             adapter = sensorsListAdapter
         }
     }
-
 }
