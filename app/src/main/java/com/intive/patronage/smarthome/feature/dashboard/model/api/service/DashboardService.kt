@@ -17,12 +17,12 @@ class DashboardService(
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
-    private fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
+    fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
     fun getRoomDashboards() = dashboardRoomRepository.getAllDashboards()
 
-    private fun getDashboardFromNetwork(): Single<Dashboard> {
+    fun getDashboardFromNetwork(): Single<Dashboard> {
         return smartHomeAPI.getDashboard().doOnSuccess { dashboard ->
             dashboardRepository.setDashboard(dashboard)
 
@@ -50,13 +50,27 @@ class DashboardService(
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
         val sensors = mutableListOf<DashboardSensor>()
-        sensors.addAll(transformFromLights(dashboard.lights))
-        sensors.addAll(transformFromTemperatureSensors(dashboard.temperatureSensors))
-        sensors.addAll(transformFromSmokeSensors(dashboard.smokeSensors))
-        sensors.addAll(transformFromWindowBlinds(dashboard.windowBlinds))
-        sensors.addAll(transfromFromWindowSensors(dashboard.windowSensors))
-        sensors.addAll(transformFromRFIDSensors(dashboard.RFIDSensors))
-        sensors.addAll(transformFromHVACRooms(dashboard.HVACRooms))
+        dashboard.lights?.let{
+            sensors.addAll(transformFromLights(it))
+        }
+        dashboard.temperatureSensors?.let {
+            sensors.addAll(transformFromTemperatureSensors(it))
+        }
+        dashboard.smokeSensors?.let {
+            sensors.addAll(transformFromSmokeSensors(it))
+        }
+        dashboard.windowBlinds?.let {
+            sensors.addAll(transformFromWindowBlinds(it))
+        }
+        dashboard.windowSensors?.let {
+            sensors.addAll(transfromFromWindowSensors(it))
+        }
+        dashboard.RFIDSensors?.let {
+            sensors.addAll(transformFromRFIDSensors(it))
+        }
+        dashboard.HVACRooms?.let{
+            sensors.addAll(transformFromHVACRooms(it))
+        }
         // TODO: verify when API ready
         // sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
         return sensors.toList()

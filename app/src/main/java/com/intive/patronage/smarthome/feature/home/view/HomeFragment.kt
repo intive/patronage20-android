@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.feature.home.view
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
@@ -20,7 +21,13 @@ class HomeFragment : Fragment() {
     ): View? {
         val myView = inflater.inflate(R.layout.home_fragment, container, false)
         image = myView.findViewById(R.id.home)
-        image.create(dialogViewModel.items, fragmentManager!!)
+        image.create(fragmentManager!!)
+        dialogViewModel.items.observe(this, Observer {
+            if (it != null) {
+                image.setData(it)
+            }
+        })
+//        image.create(dialogViewModel.items, fragmentManager!!)
         return myView
     }
 

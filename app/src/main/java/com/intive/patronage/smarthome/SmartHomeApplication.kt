@@ -37,7 +37,8 @@ class SmartHomeApplication() : Application() {
                 homeModule,
                 loginModule,
                 analyticsModule,
-                smartHomeActivityModule
+                smartHomeActivityModule,
+                homeApiModule
             )
         }
     }

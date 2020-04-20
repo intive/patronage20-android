@@ -10,7 +10,7 @@ fun aggregateRequests(dashboard: Dashboard): Dashboard? {
     requestCounter++
 
     if (requestCounter == valuesAmount) {
-        dashboard.temperatureSensors.forEach {
+        dashboard.temperatureSensors?.forEach {
             it.value = if (sumOfTemperatureValues.contains(it.id)) {
                 (sumOfTemperatureValues.getValue(it.id) + it.value) / valuesAmount
             } else {
@@ -25,7 +25,7 @@ fun aggregateRequests(dashboard: Dashboard): Dashboard? {
 
         return dashboard
     } else {
-        dashboard.temperatureSensors.forEach {
+        dashboard.temperatureSensors?.forEach {
             val sum: Int? = if (sumOfTemperatureValues.contains(it.id)) {
                 sumOfTemperatureValues.getValue(it.id)
             } else {

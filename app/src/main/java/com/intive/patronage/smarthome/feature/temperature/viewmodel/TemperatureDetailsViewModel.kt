@@ -85,7 +85,7 @@ class TemperatureDetailsViewModel(
     private fun calculateMovingAverage(dashboard: Dashboard, number: Int) {
         counter[number]++
 
-        dashboard.temperatureSensors.forEach {
+        dashboard.temperatureSensors?.forEach {
             if (it.id == this.id) {
                 sumOfTemperatureValues[number] += it.value.toFloat()
             }

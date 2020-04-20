@@ -49,7 +49,11 @@ fun getListOfReposBeingStarredJson(random: Random) = """
     {
       "id": 0,
       "type": "temperatureSensor",
-      "value": ${random.nextInt(31) + 10}
+      "value": ${random.nextInt(31) + 10},
+      "mapPosition": {
+        "x": 5,
+        "y": 25
+      }
     },
     {
       "id": 1,

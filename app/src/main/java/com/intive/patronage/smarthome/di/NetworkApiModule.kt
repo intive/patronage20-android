@@ -13,7 +13,7 @@ val networkApiModule = module {
             .callTimeout(120, TimeUnit.SECONDS)
             .connectTimeout(120, TimeUnit.SECONDS)
             .addInterceptor(AuthorizationInterceptor())
-            .addInterceptor(MockInterceptor())
+//            .addInterceptor(MockInterceptor())
             .cache(null)
             .build()
     }
