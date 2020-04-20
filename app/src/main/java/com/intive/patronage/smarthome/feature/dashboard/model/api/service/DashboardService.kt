@@ -8,7 +8,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
-import kotlin.math.max
 
 const val intervalDelay = 10L
 
@@ -27,7 +26,9 @@ class DashboardService(
             dashboardRepository.setDashboard(dashboard)
 
             val aggregatedDashboard: Dashboard? = aggregateRequests(dashboard)
-            if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(aggregatedDashboard)
+            if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(
+                aggregatedDashboard
+            )
         }.doOnError {
             it.printStackTrace()
         }
@@ -47,12 +48,12 @@ class DashboardService(
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
         Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideDashboardSensors(getDashboardFromNetwork()) }
-            .startWith( provideDashboardSensors( getDashboard()))
+            .startWith(provideDashboardSensors(getDashboard()))
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
         val sensors = mutableListOf<DashboardSensor>()
-        dashboard.lights?.let{
+        dashboard.lights?.let {
             sensors.addAll(transformFromLights(it))
         }
         dashboard.temperatureSensors?.let {
@@ -70,7 +71,7 @@ class DashboardService(
         dashboard.RFIDSensors?.let {
             sensors.addAll(transformFromRFIDSensors(it))
         }
-        dashboard.HVACRooms?.let{
+        dashboard.HVACRooms?.let {
             sensors.addAll(transformFromHVACRooms(it))
         }
         // TODO: verify when API ready
@@ -88,7 +89,7 @@ class DashboardService(
     fun getHVACById(id: Int): Single<HVACRoom?> {
         return dashboardRepository.getDashboard()
             .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
-            .filter{ it.id == id }
+            .filter { it.id == id }
             .firstOrError()
     }
 

@@ -61,7 +61,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         this.setImageBitmap(bitmap)
     }
 
-    fun setData(sensList: List<HomeSensor>){
+    fun setData(sensList: List<HomeSensor>) {
         this.sensList.clear()
         this.sensList.addAll(sensList)
     }
@@ -73,7 +73,12 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                 val x = e!!.x.toInt()
                 val y = e.y.toInt()
                 val sensorDialog = SensorDialog()
-                sensorDialog.setSensorPosition(x.toFloat(), y.toFloat(), this@HomeLayoutView.width, this@HomeLayoutView.height)
+                sensorDialog.setSensorPosition(
+                    x.toFloat(),
+                    y.toFloat(),
+                    this@HomeLayoutView.width,
+                    this@HomeLayoutView.height
+                )
                 sensorDialog.show(fragmentManager, "SensorList")
             }
         })
@@ -122,7 +127,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         val distance = SENSOR_SIZE * 2 + 2
         if (!sensList.isNullOrEmpty()) {
             for (sensor in sensList) {
-                if(sensor.mapPosition != null){
+                if (sensor.mapPosition != null) {
                     val sensorCoordX = percentToCoordinateX(sensor.mapPosition.x, this.width)
                     val sensorCoordY = percentToCoordinateY(sensor.mapPosition.y, this.height)
                     if (sensorCoordX >= x - distance && sensorCoordX <= x + distance && sensorCoordY >= y - distance && sensorCoordY <= y + distance)

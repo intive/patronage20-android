@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
                 image.setData(it)
             }
         })
-//        image.create(dialogViewModel.items, fragmentManager!!)
         return myView
     }
 

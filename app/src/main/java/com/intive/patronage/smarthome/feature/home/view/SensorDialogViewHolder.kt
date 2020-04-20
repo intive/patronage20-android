@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.feature.home.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorDialogType
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
 import kotlinx.android.synthetic.main.dialog_sensor_list_item.view.*

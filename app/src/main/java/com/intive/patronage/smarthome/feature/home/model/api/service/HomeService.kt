@@ -19,12 +19,12 @@ class HomeService(private val dashboardService: DashboardService) {
     fun fetchSensorsInInterval(): Observable<List<HomeSensor>> =
         Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideHomeSensors(dashboardService.getDashboardFromNetwork()) }
-            .startWith( provideHomeSensors( dashboardService.getDashboard()))
+            .startWith(provideHomeSensors(dashboardService.getDashboard()))
 
 
     private fun transformSensors(dashboard: Dashboard): List<HomeSensor> {
         val sensors = mutableListOf<HomeSensor>()
-        dashboard.lights?.let{
+        dashboard.lights?.let {
             sensors.addAll(transformFromLights(it))
         }
         dashboard.temperatureSensors?.let {
@@ -42,7 +42,7 @@ class HomeService(private val dashboardService: DashboardService) {
         dashboard.RFIDSensors?.let {
             sensors.addAll(transformFromRFIDSensors(it))
         }
-        dashboard.HVACRooms?.let{
+        dashboard.HVACRooms?.let {
             sensors.addAll(transformFromHVACRooms(it))
         }
         // TODO: verify when API ready
