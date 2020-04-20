@@ -16,6 +16,18 @@
         android:background="@color/backgroundColorForDeveloperSettings"
         tools:context=".feature.developer.view.DeveloperSettingsActivity">
 
+        <Button
+            android:id="@+id/delete_sensors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:text="@string/delete_sensors"
+            android:onClick="@{() -> developerSettingsViewModel.deleteAllSensors()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/app_version"
+            app:layout_constraintTop_toBottomOf="@+id/app_version" />
+
         <TextView
             android:id="@+id/app_version"
             android:layout_width="match_parent"

@@ -99,7 +99,7 @@ fun getListOfReposBeingStarredJson(random: Random) = """
   ],
   "smokeSensors": [
     {
-      "id": 0,
+      "id": 5,
       "type": "smokeSensor",
       "isSmokeDetected": true
     }

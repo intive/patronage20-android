@@ -63,7 +63,7 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
 
     fun userIsLogged() {
         val currentUser = mAuth.currentUser
-        if (currentUser != null) {
+        if (currentUser == null) {
             loginCoordinator.goToSplashScreen()
         }
     }
