@@ -416,6 +416,10 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 textPaint.textSize = metrics.densityDpi *0.13f
                 textLabelPaint.textSize = metrics.densityDpi *0.12f
             }
+            in 400..480 -> {
+                textPaint.textSize = metrics.densityDpi *0.09f
+                textLabelPaint.textSize = metrics.densityDpi *0.07f
+            }
         }
     }
 
