@@ -46,12 +46,14 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         if (!setup) {
             setupBitmap()
         }
+        paint.color = ContextCompat.getColor(context, R.color.backgroundColor)
+        cvs.drawRect(0.toFloat(), 0.toFloat(), this.width.toFloat(), this.height.toFloat(), paint)
         cvs.drawBitmap(clearBitmap, 0f, 0f, null)
         for (sensor in sensList) {
             if (sensor.mapPosition != null) {
                 drawSensor(
-                    percentToCoordinateX(sensor.mapPosition.x.toFloat(), this.width),
-                    percentToCoordinateY(sensor.mapPosition.y.toFloat(), this.height),
+                    percentToCoordinateX(sensor.mapPosition.x, this.width),
+                    percentToCoordinateY(sensor.mapPosition.y, this.height),
                     sensor.type
                 )
             }
@@ -116,29 +118,13 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         this.setImageBitmap(bitmap)
     }
 
-    fun removeSensor(x: Float, y: Float) {
-        paint.color = ContextCompat.getColor(context, R.color.backgroundColor)
-        cvs.drawCircle(x, y, SENSOR_SIZE + 1, paint)
-        cvs.drawBitmap(clearBitmap, 0f, 0f, null)
-//        for (sensor in sensList) {
-//            if (sensor.mapPosition != null)
-//                drawSensor(
-//                    percentToCoordinateX(sensor.mapPosition.x.toFloat(), this.width),
-//                    percentToCoordinateY(sensor.mapPosition.y.toFloat(), this.height),
-//                    sensor.type
-//                )
-//        }
-        showMessage(R.string.sensor_removed)
-        this.setImageBitmap(bitmap)
-    }
-
     private fun checkForSensors(x: Float, y: Float): Boolean {
         val distance = SENSOR_SIZE * 2 + 2
         if (!sensList.isNullOrEmpty()) {
             for (sensor in sensList) {
                 if(sensor.mapPosition != null){
-                    val sensorCoordX = percentToCoordinateX(sensor.mapPosition.x.toFloat(), this.width)
-                    val sensorCoordY = percentToCoordinateY(sensor.mapPosition.y.toFloat(), this.height)
+                    val sensorCoordX = percentToCoordinateX(sensor.mapPosition.x, this.width)
+                    val sensorCoordY = percentToCoordinateY(sensor.mapPosition.y, this.height)
                     if (sensorCoordX >= x - distance && sensorCoordX <= x + distance && sensorCoordY >= y - distance && sensorCoordY <= y + distance)
                         return false
                 }

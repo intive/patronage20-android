@@ -28,6 +28,8 @@ class DashboardService(
 
             val aggregatedDashboard: Dashboard? = aggregateRequests(dashboard)
             if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(aggregatedDashboard)
+        }.doOnError {
+            it.printStackTrace()
         }
     }
 
