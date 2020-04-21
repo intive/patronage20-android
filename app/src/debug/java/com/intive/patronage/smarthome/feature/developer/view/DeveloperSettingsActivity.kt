@@ -2,14 +2,9 @@ package com.intive.patronage.smarthome.feature.developer.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.databinding.ActivityDeveloperSettingsBinding
-import com.intive.patronage.smarthome.feature.developer.model.DeveloperSettingsService
 import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.navigator.DeveloperSettingsCoordinator
 import org.koin.android.ext.android.inject

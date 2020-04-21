@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.di
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.ObservableField
 import com.intive.patronage.smarthome.DeveloperSettings
 import com.intive.patronage.smarthome.feature.developer.model.DeveloperSettingsService
 import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
