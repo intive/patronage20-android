@@ -22,7 +22,6 @@ class SplashScreenActivity : AppCompatActivity() {
     private val splashScreenViewModel: SplashScreenViewModel by viewModel()
     private val splashScreenCoordinator: SplashScreenCoordinator by inject { parametersOf(this) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -46,72 +45,10 @@ class SplashScreenActivity : AppCompatActivity() {
         splashScreenViewModel.complete.observe(this, Observer { complete ->
             if (complete) {
                 data?.let {
-                    goToScreenBasedOnDeeplink(data)
-                } ?: run {
-                    splashScreenCoordinator.goToMainScreen()
-                }
+                    splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                } ?: splashScreenCoordinator.goToMainScreen()
             }
         })
-    }
-
-    private fun goToScreenBasedOnDeeplink(data: Uri?) {
-        when (data?.getQueryParameter(getString(R.string.deeplink_destination))) {
-            getString(R.string.deeplink_destination_home) ->
-                splashScreenCoordinator.goToMainScreen(
-                    createBundleWithString(
-                        getString(R.string.deeplink_destination),
-                        getString(R.string.deeplink_destination_home)
-                    )
-                )
-            getString(R.string.deeplink_destination_light) ->
-                splashScreenCoordinator.goToMainScreen(
-                    createBundleWithStringAndId(
-                        getString(R.string.deeplink_destination),
-                        getString(R.string.deeplink_destination_light),
-                        data
-                    )
-                )
-            getString(R.string.deeplink_destination_blinds) ->
-                splashScreenCoordinator.goToMainScreen(
-                    createBundleWithStringAndId(
-                        getString(R.string.deeplink_destination),
-                        getString(R.string.deeplink_destination_blinds),
-                        data
-                    )
-                )
-            getString(R.string.deeplink_destination_hvac) ->
-                splashScreenCoordinator.goToMainScreen(
-                    createBundleWithStringAndId(
-                        getString(R.string.deeplink_destination),
-                        getString(R.string.deeplink_destination_hvac),
-                        data
-                    )
-                )
-            getString(R.string.deeplink_destination_temperature) ->
-                splashScreenCoordinator.goToMainScreen(
-                    createBundleWithStringAndId(
-                        getString(R.string.deeplink_destination),
-                        getString(R.string.deeplink_destination_temperature),
-                        data
-                    )
-                )
-            getString(R.string.deeplink_destination_developer) -> splashScreenCoordinator.goToDeveloperSettings()
-            else -> splashScreenCoordinator.goToMainScreen()
-        }
-    }
-
-    private fun createBundleWithString(tag: String, value: String): Bundle {
-        val bundle = Bundle()
-        bundle.putString(tag, value)
-        return bundle
-    }
-
-    private fun createBundleWithStringAndId(tag: String, value: String, data: Uri?): Bundle {
-        val bundle = Bundle()
-        val id = data?.getQueryParameter("id")
-        id?.let { Integer.parseInt(it) }?.let { bundle.putInt("ID", it) }
-        bundle.putString(tag, value)
-        return bundle
     }
 
     // Setting fullscreen

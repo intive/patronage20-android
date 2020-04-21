@@ -1,24 +1,17 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
-import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
-import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.smart_home_activity.*
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -34,24 +27,7 @@ class SmartHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
-
-        when (intent.getStringExtra(getString(R.string.deeplink_destination))) {
-            getString(R.string.deeplink_destination_dashboard) -> dashboardCoordinator.goToDashboard()
-            getString(R.string.deeplink_destination_home) -> dashboardCoordinator.goToHome()
-            getString(R.string.deeplink_destination_blinds) -> dashboardCoordinator.goToBlindDetailsScreen(
-                intent.extras
-            )
-            getString(R.string.deeplink_destination_light) -> dashboardCoordinator.goToLightsDetailsScreen(
-                intent.extras
-            )
-            getString(R.string.deeplink_destination_hvac) -> dashboardCoordinator.goToHvacDetalisScreen(
-                intent.extras
-            )
-            getString(R.string.deeplink_destination_temperature) -> dashboardCoordinator.goToTemperatureDetailsScreen(
-                intent.extras
-            )
-            else -> dashboardCoordinator.goToSmartHome()
-        }
+        dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()

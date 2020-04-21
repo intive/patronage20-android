@@ -47,12 +47,4 @@
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
     <string name="filter_view_http_splash">filter_view_http_splash</string>
-    <string name="deeplink_destination_dashboard">dashboard</string>
-    <string name="deeplink_destination_home">home</string>
-    <string name="deeplink_destination_blinds">blinds</string>
-    <string name="deeplink_destination_light">light</string>
-    <string name="deeplink_destination_hvac">hvac</string>
-    <string name="deeplink_destination_temperature">temperature</string>
-    <string name="deeplink_destination">destination</string>
-    <string name="deeplink_destination_developer">developer_settings</string>
 </resources>
