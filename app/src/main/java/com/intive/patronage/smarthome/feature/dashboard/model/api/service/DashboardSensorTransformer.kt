@@ -6,9 +6,6 @@ import com.intive.patronage.smarthome.feature.dashboard.model.*
 import java.lang.StringBuilder
 
 const val TRANSFORMER_SEPARATOR = ","
-const val COOLING_TEMPERATURE = "Cooling temperature:"
-const val HEATING_TEMPERATURE = "Heating temperature:"
-const val HYSTERESIS = "Hysteresis:"
 
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
@@ -120,18 +117,18 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
 
 fun transfromFromHVACStatus(hvacStatus: HVACStatus): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
-        val details = StringBuilder()
-        if (hvacStatus.heating) {
-            details.append(R.string.hvac_status_heating)
-        } else {
-            details.append(R.string.hvac_status_cooling)
-        }
-        sensors.add(
-            DashboardSensor(
-                0.toString(),
-                "",
-                details.toString()
-            )
+    val details = StringBuilder()
+    if (hvacStatus.heating) {
+        details.append(R.string.hvac_status_heating)
+    } else {
+        details.append(R.string.hvac_status_cooling)
+    }
+    sensors.add(
+        DashboardSensor(
+            0.toString(),
+            "",
+            details.toString()
         )
+    )
     return sensors
 }
