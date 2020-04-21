@@ -9,5 +9,6 @@ data class HVACRoom(
     @field:Json(name = "cooling-temperature") val coolingTemperature: Int,
     @Json(name = "hysteresis") val hysteresis: Int,
     @Json(name = "temperatureSensorId") val temperatureSensorId: Int,
-    @Json(name = "windowSensorIds") val windowSensorIds: List<Int>
+    @Json(name = "windowSensorIds") val windowSensorIds: List<Int>,
+    @Json(name = "mapPosition") val mapPosition: MapPosition?
 )

@@ -27,7 +27,7 @@ import org.koin.core.parameter.parametersOf
 class DashboardFragment : Fragment() {
     private val analytics: AnalyticsWrapper by inject()
     private val dashboardViewModel: DashboardViewModel by viewModel()
-    private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(activity)}
+    private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(activity) }
     private val sensorsListAdapter: SensorsListAdapter by inject {
         parametersOf(::onItemClick)
     }
@@ -78,8 +78,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.error.observe(this, Observer { error ->
             if (error) {
                 alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-            }
-            else if(!error) {
+            } else if (!error) {
                 alertSnackbar.hideSnackbar()
             }
         })

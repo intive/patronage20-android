@@ -7,7 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class SmartHomeActivityViewModel(private val networkConnectionService: NetworkConnectionService) : ViewModel() {
+class SmartHomeActivityViewModel(private val networkConnectionService: NetworkConnectionService) :
+    ViewModel() {
 
     val networkConnection = MutableLiveData<Boolean>().apply { value = false }
     private var networkState: Disposable? = null

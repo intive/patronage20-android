@@ -6,10 +6,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 
 
-class SmartHomeFragmentViewPagerAdapter(fragmentManager: FragmentManager,
-                                        private val titleMap: Map<Int, String>) :
+class SmartHomeFragmentViewPagerAdapter(
+    fragmentManager: FragmentManager,
+    private val titleMap: Map<Int, String>
+) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
 
 
     override fun getItem(position: Int): Fragment {

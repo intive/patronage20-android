@@ -8,7 +8,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
-import kotlin.math.max
 
 const val intervalDelay = 10L
 
@@ -17,17 +16,21 @@ class DashboardService(
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
-    private fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
+    fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
     fun getRoomDashboards() = dashboardRoomRepository.getAllDashboards()
 
-    private fun getDashboardFromNetwork(): Single<Dashboard> {
+    fun getDashboardFromNetwork(): Single<Dashboard> {
         return smartHomeAPI.getDashboard().doOnSuccess { dashboard ->
             dashboardRepository.setDashboard(dashboard)
 
             val aggregatedDashboard: Dashboard? = aggregateRequests(dashboard)
-            if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(aggregatedDashboard)
+            if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(
+                aggregatedDashboard
+            )
+        }.doOnError {
+            it.printStackTrace()
         }
     }
 
@@ -45,18 +48,32 @@ class DashboardService(
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
         Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideDashboardSensors(getDashboardFromNetwork()) }
-            .startWith( provideDashboardSensors( getDashboard()))
+            .startWith(provideDashboardSensors(getDashboard()))
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {
         val sensors = mutableListOf<DashboardSensor>()
-        sensors.addAll(transformFromLights(dashboard.lights))
-        sensors.addAll(transformFromTemperatureSensors(dashboard.temperatureSensors))
-        sensors.addAll(transformFromSmokeSensors(dashboard.smokeSensors))
-        sensors.addAll(transformFromWindowBlinds(dashboard.windowBlinds))
-        sensors.addAll(transfromFromWindowSensors(dashboard.windowSensors))
-        sensors.addAll(transformFromRFIDSensors(dashboard.RFIDSensors))
-        sensors.addAll(transformFromHVACRooms(dashboard.HVACRooms))
+        dashboard.lights?.let {
+            sensors.addAll(transformFromLights(it))
+        }
+        dashboard.temperatureSensors?.let {
+            sensors.addAll(transformFromTemperatureSensors(it))
+        }
+        dashboard.smokeSensors?.let {
+            sensors.addAll(transformFromSmokeSensors(it))
+        }
+        dashboard.windowBlinds?.let {
+            sensors.addAll(transformFromWindowBlinds(it))
+        }
+        dashboard.windowSensors?.let {
+            sensors.addAll(transfromFromWindowSensors(it))
+        }
+        dashboard.RFIDSensors?.let {
+            sensors.addAll(transformFromRFIDSensors(it))
+        }
+        dashboard.HVACRooms?.let {
+            sensors.addAll(transformFromHVACRooms(it))
+        }
         // TODO: verify when API ready
         // sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
         return sensors.toList()
@@ -72,7 +89,7 @@ class DashboardService(
     fun getHVACById(id: Int): Single<HVACRoom?> {
         return dashboardRepository.getDashboard()
             .flatMapObservable { Observable.fromIterable(it.HVACRooms) }
-            .filter{ it.id == id }
+            .filter { it.id == id }
             .firstOrError()
     }
 
