@@ -12,6 +12,7 @@ import com.intive.patronage.smarthome.common.coordinateToPercentY
 import com.intive.patronage.smarthome.common.percentToCoordinateX
 import com.intive.patronage.smarthome.common.percentToCoordinateY
 import com.intive.patronage.smarthome.databinding.SensorDialogFragmentBinding
+import com.intive.patronage.smarthome.feature.dashboard.model.MapPosition
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
 import com.intive.patronage.smarthome.feature.home.viewmodel.SensorDialogViewModel
 import org.koin.android.ext.android.inject
@@ -75,19 +76,15 @@ class SensorDialog : DialogFragment() {
     private fun onItemClick(sensor: HomeSensor) {
         if (sensor.mapPosition != null) {
             //TODO: Remove sensor API call
-//            image.removeSensor(
-//                percentToCoordinateX(sensor.mapPosition.x.toFloat(), image.width),
-//                percentToCoordinateY(sensor.mapPosition.y.toFloat(), image.height)
-//            )
+            dialogViewModel.deleteSensor(sensor._id)
         } else {
-            if (image.addSensor(percentToCoordinateX(actualSensorX, image.width), percentToCoordinateY(actualSensorY, image.height), sensor.type)) {
+            if (image.addSensor(percentToCoordinateX(actualSensorX, image.width), percentToCoordinateY(actualSensorY, image.height), sensor.sensorType)) {
                 //TODO: Add sesnor API call
-//                sensor.x = actualSensorX
-//                sensor.y = actualSensorY
+                dialogViewModel.postSensor(sensor._id,
+                    sensor.copy(mapPosition = MapPosition(actualSensorX, actualSensorY)))
             }
         }
-        dialog?.dismiss()
-    }
+        dialog?.dismiss()   }
 
 
 }

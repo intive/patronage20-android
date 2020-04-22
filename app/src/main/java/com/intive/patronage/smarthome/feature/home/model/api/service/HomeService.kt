@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.home.model.api.service
 
+import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
@@ -9,7 +10,8 @@ import java.util.concurrent.TimeUnit
 
 const val intervalDelay = 10L
 
-class HomeService(private val dashboardService: DashboardService) {
+class HomeService(private val dashboardService: DashboardService,
+                  private val smartHomeAPI: SmartHomeAPI) {
 
     private fun provideHomeSensors(source: Single<Dashboard>): Observable<List<HomeSensor>> {
         return source.map { transformSensors(it) }
@@ -20,6 +22,10 @@ class HomeService(private val dashboardService: DashboardService) {
         Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideHomeSensors(dashboardService.getDashboardFromNetwork()) }
             .startWith(provideHomeSensors(dashboardService.getDashboard()))
+
+    fun postSensor(id: Int, body: HomeSensor) = smartHomeAPI.addSensor(id, body)
+
+    fun deleteSensor(id: Int) = smartHomeAPI.deleteSensor(id)
 
 
     private fun transformSensors(dashboard: Dashboard): List<HomeSensor> {

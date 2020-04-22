@@ -54,7 +54,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                 drawSensor(
                     percentToCoordinateX(sensor.mapPosition.x, this.width),
                     percentToCoordinateY(sensor.mapPosition.y, this.height),
-                    sensor.type
+                    sensor.sensorType
                 )
             }
         }
