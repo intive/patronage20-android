@@ -18,6 +18,11 @@ fun setOnColorPickerTouchListener(view: ImageView, lightsDetailsViewModel: Light
             try {
                 val pixel = cache.getPixel(motionEvent.x.toInt(), motionEvent.y.toInt())
 
+                lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(motionEvent.x, motionEvent.y)
+
+                lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(lightsDetailsViewModel.brightnessBarPointerEndX)
+                lightsDetailsViewModel.brightnessBarPointerX = motionEvent.x
+
                 val red = Color.red(pixel)
                 val green = Color.green(pixel)
                 val blue = Color.blue(pixel)
@@ -27,20 +32,12 @@ fun setOnColorPickerTouchListener(view: ImageView, lightsDetailsViewModel: Light
                     lightsDetailsViewModel.green = green
                     lightsDetailsViewModel.blue = blue
 
-                    lightsDetailsViewModel.redForBrightnessSeekBar = red
-                    lightsDetailsViewModel.greenForBrightnessSeekBar = green
-                    lightsDetailsViewModel.blueForBrightnessSeekBar = blue
+                    lightsDetailsViewModel.redForBrightnessBar = red
+                    lightsDetailsViewModel.greenForBrightnessBar = green
+                    lightsDetailsViewModel.blueForBrightnessBar = blue
 
-                    lightsDetailsViewModel.colorPickerEventListener.setBrightnessSeekBarColor(
-                        red,
-                        green,
-                        blue
-                    )
-                    lightsDetailsViewModel.colorPickerEventListener.setCurrentImageViewColor(
-                        red,
-                        green,
-                        blue
-                    )
+                    lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarColor(red, green, blue)
+                    lightsDetailsViewModel.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
                 }
             } catch (t: Throwable) {
                 Log.d("Exception", "Out of touchable area")

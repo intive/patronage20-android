@@ -125,22 +125,22 @@ fun getListOfReposBeingStarredJson(random: Random) = """
     {
       "id": 0,
       "type": "RGBLight",
-      "hue": 100,
+      "hue": 0,
       "saturation": 50,
-      "value": 50
+      "value": 25
     },
     {
       "id": 1,
       "type": "RGBLight",
-      "hue": 200,
-      "saturation": 50,
-      "value": 50
+      "hue": 120,
+      "saturation": 100,
+      "value": 75
     },
     {
       "id": 2,
       "type": "RGBLight",
-      "hue": 300,
-      "saturation": 50,
+      "hue": 240,
+      "saturation": 75,
       "value": 50
     }
   ]

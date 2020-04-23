@@ -25,12 +25,17 @@ class LightsDetailsViewModel(
     var green = 0
     var blue = 0
 
-    var redForBrightnessSeekBar = 0
-    var greenForBrightnessSeekBar = 0
-    var blueForBrightnessSeekBar = 0
+    var redForBrightnessBar = 0
+    var greenForBrightnessBar = 0
+    var blueForBrightnessBar = 0
+
+    var brightnessBarPointerEndX = 0f
+    var brightnessBarPointerX = 0f
 
     private var disposable: Disposable? = null
     val toastMessage = MutableLiveData<Int>()
+
+    val hsv = MutableLiveData<IntArray>()
 
     init {
         loadLight()
@@ -49,18 +54,20 @@ class LightsDetailsViewModel(
     }
 
     private fun loadColor(light: Light) {
-        val rgb = convertHSVtoRGB(light.hue, light.saturation, light.value)
+        hsv.value = intArrayOf(light.hue, light.saturation, light.value)
+        val saturation = if (light.saturation == 100) 99 else light.saturation
 
+        val rgb = convertHSVtoRGB(light.hue, saturation, light.value)
         red = rgb.red
         green = rgb.green
         blue = rgb.blue
-
-        redForBrightnessSeekBar = rgb.red
-        greenForBrightnessSeekBar = rgb.green
-        blueForBrightnessSeekBar = rgb.blue
-
-        colorPickerEventListener.setBrightnessSeekBarColor(red, green, blue)
         colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+
+        val rgbForBrightnessBar = convertHSVtoRGB(light.hue, saturation, 100)
+        redForBrightnessBar = rgbForBrightnessBar.red
+        greenForBrightnessBar = rgbForBrightnessBar.green
+        blueForBrightnessBar = rgbForBrightnessBar.blue
+        colorPickerEventListener.setBrightnessBarColor(redForBrightnessBar, greenForBrightnessBar, blueForBrightnessBar)
     }
 
     fun onResetClicked() {

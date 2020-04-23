@@ -1,7 +1,8 @@
 package com.intive.patronage.smarthome.feature.light.view
 
-import android.annotation.SuppressLint
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,23 +19,25 @@ import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.light.viewmodel.LightsDetailsViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import kotlin.math.PI
+import kotlin.math.sin
 
 class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
 
+    private lateinit var binding: FragmentLightsDetailsBinding
     private val lightsDetailsViewModel by viewModel<LightsDetailsViewModel> {
         parametersOf(this ,this.arguments?.getInt("ID"))
     }
 
-    private lateinit var binding: FragmentLightsDetailsBinding
-
-    private lateinit var brightnessView: BrightnessSeekBar
+    private lateinit var brightnessView: BrightnessBar
     private lateinit var brightnessBitmap: Bitmap
     private lateinit var brightnessCanvas: Canvas
 
-    private val imageQuality = 720
-    val radius = 360f
+    private val colorPickerPointer = ColorPickerPointer()
+    private val brightnessBarPointer = BrightnessBarPointer()
 
-    @SuppressLint("ClickableViewAccessibility")
+    private val imageQuality = 720
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,27 +62,63 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         binding.lightDetailsViewModel = lightsDetailsViewModel
 
         binding.brightness.setDrawingCacheEnabled(true)
-        brightnessBitmap = Bitmap.createBitmap(300, 100, Bitmap.Config.ARGB_8888)
-        brightnessCanvas = Canvas(brightnessBitmap)
+        binding.colorPicker.setDrawingCacheEnabled(true)
 
-        brightnessView = BrightnessSeekBar((activity as SmartHomeActivity).applicationContext)
+        brightnessBitmap = Bitmap.createBitmap(imageQuality / 10 * 3, imageQuality / 10, Bitmap.Config.ARGB_8888)
+        val colorPickerBitmap = Bitmap.createBitmap(imageQuality, imageQuality, Bitmap.Config.ARGB_8888)
+
+        brightnessCanvas = Canvas(brightnessBitmap)
+        val colorPickerCanvas = Canvas(colorPickerBitmap)
+
+        brightnessView = BrightnessBar((activity as SmartHomeActivity).applicationContext)
+        val colorPickerView = ColorPicker((activity as SmartHomeActivity).applicationContext)
+
         brightnessView.draw(brightnessCanvas)
+        colorPickerView.draw(colorPickerCanvas)
 
         binding.brightness.setImageBitmap(brightnessBitmap)
+        binding.colorPicker.setImageBitmap(colorPickerBitmap)
 
-        binding.colorPicker.setDrawingCacheEnabled(true)
-        val bitmap = Bitmap.createBitmap(imageQuality, imageQuality, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
+        binding.brightness.viewTreeObserver.addOnGlobalLayoutListener {
+            loadPointers()
+        }
 
-        val colorPickerView = ColorPicker((activity as SmartHomeActivity).applicationContext)
-        colorPickerView.draw(canvas)
+        val brightnessOverlay = binding.brightness.overlay
+        val colorPickerOverlay = binding.colorPicker.overlay
 
-        binding.colorPicker.setImageBitmap(bitmap)
+        brightnessOverlay.add(brightnessBarPointer)
+        colorPickerOverlay.add(colorPickerPointer)
 
         return binding.root
     }
 
-    override fun setBrightnessSeekBarColor(red: Int, green: Int, blue: Int) {
+    private fun loadPointers() {
+        brightnessBarPointer.height = binding.brightness.height.toFloat()
+        lightsDetailsViewModel.brightnessBarPointerEndX = binding.brightness.width.toFloat()
+
+        lightsDetailsViewModel.hsv.observe(this, Observer {
+            if (it != null && lightsDetailsViewModel.brightnessBarPointerX == 0f) {
+                val angleInRadians: Float = (it[0].toFloat() * PI.toFloat()) / 180
+                val partOfRadius: Float = (it[1].toFloat() / 100) * (binding.colorPicker.width / 2)
+
+                val y = partOfRadius * sin(angleInRadians)
+                val x = partOfRadius * sin((PI / 2) - angleInRadians).toFloat()
+
+                lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(
+                    (binding.colorPicker.width / 2) + x,
+                    (binding.colorPicker.height / 2) - y
+                )
+
+                lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(
+                    (binding.brightness.width.toFloat() / 100) * it[2]
+                )
+
+                lightsDetailsViewModel.brightnessBarPointerX = (binding.brightness.width.toFloat() / 100) * it[2]
+            }
+        })
+    }
+
+    override fun setBrightnessBarColor(red: Int, green: Int, blue: Int) {
         brightnessView.brightnessPaint.color = Color.rgb(red, green, blue)
         brightnessView.draw(brightnessCanvas)
         binding.brightness.setImageBitmap(brightnessBitmap)
@@ -87,5 +126,25 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
 
     override fun setCurrentImageViewColor(red: Int, green: Int, blue: Int) {
         binding.currentColor.setBackgroundColor(Color.rgb(red, green, blue))
+    }
+
+    override fun setColorPickerPointerPosition(x: Float, y: Float) {
+        colorPickerPointer.x = x
+        colorPickerPointer.y = y
+        colorPickerPointer.invalidateSelf()
+    }
+
+    override fun setBrightnessBarPointerPosition(x: Float) {
+        val margin = 18f
+
+        if (x >= lightsDetailsViewModel.brightnessBarPointerEndX - margin) {
+            brightnessBarPointer.x = lightsDetailsViewModel.brightnessBarPointerEndX - margin
+        } else if (x <= margin) {
+            brightnessBarPointer.x = margin
+        } else {
+            brightnessBarPointer.x = x
+        }
+
+        brightnessBarPointer.invalidateSelf()
     }
 }

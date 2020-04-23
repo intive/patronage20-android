@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 
-class BrightnessSeekBar(context: Context): View(context) {
+class BrightnessBar(context: Context): View(context) {
     private var red = 0
     private var green = 0
     private var blue = 0
@@ -17,12 +17,12 @@ class BrightnessSeekBar(context: Context): View(context) {
         color = Color.rgb(red, green, blue)
     }
 
-    private val brightnessRect = Rect(0, 0, 300, 100)
+    private val brightnessRect = Rect(0, 0, 216, 72)
 
     private val blackOverlayPaint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.FILL
-        shader = LinearGradient(0f, 0f, 300f, 0f, Color.BLACK, ContextCompat.getColor(context, R.color.transparent), Shader.TileMode.CLAMP)
+        shader = LinearGradient(0f, 0f, 216f, 0f, Color.BLACK, ContextCompat.getColor(context, R.color.transparent), Shader.TileMode.CLAMP)
     }
 
     override fun onDraw(canvas: Canvas?) {

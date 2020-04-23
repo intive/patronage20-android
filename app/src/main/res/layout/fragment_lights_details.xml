@@ -16,6 +16,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            app:onColorPickerOrientationChange="@{lightDetailsViewModel}"
             app:onColorPickerTouch="@{lightDetailsViewModel}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/brightness"
@@ -26,7 +27,7 @@
         <ImageView
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:onBrightnessSeekBarTouch="@{lightDetailsViewModel}"
+            app:onBrightnessBarTouch="@{lightDetailsViewModel}"
             android:layout_marginBottom="@dimen/standard_break"
             android:id="@+id/brightness"
             app:layout_constraintTop_toBottomOf="@id/colorPicker"

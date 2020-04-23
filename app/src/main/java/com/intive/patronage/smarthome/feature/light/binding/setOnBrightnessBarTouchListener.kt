@@ -9,14 +9,14 @@ import androidx.databinding.BindingAdapter
 import com.intive.patronage.smarthome.feature.light.viewmodel.LightsDetailsViewModel
 
 @SuppressLint("ClickableViewAccessibility")
-@BindingAdapter("onBrightnessSeekBarTouch")
-fun setOnBrightnessSeekBarTouchListener(view: ImageView, lightsDetailsViewModel: LightsDetailsViewModel) {
+@BindingAdapter("onBrightnessBarTouch")
+fun setOnBrightnessBarTouchListener(view: ImageView, lightsDetailsViewModel: LightsDetailsViewModel) {
     view.setOnTouchListener { _, motionEvent ->
         if (motionEvent.action == MotionEvent.ACTION_DOWN || motionEvent.action == MotionEvent.ACTION_MOVE) {
-            lightsDetailsViewModel.colorPickerEventListener.setBrightnessSeekBarColor(
-                lightsDetailsViewModel.redForBrightnessSeekBar,
-                lightsDetailsViewModel.greenForBrightnessSeekBar,
-                lightsDetailsViewModel.blueForBrightnessSeekBar
+            lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarColor(
+                lightsDetailsViewModel.redForBrightnessBar,
+                lightsDetailsViewModel.greenForBrightnessBar,
+                lightsDetailsViewModel.blueForBrightnessBar
             )
 
             val cache = view.getDrawingCache()
@@ -24,15 +24,21 @@ fun setOnBrightnessSeekBarTouchListener(view: ImageView, lightsDetailsViewModel:
             try {
                 val pixel = cache.getPixel(motionEvent.x.toInt(), motionEvent.y.toInt())
 
+                lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(motionEvent.x)
+                lightsDetailsViewModel.brightnessBarPointerX = motionEvent.x
+
                 val red = Color.red(pixel)
                 val green = Color.green(pixel)
                 val blue = Color.blue(pixel)
 
-                lightsDetailsViewModel.red = red
-                lightsDetailsViewModel.green = green
-                lightsDetailsViewModel.blue = blue
+                if (red != 0 && green != 0 && blue != 0) {
 
-                lightsDetailsViewModel.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+                    lightsDetailsViewModel.red = red
+                    lightsDetailsViewModel.green = green
+                    lightsDetailsViewModel.blue = blue
+
+                    lightsDetailsViewModel.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+                }
             } catch (t: Throwable) {
                 Log.d("Exception", "Out of touchable area")
             }
