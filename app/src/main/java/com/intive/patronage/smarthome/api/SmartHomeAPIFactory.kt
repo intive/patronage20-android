@@ -17,6 +17,7 @@ class SmartHomeAPIFactory(private val httpClient: OkHttpClient) {
             .add(LightAdapter())
             .build()
 
+
     fun buildRetrofitClient(): Retrofit = Retrofit.Builder()
         .callFactory(httpClient)
         .baseUrl(URL)

@@ -9,6 +9,7 @@ fun transformFromLights(lights: List<Light>): List<HomeSensor> {
         sensors.add(
             HomeSensor(
                 it.id,
+
                 it.type,
                 it.mapPosition
             )

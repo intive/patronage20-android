@@ -79,6 +79,7 @@ class DashboardFragment : Fragment() {
             if (error) {
                 alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
             } else {
+
                 alertSnackbar.hideSnackbar()
             }
         })
