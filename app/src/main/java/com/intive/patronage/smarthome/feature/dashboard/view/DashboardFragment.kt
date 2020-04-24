@@ -78,7 +78,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.error.observe(this, Observer { error ->
             if (error) {
                 alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-            } else if (!error) {
+            } else {
                 alertSnackbar.hideSnackbar()
             }
         })

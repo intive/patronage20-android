@@ -10,14 +10,12 @@ import java.util.concurrent.TimeUnit
 val networkApiModule = module {
 
     single {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-
         OkHttpClient.Builder()
             .callTimeout(120, TimeUnit.SECONDS)
             .connectTimeout(120, TimeUnit.SECONDS)
             .addInterceptor(AuthorizationInterceptor())
-            .addInterceptor(logging)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY })
             .cache(null)
             .build()
     }

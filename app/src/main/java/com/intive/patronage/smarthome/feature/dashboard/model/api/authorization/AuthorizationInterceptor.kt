@@ -11,7 +11,6 @@ class AuthorizationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request().newBuilder()
             .addHeader("Cookie", "secret_cookie=3241231213fsdj23kj4kl32j4")
-//            .addHeader("Content-Type:", "application/json")
             .build()
 
         return chain.proceed(request)
