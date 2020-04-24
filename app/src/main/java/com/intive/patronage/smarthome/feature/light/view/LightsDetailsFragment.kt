@@ -92,28 +92,38 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         return binding.root
     }
 
+    private fun calculatePointersPosition(hsv: IntArray) {
+        val radius = if (binding.colorPicker.width < binding.colorPicker.height) {
+            binding.colorPicker.width / 2
+        } else {
+            binding.colorPicker.height / 2
+        }
+
+        val angleInRadians: Float = (hsv[0].toFloat() * PI.toFloat()) / 180
+        val partOfRadius: Float = (hsv[1].toFloat() / 100) * radius
+
+        val y = partOfRadius * sin(angleInRadians)
+        val x = partOfRadius * sin((PI / 2) - angleInRadians).toFloat()
+
+        lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(
+            (binding.colorPicker.width / 2) + x,
+            (binding.colorPicker.height / 2) - y
+        )
+
+        lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(
+            (binding.brightness.width.toFloat() / 100) * hsv[2]
+        )
+
+        lightsDetailsViewModel.brightnessBarPointerX = (binding.brightness.width.toFloat() / 100) * hsv[2]
+    }
+
     private fun loadPointers() {
         brightnessBarPointer.height = binding.brightness.height.toFloat()
         lightsDetailsViewModel.brightnessBarPointerEndX = binding.brightness.width.toFloat()
 
         lightsDetailsViewModel.hsv.observe(this, Observer {
             if (it != null && lightsDetailsViewModel.brightnessBarPointerX == 0f) {
-                val angleInRadians: Float = (it[0].toFloat() * PI.toFloat()) / 180
-                val partOfRadius: Float = (it[1].toFloat() / 100) * (binding.colorPicker.width / 2)
-
-                val y = partOfRadius * sin(angleInRadians)
-                val x = partOfRadius * sin((PI / 2) - angleInRadians).toFloat()
-
-                lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(
-                    (binding.colorPicker.width / 2) + x,
-                    (binding.colorPicker.height / 2) - y
-                )
-
-                lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(
-                    (binding.brightness.width.toFloat() / 100) * it[2]
-                )
-
-                lightsDetailsViewModel.brightnessBarPointerX = (binding.brightness.width.toFloat() / 100) * it[2]
+                calculatePointersPosition(it)
             }
         })
     }
@@ -146,5 +156,13 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         }
 
         brightnessBarPointer.invalidateSelf()
+    }
+
+    override fun resetPointersPosition() {
+        lightsDetailsViewModel.hsv.observe(this, Observer {
+            if (it != null) {
+                calculatePointersPosition(it)
+            }
+        })
     }
 }

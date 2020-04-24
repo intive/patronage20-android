@@ -72,6 +72,7 @@ class LightsDetailsViewModel(
 
     fun onResetClicked() {
         loadLight()
+        colorPickerEventListener.resetPointersPosition()
     }
 
     fun onApplyClicked() {

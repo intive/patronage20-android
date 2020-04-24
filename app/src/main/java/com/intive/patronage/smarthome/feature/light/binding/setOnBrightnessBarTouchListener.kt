@@ -24,20 +24,23 @@ fun setOnBrightnessBarTouchListener(view: ImageView, lightsDetailsViewModel: Lig
             try {
                 val pixel = cache.getPixel(motionEvent.x.toInt(), motionEvent.y.toInt())
 
-                lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(motionEvent.x)
-                lightsDetailsViewModel.brightnessBarPointerX = motionEvent.x
-
                 val red = Color.red(pixel)
                 val green = Color.green(pixel)
                 val blue = Color.blue(pixel)
 
-                if (red != 0 && green != 0 && blue != 0) {
+                if (red == 0 && green == 0 && blue == 0) {
+                    Log.d("Exception", "Out of touchable area")
+                } else {
+                    with(lightsDetailsViewModel) {
+                        this.colorPickerEventListener.setBrightnessBarPointerPosition(motionEvent.x)
+                        this.brightnessBarPointerX = motionEvent.x
 
-                    lightsDetailsViewModel.red = red
-                    lightsDetailsViewModel.green = green
-                    lightsDetailsViewModel.blue = blue
+                        this.red = red
+                        this.green = green
+                        this.blue = blue
 
-                    lightsDetailsViewModel.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+                        this.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+                    }
                 }
             } catch (t: Throwable) {
                 Log.d("Exception", "Out of touchable area")

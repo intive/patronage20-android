@@ -8,7 +8,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        app:onLightsLayoutChange="@{lightDetailsViewModel}"
         android:layout_margin="@dimen/standard_break"
         android:background="@color/backgroundColor"
         android:orientation="vertical"

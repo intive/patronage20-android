@@ -27,7 +27,6 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_weight="1"
-            app:onLightsLayoutChange="@{lightDetailsViewModel}"
             android:orientation="vertical"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent">

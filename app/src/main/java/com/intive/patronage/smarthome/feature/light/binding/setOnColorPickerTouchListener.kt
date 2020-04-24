@@ -18,26 +18,30 @@ fun setOnColorPickerTouchListener(view: ImageView, lightsDetailsViewModel: Light
             try {
                 val pixel = cache.getPixel(motionEvent.x.toInt(), motionEvent.y.toInt())
 
-                lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(motionEvent.x, motionEvent.y)
-
-                lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(lightsDetailsViewModel.brightnessBarPointerEndX)
-                lightsDetailsViewModel.brightnessBarPointerX = motionEvent.x
-
                 val red = Color.red(pixel)
                 val green = Color.green(pixel)
                 val blue = Color.blue(pixel)
 
-                if (red != 0 && green != 0 && blue != 0) {
-                    lightsDetailsViewModel.red = red
-                    lightsDetailsViewModel.green = green
-                    lightsDetailsViewModel.blue = blue
+                if (red == 0 && green == 0 && blue == 0) {
+                    Log.d("Exception", "Out of touchable area")
+                } else {
+                    with(lightsDetailsViewModel) {
+                        this.colorPickerEventListener.setColorPickerPointerPosition(motionEvent.x, motionEvent.y)
 
-                    lightsDetailsViewModel.redForBrightnessBar = red
-                    lightsDetailsViewModel.greenForBrightnessBar = green
-                    lightsDetailsViewModel.blueForBrightnessBar = blue
+                        this.colorPickerEventListener.setBrightnessBarPointerPosition(lightsDetailsViewModel.brightnessBarPointerEndX)
+                        this.brightnessBarPointerX = motionEvent.x
 
-                    lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarColor(red, green, blue)
-                    lightsDetailsViewModel.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+                        this.red = red
+                        this.green = green
+                        this.blue = blue
+
+                        this.redForBrightnessBar = red
+                        this.greenForBrightnessBar = green
+                        this.blueForBrightnessBar = blue
+
+                        this.colorPickerEventListener.setBrightnessBarColor(red, green, blue)
+                        this.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+                    }
                 }
             } catch (t: Throwable) {
                 Log.d("Exception", "Out of touchable area")
