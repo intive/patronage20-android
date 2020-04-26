@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/splashScreenIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/splash_screen_icon_size"
+        android:layout_height="@dimen/splash_screen_icon_size"
         android:scaleType="fitCenter"
         android:src="@drawable/splash_screen_icon"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
         android:id="@+id/splashScreenProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="@dimen/splash_screen_loading_margin_bottom"
         android:progress="25"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
 
     <ImageView
         android:id="@+id/splashScreenLogo"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/splash_screen_logo_size"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/splashScreenIcon"
         app:layout_constraintEnd_toEndOf="parent"
