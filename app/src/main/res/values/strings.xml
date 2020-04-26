@@ -53,4 +53,5 @@
     <string name="login">Login</string>
     <string name="dahboard_fragment_class_name">DashboardFragment</string>
     <string name="home_fragment_class_name">HomeFragment</string>
+    <string name="splash_screen_text"><u>your inteligent home</u></string>
 </resources>

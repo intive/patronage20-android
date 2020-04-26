@@ -15,7 +15,7 @@
         android:width="@dimen/dialog_sensor_text_width"
         android:text="@string/placeholder"
         android:textAlignment="center"
-        android:textColor="@color/design_default_color_on_primary"
+        android:textColor="@color/text"
         android:textSize="@dimen/dashboard_details_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

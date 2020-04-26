@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/sensor_item_topbottom_margin"
     android:layout_marginRight="@dimen/sensor_item_side_margin"
     android:layout_marginBottom="@dimen/sensor_item_topbottom_margin"
-    android:background="#212121">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/sensorFlag"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/placeholder"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text"
         android:textSize="@dimen/dashboard_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/sensorDetalis"
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text"
         android:textSize="@dimen/dashboard_details_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/sensorName"

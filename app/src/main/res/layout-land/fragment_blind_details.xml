@@ -55,11 +55,12 @@
                         app:layout_constraintBottom_toTopOf="@+id/percent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="@dimen/blind_arrow_button_size"
-                        android:layout_height="@dimen/blind_arrow_button_size"/>
+                        android:layout_height="@dimen/blind_arrow_button_size"
+                        android:backgroundTint="@color/text"/>
 
                     <TextView
                         android:textSize="@dimen/blind_percent_text_size"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text"
                         android:gravity="center"
                         android:text="@={blindDetailsViewModel.percent}"
                         android:id="@+id/percent"
@@ -77,7 +78,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="@dimen/blind_arrow_button_size"
-                        android:layout_height="@dimen/blind_arrow_button_size" />
+                        android:layout_height="@dimen/blind_arrow_button_size"
+                        android:backgroundTint="@color/text"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
