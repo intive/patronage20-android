@@ -35,6 +35,7 @@ class DashboardFragment : Fragment() {
     private val dashboardCoordinator: DashboardCoordinator by inject {
         parametersOf(activity)
     }
+    private var binding : DashboardFragmentBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +47,11 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: DashboardFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false)
-        binding.lifecycleOwner = this
-        binding.dashboardViewModelDataBind = dashboardViewModel
-
-        setupRecyclerView(binding)
-        return binding.root
+       binding= DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false)
+        binding?.lifecycleOwner = viewLifecycleOwner
+        binding?.dashboardViewModelDataBind = dashboardViewModel
+        setupRecyclerView(binding!!)
+        return binding?.root
     }
 
     private fun onItemClick(sensor: DashboardSensor) {
@@ -90,7 +89,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {
-        val recyclerView: RecyclerView = binding.sensorRecyclerView
+       val recyclerView = binding.sensorRecyclerView
         recyclerView.apply {
             setHasFixedSize(true)
             val orientation = resources.configuration.orientation
@@ -102,4 +101,10 @@ class DashboardFragment : Fragment() {
             adapter = sensorsListAdapter
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
 }
