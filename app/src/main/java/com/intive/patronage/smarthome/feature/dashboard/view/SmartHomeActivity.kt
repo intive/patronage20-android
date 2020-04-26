@@ -35,9 +35,7 @@ class SmartHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
-        if (savedInstanceState == null) {
-            dashboardCoordinator.goToSmartHome()
-        }
+        dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
