@@ -49,7 +49,7 @@ class SmartHomeApplication() : Application() {
     }
 
     private fun setInitialTheme() {
-        if (preferences.checkIfContains(DARK_MODE_KEY)) {
+        if (!preferences.checkIfContains(DARK_MODE_KEY)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         } else {
             if (preferences.getBooleanFromPreference(DARK_MODE_KEY)) {
