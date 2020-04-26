@@ -1,10 +1,11 @@
 package com.intive.patronage.smarthome.di
 
 import com.intive.patronage.smarthome.feature.dashboard.model.api.authorization.AuthorizationInterceptor
-import com.intive.patronage.smarthome.feature.dashboard.model.api.mock.MockInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
+
 
 val networkApiModule = module {
 
@@ -13,7 +14,8 @@ val networkApiModule = module {
             .callTimeout(120, TimeUnit.SECONDS)
             .connectTimeout(120, TimeUnit.SECONDS)
             .addInterceptor(AuthorizationInterceptor())
-            .addInterceptor(MockInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY })
             .cache(null)
             .build()
     }

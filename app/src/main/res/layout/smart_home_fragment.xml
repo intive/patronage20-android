@@ -21,7 +21,7 @@
             android:background="@color/backgroundColor"
             app:tabMode="fixed"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:tabTextColor="@color/white"
+            app:tabTextColor="@color/text"
             app:tabIndicatorHeight="@dimen/tab_indicator_height"
             app:tabSelectedTextColor="@color/colorAccent"/>
 
