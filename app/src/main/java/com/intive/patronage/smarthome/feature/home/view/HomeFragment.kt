@@ -1,12 +1,12 @@
 package com.intive.patronage.smarthome.feature.home.view
 
 import android.os.Bundle
-import android.util.Log
+import androidx.lifecycle.Observer
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.common.replace
 import com.intive.patronage.smarthome.feature.home.viewmodel.SensorDialogViewModel
+
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -21,7 +21,12 @@ class HomeFragment : Fragment() {
     ): View? {
         val myView = inflater.inflate(R.layout.home_fragment, container, false)
         image = myView.findViewById(R.id.home)
-        image.create(dialogViewModel.items, fragmentManager!!)
+        image.create(fragmentManager!!)
+        dialogViewModel.items.observe(this, Observer {
+            if (it != null) {
+                image.setData(it)
+            }
+        })
         return myView
     }
 

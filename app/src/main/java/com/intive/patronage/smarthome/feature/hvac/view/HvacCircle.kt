@@ -5,6 +5,7 @@ import android.graphics.*
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
@@ -411,9 +412,13 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 touchRadius = 50.0
                 heightOffset = 60
             }
-            320 -> {
-                textPaint.textSize = 45f
-                textLabelPaint.textSize = 40f
+            in 280..330 -> {
+                textPaint.textSize = metrics.densityDpi *0.13f
+                textLabelPaint.textSize = metrics.densityDpi *0.12f
+            }
+            in 400..480 -> {
+                textPaint.textSize = metrics.densityDpi *0.09f
+                textLabelPaint.textSize = metrics.densityDpi *0.07f
             }
         }
     }

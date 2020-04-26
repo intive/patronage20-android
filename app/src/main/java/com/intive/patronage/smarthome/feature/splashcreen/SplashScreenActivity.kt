@@ -1,8 +1,6 @@
 package com.intive.patronage.smarthome.feature.splashcreen
 
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,8 +8,6 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
-import io.reactivex.Completable
-import io.reactivex.Single
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf

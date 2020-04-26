@@ -8,7 +8,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-
 class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
 
     private val minWaitTime = 5L
@@ -25,15 +24,11 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 dashboard.value = it.first
-                complete.value = true
-            }, { error.value = true })
+            }, { error.value = true }, { complete.value = true })
     }
-
 
     override fun onCleared() {
         super.onCleared()
         dashboardCall?.dispose()
     }
-
-
 }

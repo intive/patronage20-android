@@ -7,7 +7,7 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.common.replace
 
-class SensorsListAdapter(private val onDashboardClickListener: (sensor: DashboardSensor)-> Unit):
+class SensorsListAdapter(private val onDashboardClickListener: (sensor: DashboardSensor) -> Unit) :
     ListAdapter<List<DashboardSensor>, SensorsViewHolder>(SensorsDiffCallback()) {
 
     private val sensorsList = mutableListOf<DashboardSensor>()

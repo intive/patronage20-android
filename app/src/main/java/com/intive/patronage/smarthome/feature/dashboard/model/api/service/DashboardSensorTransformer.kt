@@ -5,6 +5,8 @@ import com.intive.patronage.smarthome.common.convertHSVtoRGB
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import java.lang.StringBuilder
 
+const val TRANSFORMER_SEPARATOR = ","
+
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
     lights.forEach {
@@ -101,13 +103,10 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                details.append(R.string.hvac_room_heating_temperature)
-                    .append(it.heatingTemperature)
-                    .append(R.string.transformer_separator)
-                    .append(R.string.hvac_room_cooling_temperature)
+                details.append(it.heatingTemperature)
+                    .append(TRANSFORMER_SEPARATOR)
                     .append(it.coolingTemperature)
-                    .append(R.string.transformer_separator)
-                    .append(R.string.hvac_room_hysteresis)
+                    .append(TRANSFORMER_SEPARATOR)
                     .append(it.hysteresis)
                     .toString()
             )
@@ -118,18 +117,18 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
 
 fun transfromFromHVACStatus(hvacStatus: HVACStatus): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
-        val details = StringBuilder()
-        if (hvacStatus.heating) {
-            details.append(R.string.hvac_status_heating)
-        } else {
-            details.append(R.string.hvac_status_cooling)
-        }
-        sensors.add(
-            DashboardSensor(
-                0.toString(),
-                "",
-                details.toString()
-            )
+    val details = StringBuilder()
+    if (hvacStatus.heating) {
+        details.append(R.string.hvac_status_heating)
+    } else {
+        details.append(R.string.hvac_status_cooling)
+    }
+    sensors.add(
+        DashboardSensor(
+            0.toString(),
+            "",
+            details.toString()
         )
+    )
     return sensors
 }
