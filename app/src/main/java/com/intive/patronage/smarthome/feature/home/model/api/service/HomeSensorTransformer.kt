@@ -8,7 +8,8 @@ fun transformFromLights(lights: List<Light>): List<HomeSensor> {
     lights.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
+
                 it.type,
                 it.mapPosition
             )
@@ -22,7 +23,7 @@ fun transformFromTemperatureSensors(temperatureSensors: List<TemperatureSensor>)
     temperatureSensors.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
                 it.type,
                 it.mapPosition
             )
@@ -36,7 +37,7 @@ fun transformFromSmokeSensors(smokeSensors: List<SmokeSensor>): List<HomeSensor>
     smokeSensors.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
                 it.type,
                 it.mapPosition
             )
@@ -50,7 +51,7 @@ fun transformFromWindowBlinds(windowBlinds: List<WindowBlind>): List<HomeSensor>
     windowBlinds.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
                 it.type,
                 it.mapPosition
             )
@@ -64,7 +65,7 @@ fun transfromFromWindowSensors(windowSensors: List<WindowSensor>): List<HomeSens
     windowSensors.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
                 it.type,
                 it.mapPosition
             )
@@ -78,7 +79,7 @@ fun transformFromRFIDSensors(rfidSensors: List<RFIDSensor>): List<HomeSensor> {
     rfidSensors.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
                 it.type,
                 it.mapPosition
             )
@@ -92,7 +93,7 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<HomeSensor> {
     hvacRooms.forEach {
         sensors.add(
             HomeSensor(
-                it.id.toString(),
+                it.id,
                 it.type,
                 it.mapPosition
             )

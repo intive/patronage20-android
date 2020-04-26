@@ -63,7 +63,7 @@ enum class SensorDialogType(val type: String) {
         }
 
         override fun getPaintColor(): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            return R.color.hvacSensor
         }
     };
 

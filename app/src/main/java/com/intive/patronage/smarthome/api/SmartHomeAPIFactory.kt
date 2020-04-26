@@ -10,8 +10,13 @@ private const val URL = "https://patronage20-js-master.herokuapp.com"
 
 class SmartHomeAPIFactory(private val httpClient: OkHttpClient) {
     val moshi =
-        Moshi.Builder().add(TemperatureAdapter()).add(HVACRoomAdapter()).add(WindowBlindAdapter())
-            .add(LightAdapter()).build()
+        Moshi.Builder()
+            .add(TemperatureAdapter())
+            .add(HVACRoomAdapter())
+            .add(WindowBlindAdapter())
+            .add(LightAdapter())
+            .build()
+
 
     fun buildRetrofitClient(): Retrofit = Retrofit.Builder()
         .callFactory(httpClient)
