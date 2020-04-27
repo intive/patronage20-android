@@ -42,7 +42,10 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
             if (it.isSuccessful) {
                 Toast.makeText(appCompatActivity, "Google sign in finished successfully", Toast.LENGTH_SHORT).show()
                 val data = appCompatActivity.intent?.data
-                loginCoordinator.goToScreenBasedOnDeeplinkUri(data)
+
+                data?.let {
+                    loginCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                } ?: loginCoordinator.goToScreen()
             } else {
                 mGoogleSignInClient.signOut()
                 Toast.makeText(appCompatActivity.applicationContext, "Google sign in failed", Toast.LENGTH_SHORT).show()

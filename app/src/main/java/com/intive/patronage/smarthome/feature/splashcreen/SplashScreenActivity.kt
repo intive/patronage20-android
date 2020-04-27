@@ -40,17 +40,20 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val data = intent?.data
         splashScreenViewModel.complete.observe(this, Observer { complete ->
-//<<<<<<< HEAD
+
             if (complete && FirebaseAuth.getInstance().currentUser != null) {
-                splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                data?.let {
+                    splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                } ?: splashScreenCoordinator.goToMainScreen()
             } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
                 splashScreenCoordinator.goToLoginScreen()
-/*=======
+
+/*
             if (complete) {
                 data?.let {
                     splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
                 } ?: splashScreenCoordinator.goToMainScreen()
->>>>>>> develop*/
+*/
             }
         })
     }
