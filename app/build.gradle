@@ -18,7 +18,7 @@ android {
         }
     }
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     compileOptions {
         sourceCompatibility = 1.8
@@ -84,5 +84,5 @@ dependencies {
     implementation projectDependencies.play_services_auth
     implementation projectDependencies.firebase_analytics
     implementation projectDependencies.logging_interceptor
-    implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
+    implementation projectDependencies.view_pager2
 }

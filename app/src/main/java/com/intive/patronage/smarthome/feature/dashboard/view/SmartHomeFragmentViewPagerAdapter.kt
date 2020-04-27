@@ -19,20 +19,4 @@ class SmartHomeFragmentViewPagerAdapter(fragmentManager: FragmentManager, lifecy
 
     override fun getItemCount() = 2
 
-//    override fun getItem(position: Int): Fragment {
-//        return when (position) {
-//            0 -> DashboardFragment()
-//            else -> HomeFragment()
-//        }
-//    }
-//
-//    override fun getCount(): Int = 2
-//
-//    override fun getPageTitle(position: Int): CharSequence? {
-//        return when (position) {
-//            // add to strings.xml
-//            0 -> titleMap[0]
-//            else -> titleMap[1]
-//        }
-//    }
 }

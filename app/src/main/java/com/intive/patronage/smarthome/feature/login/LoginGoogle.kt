@@ -24,10 +24,10 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
 
     fun initialGoogleSignIn() {
         mGoogleSignInOptions = GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(appCompatActivity.applicationContext.getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(appCompatActivity.applicationContext.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(appCompatActivity.applicationContext, mGoogleSignInOptions)
     }
