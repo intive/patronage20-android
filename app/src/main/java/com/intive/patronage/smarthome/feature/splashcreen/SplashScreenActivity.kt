@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
@@ -39,10 +40,20 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val data = intent?.data
         splashScreenViewModel.complete.observe(this, Observer { complete ->
+
+            if (complete && FirebaseAuth.getInstance().currentUser != null) {
+                data?.let {
+                    splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                } ?: splashScreenCoordinator.goToMainScreen()
+            } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
+                splashScreenCoordinator.goToLoginScreen()
+
+/*
             if (complete) {
                 data?.let {
                     splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
                 } ?: splashScreenCoordinator.goToMainScreen()
+*/
             }
         })
     }
@@ -56,7 +67,5 @@ class SplashScreenActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN)
-
     }
-
 }
