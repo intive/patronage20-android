@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2e2d32</color>
-    <color name="colorPrimaryDark">#2e2d32</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#F0F0F0</color>
     <color name="colorAccent">#D69C1E</color>
     <color name="colorAccentLightDark">#696969</color>
-    <color name="backgroundColor">#2e2d32</color>
+    <color name="backgroundColor">#F0F0F0</color>
     <color name="transparent">#00000000</color>
     <color name="splashScreenProgressbar">#413F3F</color>
     <color name="alert">#FF8C0000</color>
@@ -19,5 +19,5 @@
     <color name="hvacSensor">#913F86</color>
     <color name="windowBlindsSensor">#3FA194</color>
     <color name="error">#B00020</color>
-    <color name="black">#000</color>
+    <color name="text">#000</color>
 </resources>

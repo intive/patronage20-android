@@ -46,6 +46,7 @@
     <string name="graph_24_h">24 h</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
+    <string name="filter_view_http_splash">filter_view_http_splash</string>
     <string name="network_connection_error">No internet connection</string>
     <string name="api_connection_error">Couldn\'t connect to SmartHome</string>
     <string name="house_image">House image</string>
@@ -53,4 +54,5 @@
     <string name="login">Login</string>
     <string name="dahboard_fragment_class_name">DashboardFragment</string>
     <string name="home_fragment_class_name">HomeFragment</string>
+    <string name="splash_screen_text"><u>your intelligent home</u></string>
 </resources>

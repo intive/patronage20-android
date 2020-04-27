@@ -22,9 +22,11 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
         dashboardCall = dashboardService.fetchDashboardWithDelay(minWaitTime, maxWaitTime)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                dashboard.value = it.first
-            }, { error.value = true }, { complete.value = true })
+            .subscribe(
+                { dashboard.value = it.first },
+                { error.value = true },
+                { complete.value = true }
+            )
     }
 
     override fun onCleared() {

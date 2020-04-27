@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -23,18 +22,20 @@ class SmartHomeActivity : AppCompatActivity() {
 
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
-    private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this)}
+    private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this) }
     private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
     private val networkConnectionService: NetworkConnectionService by inject { parametersOf(this) }
-    private val smartHomeActivityViewModel: SmartHomeActivityViewModel by viewModel { parametersOf(networkConnectionService)}
+    private val smartHomeActivityViewModel: SmartHomeActivityViewModel by viewModel {
+        parametersOf(
+            networkConnectionService
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
-        if (savedInstanceState == null) {
-            dashboardCoordinator.goToSmartHome()
-        }
+        dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -50,7 +51,7 @@ class SmartHomeActivity : AppCompatActivity() {
             this, Observer { networkConnection ->
                 if (!networkConnection)
                     alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
-                 else
+                else
                     alertSnackbar.hideSnackbar()
             })
     }
@@ -68,7 +69,7 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.developer_settings -> {
                 dashboardCoordinator.goToDeveloperSettings()
             }
@@ -79,11 +80,11 @@ class SmartHomeActivity : AppCompatActivity() {
         return true
     }
 
-    fun hideLogo(){
+    fun hideLogo() {
         toolbarLogo.visibility = View.GONE
     }
 
-    fun showLogo(){
+    fun showLogo() {
         toolbarLogo.visibility = View.VISIBLE
     }
 }
