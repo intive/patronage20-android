@@ -9,6 +9,6 @@ fun convertRGBtoHSV(red: Int, green: Int, blue: Int): FloatArray {
 }
 
 fun convertHSVtoRGB(hue: Int, saturation: Int, value: Int): Int {
-    val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat(), value.toFloat())
+    val hsv = floatArrayOf(hue.toFloat(), saturation.toFloat() / 100, value.toFloat() / 100)
     return Color.HSVToColor(hsv)
 }
