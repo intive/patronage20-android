@@ -44,7 +44,7 @@
             <View
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/black"
+                android:background="@color/text"
                 android:id="@+id/currentColor"
                 app:layout_constraintTop_toBottomOf="@id/brightness"
                 app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
