@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class SmartHomeFragment : Fragment() {
     private val mFirebaseAnalytics: AnalyticsWrapper by inject()
     private val viewPagerAdapter: SmartHomeFragmentViewPagerAdapter
             by inject { parametersOf(childFragmentManager, lifecycle) }
+//    private lateinit var tabLayoutMediator: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,21 +35,26 @@ class SmartHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
         setupToolbar()
         setupTabLayout()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
         smartHomeViewPager.adapter = null
     }
 
     fun setupTabLayout() {
-        smartHomeViewPager.adapter = SmartHomeFragmentViewPagerAdapter(childFragmentManager, lifecycle)
-        TabLayoutMediator(smartHomeTabLayout, smartHomeViewPager) { tab, position ->
+        smartHomeViewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(smartHomeTabLayout, smartHomeViewPager)
+        { tab, position ->
             when (position) {
-                0 -> tab.text = "dashboard"
-                1 -> tab.text = "home"
+                0 -> tab.text = getString(R.string.dashboard_appbar)
+                1 -> tab.text = getString(R.string.home_appbar)
             }
         }.attach()
 

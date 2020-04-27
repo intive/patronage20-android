@@ -21,6 +21,7 @@ ext {
     firebase_auth_version = "19.3.0"
     play_services_auth = "18.0.0"
     firebase_analytics_version = "17.3.0"
+    view_pager2_version = "1.1.0-alpha01"
 
     projectDependencies = [
             koin                    : "org.koin:koin-android:$koin_version",
@@ -51,5 +52,6 @@ ext {
             firebase_auth           : "com.google.firebase:firebase-auth:$firebase_auth_version",
             play_services_auth      : "com.google.android.gms:play-services-auth:$play_services_auth",
             firebase_analytics      : "com.google.firebase:firebase-core:$firebase_analytics_version",
+            view_pager2             : "androidx.viewpager2:viewpager2:$view_pager2_version"
     ]
 }
