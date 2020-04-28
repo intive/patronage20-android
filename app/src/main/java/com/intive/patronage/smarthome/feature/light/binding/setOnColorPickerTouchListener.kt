@@ -29,7 +29,7 @@ fun setOnColorPickerTouchListener(view: ImageView, lightsDetailsViewModel: Light
                         this.colorPickerEventListener.setColorPickerPointerPosition(motionEvent.x, motionEvent.y)
 
                         this.colorPickerEventListener.setBrightnessBarPointerPosition(lightsDetailsViewModel.brightnessBarPointerEndX)
-                        this.brightnessBarPointerX = motionEvent.x
+                        this.brightnessBarPointerX = lightsDetailsViewModel.brightnessBarPointerEndX
 
                         this.red = red
                         this.green = green
