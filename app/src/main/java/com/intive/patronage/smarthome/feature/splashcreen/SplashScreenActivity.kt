@@ -1,14 +1,22 @@
 package com.intive.patronage.smarthome.feature.splashcreen
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
+import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -22,15 +30,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        observeViewModel()
-    }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) fullScreen()
-    }
-
-    private fun observeViewModel() {
         splashScreenViewModel.error.observe(this, Observer { error ->
             if (error) alertDialog.showSmartHomeDialog(
                 this, R.string.error_title,
@@ -38,27 +38,96 @@ class SplashScreenActivity : AppCompatActivity() {
             ) { finish() }
         })
 
-        val data = intent?.data
-        splashScreenViewModel.complete.observe(this, Observer { complete ->
-
-            if (complete && FirebaseAuth.getInstance().currentUser != null) {
-                data?.let {
-                    splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
-                } ?: splashScreenCoordinator.goToMainScreen()
-            } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
-                splashScreenCoordinator.goToLoginScreen()
-
-/*
-            if (complete) {
-                data?.let {
-                    splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
-                } ?: splashScreenCoordinator.goToMainScreen()
-*/
-            }
-        })
+        startFadeInAnimation()
+        startProgressBarAnimation()
     }
 
-    // Setting fullscreen
+    private fun startFadeInAnimation() {
+        val icon = findViewById<ImageView>(R.id.splashScreenIcon)
+        val iconLayout = findViewById<RelativeLayout>(R.id.iconLayout)
+        val logo = findViewById<ImageView>(R.id.splashScreenLogo)
+
+        icon.foreground = resources.getDrawable(R.drawable.wifi_animation)
+        val wifiAnimation = icon.foreground as AnimationDrawable
+        wifiAnimation.start()
+
+        val fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom)
+        fromBottom.duration = 1000
+        val fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top)
+        fromTop.duration = 1000
+
+        icon.animation = fromBottom
+        iconLayout.animation = fromBottom
+        logo.animation = fromTop
+
+        icon.animate().alpha(1f).duration = 2000
+        iconLayout.animate().alpha(1f).duration = 2000
+        logo.animate().alpha(1f).duration = 2000
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) fullScreen()
+    }
+
+    private fun startProgressBarAnimation() {
+        val progressBar = findViewById<ProgressBar>(R.id.splashScreenProgressBar)
+        progressBar.max = 1000
+
+        val progressAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max / 2)
+        progressAnimator.interpolator = LinearInterpolator()
+        progressAnimator.duration = 5000
+
+        progressAnimator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {}
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationCancel(p0: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator) {
+                splashScreenViewModel.complete.observe(this@SplashScreenActivity, Observer { complete ->
+                    if (!complete) {
+                        val animator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
+                        animator.interpolator = LinearInterpolator()
+                        animator.duration = 25000
+                        animator.start()
+                    } else {
+                        val animator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
+                        animator.interpolator = LinearInterpolator()
+                        animator.duration = 1000
+
+                        animator.addListener(object : Animator.AnimatorListener {
+                            override fun onAnimationStart(animation: Animator) {}
+                            override fun onAnimationRepeat(p0: Animator?) {}
+                            override fun onAnimationCancel(p0: Animator?) {}
+
+                            override fun onAnimationEnd(animation: Animator) {
+                                onLoadingEnd(complete)
+                            }
+                        })
+                        animator.start()
+                    }
+                })
+            }
+        })
+        progressAnimator.start()
+    }
+
+    private fun onLoadingEnd(complete: Boolean) {
+        val data = intent?.data
+
+        if (complete && FirebaseAuth.getInstance().currentUser != null) {
+            data?.let {
+                splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
+            } ?: splashScreenCoordinator.goToMainScreen()
+        } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
+            splashScreenCoordinator.goToLoginScreen()
+        }
+
+//      if (complete)
+//          data?.let { splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data) }
+//              ?: splashScreenCoordinator.goToMainScreen()
+    }
+
     private fun fullScreen() {
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
