@@ -54,6 +54,7 @@
     </RelativeLayout>
 
     <ProgressBar
+        android:max="1000"
         android:progress="0"
         android:progressDrawable="@drawable/progress_bar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
