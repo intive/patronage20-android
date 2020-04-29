@@ -10,7 +10,7 @@ import kotlin.random.Random
 class TemperatureAdapter {
     @FromJson
     fun fromJson(temperature: TemperatureSensor): TemperatureSensor {
-        return TemperatureSensor(temperature.id, temperature.type, Random.nextInt(31) + 10, temperature.mapPosition)
+        return TemperatureSensor(temperature.id, temperature.type, Random.nextInt(31) + 10, temperature._mapPosition)
     }
 }
 
@@ -25,7 +25,7 @@ class HVACRoomAdapter {
             10,
             1,
             hvacRoom.windowSensorIds,
-            hvacRoom.mapPosition
+            hvacRoom._mapPosition
         )
     }
 }
@@ -33,13 +33,13 @@ class HVACRoomAdapter {
 class WindowBlindAdapter {
     @FromJson
     fun fromJson(windowBlind: WindowBlind): WindowBlind {
-        return WindowBlind(windowBlind.id, windowBlind.type, 40, windowBlind.mapPosition)
+        return WindowBlind(windowBlind.id, windowBlind.type, 40, windowBlind._mapPosition)
     }
 }
 
 class LightAdapter {
     @FromJson
     fun fromJson(light: Light): Light {
-        return Light(light.id, light.type, 40, 85, 100, light.mapPosition)
+        return Light(light.id, light.type, 40, 85, 100, light._mapPosition)
     }
 }

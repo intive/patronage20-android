@@ -77,12 +77,21 @@ class SensorDialog : DialogFragment() {
         if (sensor.mapPosition != null) {
             dialogViewModel.deleteSensor(sensor._id)
         } else {
-            if (image.addSensor(percentToCoordinateX(actualSensorX, image.width), percentToCoordinateY(actualSensorY, image.height), sensor.sensorType)) {
-                dialogViewModel.postSensor(sensor._id,
-                    sensor.copy(mapPosition = MapPosition(actualSensorX, actualSensorY)))
+            if (image.addSensor(
+                    percentToCoordinateX(actualSensorX, image.width),
+                    percentToCoordinateY(actualSensorY, image.height),
+                    sensor.sensorType
+                )
+            ) {
+                sensor.mapPosition = MapPosition(actualSensorX, actualSensorY)
+                dialogViewModel.postSensor(
+                    sensor._id,
+                    sensor
+                )
             }
         }
-        dialog?.dismiss()   }
+        dialog?.dismiss()
+    }
 
 
 }

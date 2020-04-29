@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.dashboard.model
 
+import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
 import com.squareup.moshi.Json
 
 data class HVACRoom(
@@ -10,5 +11,5 @@ data class HVACRoom(
     @Json(name = "hysteresis") val hysteresis: Int,
     @Json(name = "temperatureSensorId") val temperatureSensorId: Int,
     @Json(name = "windowSensorIds") val windowSensorIds: List<Int>,
-    @Json(name = "mapPosition") val mapPosition: MapPosition?
-)
+    @Json(name = "mapPosition") val _mapPosition: MapPosition?
+) : HomeSensor(id, type, _mapPosition)
