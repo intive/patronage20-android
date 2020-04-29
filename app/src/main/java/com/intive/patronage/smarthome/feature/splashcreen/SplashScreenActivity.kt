@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
@@ -101,28 +100,30 @@ class SplashScreenActivity : AppCompatActivity() {
                     override fun onFinish() {}
                 }.start()
 
+                val animator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
+
                 splashScreenViewModel.complete.observe(this@SplashScreenActivity, Observer { complete ->
                     if (!complete) {
-                        val animator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
                         animator.interpolator = LinearInterpolator()
                         animator.duration = timeUntilMaxWaitTime
                         animator.start()
                     } else {
-                        val animator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
-                        animator.interpolator = LinearInterpolator()
-                        animator.duration = progressOnCompleteDuration
+                        animator.cancel()
 
-                        animator.addListener(object : Animator.AnimatorListener {
+                        val animatorOnComplete = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
+                        animatorOnComplete.interpolator = LinearInterpolator()
+                        animatorOnComplete.duration = progressOnCompleteDuration
+
+                        animatorOnComplete.addListener(object : Animator.AnimatorListener {
                             override fun onAnimationStart(animation: Animator) {}
                             override fun onAnimationRepeat(p0: Animator?) {}
                             override fun onAnimationCancel(p0: Animator?) {}
 
                             override fun onAnimationEnd(animation: Animator) {
-                                progressBar.isGone = true
                                 onLoadingEnd(complete)
                             }
                         })
-                        animator.start()
+                        animatorOnComplete.start()
                     }
                 })
             }
