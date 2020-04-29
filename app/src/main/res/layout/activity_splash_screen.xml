@@ -8,51 +8,61 @@
     tools:context=".feature.splashcreen.SplashScreenActivity">
 
     <ImageView
-        android:id="@+id/splashScreenIcon"
-        android:layout_width="@dimen/splash_screen_icon_size"
-        android:layout_height="@dimen/splash_screen_icon_size"
-        android:scaleType="fitCenter"
-        android:src="@drawable/splash_screen_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.636"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/splash_screen_text"
-        app:layout_constraintBottom_toTopOf="@+id/splashScreenProgressBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splashScreenIcon"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ProgressBar
-        android:id="@+id/splashScreenProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/splash_screen_loading_margin_bottom"
-        android:progress="25"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
+        android:alpha="0"
         android:id="@+id/splashScreenLogo"
         android:layout_width="@dimen/splash_screen_logo_size"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/splashScreenIcon"
+        app:layout_constraintBottom_toTopOf="@+id/iconLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.254"
         app:srcCompat="@drawable/logo" />
+
+    <RelativeLayout
+        android:alpha="0"
+        android:id="@+id/iconLayout"
+        android:layout_width="@dimen/splash_screen_icon_size"
+        android:layout_height="@dimen/splash_screen_icon_size"
+        app:layout_constraintBottom_toTopOf="@id/splashScreenProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splashScreenLogo"
+        android:background="@drawable/splash_screen_home_icon"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:rotation="45"
+            android:layout_marginStart="@dimen/wifi_icon_margin_start"
+            android:layout_marginEnd="@dimen/wifi_icon_margin_end"
+            android:layout_marginTop="@dimen/wifi_icon_margin_top"
+            android:layout_marginBottom="@dimen/wifi_icon_margin_bottom"
+            android:id="@+id/splashScreenIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_screen_text"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:max="1000"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:id="@+id/splashScreenProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

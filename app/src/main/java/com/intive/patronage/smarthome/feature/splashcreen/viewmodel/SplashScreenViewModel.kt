@@ -10,8 +10,8 @@ import io.reactivex.schedulers.Schedulers
 
 class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
 
-    private val minWaitTime = 5L
-    private val maxWaitTime = 30L
+    val minWaitTime = 5L
+    val maxWaitTime = 30L
 
     private var dashboard = MutableLiveData<Dashboard>()
     var error = MutableLiveData<Boolean>().apply { value = false }
