@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
@@ -96,6 +97,7 @@ class DashboardFragment : Fragment() {
                 layoutManager = GridLayoutManager(activity, 2)
             }
             adapter = sensorsListAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
     }
 
