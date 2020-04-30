@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.splashcreen
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -18,6 +19,7 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
 import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
+import com.intive.patronage.smarthome.notifications.NotificationsService
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -140,6 +142,10 @@ class SplashScreenActivity : AppCompatActivity() {
             } ?: splashScreenCoordinator.goToMainScreen()
         } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
             splashScreenCoordinator.goToLoginScreen()
+        }
+
+        Intent(this, NotificationsService::class.java).also { intent ->
+            startService(intent)
         }
 
         timer.cancel()

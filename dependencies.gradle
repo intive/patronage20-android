@@ -22,6 +22,7 @@ ext {
     play_services_auth = "18.0.0"
     firebase_analytics_version = "17.3.0"
     logging_interceptor_version = "4.5.0"
+    support_compat_version = "28.0.0"
 
     projectDependencies = [
             koin                    : "org.koin:koin-android:$koin_version",
@@ -52,6 +53,7 @@ ext {
             firebase_auth           : "com.google.firebase:firebase-auth:$firebase_auth_version",
             play_services_auth      : "com.google.android.gms:play-services-auth:$play_services_auth",
             firebase_analytics      : "com.google.firebase:firebase-core:$firebase_analytics_version",
-            logging_interceptor     : "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+            logging_interceptor     : "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version",
+            support_compat          : "com.android.support:support-compat:$support_compat_version"
     ]
 }

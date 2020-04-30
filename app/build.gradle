@@ -77,4 +77,5 @@ dependencies {
     implementation projectDependencies.play_services_auth
     implementation projectDependencies.firebase_analytics
     implementation projectDependencies.logging_interceptor
+    implementation projectDependencies.support_compat
 }
