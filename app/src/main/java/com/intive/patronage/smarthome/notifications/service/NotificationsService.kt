@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.notifications
+package com.intive.patronage.smarthome.notifications.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,40 +7,37 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.os.PowerManager
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.api.HVACRoomAdapter
-import com.intive.patronage.smarthome.api.LightAdapter
-import com.intive.patronage.smarthome.api.TemperatureAdapter
-import com.intive.patronage.smarthome.api.WindowBlindAdapter
-import com.intive.patronage.smarthome.feature.dashboard.model.api.authorization.AuthorizationInterceptor
+import com.intive.patronage.smarthome.notifications.api.NotificationsAPI
 import com.intive.patronage.smarthome.notifications.model.Notification
-import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import org.koin.core.KoinComponent
+import org.koin.core.get
 import java.util.concurrent.TimeUnit
 
 private const val CHANNEL_ID = "default_channel_id"
-private const val URL = "https://patronage20-js-master.herokuapp.com"
+//private const val URL = "https://patronage20-js-master.herokuapp.com"
 
-class NotificationsService : Service() {
-    private val timeout = 2L
+class NotificationsService : Service(), KoinComponent {
+    //private val timeout = 2L
     private val initialDelay = 0L
     private val period = 5L
 
-    private lateinit var notificationsAPI: NotificationsAPI
-    private var disposable: Disposable? = null
+    private var notificationsAPI: NotificationsAPI = get()
+    private var getDisposable: Disposable? = null
+    private var deleteDisposable: Disposable? = null
 
-    private lateinit var previousNotifications: HashMap<Int, Notification>
+    private var previousNotifications: HashMap<Int, Notification> = HashMap(100)
+    private var wakeLock: PowerManager.WakeLock? = null
 
-    private fun buildMoshiConverter() = Moshi.Builder()
+    /*private fun buildMoshiConverter() = Moshi.Builder()
         .add(TemperatureAdapter())
         .add(HVACRoomAdapter())
         .add(WindowBlindAdapter())
@@ -59,25 +56,36 @@ class NotificationsService : Service() {
         .baseUrl(URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(buildMoshiConverter()))
-        .build()
+        .build()*/
 
     private fun getNotifications() = notificationsAPI.getNotifications().toObservable()
 
     private fun getNotificationsInInterval() = Observable.interval(initialDelay, period, TimeUnit.SECONDS)
             .flatMap { getNotifications() }
 
-    private fun showNotification(title: String, text: String) {
+    private fun deleteNotification(id: Int) {
+        deleteDisposable = notificationsAPI.deleteNotification(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.newThread())
+            .subscribe()
+    }
+
+    private fun showNotification(title: String, text: String, id: Int) {
         createNotificationChannel()
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this,
+                CHANNEL_ID
+            )
             .setSmallIcon(R.drawable.ic_home_white_24dp)
             .setContentTitle(title)
             .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(0, notification.build())
+            notify(id, notification.build())
         }
+
+        //deleteNotification(id)
     }
 
     private fun createNotificationChannel() {
@@ -93,36 +101,52 @@ class NotificationsService : Service() {
         }
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        notificationsAPI = buildRetrofitClient().create(NotificationsAPI::class.java)
-
-        disposable = getNotificationsInInterval()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.newThread())
-            .subscribe({ it ->
-                Log.d("Notifications Service", it.toString())
-                showNotification("Title", "Some text content.")
-
-                if (previousNotifications.isNotEmpty()) {
-                    it.notifications.forEach {
-                        for (key in previousNotifications.keys) {
-
-                        }
+    private fun findNewNotifications(notificationsList: List<Notification>) {
+        notificationsList.forEach {
+            if (!it.isChecked) {
+                var isThere = false
+                for (key in previousNotifications.keys) {
+                    if (previousNotifications[key] == it) {
+                        isThere = true
+                        break
                     }
                 }
+                if (!isThere) {
+                    showNotification("Title", "Some text content.", it.id)
+                }
+            }
+        }
+    }
 
-                it.notifications.forEach { notification ->
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        //notificationsAPI = buildRetrofitClient().create(NotificationsAPI::class.java)
+
+        wakeLock = (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "EndlessService::lock").apply {
+                acquire()
+            }
+        }
+
+        getDisposable = getNotificationsInInterval()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.newThread())
+            .subscribe({
+                Log.d("Notifications Service", it.toString())
+
+                showNotification("Title", "Some text content.", 0) // just for testing
+
+                if (previousNotifications.isNotEmpty()) {
+                    findNewNotifications(it)
+                }
+
+                it.forEach { notification ->
                     previousNotifications[notification.id] = notification
                 }
-
-                for (key in previousNotifications.keys) {
-                    Log.d("Notifications", previousNotifications[key].toString())
-                }
             },{
-                Log.d("Exception", "ERROR")
+                Log.d("Exception", it.toString())
             })
 
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -130,7 +154,21 @@ class NotificationsService : Service() {
     }
 
     override fun onDestroy() {
-        disposable?.dispose()
+        //getDisposable?.dispose()
+        //deleteDisposable?.dispose()
+
+        val broadcastIntent = Intent().apply {
+            action = "restart_service"
+            setClass(this@NotificationsService, Receiver::class.java)
+        }
+        this.sendBroadcast(broadcastIntent)
+
+        wakeLock?.let {
+            if (it.isHeld) {
+                it.release()
+            }
+        }
+
         super.onDestroy()
     }
 }

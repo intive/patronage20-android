@@ -50,7 +50,19 @@
             </intent-filter>
         </service>
 
-        <service android:name=".notifications.NotificationsService"/>
+        <receiver
+            android:name=".notifications.service.Receiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="restart_service" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".notifications.service.NotificationsService"
+            android:enabled="true" />
+
     </application>
 
 </manifest>
