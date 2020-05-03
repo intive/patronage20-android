@@ -54,7 +54,7 @@
             android:name=".notifications.service.Receiver"
             android:enabled="true" >
             <intent-filter>
-                <action android:name="restart_service" />
+                <action android:name="RESTART_SERVICE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

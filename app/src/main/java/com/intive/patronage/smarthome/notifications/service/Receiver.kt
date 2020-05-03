@@ -7,10 +7,9 @@ import android.os.Build
 
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == "restart_service") {
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == BROADCAST_INTENT_ACTION) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //context.startForegroundService(Intent(context, NotificationsService::class.java))
-                context.startService(Intent(context, NotificationsService::class.java))
+                context.startForegroundService(Intent(context, NotificationsService::class.java))
             } else {
                 context.startService(Intent(context, NotificationsService::class.java))
             }

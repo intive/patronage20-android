@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.intive.patronage.smarthome.R
@@ -22,11 +21,10 @@ import org.koin.core.KoinComponent
 import org.koin.core.get
 import java.util.concurrent.TimeUnit
 
-private const val CHANNEL_ID = "default_channel_id"
-//private const val URL = "https://patronage20-js-master.herokuapp.com"
+private const val CHANNEL_ID = "DEFAULT_CHANNEL_ID"
+const val BROADCAST_INTENT_ACTION = "RESTART_SERVICE"
 
 class NotificationsService : Service(), KoinComponent {
-    //private val timeout = 2L
     private val initialDelay = 0L
     private val period = 5L
 
@@ -37,27 +35,6 @@ class NotificationsService : Service(), KoinComponent {
     private var previousNotifications: HashMap<Int, Notification> = HashMap(100)
     private var wakeLock: PowerManager.WakeLock? = null
 
-    /*private fun buildMoshiConverter() = Moshi.Builder()
-        .add(TemperatureAdapter())
-        .add(HVACRoomAdapter())
-        .add(WindowBlindAdapter())
-        .add(LightAdapter())
-        .build()
-
-    private fun buildOkHttpClient() = OkHttpClient.Builder()
-        .callTimeout(timeout, TimeUnit.MINUTES)
-        .connectTimeout(timeout, TimeUnit.MINUTES)
-        .addInterceptor(AuthorizationInterceptor())
-        .cache(null)
-        .build()
-
-    private fun buildRetrofitClient() = Retrofit.Builder()
-        .callFactory(buildOkHttpClient())
-        .baseUrl(URL)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(MoshiConverterFactory.create(buildMoshiConverter()))
-        .build()*/
-
     private fun getNotifications() = notificationsAPI.getNotifications().toObservable()
 
     private fun getNotificationsInInterval() = Observable.interval(initialDelay, period, TimeUnit.SECONDS)
@@ -65,9 +42,14 @@ class NotificationsService : Service(), KoinComponent {
 
     private fun deleteNotification(id: Int) {
         deleteDisposable = notificationsAPI.deleteNotification(id)
+            .retry()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .subscribe()
+            .subscribe({
+                Log.d("Success", it.toString())
+            },{
+                Log.d("Exception", it.toString())
+            })
     }
 
     private fun showNotification(title: String, text: String, id: Int) {
@@ -85,7 +67,7 @@ class NotificationsService : Service(), KoinComponent {
             notify(id, notification.build())
         }
 
-        //deleteNotification(id)
+        deleteNotification(id)
     }
 
     private fun createNotificationChannel() {
@@ -112,17 +94,15 @@ class NotificationsService : Service(), KoinComponent {
                     }
                 }
                 if (!isThere) {
-                    showNotification("Title", "Some text content.", it.id)
+                    showNotification("Title", "Notification id: ${it.id}", it.id)
                 }
             }
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        //notificationsAPI = buildRetrofitClient().create(NotificationsAPI::class.java)
-
         wakeLock = (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "EndlessService::lock").apply {
+            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "NotificationsService::lock").apply {
                 acquire()
             }
         }
@@ -131,9 +111,8 @@ class NotificationsService : Service(), KoinComponent {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .subscribe({
-                Log.d("Notifications Service", it.toString())
-
-                showNotification("Title", "Some text content.", 0) // just for testing
+                // Only for testing. This method shows notification every 5s
+                showNotification("Title", "Some text content.", 1)
 
                 if (previousNotifications.isNotEmpty()) {
                     findNewNotifications(it)
@@ -154,11 +133,11 @@ class NotificationsService : Service(), KoinComponent {
     }
 
     override fun onDestroy() {
-        //getDisposable?.dispose()
-        //deleteDisposable?.dispose()
+        getDisposable?.dispose()
+        deleteDisposable?.dispose()
 
         val broadcastIntent = Intent().apply {
-            action = "restart_service"
+            action = BROADCAST_INTENT_ACTION
             setClass(this@NotificationsService, Receiver::class.java)
         }
         this.sendBroadcast(broadcastIntent)

@@ -147,8 +147,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Intent(this, NotificationsService::class.java).also {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //startForegroundService(it)
-                startService(it)
+                startForegroundService(it)
             } else {
                 startService(it)
             }
