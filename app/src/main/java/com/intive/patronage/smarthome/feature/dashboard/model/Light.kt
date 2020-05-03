@@ -1,6 +1,5 @@
 package com.intive.patronage.smarthome.feature.dashboard.model
 
-import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
 import com.squareup.moshi.Json
 
 data class Light(
@@ -9,5 +8,5 @@ data class Light(
     @Json(name = "hue") val hue: Int,
     @Json(name = "saturation") val saturation: Int,
     @Json(name = "value") val value: Int,
-    @Json(name = "mapPosition") val _mapPosition: MapPosition?
-) : HomeSensor(id, type, _mapPosition)
+    @Json(name = "mapPosition") val mapPosition: MapPosition?
+) : BaseHomeSensor(id, type, mapPosition)

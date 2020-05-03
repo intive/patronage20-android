@@ -51,7 +51,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         cvs.drawBitmap(clearBitmap, 0f, 0f, null)
         for (sensor in sensList) {
             val mapPosition = sensor.mapPosition
-            if (mapPosition != null) {
+            mapPosition?.let {
                 drawSensor(
                     percentToCoordinateX(mapPosition.x, this.width),
                     percentToCoordinateY(mapPosition.y, this.height),
@@ -129,7 +129,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         if (!sensList.isNullOrEmpty()) {
             for (sensor in sensList) {
                 val mapPosition = sensor.mapPosition
-                if (mapPosition != null) {
+                mapPosition?.let {
                     val sensorCoordX = percentToCoordinateX(mapPosition.x, this.width)
                     val sensorCoordY = percentToCoordinateY(mapPosition.y, this.height)
                     if (sensorCoordX >= x - distance && sensorCoordX <= x + distance && sensorCoordY >= y - distance && sensorCoordY <= y + distance)
