@@ -60,6 +60,9 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         dashboardCoordinator.goBack()
+        showLogo()
+        hideTitle()
+        hideArrowBack()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,5 +91,13 @@ class SmartHomeActivity : AppCompatActivity() {
 
     fun showLogo() {
         toolbarLogo.visibility = View.VISIBLE
+    }
+
+    fun hideTitle() {
+        toolbar.title = ""
+    }
+
+    fun hideArrowBack() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 }
