@@ -11,7 +11,7 @@ android {
             storeFile file("../debug.keystore")
         }
         release {
-            storeFile file("../release.keystore.jks")
+            storeFile file('../release.keystore')
         }
     }
     compileSdkVersion 29
