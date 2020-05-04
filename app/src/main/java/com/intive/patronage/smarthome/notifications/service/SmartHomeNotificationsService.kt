@@ -22,12 +22,11 @@ import org.koin.core.get
 import java.util.concurrent.TimeUnit
 
 private const val CHANNEL_ID = "DEFAULT_CHANNEL_ID"
+private const val INITIAL_DELAY = 0L
+private const val PERIOD = 5L
 const val BROADCAST_INTENT_ACTION = "RESTART_SERVICE"
 
-class NotificationsService : Service(), KoinComponent {
-    private val initialDelay = 0L
-    private val period = 5L
-
+class SmartHomeNotificationsService : Service(), KoinComponent {
     private var notificationsAPI: NotificationsAPI = get()
     private var getDisposable: Disposable? = null
     private var deleteDisposable: Disposable? = null
@@ -37,7 +36,7 @@ class NotificationsService : Service(), KoinComponent {
 
     private fun getNotifications() = notificationsAPI.getNotifications().toObservable()
 
-    private fun getNotificationsInInterval() = Observable.interval(initialDelay, period, TimeUnit.SECONDS)
+    private fun getNotificationsInInterval() = Observable.interval(INITIAL_DELAY, PERIOD, TimeUnit.SECONDS)
             .flatMap { getNotifications() }
 
     private fun deleteNotification(id: Int) {
@@ -55,9 +54,7 @@ class NotificationsService : Service(), KoinComponent {
     private fun showNotification(title: String, text: String, id: Int) {
         createNotificationChannel()
 
-        val notification = NotificationCompat.Builder(this,
-                CHANNEL_ID
-            )
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_home_white_24dp)
             .setContentTitle(title)
             .setContentText(text)
@@ -84,25 +81,15 @@ class NotificationsService : Service(), KoinComponent {
     }
 
     private fun findNewNotifications(notificationsList: List<Notification>) {
-        notificationsList.forEach {
-            if (!it.isChecked) {
-                var isThere = false
-                for (key in previousNotifications.keys) {
-                    if (previousNotifications[key] == it) {
-                        isThere = true
-                        break
-                    }
-                }
-                if (!isThere) {
-                    showNotification("Title", "Notification id: ${it.id}", it.id)
-                }
-            }
+        val newNotifications = notificationsList.filter { !it.isChecked && previousNotifications[it.id] != it }
+        newNotifications.forEach {
+            showNotification("Title", "Notification id: ${it.id}", it.id)
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         wakeLock = (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "NotificationsService::lock").apply {
+            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SmartHomeNotificationsService::lock").apply {
                 acquire()
             }
         }
@@ -138,7 +125,7 @@ class NotificationsService : Service(), KoinComponent {
 
         val broadcastIntent = Intent().apply {
             action = BROADCAST_INTENT_ACTION
-            setClass(this@NotificationsService, Receiver::class.java)
+            setClass(this@SmartHomeNotificationsService, SmartHomeNotificationsServiceReceiver::class.java)
         }
         this.sendBroadcast(broadcastIntent)
 
