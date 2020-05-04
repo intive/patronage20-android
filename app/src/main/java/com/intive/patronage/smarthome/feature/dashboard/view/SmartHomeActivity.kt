@@ -64,9 +64,7 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (developerSettingsViewModel.isDebugMode()) {
-            menuInflater.inflate(R.menu.menu_developer_settings, menu)
-        }
+        menuInflater.inflate(R.menu.menu_developer_settings, menu)
         menuInflater.inflate(R.menu.sign_in, menu)
         return true
     }
