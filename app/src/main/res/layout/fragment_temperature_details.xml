@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="@dimen/none"
-        android:layout_marginBottom="@dimen/standard_break"
+        android:paddingBottom="@dimen/standard_break"
         android:id="@+id/graphView" />
 
     <LinearLayout
