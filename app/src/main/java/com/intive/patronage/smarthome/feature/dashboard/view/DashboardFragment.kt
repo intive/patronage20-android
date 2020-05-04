@@ -19,6 +19,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.TRANSFORMER_SEPARATOR
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.DashboardViewModel
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
+import kotlinx.android.synthetic.main.dashboard_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -99,4 +100,12 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable("position", sensorRecyclerView.layoutManager?.onSaveInstanceState())
+        super.onSaveInstanceState(outState)
+    }
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        sensorRecyclerView.layoutManager?.onRestoreInstanceState(savedInstanceState?.getParcelable("position"))
+        super.onViewStateRestored(savedInstanceState)
+    }
 }
