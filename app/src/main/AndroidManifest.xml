@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.intive.patronage.smarthome.feature.settings.view.DeveloperSettingsActivity"></activity>
         <activity
             android:name=".feature.login.LoginActivity"
             android:launchMode="singleTask"
@@ -53,6 +54,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/splash_screen_icon" />
     </application>
 
 </manifest>
