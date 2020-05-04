@@ -8,9 +8,9 @@ fun transformFromBaseSensors(baseSensors: List<BaseHomeSensor>): List<HomeSensor
     baseSensors.forEach {
         sensors.add(
             HomeSensor(
-                it.baseId,
-                it.baseSensorType,
-                it.baseMapPosition
+                it.id,
+                it.type,
+                it.mapPosition
             )
         )
     }
