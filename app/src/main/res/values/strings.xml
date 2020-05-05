@@ -56,4 +56,6 @@
     <string name="home_fragment_class_name">HomeFragment</string>
     <string name="splash_screen_text"><u>your intelligent home</u></string>
     <string name="foreground_notification_title">Your SmartHome is active</string>
+    <string name="Version">Version %s</string>
+    <string name="delete_sensors">Delete all sensors</string>
 </resources>

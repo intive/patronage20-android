@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
-import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
+import com.intive.patronage.smarthome.feature.settings.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.feature.login.LoginGoogle
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
@@ -64,9 +64,7 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (developerSettingsViewModel.isDebugMode()) {
-            menuInflater.inflate(R.menu.menu_developer_settings, menu)
-        }
+        menuInflater.inflate(R.menu.menu_developer_settings, menu)
         menuInflater.inflate(R.menu.sign_in, menu)
         return true
     }

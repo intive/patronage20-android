@@ -18,12 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.intive.patronage.smarthome.feature.settings.view.DeveloperSettingsActivity"></activity>
         <activity
             android:name=".feature.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".feature.splashcreen.SplashScreenActivity"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor">
             <intent-filter android:label="@string/filter_view_http_splash">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -43,7 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.dashboard.view.SmartHomeActivity" />
+        <activity
+            android:name=".feature.dashboard.view.SmartHomeActivity"
+            android:launchMode="singleTask" />
 
         <service android:name=".firebase.SmartHomeMessagingService">
             <intent-filter>
@@ -63,6 +68,10 @@
         <service
             android:name=".notifications.service.SmartHomeNotificationsService"
             android:enabled="true" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/splash_screen_icon" />
 
     </application>
 

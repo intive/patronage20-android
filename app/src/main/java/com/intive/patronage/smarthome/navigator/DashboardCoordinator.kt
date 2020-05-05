@@ -3,12 +3,11 @@ package com.intive.patronage.smarthome.navigator
 import android.content.Intent
 import android.os.Bundle
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.common.*
 
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
-import com.intive.patronage.smarthome.feature.developer.view.DeveloperSettingsActivity
+import com.intive.patronage.smarthome.feature.settings.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
