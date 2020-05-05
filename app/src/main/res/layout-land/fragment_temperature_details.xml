@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backgroundColor"
-    android:layout_margin="@dimen/standard_break"
+    android:padding="@dimen/standard_break"
     tools:context=".feature.temperature.view.TemperatureDetailsFragment">
 
     <com.intive.patronage.smarthome.feature.temperature.view.GraphView
@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonsLayout"
         android:layout_width="@dimen/none"
         android:layout_height="match_parent"
-        android:paddingEnd="@dimen/standard_break"
+        android:layout_marginTop="@dimen/standard_break"
         android:id="@+id/graphView" />
 
     <LinearLayout
