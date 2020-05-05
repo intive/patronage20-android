@@ -28,8 +28,8 @@ const val BROADCAST_INTENT_ACTION = "RESTART_SERVICE"
 
 class SmartHomeNotificationsService : Service(), KoinComponent {
     private var notificationsAPI: NotificationsAPI = get()
-    private var getDisposable: Disposable? = null
-    private var deleteDisposable: Disposable? = null
+    private var notificationsList: Disposable? = null
+    private var deleteAPICall: Disposable? = null
 
     private var previousNotifications: HashMap<Int, Notification> = HashMap(100)
     private var wakeLock: PowerManager.WakeLock? = null
@@ -40,7 +40,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             .flatMap { getNotifications() }
 
     private fun deleteNotification(id: Int) {
-        deleteDisposable = notificationsAPI.deleteNotification(id)
+        deleteAPICall = notificationsAPI.deleteNotification(id)
             .retry()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
@@ -85,7 +85,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             }
         }
 
-        getDisposable = getNotificationsInInterval()
+        notificationsList = getNotificationsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .subscribe({
@@ -125,8 +125,8 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
     }
 
     override fun onDestroy() {
-        getDisposable?.dispose()
-        deleteDisposable?.dispose()
+        notificationsList?.dispose()
+        deleteAPICall?.dispose()
 
         val broadcastIntent = Intent().apply {
             action = BROADCAST_INTENT_ACTION
