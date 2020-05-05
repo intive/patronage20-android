@@ -15,12 +15,16 @@ import com.intive.patronage.smarthome.R
 import kotlinx.android.synthetic.main.smart_home_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+import android.util.Log
+import com.google.android.material.tabs.TabLayoutMediator
 
 class SmartHomeFragment : Fragment() {
 
     private val mFirebaseAnalytics: AnalyticsWrapper by inject()
     private val viewPagerAdapter: SmartHomeFragmentViewPagerAdapter
-            by inject { parametersOf(childFragmentManager) }
+            by inject { parametersOf(childFragmentManager, lifecycle) }
+    //    private lateinit var tabLayoutMediator: TabLayout
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,14 +36,29 @@ class SmartHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupToolbar()
         setupTabLayout()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        smartHomeViewPager.adapter = null
     }
 
     fun setupTabLayout() {
         smartHomeViewPager.adapter = viewPagerAdapter
-        smartHomeTabLayout.setupWithViewPager(smartHomeViewPager)
+        TabLayoutMediator(smartHomeTabLayout, smartHomeViewPager)
+        { tab, position ->
+            when (position) {
+                0 -> tab.text = getString(R.string.dashboard_appbar)
+                1 -> tab.text = getString(R.string.home_appbar)
+            }
+        }.attach()
 
-        val toolbar = setupToolbar()
         smartHomeTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }

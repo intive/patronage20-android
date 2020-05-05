@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:background="@color/backgroundColor"
-        android:layout_margin="@dimen/standard_break"
+        android:padding="@dimen/standard_break"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
