@@ -44,22 +44,13 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             .retry()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .subscribe({
-                Log.d("Success", it.toString())
-            },{
-                Log.d("Exception", it.toString())
-            })
+            .subscribe()
     }
 
     private fun showNotification(title: String, text: String, id: Int) {
         createNotificationChannel()
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_home_white_24dp)
-            .setContentTitle(title)
-            .setContentText(text)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
+        val notification = createNotification(title,text)
         with(NotificationManagerCompat.from(this)) {
             notify(id, notification.build())
         }
@@ -98,9 +89,6 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .subscribe({
-                // Only for testing. This method shows notification every 5s
-                showNotification("Title", "Some text content.", 1)
-
                 if (previousNotifications.isNotEmpty()) {
                     findNewNotifications(it)
                 }
@@ -114,6 +102,23 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
 
         return START_STICKY
     }
+
+    override fun onCreate() {
+        super.onCreate()
+        createNotificationChannel()
+
+        val foregroundNotification = createNotification(
+            resources.getString(R.string.foreground_notification_title),
+            ""
+        )
+        startForeground(101, foregroundNotification.build())
+    }
+
+    private fun createNotification(title: String, text: String) = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_home_white_24dp)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
     override fun onBind(intent: Intent?): IBinder? {
         return null

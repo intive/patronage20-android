@@ -55,4 +55,5 @@
     <string name="dahboard_fragment_class_name">DashboardFragment</string>
     <string name="home_fragment_class_name">HomeFragment</string>
     <string name="splash_screen_text"><u>your intelligent home</u></string>
+    <string name="foreground_notification_title">Your SmartHome is active</string>
 </resources>
