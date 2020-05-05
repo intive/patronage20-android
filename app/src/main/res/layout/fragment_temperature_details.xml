@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backgroundColor"
     android:padding="@dimen/standard_break"
-    tools:context=".feature.temperature.view.TemperatureDetailsFragment">
+    tools:context=".feature.temperature.view.TemperatureDetailsFragment"
+    android:clickable="true">
 
     <com.intive.patronage.smarthome.feature.temperature.view.GraphView
         app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
