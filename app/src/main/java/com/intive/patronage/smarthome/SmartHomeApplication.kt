@@ -12,8 +12,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.core.parameter.parametersOf
 
-
-class SmartHomeApplication() : Application() {
+class SmartHomeApplication : Application() {
 
     private val preferences: PreferencesWrapper by inject {
         parametersOf(applicationContext)
