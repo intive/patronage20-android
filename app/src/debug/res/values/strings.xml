@@ -1,5 +1,0 @@
-<resources>
-    <string name="Version">Version %s</string>
-    <string name="delete_sensors">Delete all sensors</string>
-
-</resources>

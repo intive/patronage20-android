@@ -130,7 +130,7 @@ class GraphView(context: Context, attributeSet: AttributeSet): View(context, att
 
     private fun drawTextValues() {
         val text = Paint().apply {
-            color = Color.WHITE
+            color = ContextCompat.getColor(context, R.color.text)
             isAntiAlias = true
             textSize = degree / 2
         }

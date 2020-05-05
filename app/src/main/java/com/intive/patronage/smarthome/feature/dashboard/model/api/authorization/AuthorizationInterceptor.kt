@@ -8,7 +8,7 @@ import java.io.IOException
 class AuthorizationInterceptor : Interceptor {
 
     @Throws(IOException::class)
-    override fun intercept(chain: Interceptor.Chain): Response? {
+    override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request().newBuilder()
             .addHeader("Cookie", "secret_cookie=3241231213fsdj23kj4kl32j4")
             .build()

@@ -41,10 +41,14 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
         mAuth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 Toast.makeText(appCompatActivity, "Google sign in finished successfully", Toast.LENGTH_SHORT).show()
-                loginCoordinator.goToSplashScreen()
+                val data = appCompatActivity.intent?.data
+
+                data?.let {
+                    loginCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                } ?: loginCoordinator.goToScreen()
             } else {
-                Toast.makeText(appCompatActivity.applicationContext, "Google sign in failed", Toast.LENGTH_LONG).show()
                 mGoogleSignInClient.signOut()
+                Toast.makeText(appCompatActivity.applicationContext, "Google sign in failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -64,7 +68,7 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
     fun userIsLogged() {
         val currentUser = mAuth.currentUser
         if (currentUser != null) {
-            loginCoordinator.goToSplashScreen()
+            loginCoordinator.goToMainScreen()
         }
     }
 
@@ -76,6 +80,7 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
                 Log.w(appCompatActivity.getString(R.string.login), "Google sign in failed", e)
+                Toast.makeText(appCompatActivity.applicationContext, "Google sign in failed", Toast.LENGTH_SHORT).show()
             }
         }
     }

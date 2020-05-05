@@ -15,19 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "925008104072-57t0f60q168a0obdjv5utkdrp0p5jndn.apps.googleusercontent.com",
+          "client_id": "925008104072-hc4qorvgq4evf0cmb38vag11ivhesobh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.intive.patronage.smarthome",
-            "certificate_hash": "b2f378563a3f8810b638c6031287b94321af6b4f"
-          }
-        },
-        {
-          "client_id": "925008104072-g6153v91s7rbpvdfak9ct5fkaa4fvp59.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.intive.patronage.smarthome",
-            "certificate_hash": "26b7ad352b7c6a38d3bc357fe76b7f8b3cb42123"
+            "certificate_hash": "d5e96917cccd94c84398095445430b2fe1d6085f"
           }
         },
         {

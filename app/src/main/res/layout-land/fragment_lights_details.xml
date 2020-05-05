@@ -10,145 +10,54 @@
 
     <LinearLayout
         android:background="@color/backgroundColor"
+        android:layout_margin="@dimen/standard_break"
         android:orientation="horizontal"
-        android:weightSum="2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/standard_break">
+        android:layout_height="match_parent">
 
-        <View
-            android:background="@{lightDetailsViewModel.currentColor}"
-            android:id="@+id/colorView"
+        <ImageView
             android:layout_weight="1"
+            app:onColorPickerOrientationChange="@{lightDetailsViewModel}"
+            app:onColorPickerTouch="@{lightDetailsViewModel}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/brightness"
             android:layout_width="@dimen/none"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:id="@+id/colorPicker"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:weightSum="7"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_weight="1"
+            android:orientation="vertical"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/none">
+            <ImageView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:onBrightnessBarTouch="@{lightDetailsViewModel}"
+                android:id="@+id/brightness"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/currentColor"
+                android:layout_width="216dp"
+                android:layout_height="72dp"/>
 
-                <TextView
-                    android:padding="@dimen/standard_break"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@string/red"
-                    android:textColor="#fff"
-                    android:id="@+id/redTextView"
-                    android:layout_alignParentStart="true"
-                    android:layout_width="@dimen/text_view_width"
-                    android:layout_height="match_parent"/>
-
-                <SeekBar
-                    android:progress="@={lightDetailsViewModel.redProgress}"
-                    android:max="255"
-                    android:layout_toEndOf="@+id/redTextView"
-                    android:layout_toStartOf="@id/redValueTextView"
-                    android:id="@+id/redSeekBar"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:padding="@dimen/standard_break"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.redProgress)}"
-                    android:textColor="#fff"
-                    android:id="@+id/redValueTextView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="@dimen/text_view_width"
-                    android:layout_height="match_parent"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/none">
-
-                <TextView
-                    android:padding="@dimen/standard_break"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@string/green"
-                    android:textColor="#fff"
-                    android:id="@+id/greenTextView"
-                    android:layout_alignParentStart="true"
-                    android:layout_width="@dimen/text_view_width"
-                    android:layout_height="match_parent"/>
-
-                <SeekBar
-                    android:progress="@={lightDetailsViewModel.greenProgress}"
-                    android:max="255"
-                    android:layout_toEndOf="@+id/greenTextView"
-                    android:layout_toStartOf="@id/greenValueTextView"
-                    android:id="@+id/greenSeekBar"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:padding="@dimen/standard_break"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.greenProgress)}"
-                    android:textColor="#fff"
-                    android:id="@+id/greenValueTextView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="@dimen/text_view_width"
-                    android:layout_height="match_parent"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/none">
-
-                <TextView
-                    android:padding="@dimen/standard_break"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@string/blue"
-                    android:textColor="#fff"
-                    android:id="@+id/blueTextView"
-                    android:layout_alignParentStart="true"
-                    android:layout_width="@dimen/text_view_width"
-                    android:layout_height="match_parent"/>
-
-                <SeekBar
-                    android:progress="@={lightDetailsViewModel.blueProgress}"
-                    android:max="255"
-                    android:layout_toEndOf="@+id/blueTextView"
-                    android:layout_toStartOf="@id/blueValueTextView"
-                    android:id="@+id/blueSeekBar"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:padding="@dimen/standard_break"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@={lightDetailsViewModel.convertIntToString(lightDetailsViewModel.blueProgress)}"
-                    android:textColor="#fff"
-                    android:id="@+id/blueValueTextView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="@dimen/text_view_width"
-                    android:layout_height="match_parent"/>
-
-            </RelativeLayout>
+            <View
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/text"
+                android:id="@+id/currentColor"
+                app:layout_constraintTop_toBottomOf="@id/brightness"
+                app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
+                android:layout_width="216dp"
+                android:layout_height="72dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/standard_break"
+                app:layout_constraintTop_toBottomOf="@id/currentColor"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/none">
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonLayout">
 
                 <Button
                     android:onClick="@{() -> lightDetailsViewModel.onApplyClicked()}"
@@ -177,7 +86,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

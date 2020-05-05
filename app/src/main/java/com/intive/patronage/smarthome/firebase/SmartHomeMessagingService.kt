@@ -33,7 +33,7 @@ class SmartHomeMessagingService : FirebaseMessagingService() {
         createNotificationChannel()
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_home_white_24dp)
+            .setSmallIcon(R.drawable.splash_screen_icon)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(getPendingIntent())
             .setStyle(

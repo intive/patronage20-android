@@ -10,8 +10,8 @@ import io.reactivex.schedulers.Schedulers
 
 class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
 
-    private val minWaitTime = 5L
-    private val maxWaitTime = 30L
+    val minWaitTime = 5L
+    val maxWaitTime = 30L
 
     private var dashboard = MutableLiveData<Dashboard>()
     var error = MutableLiveData<Boolean>().apply { value = false }
@@ -22,9 +22,11 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
         dashboardCall = dashboardService.fetchDashboardWithDelay(minWaitTime, maxWaitTime)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                dashboard.value = it.first
-            }, { error.value = true }, { complete.value = true })
+            .subscribe(
+                { dashboard.value = it.first },
+                { error.value = true },
+                { complete.value = true }
+            )
     }
 
     override fun onCleared() {
