@@ -1,9 +1,9 @@
 package com.intive.patronage.smarthome.di
 
 import androidx.appcompat.app.AppCompatActivity
-import com.intive.patronage.smarthome.feature.settings.DeveloperSettings
-import com.intive.patronage.smarthome.feature.settings.model.DeveloperSettingsService
-import com.intive.patronage.smarthome.feature.settings.viewmodel.DeveloperSettingsViewModel
+import com.intive.patronage.smarthome.feature.developer_settings.DeveloperSettings
+import com.intive.patronage.smarthome.feature.developer_settings.model.DeveloperSettingsService
+import com.intive.patronage.smarthome.feature.developer_settings.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.navigator.DeveloperSettingsCoordinator
 import com.intive.patronage.smarthome.navigator.Navigator
 import org.koin.android.viewmodel.dsl.viewModel

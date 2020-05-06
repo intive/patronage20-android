@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.settings.model
+package com.intive.patronage.smarthome.feature.developer_settings.model
 
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/standard_break"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/settings_list_item_height">
+
+    <ImageView
+        android:layout_marginTop="@dimen/settings_list_item_icon_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/settingIcon"
+        android:layout_width="@dimen/settings_list_item_icon_height"
+        android:layout_height="@dimen/settings_list_item_icon_height"/>
+
+    <TextView
+        android:paddingHorizontal="@dimen/standard_break"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/settings_list_item_text_size"
+        android:textColor="@color/text"
+        android:id="@+id/setting_text"
+        app:layout_constraintStart_toEndOf="@+id/settingIcon"
+        app:layout_constraintEnd_toStartOf="@+id/settingActionLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/none"
+        android:layout_height="@dimen/settings_list_item_height"/>
+
+    <RelativeLayout
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/settingActionLayout"
+        android:layout_width="@dimen/settings_list_item_height"
+        android:layout_height="@dimen/settings_list_item_height">
+
+        <Switch
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:id="@+id/darkModeSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_margin="@dimen/settings_list_item_icon_margin"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/settingActionIcon"/>
+
+        <CheckBox
+            android:checked="true"
+            android:layout_centerInParent="true"
+            android:id="@+id/notificationsCheckBox"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

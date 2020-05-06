@@ -58,4 +58,8 @@
     <string name="foreground_notification_title">Your SmartHome is active</string>
     <string name="Version">Version %s</string>
     <string name="delete_sensors">Delete all sensors</string>
+    <string name="dark_mode_setting">Enable dark mode</string>
+    <string name="developer_settings">Developer settings</string>
+    <string name="notifications_setting">Show notifications</string>
+    <string name="settings_toolbar">Settings</string>
 </resources>
