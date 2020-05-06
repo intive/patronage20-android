@@ -85,4 +85,5 @@ dependencies {
     implementation projectDependencies.firebase_analytics
     implementation projectDependencies.logging_interceptor
     implementation projectDependencies.view_pager2
+    implementation projectDependencies.support_compat
 }
