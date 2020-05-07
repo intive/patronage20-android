@@ -1,25 +1,41 @@
 package com.intive.patronage.smarthome.feature.settings
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.BuildConfig
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
-import kotlinx.android.synthetic.main.settings_list_item.view.*
+import kotlinx.android.synthetic.main.settings_switch_item.view.*
 
 enum class SettingClickEvent {
     NIGHT_MODE {
-        override fun onClick(view: RecyclerView, dashboardCoordinator: DashboardCoordinator, context: Context) {
-            view.darkModeSwitch.isChecked = !view.darkModeSwitch.isChecked
+        override fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context) {
+            view.settingSwitch.isChecked = !view.settingSwitch.isChecked
         }
     },
     NOTIFICATIONS {
-        override fun onClick(view: RecyclerView, dashboardCoordinator: DashboardCoordinator, context: Context) {
-            view.notificationsSwitch.isChecked = !view.notificationsSwitch.isChecked
+        override fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context) {
+            view.settingSwitch.isChecked = !view.settingSwitch.isChecked
+        }
+    },
+    A {
+        override fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context) {
+            view.settingSwitch.isChecked = !view.settingSwitch.isChecked
+        }
+    },
+    B {
+        override fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context) {
+            view.settingSwitch.isChecked = !view.settingSwitch.isChecked
+        }
+    },
+    C {
+        override fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context) {
+            view.settingSwitch.isChecked = !view.settingSwitch.isChecked
         }
     },
     DEVELOPER_SETTINGS {
-        override fun onClick(view: RecyclerView, dashboardCoordinator: DashboardCoordinator, context: Context) {
+        override fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context) {
             if (BuildConfig.DEBUG) {
                 dashboardCoordinator.goToDeveloperSettings()
             } else {
@@ -28,5 +44,5 @@ enum class SettingClickEvent {
         }
     };
 
-    abstract fun onClick(view: RecyclerView, dashboardCoordinator: DashboardCoordinator, context: Context)
+    abstract fun onClick(view: View, dashboardCoordinator: DashboardCoordinator, context: Context)
 }

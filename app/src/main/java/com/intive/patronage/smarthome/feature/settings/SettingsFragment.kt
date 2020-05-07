@@ -17,7 +17,8 @@ import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.android.synthetic.main.settings_fragment.view.settingsRecyclerView
-import kotlinx.android.synthetic.main.settings_list_item.*
+import kotlinx.android.synthetic.main.settings_image_item.*
+import kotlinx.android.synthetic.main.settings_switch_item.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -59,16 +60,16 @@ class SettingsFragment : Fragment() {
         recyclerView.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    setupDarkModeSwitch(preferences, darkModeSwitch, resources)
+//                    setupDarkModeSwitch(preferences, darkModeSwitch, resources)
 
-                    notificationsSwitch.isChecked = true
-                    notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
-                        if (isChecked) {
-                            Log.d("switch.isChecked", "TRUE")
-                        } else {
-                            Log.d("switch.isChecked", "FALSE")
-                        }
-                    }
+//                    notificationsSwitch.isChecked = true
+//                    notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
+//                        if (isChecked) {
+//                            Log.d("switch.isChecked", "TRUE")
+//                        } else {
+//                            Log.d("switch.isChecked", "FALSE")
+//                        }
+//                    }
 
                     recyclerView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
