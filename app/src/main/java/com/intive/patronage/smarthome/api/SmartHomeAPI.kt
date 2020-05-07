@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.api
 
 import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
+import com.intive.patronage.smarthome.feature.light.model.api.LightDTO
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -19,4 +20,7 @@ interface SmartHomeAPI {
 
     @DELETE("/api/v1/map/{sensorID}")
     fun deleteSensor(@Path("sensorID") id: Int): Single<Boolean>
+
+    @PUT("/api/v1/light")
+    fun putLight(@Body body: LightDTO):Single<LightDTO>
 }

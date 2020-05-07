@@ -5,21 +5,26 @@ import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.lifecycle.MutableLiveData
-import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.common.convertHSVtoRGB
+import com.intive.patronage.smarthome.common.convertRGBtoHSV
 import com.intive.patronage.smarthome.feature.dashboard.model.Light
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
+import com.intive.patronage.smarthome.feature.light.model.api.LightDTO
 import com.intive.patronage.smarthome.feature.light.view.ColorPickerEventListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okio.EOFException
+import retrofit2.HttpException
 
 class LightsDetailsViewModel(
     private var dashboardService: DashboardService,
     var colorPickerEventListener: ColorPickerEventListener,
     private val id: Int
 ) : ObservableViewModel() {
+
+    private val type: String = "RGBLight"
 
     var red = 0
     var green = 0
@@ -33,6 +38,7 @@ class LightsDetailsViewModel(
     var brightnessBarPointerX = 0f
 
     private var disposable: Disposable? = null
+    private var lightChangerDisposable: Disposable? = null
     val toastMessage = MutableLiveData<Int>()
 
     val hsv = MutableLiveData<IntArray>()
@@ -48,7 +54,7 @@ class LightsDetailsViewModel(
             .subscribe({
                 if (it != null) loadColor(it)
                 else Log.d("Exception", "NULL")
-            },{
+            }, {
                 Log.d("Exception", "ERROR")
             })
     }
@@ -76,11 +82,24 @@ class LightsDetailsViewModel(
     }
 
     fun onApplyClicked() {
-        toastMessage.value = R.string.apply_toast
+        val lightChangeHSV = convertRGBtoHSV(red, green, blue)
+        lightChangerDisposable = dashboardService.changeLightColor(
+            LightDTO(id, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {
+                when (it) {
+                    is EOFException -> Log.d("testowanie", "c4")
+                    is HttpException -> Log.d("testowanie", "c5")
+                    else -> Log.d("testowanie", it.message.toString())
+                }
+            })
     }
 
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
+        lightChangerDisposable?.dispose()
     }
 }

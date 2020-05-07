@@ -4,8 +4,10 @@ import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repository.DashboardRoomRepositoryAPI
+import com.intive.patronage.smarthome.feature.light.model.api.LightDTO
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.zipWith
 import java.util.concurrent.TimeUnit
 
@@ -16,6 +18,7 @@ class DashboardService(
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
+    private var disposable: Disposable? = null
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
@@ -106,4 +109,6 @@ class DashboardService(
             .filter { it.id == id }
             .firstOrError()
     }
+
+    fun changeLightColor(light: LightDTO) = smartHomeAPI.putLight(light)
 }
