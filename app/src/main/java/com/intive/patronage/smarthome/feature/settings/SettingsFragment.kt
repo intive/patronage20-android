@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.feature.settings
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,14 +60,26 @@ class SettingsFragment : Fragment() {
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     setupDarkModeSwitch(preferences, darkModeSwitch, resources)
+
+                    notificationsSwitch.isChecked = true
+                    notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
+                        if (isChecked) {
+                            Log.d("switch.isChecked", "TRUE")
+                        } else {
+                            Log.d("switch.isChecked", "FALSE")
+                        }
+                    }
+
                     recyclerView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             })
     }
 
     private fun onSettingClickListener(settingType: SettingType) {
-        SettingClickEvent.values().find {
-            settingType.toString() == it.toString()
-        }?.onClick(settingsRecyclerView, dashboardCoordinator)
+        context?.let { context ->
+            SettingClickEvent.values().find {
+                settingType.toString() == it.toString()
+            }?.onClick(settingsRecyclerView, dashboardCoordinator, context)
+        }
     }
 }

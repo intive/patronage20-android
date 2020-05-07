@@ -16,7 +16,7 @@ enum class SettingType {
         override fun setItemView(itemView: View) {
             itemView.setting_text.text = itemView.resources.getString(R.string.notifications_setting)
             itemView.settingIcon.setBackgroundResource(R.drawable.notification_icon)
-            itemView.notificationsCheckBox.visibility = View.VISIBLE
+            itemView.notificationsSwitch.visibility = View.VISIBLE
         }
     },
     DEVELOPER_SETTINGS {

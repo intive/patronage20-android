@@ -40,6 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <Switch
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:id="@+id/notificationsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <ImageView
             android:layout_margin="@dimen/settings_list_item_icon_margin"
             android:visibility="invisible"
@@ -47,13 +54,7 @@
             android:layout_height="match_parent"
             android:id="@+id/settingActionIcon"/>
 
-        <CheckBox
-            android:checked="true"
-            android:layout_centerInParent="true"
-            android:id="@+id/notificationsCheckBox"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
 
     </RelativeLayout>
 
