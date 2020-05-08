@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.settings
+package com.intive.patronage.smarthome.feature.settings.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,9 @@ import com.intive.patronage.smarthome.BuildConfig
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.PreferencesWrapper
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
+import com.intive.patronage.smarthome.feature.settings.SettingClickEvent
+import com.intive.patronage.smarthome.feature.settings.SettingType
+import com.intive.patronage.smarthome.feature.settings.setupDarkModeSwitch
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.settings_fragment.view.settingsRecyclerView
 import org.koin.android.ext.android.inject
@@ -34,11 +37,7 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
-        toolbar.title = resources.getString(R.string.settings_toolbar)
-        toolbar.setDisplayHomeAsUpEnabled(true)
-        (activity as SmartHomeActivity).hideLogo()
-
+        setupToolbar()
         setupDarkModeSwitch(resources)
 
         val view = inflater.inflate(R.layout.settings_fragment, container, false)
@@ -52,6 +51,13 @@ class SettingsFragment : Fragment() {
         SettingType.values().filter { !it.onlyDebug }.toTypedArray()
     }
 
+    private fun setupToolbar() {
+        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
+        toolbar.title = resources.getString(R.string.settings_toolbar)
+        toolbar.setDisplayHomeAsUpEnabled(true)
+        (activity as SmartHomeActivity).hideLogo()
+    }
+
     private fun setupRecyclerView(view: View) {
         val recyclerView = view.settingsRecyclerView
         recyclerView.apply {
@@ -63,10 +69,8 @@ class SettingsFragment : Fragment() {
     }
 
     private fun onSettingClickListener(settingType: SettingType, itemView: View) {
-        context?.let { context ->
-            SettingClickEvent.values().find {
-                settingType.toString() == it.toString()
-            }?.onClick(itemView, dashboardCoordinator, context, preferences)
-        }
+        SettingClickEvent.values().find {
+            settingType.toString() == it.toString()
+        }?.onClick(itemView, dashboardCoordinator, preferences)
     }
 }
