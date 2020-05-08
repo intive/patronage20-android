@@ -23,7 +23,7 @@ class HVACRoomAdapter {
             100,
             200,
             10,
-            1,
+            62,
             hvacRoom.windowSensorIds,
             hvacRoom.mapPosition
         )
