@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -79,9 +80,14 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         binding.brightness.setImageBitmap(brightnessBitmap)
         binding.colorPicker.setImageBitmap(colorPickerBitmap)
 
-        binding.brightness.viewTreeObserver.addOnGlobalLayoutListener {
-            loadPointers()
-        }
+        binding.brightness.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    loadPointers()
+                    binding.brightness.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            }
+        )
 
         val brightnessOverlay = binding.brightness.overlay
         val colorPickerOverlay = binding.colorPicker.overlay

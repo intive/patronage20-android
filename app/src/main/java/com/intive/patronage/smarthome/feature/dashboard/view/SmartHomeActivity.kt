@@ -42,6 +42,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+            setToolbarWhenReturnToDashboard()
         }
 
         observeViewModel()
@@ -61,6 +62,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         dashboardCoordinator.goBack()
+        setToolbarWhenReturnToDashboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -87,5 +89,19 @@ class SmartHomeActivity : AppCompatActivity() {
 
     fun showLogo() {
         toolbarLogo.visibility = View.VISIBLE
+    }
+
+    fun hideTitle() {
+        toolbar.title = ""
+    }
+
+    fun hideArrowBack() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    fun setToolbarWhenReturnToDashboard() {
+        hideArrowBack()
+        hideTitle()
+        showLogo()
     }
 }

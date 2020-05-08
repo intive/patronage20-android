@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayoutMediator
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import kotlinx.android.synthetic.main.smart_home_fragment.*
@@ -20,26 +21,32 @@ class SmartHomeFragment : Fragment() {
 
     private val mFirebaseAnalytics: AnalyticsWrapper by inject()
     private val viewPagerAdapter: SmartHomeFragmentViewPagerAdapter
-            by inject { parametersOf(childFragmentManager) }
+            by inject { parametersOf(childFragmentManager, lifecycle) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setupToolbar()
         return inflater.inflate(R.layout.smart_home_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
         setupTabLayout()
     }
 
     fun setupTabLayout() {
         smartHomeViewPager.adapter = viewPagerAdapter
-        smartHomeTabLayout.setupWithViewPager(smartHomeViewPager)
+        TabLayoutMediator(smartHomeTabLayout, smartHomeViewPager)
+        { tab, position ->
+            when (position) {
+                0 -> tab.text = getString(R.string.dashboard_appbar)
+                1 -> tab.text = getString(R.string.home_appbar)
+            }
+        }.attach()
 
-        val toolbar = setupToolbar()
         smartHomeTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
@@ -58,7 +65,6 @@ class SmartHomeFragment : Fragment() {
                         getString(R.string.home_fragment_class_name)
                     )
                 }
-
             }
         })
     }
@@ -72,4 +78,8 @@ class SmartHomeFragment : Fragment() {
         return toolbar
     }
 
+    override fun onDestroyView() {
+        smartHomeViewPager.adapter = null
+        super.onDestroyView()
+    }
 }

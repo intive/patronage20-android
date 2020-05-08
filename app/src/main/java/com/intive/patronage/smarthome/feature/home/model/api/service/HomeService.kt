@@ -49,7 +49,7 @@ class HomeService(private val dashboardService: DashboardService,
             sensors.addAll(transformFromRFIDSensors(it))
         }
         dashboard.HVACRooms?.let {
-            sensors.addAll(transformFromHVACRooms(it))
+//            sensors.addAll(transformFromHVACRooms(it))
         }
         // TODO: verify when API ready
         // sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))
