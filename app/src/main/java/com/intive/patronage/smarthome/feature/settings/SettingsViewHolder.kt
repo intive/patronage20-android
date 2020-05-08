@@ -3,15 +3,15 @@ package com.intive.patronage.smarthome.feature.settings
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class SettingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class SettingsViewHolder(itemView: View, private val itemList: Array<SettingType>) : RecyclerView.ViewHolder(itemView) {
 
     fun bindView(
         position: Int,
-        onSettingClickListener: (settingType: SettingType) -> Unit
+        onSettingClickListener: (settingType: SettingType, itemView: View) -> Unit
     ) {
         itemView.setOnClickListener {
-            onSettingClickListener(SettingType.values()[position])
+            onSettingClickListener(itemList[position], itemView)
         }
-        SettingType.values()[position].setItemView(itemView)
+        itemList[position].setItemView(itemView)
     }
 }
