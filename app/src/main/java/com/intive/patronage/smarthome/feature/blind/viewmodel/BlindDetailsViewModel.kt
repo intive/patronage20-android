@@ -38,9 +38,9 @@ class BlindDetailsViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it != null) {
-                    position = it.position
+                    position = 100-it.position
                     blindViewEventListener.setStartingPosition(position)
-                    setPercent("$position %")
+                    setPercent("${100-position} %")
                 }
                 else Log.d("Exception", "NULL")
             },{
@@ -49,7 +49,6 @@ class BlindDetailsViewModel(
     }
 
     fun updateBlindPosition() {
-        Log.d("XD", id.toString())
         val blind = BlindSensor(id, BLIND_SENSOR_TYPE, 100-position)
         updatePositionCall = blindDetailsService.updateBlindPosition(blind)
             .subscribeOn(Schedulers.io())
