@@ -22,7 +22,7 @@ import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-
+import androidx.recyclerview.widget.SimpleItemAnimator
 
 class DashboardFragment : Fragment() {
     private val analytics: AnalyticsWrapper by inject()
@@ -56,7 +56,7 @@ class DashboardFragment : Fragment() {
         bundle.putInt("ID", sensor.id.toInt())
 
         when (sensor.type) {
-            "RGBLight" -> {
+            "LED_CONTROLLER" -> {
                 dashboardCoordinator.goToLightsDetailsScreen(bundle)
                 analytics.ledColorEvent(sensor.details.toInt())
             }
@@ -68,7 +68,7 @@ class DashboardFragment : Fragment() {
                 dashboardCoordinator.goToBlindDetailsScreen(bundle)
                 analytics.blindLevelEvent(sensor.details.toInt())
             }
-            "temperatureSensor" -> {
+            "TEMPERATURE_SENSOR" -> {
                 dashboardCoordinator.goToTemperatureDetailsScreen(bundle)
             }
         }
@@ -96,6 +96,7 @@ class DashboardFragment : Fragment() {
                 layoutManager = GridLayoutManager(activity, 2)
             }
             adapter = sensorsListAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
     }
 

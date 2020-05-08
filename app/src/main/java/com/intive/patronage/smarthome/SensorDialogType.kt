@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.sensor_list_item.view.*
 
 enum class SensorDialogType(val type: String) {
 
-    RGB_LIGHT("RGBLight") {
+    RGB_LIGHT("LED_CONTROLLER") {
         override fun setAttributes(sensor: HomeSensor, view: View) {
             setText(view, R.string.light_sensor_name)
         }
@@ -17,7 +17,7 @@ enum class SensorDialogType(val type: String) {
             return R.color.lightSensor
         }
     },
-    TEMPERATURE_SENSOR("temperatureSensor") {
+    TEMPERATURE_SENSOR("TEMPERATURE_SENSOR") {
         override fun setAttributes(sensor: HomeSensor, view: View) {
             setText(view, R.string.temperature_sensor_name)
         }
