@@ -51,8 +51,7 @@ class LightsDetailsViewModel(
         disposable = dashboardService.getLightById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (it != null) loadColor(it)
+            .subscribe({ if (it != null) loadColor(it)
                 else Log.d("Exception", "NULL")
             }, {
                 Log.d("Exception", "ERROR")
@@ -88,13 +87,11 @@ class LightsDetailsViewModel(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, {
-                when (it) {
-                    is EOFException -> Log.d("testowanie", "c4")
-                    is HttpException -> Log.d("testowanie", "c5")
-                    else -> Log.d("testowanie", it.message.toString())
-                }
-            })
+            .subscribe({when(it.code()){
+                400 ->Log.d("testowanie", "400")
+                404 ->Log.d("testowanie", "404")
+                500 ->Log.d("testowanie", "500")
+            } }, {})
     }
 
     override fun onCleared() {
