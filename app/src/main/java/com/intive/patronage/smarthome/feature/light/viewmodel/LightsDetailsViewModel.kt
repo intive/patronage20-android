@@ -5,6 +5,7 @@ import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.lifecycle.MutableLiveData
+import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.common.convertHSVtoRGB
 import com.intive.patronage.smarthome.common.convertRGBtoHSV
@@ -24,7 +25,7 @@ class LightsDetailsViewModel(
     private val id: Int
 ) : ObservableViewModel() {
 
-    private val type: String = "RGBLight"
+    private lateinit var type :String
 
     var red = 0
     var green = 0
@@ -51,8 +52,9 @@ class LightsDetailsViewModel(
         disposable = dashboardService.getLightById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ if (it != null) loadColor(it)
-                else Log.d("Exception", "NULL")
+            .subscribe({
+                it?.let { sensor -> loadColor(sensor) }
+                type = it!!.type
             }, {
                 Log.d("Exception", "ERROR")
             })
@@ -83,20 +85,27 @@ class LightsDetailsViewModel(
     fun onApplyClicked() {
         val lightChangeHSV = convertRGBtoHSV(red, green, blue)
         lightChangerDisposable = dashboardService.changeLightColor(
-            LightDTO(id, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
+            LightDTO(0, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({when(it.code()){
-                400 ->Log.d("testowanie", "400")
-                404 ->Log.d("testowanie", "404")
-                500 ->Log.d("testowanie", "500")
-            } }, {})
+            .subscribe(
+                {checkResponse(it.code())},
+                { toastMessage.value = R.string.api_connection_error }
+            )
     }
 
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
         lightChangerDisposable?.dispose()
+    }
+
+    private fun checkResponse(code :Int){
+        when(code){
+            200 -> toastMessage.value = R.string.apply_toast
+            400 -> toastMessage.value = R.string.http_400
+            404 -> toastMessage.value = R.string.http_404
+        }
     }
 }

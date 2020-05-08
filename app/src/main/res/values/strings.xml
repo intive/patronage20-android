@@ -58,4 +58,6 @@
     <string name="foreground_notification_title">Your SmartHome is active</string>
     <string name="Version">Version %s</string>
     <string name="delete_sensors">Delete all sensors</string>
+    <string name="http_400">Unable to connect with server - 400</string>
+    <string name="http_404">Unable to connect with server - 404</string>
 </resources>
