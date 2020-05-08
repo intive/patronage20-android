@@ -104,8 +104,10 @@ class LightsDetailsViewModel(
     private fun checkResponse(code :Int){
         when(code){
             200 -> toastMessage.value = R.string.apply_toast
-            400 -> toastMessage.value = R.string.http_400
-            404 -> toastMessage.value = R.string.http_404
+            400 -> {toastMessage.value = R.string.http_400
+                 loadLight()}
+            404 -> { toastMessage.value = R.string.http_404
+                loadLight()}
         }
     }
 }
