@@ -18,14 +18,13 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okio.EOFException
 import retrofit2.HttpException
+const val type = "LED_CONTROLLER"
 
 class LightsDetailsViewModel(
     private var dashboardService: DashboardService,
     var colorPickerEventListener: ColorPickerEventListener,
     private val id: Int
 ) : ObservableViewModel() {
-
-    private lateinit var type :String
 
     var red = 0
     var green = 0
@@ -54,7 +53,6 @@ class LightsDetailsViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it?.let { sensor -> loadColor(sensor) }
-                type = it!!.type
             }, {
                 Log.d("Exception", "ERROR")
             })
@@ -85,7 +83,7 @@ class LightsDetailsViewModel(
     fun onApplyClicked() {
         val lightChangeHSV = convertRGBtoHSV(red, green, blue)
         lightChangerDisposable = dashboardService.changeLightColor(
-            LightDTO(0, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
+            LightDTO(id, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
