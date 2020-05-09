@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.api
 
+import com.intive.patronage.smarthome.feature.blind.model.BlindSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
 import com.intive.patronage.smarthome.feature.light.model.api.LightDTO
@@ -24,4 +25,7 @@ interface SmartHomeAPI {
 
     @PUT("/api/v1/light")
     fun putLight(@Body body: LightDTO):Single<Response<Void>>
+
+    @PUT("/api/v1/blinds")
+    fun updateBlindPosition(@Body body: BlindSensor): Single<Response<Void>>
 }

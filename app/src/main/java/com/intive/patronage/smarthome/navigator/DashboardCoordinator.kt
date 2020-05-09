@@ -7,11 +7,12 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
-import com.intive.patronage.smarthome.feature.settings.view.DeveloperSettingsActivity
+import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 import com.intive.patronage.smarthome.feature.login.LoginActivity
+import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 
 const val DESTINATION_URL = "destination"
@@ -85,6 +86,10 @@ class DashboardCoordinator(private val navigator: Navigator) {
         navigator.goToScreen(ActivityEvent(DeveloperSettingsActivity::class.java))
     }
 
+    fun goToSettingsScreen() {
+        navigator.goToScreen(FragmentEvent(SettingsFragment::class.java, null, R.id.fragment))
+    }
+
     fun goToLogin() {
         navigator.goToScreen(ActivityEvent(LoginActivity::class.java))
         navigator.close()
@@ -108,5 +113,6 @@ class DashboardCoordinator(private val navigator: Navigator) {
             )
             else -> goToSmartHome()
         }
+        intent.removeExtra(DESTINATION_URL)
     }
 }

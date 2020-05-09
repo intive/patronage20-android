@@ -1,9 +1,9 @@
-package com.intive.patronage.smarthome.feature.settings.viewmodel
+package com.intive.patronage.smarthome.feature.developer_settings.viewmodel
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import com.intive.patronage.smarthome.feature.settings.DeveloperSettings
-import com.intive.patronage.smarthome.feature.settings.model.DeveloperSettingsService
+import com.intive.patronage.smarthome.feature.developer_settings.DeveloperSettings
+import com.intive.patronage.smarthome.feature.developer_settings.model.DeveloperSettingsService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

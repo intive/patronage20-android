@@ -13,7 +13,7 @@ fun setOnBlindTouchListener(view: BlindView, blindDetailsViewModel: BlindDetails
                 view.position = view.onePercent * this
                 view.invalidate()
                 blindDetailsViewModel.position = this
-                blindDetailsViewModel.setPercent("$this %")
+                blindDetailsViewModel.setPercent("${100-this} %")
             }
         }
         true

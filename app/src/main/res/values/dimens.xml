@@ -38,4 +38,8 @@
     <dimen name="wifi_icon_margin_start">15dp</dimen>
     <dimen name="wifi_icon_margin_end">75dp</dimen>
     <dimen name="progress_bar_height">8dp</dimen>
+    <dimen name="settings_list_item_height">48dp</dimen>
+    <dimen name="settings_list_item_icon_height">32dp</dimen>
+    <dimen name="settings_list_item_icon_margin">8dp</dimen>
+    <dimen name="settings_list_item_text_size">16sp</dimen>
 </resources>
