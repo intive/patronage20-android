@@ -108,5 +108,6 @@ class DashboardCoordinator(private val navigator: Navigator) {
             )
             else -> goToSmartHome()
         }
+        intent.removeExtra(DESTINATION_URL)
     }
 }

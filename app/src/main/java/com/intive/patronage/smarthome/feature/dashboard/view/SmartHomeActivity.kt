@@ -36,7 +36,7 @@ class SmartHomeActivity : AppCompatActivity() {
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null || intent.extras != null) {
+        if (savedInstanceState == null || (intent.extras != null && intent.extras?.containsKey("DESTINATION_URL")!!)) {
             dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
         }
 
