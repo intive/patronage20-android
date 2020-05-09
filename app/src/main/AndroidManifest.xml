@@ -18,15 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity"></activity>
+        <activity android:name="com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity" />
         <activity
             android:name=".feature.login.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.splashcreen.SplashScreenActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="portrait">
             <intent-filter android:label="@string/filter_view_http_splash">
                 <action android:name="android.intent.action.VIEW" />
 
