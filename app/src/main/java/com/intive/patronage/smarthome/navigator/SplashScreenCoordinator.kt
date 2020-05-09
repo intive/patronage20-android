@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.login.LoginActivity
-import com.intive.patronage.smarthome.feature.developer.view.DeveloperSettingsActivity
+import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity
 
 class SplashScreenCoordinator(private val navigator: Navigator) {
 

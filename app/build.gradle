@@ -8,11 +8,17 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         debug {
-            storeFile file("../debug.keystore")
+            storeFile file("../keystore/debug.keystore")
+        }
+        release {
+            storeFile file('../keystore/release.keystore')
+            storePassword 'PATRON2020'
+            keyAlias = 'release_keystore'
+            keyPassword 'PATRON2020'
         }
     }
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     compileOptions {
         sourceCompatibility = 1.8
@@ -37,6 +43,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             applicationIdSuffix ".debug"
@@ -77,4 +84,6 @@ dependencies {
     implementation projectDependencies.play_services_auth
     implementation projectDependencies.firebase_analytics
     implementation projectDependencies.logging_interceptor
+    implementation projectDependencies.view_pager2
+    implementation projectDependencies.support_compat
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.common.replace
+import android.util.Log
 
 class SensorsListAdapter(private val onDashboardClickListener: (sensor: DashboardSensor) -> Unit) :
     ListAdapter<List<DashboardSensor>, SensorsViewHolder>(SensorsDiffCallback()) {
@@ -24,8 +25,10 @@ class SensorsListAdapter(private val onDashboardClickListener: (sensor: Dashboar
     override fun getItemCount() = sensorsList.size
 
     fun update(sensorsList: List<DashboardSensor>) {
+        val isDataChanged = this.sensorsList.isEmpty() && sensorsList.isNotEmpty()
         this.sensorsList.replace(sensorsList)
-        notifyDataSetChanged()
+        if (isDataChanged) notifyDataSetChanged()
+        else notifyItemRangeChanged(0, sensorsList.size)
     }
 
 }

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.sensor_list_item.view.*
 
 enum class SensorType(val type: String) {
 
-    RGB_LIGHT("RGBLight") {
+    RGB_LIGHT("LED_CONTROLLER") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
             setTextAndVisibility(view, View.GONE, R.string.light_sensor_name)
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.lightSensor, null))
@@ -19,7 +19,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.light, null).mutate())
         }
     },
-    TEMPERATURE_SENSOR("temperatureSensor") {
+    TEMPERATURE_SENSOR("TEMPERATURE_SENSOR") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
             setTextAndVisibility(view, View.VISIBLE, R.string.temperature_sensor_name)
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.temperatureSensor, null))

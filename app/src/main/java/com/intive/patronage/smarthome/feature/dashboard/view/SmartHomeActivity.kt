@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
-import com.intive.patronage.smarthome.feature.developer.viewmodel.DeveloperSettingsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.feature.login.LoginGoogle
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
@@ -23,7 +22,6 @@ class SmartHomeActivity : AppCompatActivity() {
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
     private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
     private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this) }
-    private val developerSettingsViewModel: DeveloperSettingsViewModel by viewModel()
     private val networkConnectionService: NetworkConnectionService by inject { parametersOf(this) }
     private val smartHomeActivityViewModel: SmartHomeActivityViewModel by viewModel {
         parametersOf(
@@ -36,12 +34,13 @@ class SmartHomeActivity : AppCompatActivity() {
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null || intent.extras != null) {
+        if (savedInstanceState == null || (intent.extras != null && intent.extras?.containsKey("DESTINATION_URL")!!)) {
             dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
         }
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+            setToolbarWhenReturnToDashboard()
         }
 
         observeViewModel()
@@ -61,12 +60,11 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         dashboardCoordinator.goBack()
+        setToolbarWhenReturnToDashboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (developerSettingsViewModel.isDebugMode()) {
-            menuInflater.inflate(R.menu.menu_developer_settings, menu)
-        }
+        menuInflater.inflate(R.menu.menu_developer_settings, menu)
         menuInflater.inflate(R.menu.sign_in, menu)
         return true
     }
@@ -74,7 +72,7 @@ class SmartHomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.developer_settings -> {
-                dashboardCoordinator.goToDeveloperSettings()
+                dashboardCoordinator.goToSettingsScreen()
             }
             R.id.log_out_google -> {
                 loginGoogle.signOut()
@@ -89,5 +87,19 @@ class SmartHomeActivity : AppCompatActivity() {
 
     fun showLogo() {
         toolbarLogo.visibility = View.VISIBLE
+    }
+
+    fun hideTitle() {
+        toolbar.title = ""
+    }
+
+    fun hideArrowBack() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    fun setToolbarWhenReturnToDashboard() {
+        hideArrowBack()
+        hideTitle()
+        showLogo()
     }
 }

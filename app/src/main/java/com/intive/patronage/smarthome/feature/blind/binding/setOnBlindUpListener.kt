@@ -9,6 +9,6 @@ fun setOnBlindUpListener(view: Button, blindDetailsViewModel: BlindDetailsViewMo
     view.setOnClickListener {
         blindDetailsViewModel.blindViewEventListener.blindUp()
         if (blindDetailsViewModel.position > 0) blindDetailsViewModel.position--
-        blindDetailsViewModel.setPercent("${blindDetailsViewModel.position} %")
+        blindDetailsViewModel.setPercent("${100-blindDetailsViewModel.position} %")
     }
 }

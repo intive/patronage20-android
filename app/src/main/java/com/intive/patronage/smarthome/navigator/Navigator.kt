@@ -18,7 +18,7 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
                     if (topFragment != null) it.popBackStack()
 
                     it.beginTransaction()
-                        .replace(event.containerId, fragment, "${fragment.javaClass}")
+                        .add(event.containerId, fragment, "${fragment.javaClass}")
                         .addToBackStack(null)
                         .commit()
                 }

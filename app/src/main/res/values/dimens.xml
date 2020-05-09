@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="developer_settings_text_size">30sp</dimen>
+    <dimen name="developer_settings_margin_top">24sp</dimen>
     <dimen name="standard_break">16dp</dimen>
     <dimen name="none">0dp</dimen>
     <dimen name="text_view_width">64dp</dimen>
@@ -31,4 +33,13 @@
     <dimen name="splash_screen_icon_size">150dp</dimen>
     <dimen name="splash_screen_loading_margin_bottom">48dp</dimen>
     <dimen name="splash_screen_logo_size">300dp</dimen>
+    <dimen name="wifi_icon_margin_top">82dp</dimen>
+    <dimen name="wifi_icon_margin_bottom">8dp</dimen>
+    <dimen name="wifi_icon_margin_start">15dp</dimen>
+    <dimen name="wifi_icon_margin_end">75dp</dimen>
+    <dimen name="progress_bar_height">8dp</dimen>
+    <dimen name="settings_list_item_height">48dp</dimen>
+    <dimen name="settings_list_item_icon_height">32dp</dimen>
+    <dimen name="settings_list_item_icon_margin">8dp</dimen>
+    <dimen name="settings_list_item_text_size">16sp</dimen>
 </resources>

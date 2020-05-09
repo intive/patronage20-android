@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".SmartHomeApplication"
@@ -17,12 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity"></activity>
         <activity
             android:name=".feature.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".feature.splashcreen.SplashScreenActivity"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor">
             <intent-filter android:label="@string/filter_view_http_splash">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -42,13 +46,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.dashboard.view.SmartHomeActivity" />
+        <activity
+            android:name=".feature.dashboard.view.SmartHomeActivity"
+            android:launchMode="singleTask" />
 
         <service android:name=".firebase.SmartHomeMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <receiver
+            android:name=".notifications.service.SmartHomeNotificationsServiceReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="RESTART_SERVICE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".notifications.service.SmartHomeNotificationsService"
+            android:enabled="true" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/splash_screen_icon" />
+
     </application>
 
 </manifest>
