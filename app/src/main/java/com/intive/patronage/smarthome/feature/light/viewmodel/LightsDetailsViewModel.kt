@@ -88,8 +88,8 @@ class LightsDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { checkResponse(it.code()) },
-                { toastMessage.value = R.string.api_connection_error }
+                { toastMessage.value = R.string.apply_toast },
+                { toastMessage.value = R.string.update_value_toast_error }
             )
     }
 
@@ -99,19 +99,6 @@ class LightsDetailsViewModel(
         lightChangerDisposable?.dispose()
     }
 
-    private fun checkResponse(code: Int) {
-        when (code) {
-            200 -> toastMessage.value = R.string.apply_toast
-            400 -> {
-                toastMessage.value = R.string.http_400
-                lightColorReset()
-            }
-            404 -> {
-                toastMessage.value = R.string.http_404
-                lightColorReset()
-            }
-        }
-    }
 
     private fun lightColorReset() {
         loadLight()

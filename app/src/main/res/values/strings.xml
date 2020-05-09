@@ -59,8 +59,6 @@
     <string name="foreground_notification_title">Your SmartHome is active</string>
     <string name="Version">Version %s</string>
     <string name="delete_sensors">Delete all sensors</string>
-    <string name="http_400">Unable to connect with server - 400</string>
-    <string name="http_404">Unable to connect with server - 404</string>
     <string name="dark_mode_setting">Enable dark mode</string>
     <string name="developer_settings">Developer settings</string>
     <string name="notifications_setting">Show notifications</string>
