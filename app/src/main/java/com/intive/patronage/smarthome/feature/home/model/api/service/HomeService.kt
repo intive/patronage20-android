@@ -14,7 +14,7 @@ class HomeService(private val dashboardService: DashboardService,
                   private val smartHomeAPI: SmartHomeAPI) {
 
     private fun provideHomeSensors(source: Single<Dashboard>): Observable<List<HomeSensor>> {
-        return source.map { transformSensors(it) }
+        return source.map { mapToSensorsList(it) }
             .toObservable()
     }
 
@@ -28,28 +28,28 @@ class HomeService(private val dashboardService: DashboardService,
     fun deleteSensor(id: Int) = smartHomeAPI.deleteSensor(id)
 
 
-    private fun transformSensors(dashboard: Dashboard): List<HomeSensor> {
+    private fun mapToSensorsList(dashboard: Dashboard): List<HomeSensor> {
         val sensors = mutableListOf<HomeSensor>()
         dashboard.lights?.let {
-            sensors.addAll(transformFromLights(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         dashboard.temperatureSensors?.let {
-            sensors.addAll(transformFromTemperatureSensors(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         dashboard.smokeSensors?.let {
-            sensors.addAll(transformFromSmokeSensors(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         dashboard.windowBlinds?.let {
-            sensors.addAll(transformFromWindowBlinds(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         dashboard.windowSensors?.let {
-            sensors.addAll(transfromFromWindowSensors(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         dashboard.RFIDSensors?.let {
-            sensors.addAll(transformFromRFIDSensors(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         dashboard.HVACRooms?.let {
-//            sensors.addAll(transformFromHVACRooms(it))
+            sensors.addAll(transformFromBaseSensors(it))
         }
         // TODO: verify when API ready
         // sensors.addAll(transfromFromHVACStatus(dashboard.HVACStatus))

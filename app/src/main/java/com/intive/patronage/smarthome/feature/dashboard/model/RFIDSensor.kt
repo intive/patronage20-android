@@ -7,8 +7,5 @@ data class RFIDSensorLastTag(
 )
 
 data class RFIDSensor(
-    @Json(name = "id") val id: Int,
-    @Json(name = "type") val type: String,
-    @Json(name = "lastTag") val lastTag: RFIDSensorLastTag,
-    @Json(name = "mapPosition") val mapPosition: MapPosition?
-)
+    @Json(name = "lastTag") val lastTag: RFIDSensorLastTag
+) : BaseHomeSensor()
