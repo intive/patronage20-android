@@ -39,6 +39,7 @@
     <string name="hvac_temperature_label">Temperature</string>
     <string name="home_appbar">Home</string>
     <string name="apply_toast">Successfully applied</string>
+    <string name="update_value_toast_error">Something went wrong</string>
     <string name="graph_1_h">1 h</string>
     <string name="graph_3_h">3 h</string>
     <string name="graph_6_h">6 h</string>
