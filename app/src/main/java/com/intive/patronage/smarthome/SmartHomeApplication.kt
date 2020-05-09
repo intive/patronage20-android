@@ -41,7 +41,8 @@ class SmartHomeApplication : Application() {
                 analyticsModule,
                 smartHomeActivityModule,
                 homeApiModule,
-                preferencesModule
+                preferencesModule,
+                settingsModule
             )
         }
         setInitialTheme()
