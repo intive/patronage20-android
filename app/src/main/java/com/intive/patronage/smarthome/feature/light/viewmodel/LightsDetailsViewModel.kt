@@ -12,16 +12,17 @@ import com.intive.patronage.smarthome.common.convertRGBtoHSV
 import com.intive.patronage.smarthome.feature.dashboard.model.Light
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.light.model.api.LightDTO
+import com.intive.patronage.smarthome.feature.light.model.api.LightDetailsService
 import com.intive.patronage.smarthome.feature.light.view.ColorPickerEventListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okio.EOFException
-import retrofit2.HttpException
+
 const val type = "LED_CONTROLLER"
 
 class LightsDetailsViewModel(
     private var dashboardService: DashboardService,
+    private var lightService: LightDetailsService,
     var colorPickerEventListener: ColorPickerEventListener,
     private val id: Int
 ) : ObservableViewModel() {
@@ -76,19 +77,18 @@ class LightsDetailsViewModel(
     }
 
     fun onResetClicked() {
-        loadLight()
-        colorPickerEventListener.resetPointersPosition()
+        lightColorReset()
     }
 
     fun onApplyClicked() {
         val lightChangeHSV = convertRGBtoHSV(red, green, blue)
-        lightChangerDisposable = dashboardService.changeLightColor(
+        lightChangerDisposable = lightService.changeLightColor(
             LightDTO(id, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {checkResponse(it.code())},
+                { checkResponse(it.code()) },
                 { toastMessage.value = R.string.api_connection_error }
             )
     }
@@ -99,13 +99,23 @@ class LightsDetailsViewModel(
         lightChangerDisposable?.dispose()
     }
 
-    private fun checkResponse(code :Int){
-        when(code){
+    private fun checkResponse(code: Int) {
+        when (code) {
             200 -> toastMessage.value = R.string.apply_toast
-            400 -> {toastMessage.value = R.string.http_400
-                 loadLight()}
-            404 -> { toastMessage.value = R.string.http_404
-                loadLight()}
+            400 -> {
+                toastMessage.value = R.string.http_400
+                lightColorReset()
+            }
+            404 -> {
+                toastMessage.value = R.string.http_404
+                lightColorReset()
+            }
         }
     }
+
+    private fun lightColorReset() {
+        loadLight()
+        colorPickerEventListener.resetPointersPosition()
+    }
+
 }

@@ -109,6 +109,4 @@ class DashboardService(
             .filter { it.id == id }
             .firstOrError()
     }
-
-    fun changeLightColor(light: LightDTO) = smartHomeAPI.putLight(light)
 }
