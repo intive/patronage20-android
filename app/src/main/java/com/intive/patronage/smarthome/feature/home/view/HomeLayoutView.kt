@@ -28,6 +28,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     private lateinit var paint: Paint
     private lateinit var arcPaint: Paint
     private lateinit var textPaint: Paint
+    private lateinit var stkPaint: Paint
     private lateinit var oval: RectF
     private var smokeSensorBlinkStart: Long = System.currentTimeMillis()
     private var smokeSensorBlink: Boolean = false
@@ -53,6 +54,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         paint = Paint()
         arcPaint = Paint()
         textPaint = Paint()
+        stkPaint = Paint()
         paint.apply {
             isAntiAlias = true
             isDither = true
@@ -70,6 +72,15 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             isDither = true
             color = resources.getColor(R.color.text, null)
             textSize = SENSOR_TEXT_SIZE * this@HomeLayoutView.height
+            typeface = Typeface.DEFAULT_BOLD
+        }
+        stkPaint.apply{
+            stkPaint.style = Paint.Style.STROKE
+            stkPaint.strokeWidth = 8f
+            stkPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
+            stkPaint.textSize = SENSOR_TEXT_SIZE * this@HomeLayoutView.height
+            stkPaint.isAntiAlias = true
+            typeface = Typeface.DEFAULT_BOLD
         }
     }
 
@@ -143,6 +154,12 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             drawable.draw(cvs)
         }
         if (sensor.type == SensorType.TEMPERATURE_SENSOR.type) {
+            cvs.drawText(
+                sensor.details + DEGREE_CHAR,
+                x - textPaint.measureText(sensor.details) / 2,
+                (y - (textPaint.descent() + textPaint.ascent()) / 2) + SENSOR_SIZE * this.height,
+                stkPaint
+            )
             cvs.drawText(
                 sensor.details + DEGREE_CHAR,
                 x - textPaint.measureText(sensor.details) / 2,
