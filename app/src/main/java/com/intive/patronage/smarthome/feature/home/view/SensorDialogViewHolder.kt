@@ -18,6 +18,9 @@ class SensorDialogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             if (sensor.mapPosition != null) {
                 dialogSensorImage.visibility = View.VISIBLE
             }
+            else{
+                dialogSensorImage.visibility = View.INVISIBLE
+            }
             val findSensor = SensorDialogType.values().find {
                 it.type == sensor.type
             }

@@ -26,7 +26,7 @@ class SensorDialog : DialogFragment() {
     private val sensorDialogListAdapter: SensorDialogListAdapter by inject {
         parametersOf(::onItemClick)
     }
-    private val dialogViewModel: HomeSharedViewModel by sharedViewModel()
+    private val homeSharedViewModel: HomeSharedViewModel by sharedViewModel()
 
     private lateinit var image: HomeLayoutView
 
@@ -39,7 +39,7 @@ class SensorDialog : DialogFragment() {
         val binding: SensorDialogFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.sensor_dialog_fragment, container, false)
         binding.lifecycleOwner = this
-        binding.homeViewModelDataBind = dialogViewModel
+        binding.homeViewModelDataBind = homeSharedViewModel
         setupRecyclerView(binding)
         image = activity!!.findViewById(R.id.home)
         return binding.root
@@ -62,16 +62,16 @@ class SensorDialog : DialogFragment() {
 
     private fun onItemClick(sensor: DashboardSensor) {
         if (sensor.mapPosition != null) {
-            dialogViewModel.deleteSensor(sensor.id.toInt())
+            homeSharedViewModel.deleteSensor(sensor.id.toInt())
         } else {
-            val x = dialogViewModel.getSensorXPosition()
-            val y = dialogViewModel.getSensorYPosition()
+            val x = homeSharedViewModel.getSensorXPosition()
+            val y = homeSharedViewModel.getSensorYPosition()
             if (image.checkForSensors(
                     percentToCoordinateX(x, image.width),
                     percentToCoordinateY(y, image.height)
                 )
             ) {
-                dialogViewModel.postSensor(
+                homeSharedViewModel.postSensor(
                     sensor.id.toInt(),
                     HomeSensor(sensor.id.toInt(), sensor.type, MapPosition(x, y))
                 )

@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.home.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
@@ -10,7 +11,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
 
-    private val dialogViewModel: HomeSharedViewModel by sharedViewModel()
+    private val homeSharedViewModel: HomeSharedViewModel by sharedViewModel()
     lateinit var image: HomeLayoutView
     lateinit var gestureDetector: GestureDetector
 
@@ -27,6 +28,7 @@ class HomeFragment : Fragment() {
             gestureDetector.onTouchEvent(event)
             true
         }
+        observeToastMessage()
         return myView
     }
 
@@ -38,16 +40,25 @@ class HomeFragment : Fragment() {
                     val x = e!!.x
                     val y = e.y
                     val sensorDialog = SensorDialog()
-                    dialogViewModel.setSensorPosition(x, y, image.width, image.height)
+                    homeSharedViewModel.setSensorPosition(x, y, image.width, image.height)
                     sensorDialog.show(fragmentManager!!, "SensorList")
                 }
             })
     }
 
     private fun getSensors() {
-        dialogViewModel.items.observe(this, Observer {
+        homeSharedViewModel.items.observe(this, Observer {
             if (it != null) {
                 image.setData(it)
+            }
+        })
+    }
+
+    private fun observeToastMessage(){
+        homeSharedViewModel.toastMessage.observe(this, Observer {
+            if (it != null) {
+                val message = getString(it)
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
             }
         })
     }

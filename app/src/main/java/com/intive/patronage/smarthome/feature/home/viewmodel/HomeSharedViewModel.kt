@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.home.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.common.coordinateToPercentX
 import com.intive.patronage.smarthome.common.coordinateToPercentY
@@ -21,9 +22,9 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
     private var sensorList: Disposable? = null
     private var postSensorCall: Disposable? = null
     private var deleteSensorCall: Disposable? = null
-    var responsePostCode = MutableLiveData<Int>()
     private var actualSensorX = 0f
     private var actualSensorY = 0f
+    val toastMessage = MutableLiveData<Int>()
 
     init {
         sensorList = dashboardService.dashboardReplaySubject
@@ -40,8 +41,9 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                responsePostCode.value = it.code()
+                toastMessage.value = R.string.sensor_add_success
             }, {
+                toastMessage.value = R.string.update_value_toast_error
                 it.printStackTrace()
             })
     }
@@ -50,7 +52,11 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
         deleteSensorCall = homeService.deleteSensor(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, {})
+            .subscribe({
+                toastMessage.value = R.string.sensor_add_failure
+            }, {
+                toastMessage.value = R.string.update_value_toast_error
+            })
     }
 
     override fun onCleared() {
