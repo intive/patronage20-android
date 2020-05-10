@@ -20,8 +20,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val myView = inflater.inflate(R.layout.home_fragment, container, false)
-        image = myView.findViewById(R.id.home)
+        val view = inflater.inflate(R.layout.home_fragment, container, false)
+        image = view.findViewById(R.id.home)
         getSensors()
         initGestureDetector()
         image.setOnTouchListener { _, event ->
@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
             true
         }
         observeToastMessage()
-        return myView
+        return view
     }
 
     private fun initGestureDetector() {
