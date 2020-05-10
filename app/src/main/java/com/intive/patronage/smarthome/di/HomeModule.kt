@@ -1,16 +1,16 @@
 package com.intive.patronage.smarthome.di
 
-import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
+import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.home.view.SensorDialogListAdapter
-import com.intive.patronage.smarthome.feature.home.viewmodel.SensorDialogViewModel
+import com.intive.patronage.smarthome.feature.home.viewmodel.HomeSharedViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val homeModule = module {
-    factory { (onItemClickListener: (sensor: HomeSensor) -> Unit) ->
+    factory { (onItemClickListener: (sensor: DashboardSensor) -> Unit) ->
         SensorDialogListAdapter(
             onItemClickListener
         )
     }
-    viewModel { SensorDialogViewModel(get()) }
+    viewModel { HomeSharedViewModel(get(), get()) }
 }

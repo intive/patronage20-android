@@ -7,7 +7,7 @@
 
         <variable
             name="homeViewModelDataBind"
-            type="com.intive.patronage.smarthome.feature.home.viewmodel.SensorDialogViewModel" />
+            type="com.intive.patronage.smarthome.feature.home.viewmodel.HomeSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

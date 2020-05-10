@@ -1,14 +1,15 @@
 package com.intive.patronage.smarthome.feature.home.view
 
 import androidx.recyclerview.widget.DiffUtil
+import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
 
-class SensorDialogDiffCallback : DiffUtil.ItemCallback<List<HomeSensor>>() {
-    override fun areItemsTheSame(oldItem: List<HomeSensor>, newItem: List<HomeSensor>) =
+class SensorDialogDiffCallback : DiffUtil.ItemCallback<List<DashboardSensor>>() {
+    override fun areItemsTheSame(oldItem: List<DashboardSensor>, newItem: List<DashboardSensor>) =
         oldItem == newItem
 
     override fun areContentsTheSame(
-        oldItem: List<HomeSensor>,
-        newItem: List<HomeSensor>
+        oldItem: List<DashboardSensor>,
+        newItem: List<DashboardSensor>
     ) = oldItem == newItem
 }

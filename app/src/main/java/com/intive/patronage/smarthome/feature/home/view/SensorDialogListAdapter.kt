@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.replace
-import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
+import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 
-class SensorDialogListAdapter(private val onDialogSensorClickListener: (sensor: HomeSensor) -> Unit) :
-    ListAdapter<List<HomeSensor>, SensorDialogViewHolder>(SensorDialogDiffCallback()) {
+class SensorDialogListAdapter(private val onDialogSensorClickListener: (sensor: DashboardSensor) -> Unit) :
+    ListAdapter<List<DashboardSensor>, SensorDialogViewHolder>(SensorDialogDiffCallback()) {
 
-    private val sensorsList = mutableListOf<HomeSensor>()
+    private val sensorsList = mutableListOf<DashboardSensor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SensorDialogViewHolder =
         SensorDialogViewHolder(
@@ -27,7 +27,7 @@ class SensorDialogListAdapter(private val onDialogSensorClickListener: (sensor: 
 
     override fun getItemCount() = sensorsList.size
 
-    fun update(sensorsList: List<HomeSensor>) {
+    fun update(sensorsList: List<DashboardSensor>) {
         this.sensorsList.replace(sensorsList)
         notifyDataSetChanged()
     }

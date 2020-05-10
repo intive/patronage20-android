@@ -3,18 +3,21 @@ package com.intive.patronage.smarthome.feature.home.view
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.SensorDialogType
+import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.common.percentToCoordinateX
 import com.intive.patronage.smarthome.common.percentToCoordinateY
-import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
+import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 
-const val SENSOR_SIZE: Float = 30f
+const val SENSOR_SIZE: Float = 0.06f // size - radius in percentage
+const val SENSOR_BORDER_SIZE: Float = 0.065f // size - radius in percentage
+const val SENSOR_ICON_SIZE: Float = 0.035f // size - radius in percentage
+const val SENSOR_TEXT_SIZE: Float = 0.035f
+const val SENSOR_DISTANCE: Float =
+    SENSOR_BORDER_SIZE * 2 + SENSOR_TEXT_SIZE / 2 // distance in percentage
+const val SMOKE_SENSOR_BLINK_INTERVAL: Float = 500f // interval is milliseconds
+const val DEGREE_CHAR = '°'
 
 class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     androidx.appcompat.widget.AppCompatImageView(context, attrs) {
@@ -23,10 +26,15 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     private lateinit var cvs: Canvas
     private lateinit var clearBitmap: Bitmap
     private lateinit var paint: Paint
-    private var sensList: MutableList<HomeSensor> = mutableListOf()
+    private lateinit var arcPaint: Paint
+    private lateinit var textPaint: Paint
+    private lateinit var oval: RectF
+    private var smokeSensorBlinkStart: Long = System.currentTimeMillis()
+    private var smokeSensorBlink: Boolean = false
+    private var sensList: MutableList<DashboardSensor> = mutableListOf()
     private var setup = false
 
-    private fun setupBitmap() {
+    private fun setupView() {
         val drawable = ContextCompat.getDrawable(context, R.drawable.ic_house)
         bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
         cvs = Canvas(bitmap)
@@ -35,104 +43,133 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             it.draw(cvs)
         }
         this.setImageBitmap(bitmap)
-        paint = Paint()
-        paint.isAntiAlias = true
-        setup = true
+        oval = RectF()
+        setupPaints()
         clearBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, false)
+        setup = true
+    }
+
+    private fun setupPaints() {
+        paint = Paint()
+        arcPaint = Paint()
+        textPaint = Paint()
+        paint.apply {
+            isAntiAlias = true
+            isDither = true
+        }
+        arcPaint.apply {
+            isDither = true
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            color = resources.getColor(R.color.windowBlindsSensor, null)
+            strokeWidth = (SENSOR_BORDER_SIZE - SENSOR_SIZE) * this@HomeLayoutView.height * 2
+            isAntiAlias = true
+        }
+        textPaint.apply {
+            isAntiAlias = true
+            isDither = true
+            color = resources.getColor(R.color.text, null)
+            textSize = SENSOR_TEXT_SIZE * this@HomeLayoutView.height
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (!setup) {
-            setupBitmap()
+            setupView()
         }
         paint.color = ContextCompat.getColor(context, R.color.backgroundColor)
-        cvs.drawRect(0.toFloat(), 0.toFloat(), this.width.toFloat(), this.height.toFloat(), paint)
+        cvs.drawRect(0f, 0f, this.width.toFloat(), this.height.toFloat(), paint)
         cvs.drawBitmap(clearBitmap, 0f, 0f, null)
-        for (sensor in sensList) {
-            if (sensor.mapPosition != null) {
-                drawSensor(
-                    percentToCoordinateX(sensor.mapPosition.x, this.width),
-                    percentToCoordinateY(sensor.mapPosition.y, this.height),
-                    sensor.sensorType
-                )
-            }
+        sensList.filter {
+            it.mapPosition != null
+        }.forEach {
+            drawSensor(
+                percentToCoordinateX(it.mapPosition!!.x, this.width),
+                percentToCoordinateY(it.mapPosition.y, this.height),
+                it
+            )
         }
         this.setImageBitmap(bitmap)
     }
 
-    fun setData(sensList: List<HomeSensor>) {
+    fun setData(sensList: List<DashboardSensor>) {
         this.sensList.clear()
         this.sensList.addAll(sensList)
     }
 
-    fun create(fragmentManager: FragmentManager) {
-        val gesture = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onLongPress(e: MotionEvent?) {
-                super.onLongPress(e)
-                val x = e!!.x.toInt()
-                val y = e.y.toInt()
-                val sensorDialog = SensorDialog()
-                sensorDialog.setSensorPosition(
-                    x.toFloat(),
-                    y.toFloat(),
-                    this@HomeLayoutView.width,
-                    this@HomeLayoutView.height
-                )
-                sensorDialog.show(fragmentManager, "SensorList")
-            }
-        })
-        this.setOnTouchListener { _, event ->
-            gesture.onTouchEvent(event)
-            true
-        }
-    }
-
-    fun addSensor(x: Float, y: Float, sensorType: String): Boolean {
-        if (checkForSensors(x, y)) {
-            drawSensor(x, y, sensorType)
-            this.setImageBitmap(bitmap)
-            showMessage(R.string.sensor_add_success)
-            return true
+    private fun drawSensorBorder(x: Float, y: Float, sensor: DashboardSensor) {
+        if (sensor.type == SensorType.RGB_LIGHT.type) {
+            paint.color = sensor.details.toInt()
         } else {
-            showMessage(R.string.sensor_add_failure)
-        }
-        return false
-    }
-
-    private fun showMessage(textId: Int) {
-        Toast.makeText(
-            context,
-            context.getString(textId),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun drawSensor(x: Float, y: Float, sensorType: String) {
-        val findSensor = SensorDialogType.values().find {
-            it.type == sensorType
-        }
-        var color = R.color.colorAccent
-        for (sensorT in SensorDialogType.values()) {
-            if (sensorT == findSensor) {
-                color = sensorT.getPaintColor()
+            paint.color = ContextCompat.getColor(context!!, R.color.colorAccentLightDark)
+            if (sensor.type == SensorType.SMOKE_SENSOR.type && smokeSensorBlink && sensor.details == "true") {
+                paint.color = resources.getColor(R.color.alert, null)
             }
         }
-        paint.color = ContextCompat.getColor(context!!, color)
-        cvs.drawCircle(x, y, SENSOR_SIZE, paint)
+        cvs.drawCircle(x, y, SENSOR_BORDER_SIZE * this.height, paint)
+        if (sensor.type == SensorType.WINDOW_BLIND.type) {
+            oval.set(
+                x - SENSOR_SIZE * this.height,
+                y - SENSOR_SIZE * this.height,
+                x + SENSOR_SIZE * this.height,
+                y + SENSOR_SIZE * this.height
+            )
+            paint.color = Color.TRANSPARENT
+            cvs.drawOval(oval, paint)
+            cvs.drawArc(oval, 90f, sensor.details.toFloat() / 100f * 360f, true, arcPaint)
+        }
+    }
+
+    private fun drawSensorIcon(x: Float, y: Float, sensor: DashboardSensor) {
+        val drawable = SensorType.values().find {
+            it.type == sensor.type
+        }?.getDrawable(resources)
+        if (drawable != null) {
+            drawable.setBounds(
+                (x - SENSOR_ICON_SIZE * this.height).toInt(),
+                (y - SENSOR_ICON_SIZE * this.height).toInt(),
+                (x + SENSOR_ICON_SIZE * this.height).toInt(),
+                (y + SENSOR_ICON_SIZE * this.height).toInt()
+            )
+            drawable.setTint(resources.getColor(R.color.text, null))
+            if (sensor.type == SensorType.SMOKE_SENSOR.type && smokeSensorBlink && sensor.details == "true") {
+                drawable.setTint(resources.getColor(R.color.alert, null))
+            }
+            if (System.currentTimeMillis() - smokeSensorBlinkStart > SMOKE_SENSOR_BLINK_INTERVAL) {
+                smokeSensorBlinkStart = System.currentTimeMillis()
+                smokeSensorBlink = !smokeSensorBlink
+            }
+            drawable.draw(cvs)
+        }
+        if (sensor.type == SensorType.TEMPERATURE_SENSOR.type) {
+            cvs.drawText(
+                sensor.details + DEGREE_CHAR,
+                x - textPaint.measureText(sensor.details) / 2,
+                (y - (textPaint.descent() + textPaint.ascent()) / 2) + SENSOR_SIZE * this.height,
+                textPaint
+            )
+        }
+    }
+
+    private fun drawSensor(x: Float, y: Float, sensor: DashboardSensor) {
+        drawSensorBorder(x, y, sensor)
+        paint.color = ContextCompat.getColor(context!!, R.color.colorPrimary)
+        cvs.drawCircle(x, y, SENSOR_SIZE * this.height, paint)
+        drawSensorIcon(x, y, sensor)
         this.setImageBitmap(bitmap)
     }
 
-    private fun checkForSensors(x: Float, y: Float): Boolean {
-        val distance = SENSOR_SIZE * 2 + 2
+    fun checkForSensors(x: Float, y: Float): Boolean {
+        val distance = SENSOR_DISTANCE * this.height
         if (!sensList.isNullOrEmpty()) {
-            for (sensor in sensList) {
-                if (sensor.mapPosition != null) {
-                    val sensorCoordX = percentToCoordinateX(sensor.mapPosition.x, this.width)
-                    val sensorCoordY = percentToCoordinateY(sensor.mapPosition.y, this.height)
-                    if (sensorCoordX >= x - distance && sensorCoordX <= x + distance && sensorCoordY >= y - distance && sensorCoordY <= y + distance)
-                        return false
-                }
+            sensList.filter {
+                it.mapPosition != null
+            }.forEach {
+                val sensorCoordX = percentToCoordinateX(it.mapPosition!!.x, this.width)
+                val sensorCoordY = percentToCoordinateY(it.mapPosition.y, this.height)
+                if (sensorCoordX >= x - distance && sensorCoordX <= x + distance && sensorCoordY >= y - distance && sensorCoordY <= y + distance)
+                    return false
             }
         }
         return true

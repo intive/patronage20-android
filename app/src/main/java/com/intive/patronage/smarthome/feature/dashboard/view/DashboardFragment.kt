@@ -56,7 +56,7 @@ class DashboardFragment : Fragment() {
         bundle.putInt("ID", sensor.id.toInt())
 
         when (sensor.type) {
-            "RGBLight" -> {
+            "LED_CONTROLLER" -> {
                 dashboardCoordinator.goToLightsDetailsScreen(bundle)
                 analytics.ledColorEvent(sensor.details.toInt())
             }
@@ -68,7 +68,7 @@ class DashboardFragment : Fragment() {
                 dashboardCoordinator.goToBlindDetailsScreen(bundle)
                 analytics.blindLevelEvent(sensor.details.toInt())
             }
-            "temperatureSensor" -> {
+            "TEMPERATURE_SENSOR" -> {
                 dashboardCoordinator.goToTemperatureDetailsScreen(bundle)
             }
         }
