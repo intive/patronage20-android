@@ -35,9 +35,9 @@ class HomeFragment : Fragment() {
     private fun initGestureDetector() {
         gestureDetector =
             GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-                override fun onLongPress(e: MotionEvent?) {
+                override fun onLongPress(e: MotionEvent) {
                     super.onLongPress(e)
-                    val x = e!!.x
+                    val x = e.x
                     val y = e.y
                     val sensorDialog = SensorDialog()
                     homeSharedViewModel.setSensorPosition(x, y, image.width, image.height)

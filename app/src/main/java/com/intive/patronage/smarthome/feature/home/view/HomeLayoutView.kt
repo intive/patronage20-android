@@ -113,7 +113,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         if (sensor.type == SensorType.RGB_LIGHT.type) {
             paint.color = sensor.details.toInt()
         } else {
-            paint.color = ContextCompat.getColor(context!!, R.color.colorAccentLightDark)
+            paint.color = resources.getColor(R.color.colorAccentLightDark, null)
             if (sensor.type == SensorType.SMOKE_SENSOR.type && smokeSensorBlink && sensor.details == "true") {
                 paint.color = resources.getColor(R.color.alert, null)
             }
@@ -171,7 +171,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
 
     private fun drawSensor(x: Float, y: Float, sensor: DashboardSensor) {
         drawSensorBorder(x, y, sensor)
-        paint.color = ContextCompat.getColor(context!!, R.color.colorPrimary)
+        paint.color = resources.getColor(R.color.colorAccentLightDark, null)
         cvs.drawCircle(x, y, SENSOR_SIZE * this.height, paint)
         drawSensorIcon(x, y, sensor)
         this.setImageBitmap(bitmap)

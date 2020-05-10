@@ -31,7 +31,7 @@ class SmartHomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        smartHomeFragmentViewModel.fetchSensors()
+        smartHomeFragmentViewModel
         setupToolbar()
         return inflater.inflate(R.layout.smart_home_fragment, container, false)
     }
