@@ -18,7 +18,8 @@ fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
                     it.hue,
                     it.saturation,
                     it.value
-                ).toString()
+                ).toString(),
+                it.mapPosition
             )
         )
     }
@@ -32,7 +33,8 @@ fun transformFromTemperatureSensors(temperatureSensors: List<TemperatureSensor>)
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.value.toString()
+                it.value.toString(),
+                it.mapPosition
             )
         )
     }
@@ -46,7 +48,8 @@ fun transformFromSmokeSensors(smokeSensors: List<SmokeSensor>): List<DashboardSe
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.isSmokeDetected.toString()
+                it.isSmokeDetected.toString(),
+                it.mapPosition
             )
         )
     }
@@ -60,7 +63,8 @@ fun transformFromWindowBlinds(windowBlinds: List<WindowBlind>): List<DashboardSe
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.position.toString()
+                it.position.toString(),
+                it.mapPosition
             )
         )
     }
@@ -74,7 +78,8 @@ fun transfromFromWindowSensors(windowSensors: List<WindowSensor>): List<Dashboar
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.isOpen.toString()
+                it.isOpen.toString(),
+                it.mapPosition
             )
         )
     }
@@ -88,7 +93,8 @@ fun transformFromRFIDSensors(rfidSensors: List<RFIDSensor>): List<DashboardSenso
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                ""
+                "",
+                it.mapPosition
             )
         )
     }
@@ -108,7 +114,8 @@ fun transformFromHVACRooms(hvacRooms: List<HVACRoom>): List<DashboardSensor> {
                     .append(it.coolingTemperature)
                     .append(TRANSFORMER_SEPARATOR)
                     .append(it.hysteresis)
-                    .toString()
+                    .toString(),
+                it.mapPosition
             )
         )
     }
@@ -127,7 +134,8 @@ fun transfromFromHVACStatus(hvacStatus: HVACStatus): List<DashboardSensor> {
         DashboardSensor(
             0.toString(),
             "",
-            details.toString()
+            details.toString(),
+            null
         )
     )
     return sensors
