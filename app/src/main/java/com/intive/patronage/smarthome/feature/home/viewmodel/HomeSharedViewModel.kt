@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.home.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.common.coordinateToPercentX
 import com.intive.patronage.smarthome.common.coordinateToPercentY
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
@@ -29,7 +30,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                items.value = it
+                items.value = it.filter { it.type != SensorType.HVAC_ROOM.type }
                 error.value = false
             }, { error.value = true })
     }
