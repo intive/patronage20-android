@@ -25,6 +25,8 @@ private const val CHANNEL_ID = "DEFAULT_CHANNEL_ID"
 private const val INITIAL_DELAY = 0L
 private const val PERIOD = 5L
 const val BROADCAST_INTENT_ACTION = "RESTART_SERVICE"
+private const val EXCEPTION_TAG = "Exception"
+private const val SUCCESS_TAG = "Success"
 
 class SmartHomeNotificationsService : Service(), KoinComponent {
     private var notificationsAPI: NotificationsAPI = get()
@@ -44,7 +46,11 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             .retry()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .subscribe()
+            .subscribe({
+                Log.d(SUCCESS_TAG, it.toString())
+            }, {
+                Log.d(EXCEPTION_TAG, it.toString())
+            })
     }
 
     private fun showNotification(title: String, text: String, id: Int) {
@@ -72,9 +78,16 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
     }
 
     private fun findNewNotifications(notificationsList: List<Notification>) {
-        val newNotifications = notificationsList.filter { !it.isChecked && previousNotifications[it.id] != it }
-        newNotifications.forEach {
-            showNotification("Title", "Notification id: ${it.id}", it.id)
+        notificationsList.filter {
+            !it.isChecked
+        }.forEach {
+            if (previousNotifications.containsKey(it.id)) {
+                if (previousNotifications[it.id] != it) {
+                    showNotification("Title", "Notification id: ${it.id}", it.id)
+                }
+            } else {
+                showNotification("Title", "Notification id: ${it.id}", it.id)
+            }
         }
     }
 
@@ -97,7 +110,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
                     previousNotifications[notification.id] = notification
                 }
             },{
-                Log.d("Exception", it.toString())
+                Log.d(EXCEPTION_TAG, it.toString())
             })
 
         return START_STICKY

@@ -6,13 +6,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
 
-
 val networkApiModule = module {
 
     single {
         OkHttpClient.Builder()
-            .callTimeout(120, TimeUnit.SECONDS)
-            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(180, TimeUnit.SECONDS)
+            .callTimeout(180, TimeUnit.SECONDS)
+            .connectTimeout(180, TimeUnit.SECONDS)
             .addInterceptor(AuthorizationInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY })
