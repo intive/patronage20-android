@@ -67,7 +67,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         dashboardCoordinator.goBack()
-        setToolbarWhenWeReturn(findPenultimateFragmentOnBackStack())
+        setToolbarOnBackPressed(findPenultimateFragmentOnBackStack())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -104,7 +104,7 @@ class SmartHomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    fun setToolbarWhenReturnToDashboard() {
+    fun setToolbarAfterReturnFromDetailScreen() {
         hideArrowBack()
         hideTitle()
         showLogo()
@@ -116,17 +116,18 @@ class SmartHomeActivity : AppCompatActivity() {
         hideLogo()
     }
 
-    fun findPenultimateFragmentOnBackStack() : Fragment? {
-        val penultimateIndex = 2
-        val penultimateFragmentIndex = supportFragmentManager.backStackEntryCount - penultimateIndex
-        return if (penultimateFragmentIndex >= 0) {
-            supportFragmentManager.fragments[penultimateFragmentIndex]
-        } else {
-            null
-        }
+    fun setToolbarForTemperatureScreen() {
+        supportActionBar?.hide()
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
-    fun setToolbarWhenWeReturn(penultimateFragment: Fragment?) {
+    fun findPenultimateFragmentOnBackStack() : Fragment? {
+        val valueToSubtractToGetPenultimateIndex = 2
+        val penultimateFragmentIndex = supportFragmentManager.backStackEntryCount - valueToSubtractToGetPenultimateIndex
+        return if (penultimateFragmentIndex >= 0) supportFragmentManager.fragments[penultimateFragmentIndex] else null
+    }
+
+    fun setToolbarOnBackPressed(penultimateFragment: Fragment?) {
 
         when (penultimateFragment?.tag) {
             "${LightsDetailsFragment::class.java}" -> {
@@ -136,14 +137,13 @@ class SmartHomeActivity : AppCompatActivity() {
                 setToolbarForDetailsScreen(R.string.hvac_details_appbar, true)
             }
             "${TemperatureDetailsFragment::class.java}" -> {
-                supportActionBar?.hide()
-                window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                setToolbarForTemperatureScreen()
             }
             "${BlindDetailsFragment::class.java}" -> {
                 setToolbarForDetailsScreen(R.string.blind_details_appbar, true)
             }
             "${SmartHomeFragment::class.java}" -> {
-                setToolbarWhenReturnToDashboard()
+                setToolbarAfterReturnFromDetailScreen()
             }
         }
     }
