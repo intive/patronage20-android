@@ -13,7 +13,7 @@ data class Dashboard(
     @Json(name = "windowBlinds") val windowBlinds: List<WindowBlind>?,
     @Json(name = "RFIDSensors") val RFIDSensors: List<RFIDSensor>?,
     @Json(name = "smokeSensors") val smokeSensors: List<SmokeSensor>?,
-    @Json(name = "HVACStatus") val HVACStatus: HVACStatus?,
+    @Json(name = "HVACStatus") val HVACStatus: List<HVACStatus>?,
     @Json(name = "HVACRooms") val HVACRooms: List<HVACRoom>?,
     @Json(name = "lights") val lights: List<Light>?
 )
