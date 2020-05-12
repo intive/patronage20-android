@@ -13,19 +13,30 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SmartHomeApplication
+import com.intive.patronage.smarthome.common.NOTIFICATIONS_VISIBILITY
+import com.intive.patronage.smarthome.common.PreferencesWrapper
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 private const val TAG = "FCM_SERVICE"
 private const val CHANNEL_ID = "default"
 
 class SmartHomeMessagingService : FirebaseMessagingService() {
+    private val preferences: PreferencesWrapper by inject {
+        parametersOf(this)
+    }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        message.data.isNotEmpty().let {
-            sendNotification(message)
-            Log.d(TAG, "From: ${message.from}")
-            Log.d(TAG, "Notification: id: ${message.messageId}, body: ${message.notification?.body}")
+        if (preferences.checkIfContains(NOTIFICATIONS_VISIBILITY)) {
+            if (preferences.getBooleanFromPreference(NOTIFICATIONS_VISIBILITY)) {
+                message.data.isNotEmpty().let {
+                    sendNotification(message)
+                    Log.d(TAG, "From: ${message.from}")
+                    Log.d(TAG, "Notification: id: ${message.messageId}, body: ${message.notification?.body}")
+                }
+            }
         }
     }
 
