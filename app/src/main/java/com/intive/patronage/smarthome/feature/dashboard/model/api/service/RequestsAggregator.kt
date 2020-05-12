@@ -4,7 +4,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 
 private var requestCounter: Int = 0
 private val sumOfTemperatureValues = mutableMapOf<Int, Int>()
-private const val valuesAmount = 6
+private const val valuesAmount = 60
 
 fun aggregateRequests(dashboard: Dashboard): Dashboard? {
     requestCounter++

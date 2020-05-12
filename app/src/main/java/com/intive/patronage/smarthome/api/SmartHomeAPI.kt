@@ -15,10 +15,10 @@ interface SmartHomeAPI {
 
     @GET("/api/v1/dashboard/delete")
     fun deleteSensors(): Single<Boolean>
-  
+
     @POST("/api/v1/map/{sensorID}")
     fun addSensor(@Path("sensorID") id: Int,
-                  @Body body: HomeSensor): Single<Boolean>
+                  @Body body: HomeSensor): Single<Response<Void>>
 
     @DELETE("/api/v1/map/{sensorID}")
     fun deleteSensor(@Path("sensorID") id: Int): Single<Boolean>

@@ -20,7 +20,7 @@ class HVACRoomAdapter {
         heatingTemperature = 100
         coolingTemperature = 200
         hysteresis = 10
-        temperatureSensorId = 1
+        temperatureSensorId = 61
     }
 }
 
