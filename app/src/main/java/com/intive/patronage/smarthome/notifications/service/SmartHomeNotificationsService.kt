@@ -32,13 +32,6 @@ private const val NOTIFICATIONS_COUNT = 100
 const val BROADCAST_INTENT_ACTION = "RESTART_SERVICE"
 private const val EXCEPTION_TAG = "Exception"
 private const val SUCCESS_TAG = "Success"
-
-private const val EXCEPTION_TAG = "Exception"
-private const val SUCCESS_TAG = "Success"
-private const val WAKE_LOCK_TAG = "SmartHomeNotificationsService::lock"
-
-private const val EXCEPTION_TAG = "Exception"
-private const val SUCCESS_TAG = "Success"
 private const val WAKE_LOCK_TAG = "SmartHomeNotificationsService::lock"
 
 class SmartHomeNotificationsService : Service(), KoinComponent {
