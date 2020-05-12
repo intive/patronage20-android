@@ -5,7 +5,7 @@ import com.intive.patronage.smarthome.R
 import kotlinx.android.synthetic.main.settings_image_item.view.*
 import kotlinx.android.synthetic.main.settings_switch_item.view.*
 
-enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isChecked: Boolean = false) {
+enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isChecked: Boolean = true) {
     NIGHT_MODE("switch") {
         override fun setItemView(itemView: View) {
             itemView.settingSwitchText.text = itemView.resources.getString(R.string.dark_mode_setting)

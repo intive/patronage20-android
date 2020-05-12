@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.settings.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
@@ -16,6 +17,7 @@ import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.settings.SettingClickEvent
 import com.intive.patronage.smarthome.feature.settings.SettingType
 import com.intive.patronage.smarthome.feature.settings.setupDarkModeSwitch
+import com.intive.patronage.smarthome.feature.settings.setupNotificationsVisibilitySwitch
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.settings_fragment.view.settingsRecyclerView
 import org.koin.android.ext.android.inject
@@ -38,11 +40,20 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setupToolbar()
+        setHasOptionsMenu(true)
+
         setupDarkModeSwitch(resources)
+        setupNotificationsVisibilitySwitch(preferences)
 
         val view = inflater.inflate(R.layout.settings_fragment, container, false)
         setupRecyclerView(view)
         return view
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
+        activity?.menuInflater?.inflate(R.menu.sign_in, menu)
     }
 
     private fun filterItemList() = if (BuildConfig.DEBUG) {

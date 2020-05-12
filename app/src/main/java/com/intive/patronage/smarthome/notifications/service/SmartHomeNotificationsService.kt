@@ -12,28 +12,41 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.NOTIFICATIONS_VISIBILITY
+import com.intive.patronage.smarthome.common.PreferencesWrapper
 import com.intive.patronage.smarthome.notifications.api.NotificationsAPI
 import com.intive.patronage.smarthome.notifications.model.Notification
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.get
+import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
 
 private const val CHANNEL_ID = "DEFAULT_CHANNEL_ID"
 private const val INITIAL_DELAY = 0L
 private const val PERIOD = 5L
+private const val NOTIFICATIONS_COUNT = 100
 const val BROADCAST_INTENT_ACTION = "RESTART_SERVICE"
 private const val EXCEPTION_TAG = "Exception"
 private const val SUCCESS_TAG = "Success"
 
+private const val EXCEPTION_TAG = "Exception"
+private const val SUCCESS_TAG = "Success"
+private const val WAKE_LOCK_TAG = "SmartHomeNotificationsService::lock"
+
 class SmartHomeNotificationsService : Service(), KoinComponent {
     private var notificationsAPI: NotificationsAPI = get()
+    private val preferences: PreferencesWrapper by inject {
+        parametersOf(this)
+    }
+
     private var notificationsList: Disposable? = null
     private var deleteAPICall: Disposable? = null
 
-    private var previousNotifications: HashMap<Int, Notification> = HashMap(100)
+    private var previousNotifications: HashMap<Int, Notification> = HashMap(NOTIFICATIONS_COUNT)
     private var wakeLock: PowerManager.WakeLock? = null
 
     private fun getNotifications() = notificationsAPI.getNotifications().toObservable()
@@ -43,7 +56,6 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
 
     private fun deleteNotification(id: Int) {
         deleteAPICall = notificationsAPI.deleteNotification(id)
-            .retry()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .subscribe({
@@ -93,7 +105,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         wakeLock = (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SmartHomeNotificationsService::lock").apply {
+            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKE_LOCK_TAG).apply {
                 acquire()
             }
         }
@@ -102,12 +114,18 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .subscribe({
-                if (previousNotifications.isNotEmpty()) {
-                    findNewNotifications(it)
-                }
+                if (preferences.checkIfContains(NOTIFICATIONS_VISIBILITY)) {
+                    if (preferences.getBooleanFromPreference(NOTIFICATIONS_VISIBILITY)) {
+                        if (previousNotifications.isNotEmpty()) {
+                            findNewNotifications(it)
+                        }
 
-                it.forEach { notification ->
-                    previousNotifications[notification.id] = notification
+                        Log.d("NOTIFICATIONS", it.toString())
+
+                        it.forEach { notification ->
+                            previousNotifications[notification.id] = notification
+                        }
+                    }
                 }
             },{
                 Log.d(EXCEPTION_TAG, it.toString())
@@ -124,7 +142,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             resources.getString(R.string.foreground_notification_title),
             ""
         )
-        startForeground(101, foregroundNotification.build())
+        startForeground(NOTIFICATIONS_COUNT + 1, foregroundNotification.build())
     }
 
     private fun createNotification(title: String, text: String) = NotificationCompat.Builder(this, CHANNEL_ID)

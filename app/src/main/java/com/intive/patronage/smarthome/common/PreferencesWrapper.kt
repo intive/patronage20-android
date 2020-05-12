@@ -5,14 +5,11 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
 const val DARK_MODE_KEY = "DARK_MODE"
+const val NOTIFICATIONS_VISIBILITY = "NOTIFICATIONS_VISIBILITY"
 
 class PreferencesWrapper(appContext: Context) {
 
-    var sharedPref: SharedPreferences
-
-    init {
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(appContext)
-    }
+    var sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(appContext)
 
     fun checkIfContains(key: String) = sharedPref.contains(key)
 
@@ -21,6 +18,13 @@ class PreferencesWrapper(appContext: Context) {
     fun setDarkModePreference(bool: Boolean){
         with (sharedPref.edit()){
             putBoolean(DARK_MODE_KEY, bool)
+            commit()
+        }
+    }
+
+    fun setNotificationsVisibilityPreference(bool: Boolean) {
+        with (sharedPref.edit()){
+            putBoolean(NOTIFICATIONS_VISIBILITY, bool)
             commit()
         }
     }
