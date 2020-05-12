@@ -1,7 +1,6 @@
 package com.intive.patronage.smarthome.feature.blind.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.FragmentBlindDetailsBinding
 import com.intive.patronage.smarthome.feature.blind.viewmodel.BlindDetailsViewModel
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
-import kotlinx.android.synthetic.main.smart_home_activity.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -40,13 +35,6 @@ class BlindDetailsFragment : Fragment(), BlindViewEventListener {
         (activity as SmartHomeActivity).hideLogo()
 
         blindDetailsViewModel.blindViewEventListener = this
-
-        blindDetailsViewModel.toastMessage.observe(this, Observer {
-            if (it != null) {
-                val message = getString(it)
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-            }
-        })
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind_details, container, false)
         binding.lifecycleOwner = this
@@ -75,5 +63,9 @@ class BlindDetailsFragment : Fragment(), BlindViewEventListener {
             this.position = this.onePercent * percentPosition
             this.invalidate()
         }
+    }
+
+    override fun showToast(message: Int) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 }

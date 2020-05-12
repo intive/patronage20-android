@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.feature.hvac.view
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,22 +10,20 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.databinding.FragmentHvacDetailsBinding
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.hvac.viewmodel.HVACViewEventListener
 import com.intive.patronage.smarthome.feature.hvac.viewmodel.HvacViewModel
-import kotlinx.android.synthetic.main.smart_home_activity.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class HvacDetailsFragment : Fragment(),
-    HVACViewEventListener {
+class HvacDetailsFragment : Fragment(), HVACViewEventListener {
 
-    private val hvacViewModel by viewModel<HvacViewModel> { parametersOf(this, this.arguments?.getInt("ID")) }
+    private val hvacViewModel by viewModel<HvacViewModel> {
+        parametersOf(this, this.arguments?.getInt("ID"))
+    }
     lateinit var binding: FragmentHvacDetailsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,7 +31,6 @@ class HvacDetailsFragment : Fragment(),
         toolbar.title = resources.getString(R.string.hvac_details_appbar)
         toolbar.setDisplayHomeAsUpEnabled(true)
         (activity as SmartHomeActivity).hideLogo()
-
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hvac_details, container, false)
         binding.lifecycleOwner = this
@@ -74,13 +70,10 @@ class HvacDetailsFragment : Fragment(),
     }
 
     override fun saveSetting() {
-
-        Toast.makeText(activity, "Setting saved", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, R.string.apply_toast, Toast.LENGTH_SHORT).show()
     }
 
     override fun resetSetting() {
         binding.hvacCircle.postInvalidate()
     }
-
-
 }

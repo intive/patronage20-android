@@ -40,8 +40,6 @@ class LightsDetailsViewModel(
 
     private var disposable: Disposable? = null
     private var lightChangerDisposable: Disposable? = null
-    val toastMessage = MutableLiveData<Int>()
-
     val hsv = MutableLiveData<IntArray>()
 
     init {
@@ -55,7 +53,7 @@ class LightsDetailsViewModel(
             .subscribe({
                 it?.let { sensor -> loadColor(sensor) }
             }, {
-                Log.d("Exception", "ERROR")
+                Log.d("Exception", it.toString())
             })
     }
 
@@ -87,10 +85,11 @@ class LightsDetailsViewModel(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { toastMessage.value = R.string.apply_toast },
-                { toastMessage.value = R.string.update_value_toast_error }
-            )
+            .subscribe({
+                colorPickerEventListener.showToast(R.string.apply_toast)
+            }, {
+                colorPickerEventListener.showToast(R.string.update_value_toast_error)
+            })
     }
 
     override fun onCleared() {

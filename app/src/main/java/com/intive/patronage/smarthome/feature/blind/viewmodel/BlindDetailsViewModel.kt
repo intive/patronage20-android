@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.feature.blind.viewmodel
 
 import android.util.Log
 import androidx.databinding.Bindable
-import androidx.lifecycle.MutableLiveData
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.feature.blind.model.BlindSensor
@@ -26,7 +25,6 @@ class BlindDetailsViewModel(
     private var percent: String = "$position %"
     private var disposable: Disposable? = null
     private var updatePositionCall: Disposable? = null
-    val toastMessage = MutableLiveData<Int>()
 
     init {
         loadBlind()
@@ -44,17 +42,20 @@ class BlindDetailsViewModel(
                 }
                 else Log.d("Exception", "NULL")
             },{
-                Log.d("Exception", "ERROR")
+                Log.d("Exception", it.toString())
             })
     }
 
-    fun updateBlindPosition() {
-        val blind = BlindSensor(id, BLIND_SENSOR_TYPE, 100-position)
+    private fun updateBlindPosition() {
+        val blind = BlindSensor(id, BLIND_SENSOR_TYPE, 100 - position)
         updatePositionCall = blindDetailsService.updateBlindPosition(blind)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ toastMessage.value = R.string.apply_toast },
-                { toastMessage.value = R.string.update_value_toast_error })
+            .subscribe({
+                blindViewEventListener.showToast(R.string.apply_toast)
+            }, {
+                blindViewEventListener.showToast(R.string.update_value_toast_error)
+            })
     }
 
     @Bindable
