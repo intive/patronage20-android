@@ -6,4 +6,5 @@ interface ColorPickerEventListener {
     fun setColorPickerPointerPosition(x: Float, y: Float)
     fun setBrightnessBarPointerPosition(x: Float)
     fun resetPointersPosition()
+    fun showToast(message: Int)
 }

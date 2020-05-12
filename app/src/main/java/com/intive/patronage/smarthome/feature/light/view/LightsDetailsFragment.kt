@@ -23,6 +23,8 @@ import org.koin.core.parameter.parametersOf
 import kotlin.math.PI
 import kotlin.math.sin
 
+private const val IMAGE_QUALITY = 720
+
 class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
 
     private lateinit var binding: FragmentLightsDetailsBinding
@@ -37,8 +39,6 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
     private val colorPickerPointer = ColorPickerPointer()
     private val brightnessBarPointer = BrightnessBarPointer()
 
-    private val imageQuality = 720
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,13 +51,6 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
 
         lightsDetailsViewModel.colorPickerEventListener = this
 
-        lightsDetailsViewModel.toastMessage.observe(this, Observer {
-            if (it != null) {
-                val message = getString(it)
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-            }
-        })
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
         binding.lifecycleOwner = this
         binding.lightDetailsViewModel = lightsDetailsViewModel
@@ -65,8 +58,8 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         binding.brightness.setDrawingCacheEnabled(true)
         binding.colorPicker.setDrawingCacheEnabled(true)
 
-        brightnessBitmap = Bitmap.createBitmap(imageQuality / 10 * 3, imageQuality / 10, Bitmap.Config.ARGB_8888)
-        val colorPickerBitmap = Bitmap.createBitmap(imageQuality, imageQuality, Bitmap.Config.ARGB_8888)
+        brightnessBitmap = Bitmap.createBitmap(IMAGE_QUALITY / 10 * 3, IMAGE_QUALITY / 10, Bitmap.Config.ARGB_8888)
+        val colorPickerBitmap = Bitmap.createBitmap(IMAGE_QUALITY, IMAGE_QUALITY, Bitmap.Config.ARGB_8888)
 
         brightnessCanvas = Canvas(brightnessBitmap)
         val colorPickerCanvas = Canvas(colorPickerBitmap)
@@ -170,5 +163,9 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
                 calculatePointersPosition(it)
             }
         })
+    }
+
+    override fun showToast(message: Int) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 }

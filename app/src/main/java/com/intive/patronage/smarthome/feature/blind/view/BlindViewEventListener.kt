@@ -4,4 +4,5 @@ interface BlindViewEventListener {
     fun blindUp()
     fun blindDown()
     fun setStartingPosition(percentPosition: Int)
+    fun showToast(message: Int)
 }
