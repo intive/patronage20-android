@@ -42,6 +42,7 @@ class SmartHomeApplication : Application() {
                 smartHomeActivityModule,
                 homeApiModule,
                 preferencesModule,
+                smartHomeFramgentModule,
                 settingsModule
             )
         }

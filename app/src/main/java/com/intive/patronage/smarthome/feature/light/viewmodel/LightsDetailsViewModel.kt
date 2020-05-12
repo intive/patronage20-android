@@ -83,7 +83,7 @@ class LightsDetailsViewModel(
     fun onApplyClicked() {
         val lightChangeHSV = convertRGBtoHSV(red, green, blue)
         lightChangerDisposable = lightService.changeLightColor(
-            LightDTO(id, type, lightChangeHSV[0].toInt(), lightChangeHSV[1].toInt(), lightChangeHSV[2].toInt())
+            LightDTO(id, type, lightChangeHSV[0].toInt(), (lightChangeHSV[1]*100).toInt(), (lightChangeHSV[2]*100).toInt())
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -1,7 +1,9 @@
 package com.intive.patronage.smarthome
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.ColorFilter
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -18,6 +20,10 @@ enum class SensorType(val type: String) {
             view.resources.getDrawable(R.drawable.light_bulb_inside, null).setTint(sensor.details.toInt())
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.light, null).mutate())
         }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.light_bulb_outline, null).mutate()
+        }
     },
     TEMPERATURE_SENSOR("TEMPERATURE_SENSOR") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
@@ -25,6 +31,10 @@ enum class SensorType(val type: String) {
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.temperatureSensor, null))
             view.sensorDetalis.text = view.context.getString(R.string.temperature_details, sensor.details)
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.thermometer, null))
+        }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.thermometer, null).mutate()
         }
     },
     SMOKE_SENSOR("smokeSensor") {
@@ -38,6 +48,10 @@ enum class SensorType(val type: String) {
             }
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.smoke_detector, null))
         }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.smoke_detector, null).mutate()
+        }
     },
     WINDOW_BLIND("windowBlind") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
@@ -45,6 +59,10 @@ enum class SensorType(val type: String) {
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.windowBlindsSensor, null))
             view.sensorDetalis.text = view.context.getString(R.string.window_blinds_details, sensor.details)
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.window_blinds, null))
+        }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.window_blinds, null).mutate()
         }
     },
     WINDOW_SENSOR("windowSensor") {
@@ -59,12 +77,20 @@ enum class SensorType(val type: String) {
                 view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.window_closed, null))
             }
         }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.window_closed, null).mutate()
+        }
     },
     RFID_SENSOR("RFIDSensor") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
             setTextAndVisibility(view, View.GONE, R.string.RFID_sensor_name)
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.rfidSensor, null))
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.rfid_sensor, null))
+        }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.rfid_sensor, null).mutate()
         }
     },
     HVAC_ROOM("HVACRoom") {
@@ -73,14 +99,23 @@ enum class SensorType(val type: String) {
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.hvacSensor, null))
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.hvac, null))
         }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return resources.getDrawable(R.drawable.hvac, null).mutate()
+        }
     },
     HVAC_STATUS("HVACStatus") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
             view.sensorName.text = "HVACA"
         }
+
+        override fun getDrawable(resources: Resources): Drawable? {
+            return null
+        }
     };
 
     abstract fun setAttributes(sensor: DashboardSensor, view: View)
+    abstract fun getDrawable(resources: Resources): Drawable?
     fun setTextAndVisibility(view: View, visibility: Int, nameSensor: Int) {
         view.sensorName.text = view.context.getString(nameSensor)
         view.sensorDetalis.visibility = visibility

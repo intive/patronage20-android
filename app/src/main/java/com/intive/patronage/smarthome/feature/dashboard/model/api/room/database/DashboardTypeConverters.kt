@@ -24,7 +24,7 @@ class DashboardTypeConverters {
         private val smokeSensorsAdapter = moshi.adapter<List<SmokeSensor>>(
             Types.newParameterizedType(List::class.java, SmokeSensor::class.java)
         )
-        private val HVACStatusAdapter = moshi.adapter<HVACStatus>(
+        private val HVACStatusAdapter = moshi.adapter<List<HVACStatus>>(
             Types.getRawType(HVACStatus::class.java)
         )
         private val HVACRoomsAdapter = moshi.adapter<List<HVACRoom>>(
@@ -86,12 +86,12 @@ class DashboardTypeConverters {
 
         @JvmStatic
         @TypeConverter
-        fun convertHVACStatusToJson(input: HVACStatus?): String =
+        fun convertHVACStatusToJson(input: List<HVACStatus>?): String =
             HVACStatusAdapter.toJson(input)
 
         @JvmStatic
         @TypeConverter
-        fun convertJsonToHVACStatus(input: String): HVACStatus? =
+        fun convertJsonToHVACStatus(input: String): List<HVACStatus>? =
             HVACStatusAdapter.fromJson(input)
 
         @JvmStatic
