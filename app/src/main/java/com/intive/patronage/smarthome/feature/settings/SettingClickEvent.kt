@@ -25,6 +25,7 @@ enum class SettingClickEvent {
             with(!itemView.settingSwitch.isChecked) {
                 itemView.settingSwitch.isChecked = this
                 SettingType.NOTIFICATIONS.isChecked = this
+                setNotificationsVisibility(this, preferences)
             }
         }
     };

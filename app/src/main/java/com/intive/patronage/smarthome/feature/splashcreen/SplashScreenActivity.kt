@@ -29,7 +29,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private val alertDialog: SmartHomeAlertDialog by inject()
     private val splashScreenViewModel: SplashScreenViewModel by viewModel()
-    private val splashScreenCoordinator: SplashScreenCoordinator by inject { parametersOf(this) }
+    private val splashScreenCoordinator: SplashScreenCoordinator by inject {
+        parametersOf(this)
+    }
 
     private val slideDuration = 1000L
     private val fadeDuration = 2000L
@@ -145,6 +147,15 @@ class SplashScreenActivity : AppCompatActivity() {
             splashScreenCoordinator.goToLoginScreen()
         }
 
+        startNotificationsService()
+        timer.cancel()
+
+//      if (complete)
+//          data?.let { splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data) }
+//              ?: splashScreenCoordinator.goToMainScreen()
+    }
+
+    private fun startNotificationsService() {
         Intent(this, SmartHomeNotificationsService::class.java).also {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(it)
@@ -152,12 +163,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 startService(it)
             }
         }
-
-        timer.cancel()
-
-//      if (complete)
-//          data?.let { splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data) }
-//              ?: splashScreenCoordinator.goToMainScreen()
     }
 
     private fun fullScreen() {
