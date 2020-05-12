@@ -117,8 +117,6 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
                             findNewNotifications(it)
                         }
 
-                        Log.d("NOTIFICATIONS", it.toString())
-
                         it.forEach { notification ->
                             previousNotifications[notification.id] = notification
                         }
