@@ -124,7 +124,7 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
                 intent.extras,
                 true
             )
-            else -> goToSmartHome(true)
+            else -> goToSmartHome(false)
         }
         intent.removeExtra(DESTINATION_URL)
     }

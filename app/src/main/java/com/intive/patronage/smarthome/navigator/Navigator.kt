@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
+import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
+import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import kotlinx.android.synthetic.main.smart_home_activity.view.*
 import org.koin.core.KoinComponent
 
@@ -23,8 +25,20 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
                     if (topFragment != null) it.popBackStack()
 
-                    if(deeplink && it.fragments.size > 1)
-                        goBack()
+                    if (deeplink) {
+                        if (it.fragments.size > 1)
+                            goBack()
+                        else if (it.fragments.size == 0) {
+                            it.beginTransaction()
+                                .add(
+                                    event.containerId,
+                                    SmartHomeFragment(),
+                                    "${SmartHomeFragment::class.java}"
+                                )
+                                .addToBackStack(null)
+                                .commit()
+                        }
+                    }
 
                     it.beginTransaction()
                         .add(event.containerId, fragment, "${fragment.javaClass}")
