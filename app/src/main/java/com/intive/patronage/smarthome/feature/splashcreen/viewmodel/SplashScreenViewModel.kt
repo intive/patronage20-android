@@ -8,10 +8,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
+const val MIN_WAIT_TIME = 5L
+const val MAX_WAIT_TIME = 30L
+
 class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
 
-    val minWaitTime = 5L
-    val maxWaitTime = 30L
 
     private var dashboard = MutableLiveData<Dashboard>()
     var error = MutableLiveData<Boolean>().apply { value = false }
@@ -19,7 +20,7 @@ class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
     private var dashboardCall: Disposable? = null
 
     init {
-        dashboardCall = dashboardService.fetchDashboardWithDelay(minWaitTime, maxWaitTime)
+        dashboardCall = dashboardService.fetchDashboardWithDelay(MIN_WAIT_TIME, MAX_WAIT_TIME)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
