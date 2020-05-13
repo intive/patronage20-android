@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.DeeplinkService
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
 import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
@@ -31,6 +32,9 @@ class SplashScreenActivity : AppCompatActivity() {
     private val splashScreenViewModel: SplashScreenViewModel by viewModel()
     private val splashScreenCoordinator: SplashScreenCoordinator by inject {
         parametersOf(this)
+    }
+    private val deeplinkService: DeeplinkService by inject {
+        parametersOf(splashScreenCoordinator)
     }
 
     private val slideDuration = 1000L
@@ -137,16 +141,8 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun onLoadingEnd(complete: Boolean) {
-        val data = intent?.data
 
-        if (complete && FirebaseAuth.getInstance().currentUser != null) {
-            data?.let {
-                splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
-            } ?: splashScreenCoordinator.goToMainScreen()
-        } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
-            splashScreenCoordinator.goToLoginScreen()
-        }
-
+        deeplinkService.handleDeeplinkRedirectionOnLoadingEnd(intent)
         startNotificationsService()
         timer.cancel()
 

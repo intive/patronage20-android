@@ -1,12 +1,18 @@
 package com.intive.patronage.smarthome.navigator
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.AnalyticsWrapper
+import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
+import kotlinx.android.synthetic.main.smart_home_activity.view.*
 import org.koin.core.KoinComponent
 
-class Navigator(private val activity: AppCompatActivity, private val analytics: AnalyticsWrapper): KoinComponent {
+class Navigator(private val activity: AppCompatActivity, private val analytics: AnalyticsWrapper) :
+    KoinComponent {
 
-    fun goToScreen(event: NavigationEvent) {
+    fun goToScreen(event: NavigationEvent, deeplink: Boolean = false) {
 
         when (event) {
             is FragmentEvent -> {
@@ -16,6 +22,9 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
                     analytics.switchScreenEvent(activity, fragment.javaClass.simpleName)
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
                     if (topFragment != null) it.popBackStack()
+
+                    if(deeplink && it.fragments.size > 1)
+                        goBack()
 
                     it.beginTransaction()
                         .add(event.containerId, fragment, "${fragment.javaClass}")

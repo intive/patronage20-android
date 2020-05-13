@@ -44,7 +44,7 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
                 val data = appCompatActivity.intent?.data
 
                 data?.let {
-                    loginCoordinator.goToScreenBasedOnDeeplinkUri(data)
+                    loginCoordinator.goToScreenBasedOnDeeplinkIntent(appCompatActivity.intent)
                 } ?: loginCoordinator.goToScreen()
             } else {
                 mGoogleSignInClient.signOut()
