@@ -36,8 +36,8 @@ class SmartHomeFragment : Fragment() {
         return inflater.inflate(R.layout.smart_home_fragment, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupTabLayout()
     }
 
@@ -61,12 +61,10 @@ class SmartHomeFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position!!) {
                     0 -> mFirebaseAnalytics.switchScreenEvent(
-                        activity,
-                        getString(R.string.dahboard_fragment_class_name)
+                        activity, getString(R.string.dahboard_fragment_class_name)
                     )
                     1 -> mFirebaseAnalytics.switchScreenEvent(
-                        activity,
-                        getString(R.string.home_fragment_class_name)
+                        activity, getString(R.string.home_fragment_class_name)
                     )
                 }
             }
@@ -80,10 +78,5 @@ class SmartHomeFragment : Fragment() {
         toolbar.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.backgroundColor)))
         (activity as SmartHomeActivity).showLogo()
         return toolbar
-    }
-
-    override fun onDestroyView() {
-        smartHomeViewPager.adapter = null
-        super.onDestroyView()
     }
 }
