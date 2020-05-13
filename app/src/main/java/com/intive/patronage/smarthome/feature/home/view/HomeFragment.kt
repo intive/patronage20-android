@@ -6,10 +6,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.ToastListener
 import com.intive.patronage.smarthome.feature.home.viewmodel.HomeSharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.core.parameter.parametersOf
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ToastListener {
 
     private val homeSharedViewModel: HomeSharedViewModel by sharedViewModel()
     lateinit var image: HomeLayoutView
@@ -20,6 +22,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        homeSharedViewModel.toastListener = this
         val view = inflater.inflate(R.layout.home_fragment, container, false)
         image = view.findViewById(R.id.home)
         getSensors()
@@ -55,12 +58,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeToastMessage(){
-        homeSharedViewModel.toastMessage.observe(this, Observer {
-            if (it != null) {
-                val message = getString(it)
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        homeSharedViewModel.responseCode.observe(this, Observer {
+            when(it){
+                200 -> Toast.makeText(this.context, R.string.sensor_add_success, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun showToast(message: Int) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
 }

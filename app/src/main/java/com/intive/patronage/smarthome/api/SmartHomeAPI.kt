@@ -21,7 +21,7 @@ interface SmartHomeAPI {
                   @Body body: HomeSensor): Single<Response<Void>>
 
     @DELETE("/api/v1/map/{sensorID}")
-    fun deleteSensor(@Path("sensorID") id: Int): Single<Boolean>
+    fun deleteSensor(@Path("sensorID") id: Int): Single<Response<Void>>
 
     @PUT("/api/v1/light")
     fun putLight(@Body body: LightDTO):Single<Response<Void>>
