@@ -31,7 +31,6 @@ class HomeFragment : Fragment(), ToastListener {
             gestureDetector.onTouchEvent(event)
             true
         }
-        observeToastMessage()
         return view
     }
 
@@ -53,14 +52,6 @@ class HomeFragment : Fragment(), ToastListener {
         homeSharedViewModel.items.observe(this, Observer {
             if (it != null) {
                 image.setData(it)
-            }
-        })
-    }
-
-    private fun observeToastMessage(){
-        homeSharedViewModel.responseCode.observe(this, Observer {
-            when(it){
-                200 -> Toast.makeText(this.context, R.string.sensor_add_success, Toast.LENGTH_SHORT).show()
             }
         })
     }
