@@ -40,12 +40,7 @@ class SmartHomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setupTabLayout()
-        if (activity?.intent?.extras != null && activity?.intent?.extras?.containsKey(
-                POSITION_HOME_ON_VIEW_PAGER_KEY
-            )!!) {
-            val position = activity?.intent?.extras?.getInt(POSITION_HOME_ON_VIEW_PAGER_KEY)
-            smartHomeViewPager.currentItem = position!!
-        }
+        switchViewPagerOnHomeAfterRedirectionDeeplink()
     }
 
     fun setupTabLayout() {
@@ -92,5 +87,14 @@ class SmartHomeFragment : Fragment() {
     override fun onDestroyView() {
         smartHomeViewPager.adapter = null
         super.onDestroyView()
+    }
+
+    fun switchViewPagerOnHomeAfterRedirectionDeeplink() {
+        if (activity?.intent?.extras != null && activity?.intent?.extras?.containsKey(
+                POSITION_HOME_ON_VIEW_PAGER_KEY
+            )!!) {
+            val position = activity?.intent?.extras?.getInt(POSITION_HOME_ON_VIEW_PAGER_KEY)
+            smartHomeViewPager.currentItem = position!!
+        }
     }
 }
