@@ -15,6 +15,8 @@ import com.intive.patronage.smarthome.feature.home.model.api.service.HomeService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.ReplaySubject
 
 class HomeSharedViewModel(private val dashboardService: DashboardService, private val homeService: HomeService) : ViewModel() {
 
@@ -27,6 +29,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
     private var actualSensorY = 0f
     var responseCode = MutableLiveData<Int>()
     lateinit var toastListener: ToastListener
+    val postSensorPublishSubject = PublishSubject.create<DashboardSensor>()
 
     init {
         sensorList = dashboardService.dashboardReplaySubject
