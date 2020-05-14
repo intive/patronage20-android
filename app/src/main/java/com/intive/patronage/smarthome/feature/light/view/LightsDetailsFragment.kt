@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,21 +36,21 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
     private lateinit var brightnessView: BrightnessBar
     private lateinit var brightnessBitmap: Bitmap
     private lateinit var brightnessCanvas: Canvas
-
-    private val colorPickerPointer = ColorPickerPointer()
-    private val brightnessBarPointer = BrightnessBarPointer()
+    private lateinit var colorPickerPointer: ColorPickerPointer
+    private lateinit var brightnessBarPointer: BrightnessBarPointer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setupToolbar()
 
-        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
-        toolbar.title = resources.getString(R.string.lights_details_appbar)
-        toolbar.setDisplayHomeAsUpEnabled(true)
-        (activity as SmartHomeActivity).hideLogo()
-
+        lightsDetailsViewModel.viewPadding = resources.displayMetrics.density * 8
         lightsDetailsViewModel.colorPickerEventListener = this
+
+        val pointerRadius = lightsDetailsViewModel.viewPadding - resources.displayMetrics.density
+        colorPickerPointer = ColorPickerPointer(pointerRadius)
+        brightnessBarPointer = BrightnessBarPointer(pointerRadius)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
         binding.lifecycleOwner = this
@@ -91,11 +92,18 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         return binding.root
     }
 
+    private fun setupToolbar() {
+        val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
+        toolbar.title = resources.getString(R.string.lights_details_appbar)
+        toolbar.setDisplayHomeAsUpEnabled(true)
+        (activity as SmartHomeActivity).hideLogo()
+    }
+
     private fun calculatePointersPosition(hsv: IntArray) {
         val radius = if (binding.colorPicker.width < binding.colorPicker.height) {
-            binding.colorPicker.width / 2
+            binding.colorPicker.width / 2 - lightsDetailsViewModel.viewPadding
         } else {
-            binding.colorPicker.height / 2
+            binding.colorPicker.height / 2 - lightsDetailsViewModel.viewPadding
         }
 
         val angleInRadians: Float = (hsv[0].toFloat() * PI.toFloat()) / 180

@@ -17,6 +17,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:padding="@dimen/color_picker_padding"
             android:layout_weight="1"
             app:onColorPickerOrientationChange="@{lightDetailsViewModel}"
             app:onColorPickerTouch="@{lightDetailsViewModel}"
