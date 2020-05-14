@@ -72,6 +72,13 @@ class LoginGoogle(private val appCompatActivity: AppCompatActivity, private val 
         }
     }
 
+    fun isUserLogged(): Boolean{
+        if(mAuth.currentUser == null){
+            return false
+        }
+        return true
+    }
+
     fun accountVerification(requestCode: Int, data: Intent?) {
         if (requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)

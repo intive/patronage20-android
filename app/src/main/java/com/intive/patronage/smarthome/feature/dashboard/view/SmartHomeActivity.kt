@@ -53,6 +53,9 @@ class SmartHomeActivity : AppCompatActivity() {
         observeViewModel()
         loginGoogle.initialAuthFirebase()
         loginGoogle.initialGoogleSignIn()
+        if(!loginGoogle.isUserLogged()){
+            dashboardCoordinator.goToLogin()
+        }
     }
 
     private fun observeViewModel() {
