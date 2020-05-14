@@ -1,7 +1,5 @@
 package com.intive.patronage.smarthome.feature.splashcreen
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
@@ -9,7 +7,6 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -18,12 +15,16 @@ import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
+import com.intive.patronage.smarthome.feature.splashcreen.animation.ProgressBarAnimation
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
 import com.intive.patronage.smarthome.navigator.SplashScreenCoordinator
 import com.intive.patronage.smarthome.notifications.service.SmartHomeNotificationsService
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
+private const val SLIDE_DURATION = 1000L
+private const val FADE_DURATION = 2000L
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -32,12 +33,8 @@ class SplashScreenActivity : AppCompatActivity() {
     private val splashScreenCoordinator: SplashScreenCoordinator by inject {
         parametersOf(this)
     }
-
-    private val slideDuration = 1000L
-    private val fadeDuration = 2000L
-    private val progressOnCompleteDuration = 1000L
-
-    lateinit var timer: CountDownTimer
+    private val progressBarAnimation: ProgressBarAnimation by inject()
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +47,13 @@ class SplashScreenActivity : AppCompatActivity() {
             ) { finish() }
         })
 
+        initProgressBar()
+    }
+
+    override fun onResume() {
+        super.onResume()
         startSlideInAnimation()
-        startProgressBarAnimation()
+        startProgressAnimation()
     }
 
     private fun startSlideInAnimation() {
@@ -64,18 +66,18 @@ class SplashScreenActivity : AppCompatActivity() {
         wifiAnimation.start()
 
         val fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom)
-        fromBottom.duration = slideDuration
+        fromBottom.duration = SLIDE_DURATION
 
         val fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top)
-        fromTop.duration = slideDuration
+        fromTop.duration = SLIDE_DURATION
 
         icon.animation = fromBottom
         iconLayout.animation = fromBottom
         logo.animation = fromTop
 
-        icon.animate().alpha(1f).duration = fadeDuration
-        iconLayout.animate().alpha(1f).duration = fadeDuration
-        logo.animate().alpha(1f).duration = fadeDuration
+        icon.animate().alpha(1f).duration = FADE_DURATION
+        iconLayout.animate().alpha(1f).duration = FADE_DURATION
+        logo.animate().alpha(1f).duration = FADE_DURATION
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -83,76 +85,37 @@ class SplashScreenActivity : AppCompatActivity() {
         if (hasFocus) fullScreen()
     }
 
-    private fun startProgressBarAnimation() {
-        val progressBar = findViewById<ProgressBar>(R.id.splashScreenProgressBar)
-        val progressAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max / 2)
-        progressAnimator.interpolator = LinearInterpolator()
-        progressAnimator.duration = splashScreenViewModel.minWaitTime * 1000
-
-        progressAnimator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) {}
-            override fun onAnimationRepeat(p0: Animator?) {}
-            override fun onAnimationCancel(p0: Animator?) {}
-
-            override fun onAnimationEnd(animation: Animator) {
-                var timeUntilMaxWaitTime = (splashScreenViewModel.maxWaitTime - splashScreenViewModel.minWaitTime) * 1000
-
-                timer = object : CountDownTimer(timeUntilMaxWaitTime, 1) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        timeUntilMaxWaitTime--
-                    }
-
-                    override fun onFinish() {}
-                }.start()
-
-                val animator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
-
-                splashScreenViewModel.complete.observe(this@SplashScreenActivity, Observer { complete ->
-                    if (!complete) {
-                        animator.interpolator = LinearInterpolator()
-                        animator.duration = timeUntilMaxWaitTime
-                        animator.start()
-                    } else {
-                        animator.cancel()
-
-                        val animatorOnComplete = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressBar.max)
-                        animatorOnComplete.interpolator = LinearInterpolator()
-                        animatorOnComplete.duration = progressOnCompleteDuration
-
-                        animatorOnComplete.addListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animation: Animator) {}
-                            override fun onAnimationRepeat(p0: Animator?) {}
-                            override fun onAnimationCancel(p0: Animator?) {}
-
-                            override fun onAnimationEnd(animation: Animator) {
-                                onLoadingEnd(complete)
-                            }
-                        })
-                        animatorOnComplete.start()
-                    }
-                })
-            }
-        })
-        progressAnimator.start()
+    private fun initProgressBar() {
+        progressBar = findViewById(R.id.splashScreenProgressBar)
     }
 
-    private fun onLoadingEnd(complete: Boolean) {
-        val data = intent?.data
+    private fun startProgressAnimation() {
+        progressBarAnimation.startInitialPhase(progressBar, ::startProgressAnimationSecondPhase)
+    }
 
-        if (complete && FirebaseAuth.getInstance().currentUser != null) {
+    private fun startProgressAnimationSecondPhase() {
+        splashScreenViewModel.complete.observe(this,  Observer { complete ->
+            if (!complete) {
+                progressBarAnimation.startLoadingPhase(progressBar)
+            } else {
+                progressBarAnimation.cancel()
+                progressBarAnimation.startFinishingPhase(progressBar, ::onLoadingFinished)
+            }
+        })
+    }
+
+    private fun onLoadingFinished() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser != null) {
+            val data = intent?.data
             data?.let {
                 splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
             } ?: splashScreenCoordinator.goToMainScreen()
-        } else if (complete && FirebaseAuth.getInstance().currentUser == null) {
+        } else {
             splashScreenCoordinator.goToLoginScreen()
         }
-
         startNotificationsService()
-        timer.cancel()
-
-//      if (complete)
-//          data?.let { splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data) }
-//              ?: splashScreenCoordinator.goToMainScreen()
     }
 
     private fun startNotificationsService() {
