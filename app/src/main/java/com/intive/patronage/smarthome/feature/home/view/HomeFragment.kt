@@ -91,11 +91,7 @@ class HomeFragment : Fragment(), ToastListener {
                 HomeSensor(sensor.id.toInt(), sensor.type, MapPosition(x, y))
             )
         } else {
-            Toast.makeText(
-                this.context,
-                getString(R.string.sensor_add_failure),
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast(R.string.sensor_add_failure)
         }
     }
 
