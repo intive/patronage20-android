@@ -42,7 +42,7 @@ class LightsDetailsViewModel(
     private var lightChangerDisposable: Disposable? = null
     val hsv = MutableLiveData<IntArray>()
 
-    var viewPadding = 0f
+    var halfOfPointerWidth = 0f
 
     init {
         loadLight()

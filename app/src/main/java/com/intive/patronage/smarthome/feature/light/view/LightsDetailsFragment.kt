@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,10 +44,10 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
     ): View? {
         setupToolbar()
 
-        lightsDetailsViewModel.viewPadding = resources.displayMetrics.density * 8
+        lightsDetailsViewModel.halfOfPointerWidth = resources.displayMetrics.density * 8
         lightsDetailsViewModel.colorPickerEventListener = this
 
-        val pointerRadius = lightsDetailsViewModel.viewPadding - resources.displayMetrics.density
+        val pointerRadius = lightsDetailsViewModel.halfOfPointerWidth - resources.displayMetrics.density
         colorPickerPointer = ColorPickerPointer(pointerRadius)
         brightnessBarPointer = BrightnessBarPointer(pointerRadius)
 
@@ -101,9 +100,9 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
 
     private fun calculatePointersPosition(hsv: IntArray) {
         val radius = if (binding.colorPicker.width < binding.colorPicker.height) {
-            binding.colorPicker.width / 2 - lightsDetailsViewModel.viewPadding
+            binding.colorPicker.width / 2 - lightsDetailsViewModel.halfOfPointerWidth
         } else {
-            binding.colorPicker.height / 2 - lightsDetailsViewModel.viewPadding
+            binding.colorPicker.height / 2 - lightsDetailsViewModel.halfOfPointerWidth
         }
 
         val angleInRadians: Float = (hsv[0].toFloat() * PI.toFloat()) / 180

@@ -17,9 +17,9 @@ fun setOnColorPickerOrientationChangeListener(imageView: ImageView, lightsDetail
         )
 
         val radius = if (imageView.width < imageView.height) {
-            imageView.width / 2 - lightsDetailsViewModel.viewPadding
+            imageView.width / 2 - lightsDetailsViewModel.halfOfPointerWidth
         } else {
-            imageView.height / 2 - lightsDetailsViewModel.viewPadding
+            imageView.height / 2 - lightsDetailsViewModel.halfOfPointerWidth
         }
 
         val angleInRadians: Float = (hsv[0] * PI.toFloat()) / 180
