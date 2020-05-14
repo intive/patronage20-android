@@ -61,7 +61,6 @@ class SensorDialog : DialogFragment() {
     }
 
     private fun onItemClick(sensor: DashboardSensor) {
-        image = activity!!.findViewById(R.id.home)
         if (sensor.mapPosition != null) {
             homeSharedViewModel.deleteSensor(sensor.id.toInt())
         } else {
