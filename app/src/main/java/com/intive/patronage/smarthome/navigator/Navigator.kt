@@ -19,16 +19,21 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
         when (event) {
             is FragmentEvent -> {
                 val fragment = event.buildFragment()
+                var isMainFragment: Boolean = false
 
                 activity.supportFragmentManager.also {
                     analytics.switchScreenEvent(activity, fragment.javaClass.simpleName)
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
                     if (topFragment != null) it.popBackStack()
 
+                    if (fragment is SmartHomeFragment) {
+                        isMainFragment = true
+                    }
+
                     if (deeplink) {
                         if (it.fragments.size > 1)
                             goBack()
-                        else if (it.fragments.size == 0) {
+                        else if (it.fragments.size == 0 && !isMainFragment) {
                             it.beginTransaction()
                                 .add(
                                     event.containerId,
