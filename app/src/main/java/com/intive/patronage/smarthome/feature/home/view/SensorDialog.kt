@@ -41,7 +41,7 @@ class SensorDialog : DialogFragment() {
         binding.lifecycleOwner = this
         binding.homeViewModelDataBind = homeSharedViewModel
         setupRecyclerView(binding)
-        image = activity!!.findViewById(R.id.home)
+
         return binding.root
     }
 
@@ -61,27 +61,11 @@ class SensorDialog : DialogFragment() {
     }
 
     private fun onItemClick(sensor: DashboardSensor) {
+        image = activity!!.findViewById(R.id.home)
         if (sensor.mapPosition != null) {
             homeSharedViewModel.deleteSensor(sensor.id.toInt())
         } else {
-            val x = homeSharedViewModel.getSensorXPosition()
-            val y = homeSharedViewModel.getSensorYPosition()
-            if (image.checkForSensors(
-                    percentToCoordinateX(x, image.width),
-                    percentToCoordinateY(y, image.height)
-                )
-            ) {
-                homeSharedViewModel.postSensor(
-                    sensor.id.toInt(),
-                    HomeSensor(sensor.id.toInt(), sensor.type, MapPosition(x, y))
-                )
-            } else {
-                Toast.makeText(
-                    this.context,
-                    getString(R.string.sensor_add_failure),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            homeSharedViewModel.postSensorPublishSubject.onNext(sensor)
         }
         dialog?.dismiss()
     }
