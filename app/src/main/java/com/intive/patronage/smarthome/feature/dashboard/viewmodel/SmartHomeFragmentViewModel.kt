@@ -20,6 +20,7 @@ class SmartHomeFragmentViewModel(val dashboardService: DashboardService)  : View
         sensorList = dashboardService.fetchSensorsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .retry()
             .subscribe({
                 error.value = false
             }, { error.value = true })
