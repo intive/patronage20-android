@@ -62,10 +62,11 @@ class LightsDetailsViewModel(
     }
 
     private fun loadColor(light: Light) {
-        hsv.value = intArrayOf(light.hue, light.saturation, light.value)
         val saturation = if (light.saturation == 100) 99 else light.saturation
+        val value = if (light.value == 0) 1 else light.value
+        hsv.value = intArrayOf(light.hue, saturation, value)
 
-        val rgb = convertHSVtoRGB(light.hue, saturation, light.value)
+        val rgb = convertHSVtoRGB(light.hue, saturation, value)
         red = rgb.red
         green = rgb.green
         blue = rgb.blue
