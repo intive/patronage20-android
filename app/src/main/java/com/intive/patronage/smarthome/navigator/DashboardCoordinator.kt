@@ -12,6 +12,7 @@ import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 import com.intive.patronage.smarthome.feature.login.LoginActivity
+import com.intive.patronage.smarthome.feature.settings.feature.ThirdPartyAcknowledgmentsFragment
 import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 
@@ -59,6 +60,16 @@ class DashboardCoordinator(private val navigator: Navigator) {
         navigator.goToScreen(
             FragmentEvent(
                 TemperatureDetailsFragment::class.java,
+                bundle,
+                R.id.fragment
+            )
+        )
+    }
+
+    fun goToThirdPartyAcknowledgments(bundle: Bundle? = null) {
+        navigator.goToScreen(
+            FragmentEvent(
+                ThirdPartyAcknowledgmentsFragment::class.java,
                 bundle,
                 R.id.fragment
             )
