@@ -109,7 +109,7 @@ class SplashScreenActivity : AppCompatActivity() {
         })
     }
 
-    private fun onLoadingEnd(complete: Boolean) {
+    private fun onLoadingFinished() {
         deeplinkService.handleDeeplinkRedirectionOnLoadingEnd(intent)
         startNotificationsService()
     }

@@ -61,7 +61,7 @@ class SmartHomeActivity : AppCompatActivity() {
         loginGoogle.initialAuthFirebase()
         loginGoogle.initialGoogleSignIn()
         if(!loginGoogle.isUserLogged()){
-            dashboardCoordinator.goToLogin()
+            dashboardCoordinator.goToLoginScreen()
         }
     }
 
