@@ -5,6 +5,6 @@ interface ColorPickerEventListener {
     fun setCurrentImageViewColor(red: Int, green: Int, blue: Int)
     fun setColorPickerPointerPosition(x: Float, y: Float)
     fun setBrightnessBarPointerPosition(x: Float)
-    fun resetPointersPosition()
+    fun resetPointersPosition(colorPickerPointerWasTouched: Boolean, hsv: IntArray)
     fun showToast(message: Int)
 }

@@ -37,12 +37,14 @@ class LightsDetailsViewModel(
 
     var brightnessBarPointerEndX = 0f
     var brightnessBarPointerX = 0f
+    var halfOfPointerWidth = 0f
 
     private var disposable: Disposable? = null
     private var lightChangerDisposable: Disposable? = null
     val hsv = MutableLiveData<IntArray>()
 
-    var halfOfPointerWidth = 0f
+    var colorPickerPointerWasTouched = false
+    var brightnessBarPointerWasTouched = false
 
     init {
         loadLight()
@@ -74,10 +76,15 @@ class LightsDetailsViewModel(
         greenForBrightnessBar = rgbForBrightnessBar.green
         blueForBrightnessBar = rgbForBrightnessBar.blue
         colorPickerEventListener.setBrightnessBarColor(redForBrightnessBar, greenForBrightnessBar, blueForBrightnessBar)
+
+        colorPickerEventListener.resetPointersPosition(colorPickerPointerWasTouched, hsv.value!!)
+        clearPointersFlags()
     }
 
     fun onResetClicked() {
-        lightColorReset()
+        if (colorPickerPointerWasTouched || brightnessBarPointerWasTouched) {
+            loadLight()
+        }
     }
 
     fun onApplyClicked() {
@@ -89,9 +96,15 @@ class LightsDetailsViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 colorPickerEventListener.showToast(R.string.apply_toast)
+                clearPointersFlags()
             }, {
                 colorPickerEventListener.showToast(R.string.update_value_toast_error)
             })
+    }
+
+    private fun clearPointersFlags() {
+        colorPickerPointerWasTouched = false
+        brightnessBarPointerWasTouched = false
     }
 
     override fun onCleared() {
@@ -99,11 +112,4 @@ class LightsDetailsViewModel(
         disposable?.dispose()
         lightChangerDisposable?.dispose()
     }
-
-
-    private fun lightColorReset() {
-        loadLight()
-        colorPickerEventListener.resetPointersPosition()
-    }
-
 }
