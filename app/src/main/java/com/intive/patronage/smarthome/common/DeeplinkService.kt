@@ -23,15 +23,14 @@ class DeeplinkService(private val deeplinkCoordinator: DeeplinkCoordinator) {
             data?.let {
                 handleDeeplinkRedirectionInDashboard(intent)
             } ?: deeplinkCoordinator.goToMainScreen()
-        } else if (FirebaseAuth.getInstance().currentUser == null) {
+        } else {
             deeplinkCoordinator.goToLoginScreen()
         }
     }
 
     fun handleDeeplinkRedirectionInDashboard(intent: Intent, savedInstanceState: Bundle? = null) {
-        if (savedInstanceState == null || (intent.extras != null && intent.extras?.containsKey(
-                DESTINATION_URL
-            )!!)
+        if (savedInstanceState == null ||
+            (intent.extras != null && intent.extras?.containsKey(DESTINATION_URL)!!)
         ) {
             deeplinkCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
         }

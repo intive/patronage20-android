@@ -25,20 +25,8 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
                     val topFragment = it.findFragmentByTag("${fragment.javaClass}")
                     if (topFragment != null) it.popBackStack()
 
-                    if (deeplink) {
-                        if (it.fragments.size > 1)
-                            goBack()
-                        else if (it.fragments.size == 0) {
-                            it.beginTransaction()
-                                .add(
-                                    event.containerId,
-                                    SmartHomeFragment(),
-                                    "${SmartHomeFragment::class.java}"
-                                )
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                    }
+                    if (deeplink)
+                        adjustToDeeplinkLogic(it, event)
 
                     it.beginTransaction()
                         .add(event.containerId, fragment, "${fragment.javaClass}")
@@ -50,6 +38,21 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
                 val intent = event.createIntent(activity)
                 activity.startActivity(intent)
             }
+        }
+    }
+
+    private fun adjustToDeeplinkLogic(fragmentManager: FragmentManager, event: FragmentEvent) {
+        if (fragmentManager.fragments.size > 1)
+            goBack()
+        else if (fragmentManager.fragments.size == 0) {
+            fragmentManager.beginTransaction()
+                .add(
+                    event.containerId,
+                    SmartHomeFragment(),
+                    "${SmartHomeFragment::class.java}"
+                )
+                .addToBackStack(null)
+                .commit()
         }
     }
 

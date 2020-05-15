@@ -64,7 +64,6 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
     }
 
     fun goToDashboard(deeplink: Boolean = false) {
-        //uncomment and replace Fragment::class
         navigator.goToScreen(
             FragmentEvent(DashboardFragment::class.java, null, R.id.fragment),
             deeplink
