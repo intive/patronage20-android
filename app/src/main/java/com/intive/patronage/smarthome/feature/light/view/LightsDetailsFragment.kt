@@ -98,7 +98,7 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         (activity as SmartHomeActivity).hideLogo()
     }
 
-    private fun calculatePointersPosition(hsv: IntArray) {
+    private fun calculatePointersPosition(hsv: IntArray, colorPickerPointerWasTouched: Boolean = true) {
         val radius = if (binding.colorPicker.width < binding.colorPicker.height) {
             binding.colorPicker.width / 2 - lightsDetailsViewModel.halfOfPointerWidth
         } else {
@@ -111,10 +111,12 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         val y = partOfRadius * sin(angleInRadians)
         val x = partOfRadius * sin((PI / 2) - angleInRadians).toFloat()
 
-        lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(
-            (binding.colorPicker.width / 2) + x,
-            (binding.colorPicker.height / 2) - y
-        )
+        if (colorPickerPointerWasTouched) {
+            lightsDetailsViewModel.colorPickerEventListener.setColorPickerPointerPosition(
+                (binding.colorPicker.width / 2) + x,
+                (binding.colorPicker.height / 2) - y
+            )
+        }
 
         lightsDetailsViewModel.colorPickerEventListener.setBrightnessBarPointerPosition(
             (binding.brightness.width.toFloat() / 100) * hsv[2]
@@ -130,6 +132,7 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         lightsDetailsViewModel.hsv.observe(this, Observer {
             if (it != null && lightsDetailsViewModel.brightnessBarPointerX == 0f) {
                 calculatePointersPosition(it)
+                lightsDetailsViewModel.hsv.removeObservers(this)
             }
         })
     }
@@ -164,12 +167,8 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         brightnessBarPointer.invalidateSelf()
     }
 
-    override fun resetPointersPosition() {
-        lightsDetailsViewModel.hsv.observe(this, Observer {
-            if (it != null) {
-                calculatePointersPosition(it)
-            }
-        })
+    override fun resetPointersPosition(colorPickerPointerWasTouched: Boolean, hsv: IntArray) {
+        calculatePointersPosition(hsv, colorPickerPointerWasTouched)
     }
 
     override fun showToast(message: Int) {
