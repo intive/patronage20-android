@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.DeeplinkService
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
@@ -27,6 +28,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+
 class SmartHomeActivity : AppCompatActivity() {
 
     private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
@@ -38,15 +40,18 @@ class SmartHomeActivity : AppCompatActivity() {
             networkConnectionService
         )
     }
+    private val deeplinkService: DeeplinkService by inject { parametersOf(dashboardCoordinator) }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        deeplinkService.handleDeeplinkRedirectionInDashboard(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
-
-        if (savedInstanceState == null || (intent.extras != null && intent.extras?.containsKey("DESTINATION_URL")!!)) {
-            dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
-        }
+        deeplinkService.handleDeeplinkRedirectionInDashboard(intent, savedInstanceState)
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -56,9 +61,10 @@ class SmartHomeActivity : AppCompatActivity() {
         loginGoogle.initialAuthFirebase()
         loginGoogle.initialGoogleSignIn()
         if(!loginGoogle.isUserLogged()){
-            dashboardCoordinator.goToLogin()
+            dashboardCoordinator.goToLoginScreen()
         }
     }
+
 
     private fun observeViewModel() {
         smartHomeActivityViewModel.networkConnection.observe(

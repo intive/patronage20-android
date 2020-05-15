@@ -1,19 +1,23 @@
 package com.intive.patronage.smarthome.navigator
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import com.intive.patronage.smarthome.common.DESTINATION_URL
+import com.intive.patronage.smarthome.common.ID_PARAMETER_URL
+import com.intive.patronage.smarthome.common.ID_QUERY_URL
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.login.LoginActivity
 import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity
 
-class SplashScreenCoordinator(private val navigator: Navigator) {
+class SplashScreenCoordinator(private val navigator: Navigator) : DeeplinkCoordinator {
 
-    fun goToMainScreen(bundle: Bundle? = null) {
+    override fun goToMainScreen(bundle: Bundle?) {
         navigator.goToScreen(ActivityEvent(SmartHomeActivity::class.java, bundle))
         navigator.close()
     }
 
-    fun goToLoginScreen() {
+    override fun goToLoginScreen() {
         navigator.goToScreen(ActivityEvent(LoginActivity::class.java))
         navigator.close()
     }
@@ -23,7 +27,11 @@ class SplashScreenCoordinator(private val navigator: Navigator) {
         navigator.close()
     }
 
-    fun goToScreenBasedOnDeeplinkUri(data: Uri?) {
+    override fun goToScreenBasedOnDeeplinkIntent(intent: Intent) {
+        goToScreenBasedOnDeeplinkUri(intent.data)
+    }
+
+    private fun goToScreenBasedOnDeeplinkUri(data: Uri?) {
         val queryParameter = data?.getQueryParameter(DESTINATION_URL)
 
         queryParameter?.let {
@@ -40,8 +48,8 @@ class SplashScreenCoordinator(private val navigator: Navigator) {
 
     private fun createBundleWithStringAndId(tag: String, value: String, data: Uri?): Bundle {
         val bundle = Bundle()
-        val id = data?.getQueryParameter("id")
-        id?.let { bundle.putInt("ID", Integer.parseInt(it)) }
+        val id = data?.getQueryParameter(ID_QUERY_URL)
+        id?.let { bundle.putInt(ID_PARAMETER_URL, Integer.parseInt(it)) }
         bundle.putString(tag, value)
         return bundle
     }

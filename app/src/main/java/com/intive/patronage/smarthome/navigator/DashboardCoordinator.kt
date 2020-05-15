@@ -3,9 +3,11 @@ package com.intive.patronage.smarthome.navigator
 import android.content.Intent
 import android.os.Bundle
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.*
 
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
+import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
@@ -15,67 +17,68 @@ import com.intive.patronage.smarthome.feature.login.LoginActivity
 import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 
-const val DESTINATION_URL = "destination"
-const val DASHBOARD_DESTINATION_URL = "dashboard"
-const val HOME_DESTINATION_URL = "home"
-const val BLINDS_DESTINATION_URL = "blinds"
-const val LIGHT_DESTINATION_URL = "light"
-const val HVAC_DESTINATION_URL = "hvac"
-const val TEMPERATURE_DESTINATION_URL = "temperature"
+class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinator {
 
-class DashboardCoordinator(private val navigator: Navigator) {
-
-    fun goToLightsDetailsScreen(bundle: Bundle? = null) {
+    fun goToLightsDetailsScreen(bundle: Bundle? = null, deeplink: Boolean = false) {
         navigator.goToScreen(
             FragmentEvent(
                 LightsDetailsFragment::class.java,
                 bundle,
                 R.id.fragment
-            )
+            ),
+            deeplink
         )
     }
 
-    fun goToHvacDetalisScreen(bundle: Bundle? = null) {
+    fun goToHvacDetalisScreen(bundle: Bundle? = null, deeplink: Boolean = false) {
         navigator.goToScreen(
             FragmentEvent(
                 HvacDetailsFragment::class.java,
                 bundle,
                 R.id.fragment
-            )
+            ),
+            deeplink
         )
     }
 
-    fun goToBlindDetailsScreen(bundle: Bundle? = null) {
+    fun goToBlindDetailsScreen(bundle: Bundle? = null, deeplink: Boolean = false) {
         navigator.goToScreen(
             FragmentEvent(
                 BlindDetailsFragment::class.java,
                 bundle,
                 R.id.fragment
-            )
+            ),
+            deeplink
         )
     }
 
-    fun goToTemperatureDetailsScreen(bundle: Bundle? = null) {
+    fun goToTemperatureDetailsScreen(bundle: Bundle? = null, deeplink: Boolean = false) {
         navigator.goToScreen(
             FragmentEvent(
                 TemperatureDetailsFragment::class.java,
                 bundle,
                 R.id.fragment
-            )
+            ),
+            deeplink
         )
     }
 
-    fun goToDashboard() {
-        //uncomment and replace Fragment::class
-        navigator.goToScreen(FragmentEvent(DashboardFragment::class.java, null, R.id.fragment))
+    fun goToDashboard(deeplink: Boolean = false) {
+        navigator.goToScreen(
+            FragmentEvent(DashboardFragment::class.java, null, R.id.fragment),
+            deeplink
+        )
     }
 
-    fun goToHome() {
-        navigator.goToScreen(FragmentEvent(HomeFragment::class.java, null, R.id.fragment))
+    fun goToHome(deeplink: Boolean = false) {
+        navigator.goToScreen(FragmentEvent(HomeFragment::class.java, null, R.id.fragment), deeplink)
     }
 
-    fun goToSmartHome() {
-        navigator.goToScreen(FragmentEvent(SmartHomeFragment::class.java, null, R.id.fragment))
+    fun goToSmartHome(deeplink: Boolean = false) {
+        navigator.goToScreen(
+            FragmentEvent(SmartHomeFragment::class.java, null, R.id.fragment),
+            deeplink
+        )
     }
 
     fun goBack() {
@@ -90,28 +93,37 @@ class DashboardCoordinator(private val navigator: Navigator) {
         navigator.goToScreen(FragmentEvent(SettingsFragment::class.java, null, R.id.fragment))
     }
 
-    fun goToLogin() {
+    override fun goToMainScreen(bundle: Bundle?) {
+        navigator.goToScreen(ActivityEvent(SmartHomeActivity::class.java, bundle))
+        navigator.close()
+    }
+
+    override fun goToLoginScreen() {
         navigator.goToScreen(ActivityEvent(LoginActivity::class.java))
         navigator.close()
     }
 
-    fun goToScreenBasedOnDeeplinkIntent(intent: Intent) {
+    override fun goToScreenBasedOnDeeplinkIntent(intent: Intent) {
         when (intent.getStringExtra(DESTINATION_URL)) {
-            DASHBOARD_DESTINATION_URL -> goToDashboard()
-            HOME_DESTINATION_URL -> goToHome()
+            DASHBOARD_DESTINATION_URL -> goToDashboard(true)
+            HOME_DESTINATION_URL -> goToHome(true)
             BLINDS_DESTINATION_URL -> goToBlindDetailsScreen(
-                intent.extras
+                intent.extras,
+                true
             )
             LIGHT_DESTINATION_URL -> goToLightsDetailsScreen(
-                intent.extras
+                intent.extras,
+                true
             )
             HVAC_DESTINATION_URL -> goToHvacDetalisScreen(
-                intent.extras
+                intent.extras,
+                true
             )
             TEMPERATURE_DESTINATION_URL -> goToTemperatureDetailsScreen(
-                intent.extras
+                intent.extras,
+                true
             )
-            else -> goToSmartHome()
+            else -> goToSmartHome(false)
         }
         intent.removeExtra(DESTINATION_URL)
     }
