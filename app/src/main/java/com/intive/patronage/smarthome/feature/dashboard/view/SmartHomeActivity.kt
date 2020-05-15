@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.dashboard.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.DeeplinkService
 import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.NetworkConnectionService
@@ -18,12 +20,14 @@ import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActiv
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 import com.intive.patronage.smarthome.feature.login.LoginGoogle
+import com.intive.patronage.smarthome.feature.splashcreen.SplashScreenActivity
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.smart_home_activity.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
 
 class SmartHomeActivity : AppCompatActivity() {
 
@@ -36,15 +40,18 @@ class SmartHomeActivity : AppCompatActivity() {
             networkConnectionService
         )
     }
+    private val deeplinkService: DeeplinkService by inject { parametersOf(dashboardCoordinator) }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        deeplinkService.handleDeeplinkRedirectionInDashboard(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.smart_home_activity)
         setSupportActionBar(toolbar)
-
-        if (savedInstanceState == null || (intent.extras != null && intent.extras?.containsKey("DESTINATION_URL")!!)) {
-            dashboardCoordinator.goToScreenBasedOnDeeplinkIntent(intent)
-        }
+        deeplinkService.handleDeeplinkRedirectionInDashboard(intent, savedInstanceState)
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -53,7 +60,11 @@ class SmartHomeActivity : AppCompatActivity() {
         observeViewModel()
         loginGoogle.initialAuthFirebase()
         loginGoogle.initialGoogleSignIn()
+        if(!loginGoogle.isUserLogged()){
+            dashboardCoordinator.goToLoginScreen()
+        }
     }
+
 
     private fun observeViewModel() {
         smartHomeActivityViewModel.networkConnection.observe(

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.DeeplinkService
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
 import com.intive.patronage.smarthome.feature.splashcreen.animation.ProgressBarAnimation
 import com.intive.patronage.smarthome.feature.splashcreen.viewmodel.SplashScreenViewModel
@@ -33,6 +34,10 @@ class SplashScreenActivity : AppCompatActivity() {
     private val splashScreenCoordinator: SplashScreenCoordinator by inject {
         parametersOf(this)
     }
+    private val deeplinkService: DeeplinkService by inject {
+        parametersOf(splashScreenCoordinator)
+    }
+
     private val progressBarAnimation: ProgressBarAnimation by inject()
     private lateinit var progressBar: ProgressBar
 
@@ -105,16 +110,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun onLoadingFinished() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-
-        if (currentUser != null) {
-            val data = intent?.data
-            data?.let {
-                splashScreenCoordinator.goToScreenBasedOnDeeplinkUri(data)
-            } ?: splashScreenCoordinator.goToMainScreen()
-        } else {
-            splashScreenCoordinator.goToLoginScreen()
-        }
+        deeplinkService.handleDeeplinkRedirectionOnLoadingEnd(intent)
         startNotificationsService()
     }
 

@@ -43,7 +43,8 @@ class SmartHomeApplication : Application() {
                 homeApiModule,
                 preferencesModule,
                 smartHomeFramgentModule,
-                settingsModule
+                settingsModule,
+                deeplinkModule
             )
         }
         setInitialTheme()

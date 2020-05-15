@@ -15,6 +15,7 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SmartHomeApplication
 import com.intive.patronage.smarthome.common.NOTIFICATIONS_VISIBILITY
 import com.intive.patronage.smarthome.common.PreferencesWrapper
+import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -74,7 +75,7 @@ class SmartHomeMessagingService : FirebaseMessagingService() {
     }
 
     private fun getPendingIntent(): PendingIntent {
-        val intent = Intent(this, SmartHomeApplication::class.java)
+        val intent = Intent(this, SmartHomeActivity::class.java)
         return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 }

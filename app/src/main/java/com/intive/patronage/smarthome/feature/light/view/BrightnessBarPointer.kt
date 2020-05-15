@@ -3,7 +3,7 @@ package com.intive.patronage.smarthome.feature.light.view
 import android.graphics.*
 import android.graphics.drawable.Drawable
 
-class BrightnessBarPointer : Drawable() {
+class BrightnessBarPointer(private val halfOfPointerWidth: Float) : Drawable() {
 
     var x: Float = 0f
     var height: Float = 0f
@@ -11,12 +11,12 @@ class BrightnessBarPointer : Drawable() {
     override fun draw(canvas: Canvas) {
         val pointerPaint = Paint().apply {
             style = Paint.Style.STROKE
-            strokeWidth = 6f
+            strokeWidth = halfOfPointerWidth / 4
             color = Color.BLACK
             isAntiAlias = true
         }
-        val pointer = RectF(x - 24f, 0f, x + 24f, height)
-        canvas.drawRoundRect(pointer, 6f, 6f, pointerPaint)
+        val pointer = RectF(x - halfOfPointerWidth, 0f, x + halfOfPointerWidth, height)
+        canvas.drawRoundRect(pointer, halfOfPointerWidth / 4, halfOfPointerWidth / 4, pointerPaint)
     }
 
     override fun setAlpha(p0: Int) {}

@@ -42,4 +42,5 @@
     <dimen name="settings_list_item_icon_height">32dp</dimen>
     <dimen name="settings_list_item_icon_margin">8dp</dimen>
     <dimen name="settings_list_item_text_size">16sp</dimen>
+    <dimen name="color_picker_padding">9dp</dimen>
 </resources>

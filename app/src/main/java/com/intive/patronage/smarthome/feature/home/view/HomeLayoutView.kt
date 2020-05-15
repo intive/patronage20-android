@@ -171,7 +171,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
 
     private fun drawSensor(x: Float, y: Float, sensor: DashboardSensor) {
         drawSensorBorder(x, y, sensor)
-        paint.color = resources.getColor(R.color.backgroundColor, null)
+        paint.color = resources.getColor(R.color.colorPrimary, null)
         cvs.drawCircle(x, y, SENSOR_SIZE * this.height, paint)
         drawSensorIcon(x, y, sensor)
         this.setImageBitmap(bitmap)

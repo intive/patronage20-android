@@ -40,6 +40,10 @@ fun setOnBrightnessBarTouchListener(view: ImageView, lightsDetailsViewModel: Lig
                         this.blue = blue
 
                         this.colorPickerEventListener.setCurrentImageViewColor(red, green, blue)
+
+                        if (!this.brightnessBarPointerWasTouched) {
+                            this.brightnessBarPointerWasTouched = true
+                        }
                     }
                 }
             } catch (t: Throwable) {
