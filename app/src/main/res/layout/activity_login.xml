@@ -19,6 +19,7 @@
         app:srcCompat="@drawable/logo"/>
 
     <LinearLayout
+        android:id="@+id/loginCard"
         android:gravity="center"
         android:orientation="vertical"
         android:elevation="8dp"
@@ -110,26 +111,32 @@
 
     </LinearLayout>
 
-    <TextView
-        android:textSize="16sp"
-        android:textColor="@color/loginScreenMainColor"
-        android:text="Don't have an account?"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/signUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_marginBottom="25dp"
-        android:textSize="24sp"
-        android:textColor="@color/loginScreenMainColor"
-        android:text="Sign Up"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/signUp"
+    <LinearLayout
+        android:id="@+id/loginInfo"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/loginScreenMainColor"
+            android:text="Don't have an account?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginBottom="25dp"
+            android:textSize="24sp"
+            android:textColor="@color/loginScreenMainColor"
+            android:text="Sign Up"
+            android:id="@+id/signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

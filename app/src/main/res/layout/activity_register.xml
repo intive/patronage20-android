@@ -18,6 +18,7 @@
         app:srcCompat="@drawable/logo"/>
 
     <LinearLayout
+        android:id="@+id/registerCard"
         android:gravity="center"
         android:orientation="vertical"
         android:elevation="8dp"
@@ -107,26 +108,32 @@
 
     </LinearLayout>
 
-    <TextView
-        android:textSize="16sp"
-        android:textColor="@color/loginScreenMainColor"
-        android:text="Already have an account?"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/signIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_marginBottom="25dp"
-        android:textSize="24sp"
-        android:textColor="@color/loginScreenMainColor"
-        android:text="Sign In"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/signIn"
+    <LinearLayout
+        android:id="@+id/registerInfo"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/loginScreenMainColor"
+            android:text="Already have an account?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginBottom="25dp"
+            android:textSize="24sp"
+            android:textColor="@color/loginScreenMainColor"
+            android:text="Sign In"
+            android:id="@+id/signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

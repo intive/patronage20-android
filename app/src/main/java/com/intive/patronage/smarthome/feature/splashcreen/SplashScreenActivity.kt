@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -12,7 +11,6 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.google.firebase.auth.FirebaseAuth
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.DeeplinkService
 import com.intive.patronage.smarthome.common.SmartHomeAlertDialog
@@ -70,10 +68,10 @@ class SplashScreenActivity : AppCompatActivity() {
         val wifiAnimation = icon.foreground as AnimationDrawable
         wifiAnimation.start()
 
-        val fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom)
+        val fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom_splash)
         fromBottom.duration = SLIDE_DURATION
 
-        val fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top)
+        val fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top_splash)
         fromTop.duration = SLIDE_DURATION
 
         icon.animation = fromBottom
