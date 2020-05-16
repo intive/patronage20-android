@@ -4,32 +4,42 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.navigator.DashboardCoordinator
+import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class LoginActivity : AppCompatActivity() {
-
-    private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
+    private val authentication: Authentication by inject {
+        parametersOf(this)
+    }
+    private val coordinator: DashboardCoordinator by inject {
+        parametersOf(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loginGoogle.initialAuthFirebase()
-        loginGoogle.initialGoogleSignIn()
+        authentication.initAuthFirebase()
+        authentication.initGoogleSignIn()
 
-        findViewById<com.google.android.gms.common.SignInButton>(R.id.sign_in_button).setOnClickListener {
-            loginGoogle.signIn()
+        signInButton.setOnClickListener {
+            authentication.signIn()
+        }
+
+        signUp.setOnClickListener {
+            coordinator.goToRegisterScreen()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        loginGoogle.userIsLogged()
+        authentication.checkIfUserIsLogged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        loginGoogle.accountVerification(requestCode, data)
+        authentication.accountVerification(requestCode, data)
     }
 }

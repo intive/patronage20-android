@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    tools:context="com.intive.patronage.smarthome.feature.login.LoginActivity">
+    tools:context="com.intive.patronage.smarthome.feature.login.RegisterActivity">
 
     <ImageView
-        android:transitionName="logo_transition"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/applicationLogo"
+        android:id="@+id/application_logo"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/logo"
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/newAccountEmail"
                 android:textSize="16sp"
                 android:textColor="@color/loginScreenMainColor"
                 android:hint="Email"
@@ -60,10 +59,32 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/newAccountPassword"
                 android:textSize="16sp"
                 android:textColor="@color/loginScreenMainColor"
                 android:hint="Password"
+                android:padding="8dp"
+                android:background="@drawable/rounded_with_stroke"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:layout_width="250dp"
+                android:layout_height="50dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintEnabled="false"
+            app:errorEnabled="true"
+            android:hint="@string/app_name"
+            app:passwordToggleEnabled="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/confirmPassword"
+                android:textSize="16sp"
+                android:textColor="@color/loginScreenMainColor"
+                android:hint="Confirm password"
                 android:padding="8dp"
                 android:background="@drawable/rounded_with_stroke"
                 android:inputType="textPassword"
@@ -79,44 +100,20 @@
             android:elevation="8dp"
             android:background="@drawable/rounded_button"
             android:textColor="@color/colorPrimary"
-            android:text="Sign In"
-            android:id="@+id/signIn"
+            android:text="Create account"
+            android:id="@+id/createAccount"
             android:layout_width="250dp"
             android:layout_height="50dp"/>
-
-        <TextView
-            android:textSize="16sp"
-            android:textColor="@color/loginScreenMainColor"
-            android:gravity="center"
-            android:text="or"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
-
-        <Button
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textAllCaps="false"
-            android:drawableStart="@drawable/google_icon"
-            android:elevation="8dp"
-            android:background="@drawable/sign_in_button"
-            android:text="Sign in with Google"
-            android:id="@+id/signInButton"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/applicationLogo"/>
 
     </LinearLayout>
 
     <TextView
         android:textSize="16sp"
         android:textColor="@color/loginScreenMainColor"
-        android:text="Don't have an account?"
+        android:text="Already have an account?"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/signUp"
+        app:layout_constraintBottom_toTopOf="@id/signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -124,10 +121,10 @@
         android:layout_marginBottom="25dp"
         android:textSize="24sp"
         android:textColor="@color/loginScreenMainColor"
-        android:text="Sign Up"
+        android:text="Sign In"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/signUp"
+        android:id="@+id/signIn"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
