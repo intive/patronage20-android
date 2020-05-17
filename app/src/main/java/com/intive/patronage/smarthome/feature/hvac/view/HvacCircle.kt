@@ -4,11 +4,17 @@ import android.content.Context
 import android.graphics.*
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 import kotlin.math.*
-
+const val MAX_HEATING_TEMPERATURE = 300
+const val MIN_HEATING_TEMPERATURE = 50
+const val MAX_COOLING_TEMPERATURE = 400
+const val MIN_COOLING_TEMPERATURE = 100
+const val MIN_HYSTERESIS = 5
+const val MAX_HYSTERESIS = 20
 class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private val rangeOffset = 0
@@ -20,18 +26,21 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var radius = 0
     private var coldSweepAngle = 0f
     private var hotSweepAngle = 0f
+    private var hysteresisSweepAngle = 0f
     private val startAngle = 140f
     private val sweepAngle = 260f
     private val tempOffset = 40f
     private var oneDegree = sweepAngle / range
-    var minTemperature = 0
-    var maxTemperature = 0
+    var heatingTemperature = 0
+    var coolingTemperature = 0
     private var coldCircleRadius = 20f
     private var hotCircleRadius = 20f
+    private var hysteresisCircleRadius = 20f
     private var coldTouched = false
     private var hotTouched = false
     private lateinit var coldPoint: Point
     private lateinit var hotPoint: Point
+    private lateinit var hysteresisPoint: Point
     private lateinit var coldCircle: RectF
     private lateinit var hotCircle: RectF
     private var touchRadius = 100.0
@@ -42,6 +51,11 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         isAntiAlias = true
         color = ContextCompat.getColor(context!!, R.color.colorAccent)
         style = Paint.Style.STROKE
+        strokeWidth = 20f
+    }
+    private val histPaint = Paint().apply {
+        isAntiAlias = true
+        color = ContextCompat.getColor(context!!, R.color.colorAccent)
         strokeWidth = 20f
     }
 
@@ -119,7 +133,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         setTextSize()
 
         val tempLabel = resources.getString(R.string.hvac_temperature_label)
-        val tempString = "$tempInt °C"
+        val tempString = "${tempInt/10 }°C"
 
         val tempCircle = RectF().apply {
             top = centerOfTemperatureCircle.y - radius / 2f
@@ -133,8 +147,8 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         coldPoint = getPoint(coldCircle.centerX(), coldCircle.centerY(), radius / 2, startAngle + coldSweepAngle)
         hotPoint = getPoint(hotCircle.centerX(), hotCircle.centerY(), radius / 2, tempOffset + (hotSweepAngle * (-1)))
-        coldSweepAngle = minTemperature.toFloat() / 10 * oneDegree
-        hotSweepAngle = (range * 10 - maxTemperature).toFloat() / 10 * oneDegree
+        coldSweepAngle = (heatingTemperature.toFloat() - MIN_HEATING_TEMPERATURE) / 10 * oneDegree
+        hotSweepAngle = (range * 10 - coolingTemperature+ MIN_HEATING_TEMPERATURE).toFloat() / 10 * oneDegree
 
         catchTemperature()
         canvas?.drawArc(tempCircle, startAngle, sweepAngle, false, paint)
@@ -180,7 +194,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun drawMinTemperatureLabel(canvas: Canvas?) {
         setTextSize()
 
-        val text = (minTemperature.toFloat() / 10).toString()
+        val text = (heatingTemperature.toFloat() / 10).toString()
         val minTempLabel = "Min Temp"
         val tempString = "$text °C"
 
@@ -218,7 +232,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun drawMaxTemperatureLabel(canvas: Canvas?) {
         setTextSize()
 
-        val text = ((maxTemperature).toFloat() / 10).toString()
+        val text = ((coolingTemperature).toFloat() / 10).toString()
         val tempLabel = "Max Temp"
         val tempString = "$text °C"
 
@@ -253,13 +267,15 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         }
     }
 
-    private fun drawCircleHysteresis(canvas: Canvas?, hysteresis: Int) {
+    private fun drawCircleHysteresis(canvas: Canvas?, hyst: Int) {
         setTextSize()
 
+        val degry = 180 / 15f
         val histLabel = resources.getString(R.string.hvac_hysteresis_label)
-        val histValueString = "$hysteresis %"
-        val sweepAngle = hysteresis * 2.7F
+        val histValueString = "${hyst.toFloat() /10} °C"
+        val sweepAngle = degry
         val offsetLength: Float = ((90f / 360f) * 2 * Math.PI * (radius / 2f)).toFloat()
+
 
         val circle = RectF().apply {
             top = centerOfHysteresisCircle.y - radius / 2f
@@ -268,13 +284,22 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             right = centerOfHysteresisCircle.x + radius / 2f
         }
 
-        canvas?.drawArc(circle, 180f, 270f, false, paintBackground)
-        canvas?.drawArc(circle, 180f, sweepAngle, false, paint)
+        hysteresisSweepAngle = (hysteresis.toFloat() - MIN_HYSTERESIS) * sweepAngle
+        hysteresisPoint = getPoint(circle.centerX(), circle.centerY(), radius / 2, 180 + hysteresisSweepAngle)
+
+        canvas?.drawArc(circle, 180f, 180f, false, paintBackground)
+        canvas?.drawArc(circle, 180f, hysteresisSweepAngle, false, paint)
         canvas?.drawText(
             histValueString,
             centerOfHysteresisCircle.x - textPaint.measureText(histValueString) / 2,
             centerOfHysteresisCircle.y + textPaint.textSize / 2,
             textPaint
+        )
+        canvas?.drawCircle(
+            hysteresisPoint.x.toFloat(),
+            hysteresisPoint.y.toFloat(),
+            hysteresisCircleRadius,
+            histPaint.apply { style = Paint.Style.FILL }
         )
 
         canvas?.drawTextOnPath(
@@ -298,16 +323,18 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         val cdy = (eventY - coldPoint.y.toDouble()).pow(2.0)
         val hdx = (eventX - hotPoint.x.toDouble()).pow(2.0)
         val hdy = (eventY - hotPoint.y.toDouble()).pow(2.0)
+        val hisdx = (eventX - hysteresisPoint.x.toDouble()).pow(2.0)
+        val hisdy = (eventY - hysteresisPoint.y.toDouble()).pow(2.0)
         val angEvent = angleCounter(eventX.toInt(), eventY.toInt(), centerOfTemperatureCircle.x, centerOfTemperatureCircle.y)
         val eventAngleDegrees = Math.toDegrees(asin(angEvent))
-
+        val hystEvent = angleCounter(eventX.toInt(),eventY.toInt(),centerOfHysteresisCircle.x,centerOfHysteresisCircle.y)
+        val hystEventAngleDegrees = Math.toDegrees(asin(hystEvent))
         if (cdx + cdy < touchRadius.pow(2.0) && !hotTouched) {
             coldTouched = true
             coldCircleRadius = 30f
             touchRadius = 300.0
             coldSweepAngle = setColdAngle(eventAngleDegrees.toFloat() + tempOffset, eventX)
-            minTemperature = ((coldSweepAngle / oneDegree) * 10).toInt()
-            invalidate()
+            setHeatingTemperature()
         }
 
         if (hdx + hdy < touchRadius.pow(2.0) && !coldTouched) {
@@ -315,8 +342,18 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             hotCircleRadius = 30f
             touchRadius = 300.0
             hotSweepAngle = setHotAngle(eventAngleDegrees.toFloat() + tempOffset, eventX)
-            maxTemperature = range * 10 - ((hotSweepAngle / oneDegree) * 10).toInt()
+            setCoolingTemperature()
+        }
+
+        if (hisdx + hisdy < touchRadius.pow(2.0) && !coldTouched && !hotTouched ) {
+            hysteresisCircleRadius = 30f
+            touchRadius = 150.0
+            Log.d("testowanie", "kont $hysteresisSweepAngle")
+            hysteresisSweepAngle = setHysterisAngle(hystEventAngleDegrees.toFloat(),eventX)
+            hysteresis = ((hysteresisSweepAngle )).toInt() + MIN_HYSTERESIS
+            Log.d("testowanie", "histereza $hysteresis")
             invalidate()
+
         }
 
     }
@@ -336,6 +373,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         hotCircleRadius = 20f
         touchRadius = 100.0
         coldCircleRadius = 20f
+        hysteresisCircleRadius =20f
         invalidate()
     }
 
@@ -348,55 +386,83 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     private fun setHotAngle(angle: Float, evenX: Float): Float {
         var value = 0f
+        var cieply = 260 - hotSweepAngle
+        var zimny = coldSweepAngle + hysteresis
         when {
             angle in 0.1..130.0 && evenX >= centerOfTemperatureCircle.x -> {
                 value = angle
             }
-            evenX < centerOfTemperatureCircle.x -> {
-                value = 129.0f
+            angle > 36.1 && evenX < centerOfTemperatureCircle.x -> {
+                value = 130 + (130-angle)
+            }
+            angle < 36 && evenX < centerOfTemperatureCircle.x ->{
+                value = 223F
             }
             angle < 0.1 -> {
                 value = 0.1f
             }
         }
+        if(cieply < zimny ){
+            coldSweepAngle = cieply - hysteresis
+            setHeatingTemperature()
+
+        }
         return value
+    }
+
+    private fun setHysterisAngle(angle: Float, evenX: Float): Float {
+        var value = 0f
+        Log.d("testowanie", "$angle i $evenX")
+        when {
+            angle in 0.1..89.9 && evenX <= centerOfHysteresisCircle.x-> {
+                value = angle
+            }
+            angle > 0F && evenX > centerOfHysteresisCircle.x -> {
+                Log.d("testowanie", "weszlo")
+                value = 90 +(90 - angle)
+            }
+            angle < 0F && evenX >centerOfHysteresisCircle.x ->{
+                value =180f
+            }
+
+
+
+        }
+        Log.d("testowanie", "value = $value")
+        return value /12
     }
 
     private fun setColdAngle(angle: Float, evenX: Float): Float {
         var value = 0f
+        var cieply = 260 - hotSweepAngle
+        var zimny = coldSweepAngle + hysteresis
+        Log.d("testowanie", "$angle i $evenX")
         when {
             angle in 0.1..129.5 && evenX <= centerOfTemperatureCircle.x -> {
                 value = angle
             }
-            evenX > centerOfTemperatureCircle.x -> {
-                value = 129.0f
+            angle > 75 && evenX > centerOfTemperatureCircle.x -> {
+                value = 130 + (130-angle)
+            }
+            angle < 75 && evenX > centerOfTemperatureCircle.x ->{
+                value = 186F
             }
             angle < 0.1 -> {
                 value = 0.1f
             }
+
+        }
+        if(cieply < zimny ){
+            hotSweepAngle = 260 - zimny
+            setCoolingTemperature()
+
         }
         return value
     }
 
     private fun hysteresisCalculation(): Int {
         var value = 0
-        val maxValue = maxTemperature - minTemperature
-        val currentValue = ((temperatureFloat * 10).toInt()) - minTemperature
-        val percent = if (maxValue > 0) {
-            currentValue * 100 / maxValue
-        } else 100
-
-        when {
-            percent in 100 downTo 1 -> {
-                value = percent
-            }
-            percent > 100 -> {
-                value = 100
-            }
-            percent < 0 -> {
-                value = 0
-            }
-        }
+        value = hysteresis
         return value
     }
 
@@ -407,5 +473,13 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         if (hotSweepAngle < 1) {
             hotSweepAngle = 1f
         }
+    }
+    private fun setCoolingTemperature(){
+        coolingTemperature = range * 10 - ((hotSweepAngle / oneDegree) * 10).toInt() + MIN_HEATING_TEMPERATURE
+        invalidate()
+    }
+    private fun setHeatingTemperature(){
+        heatingTemperature = (((coldSweepAngle)/ oneDegree) * 10).toInt() + MIN_HEATING_TEMPERATURE
+        invalidate()
     }
 }

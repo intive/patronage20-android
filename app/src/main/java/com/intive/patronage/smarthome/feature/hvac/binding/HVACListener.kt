@@ -11,8 +11,8 @@ fun setLayout(view: HvacCircle, hvacViewModel: HvacViewModel) {
     view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
         view.temperatureFloat = hvacViewModel.temperature
         view.hysteresis = hvacViewModel.hysteresis
-        view.maxTemperature = hvacViewModel.coolingTemperature
-        view.minTemperature = hvacViewModel.heatingTemperature
+        view.coolingTemperature = hvacViewModel.coolingTemperature
+        view.heatingTemperature = hvacViewModel.heatingTemperature
     }
 }
 
@@ -23,8 +23,9 @@ fun setTemperature(view: HvacCircle, hvacViewModel: HvacViewModel) {
         when(motionEvent.action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
                 view.onTouch(motionEvent.x, motionEvent.y).apply {
-                    hvacViewModel.coolingTemperature = view.maxTemperature
-                    hvacViewModel.heatingTemperature = view.minTemperature
+                    hvacViewModel.coolingTemperature = view.coolingTemperature
+                    hvacViewModel.heatingTemperature = view.heatingTemperature
+                    hvacViewModel.hysteresis = view.hysteresis
                 }
             }
             MotionEvent.ACTION_UP ->{
