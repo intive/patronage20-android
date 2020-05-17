@@ -1,7 +1,7 @@
 package com.intive.patronage.smarthome.di
 
 import androidx.appcompat.app.AppCompatActivity
-import com.intive.patronage.smarthome.feature.login.Authentication
+import com.intive.patronage.smarthome.feature.login.authentication.Authentication
 import com.intive.patronage.smarthome.navigator.LoginCoordinator
 import com.intive.patronage.smarthome.navigator.Navigator
 import org.koin.core.module.Module

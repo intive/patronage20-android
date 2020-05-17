@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.third_party_acknowledgments_fragment.*
 
 class ThirdPartyAcknowledgmentsFragment : Fragment() {
 
@@ -35,7 +33,6 @@ class ThirdPartyAcknowledgmentsFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.clear()
-        activity?.menuInflater?.inflate(R.menu.sign_in, menu)
     }
 
     private fun setupToolbar() {

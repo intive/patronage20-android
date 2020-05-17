@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    tools:context="com.intive.patronage.smarthome.feature.login.LoginActivity">
+    tools:context="com.intive.patronage.smarthome.feature.login.view.LoginActivity">
 
     <ImageView
-        android:transitionName="logo_transition"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/applicationLogo"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/splash_screen_logo_size"
         android:layout_height="wrap_content"
         android:contentDescription="@string/logo"
         app:srcCompat="@drawable/logo"/>
@@ -22,14 +21,14 @@
         android:id="@+id/loginCard"
         android:gravity="center"
         android:orientation="vertical"
-        android:elevation="8dp"
+        android:elevation="@dimen/elevation"
         android:background="@drawable/rounded_login_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="300dp"
-        android:layout_height="350dp">
+        android:layout_width="@dimen/splash_screen_logo_size"
+        android:layout_height="@dimen/login_card_height">
 
         <com.google.android.material.textfield.TextInputLayout
             app:hintEnabled="false"
@@ -39,20 +38,21 @@
 
             <EditText
                 android:id="@+id/email"
-                android:textSize="16sp"
+                android:textSize="@dimen/login_text_size"
                 android:textColor="@color/loginScreenMainColor"
-                android:hint="Email"
-                android:padding="8dp"
+                android:hint="@string/email"
+                android:padding="@dimen/login_text_input_padding"
                 android:background="@drawable/rounded_with_stroke"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:layout_width="250dp"
-                android:layout_height="50dp"/>
+                android:layout_width="@dimen/login_text_input_width"
+                android:layout_height="@dimen/login_text_input_height"
+                android:importantForAutofill="no" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="@dimen/login_screen_items_margin"
             app:hintEnabled="false"
             android:hint="@string/app_name"
             app:passwordToggleEnabled="true"
@@ -61,49 +61,50 @@
 
             <EditText
                 android:id="@+id/password"
-                android:textSize="16sp"
+                android:textSize="@dimen/login_text_size"
                 android:textColor="@color/loginScreenMainColor"
-                android:hint="Password"
-                android:padding="8dp"
+                android:hint="@string/password"
+                android:padding="@dimen/login_text_input_padding"
                 android:background="@drawable/rounded_with_stroke"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:layout_width="250dp"
-                android:layout_height="50dp"/>
+                android:layout_width="@dimen/login_text_input_width"
+                android:layout_height="@dimen/login_text_input_height"
+                android:importantForAutofill="no" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:layout_marginTop="25dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/login_screen_items_margin"
+            android:textSize="@dimen/login_text_size"
             android:textAllCaps="false"
-            android:elevation="8dp"
+            android:elevation="@dimen/elevation"
             android:background="@drawable/rounded_button"
             android:textColor="@color/colorPrimary"
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:id="@+id/signIn"
-            android:layout_width="250dp"
-            android:layout_height="50dp"/>
+            android:layout_width="@dimen/login_text_input_width"
+            android:layout_height="@dimen/login_text_input_height"/>
 
         <TextView
-            android:textSize="16sp"
+            android:textSize="@dimen/login_text_size"
             android:textColor="@color/loginScreenMainColor"
             android:gravity="center"
-            android:text="or"
+            android:text="@string/or"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
+            android:layout_height="@dimen/login_text_input_height"/>
 
         <Button
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
+            android:textSize="@dimen/login_text_size"
             android:textAllCaps="false"
             android:drawableStart="@drawable/google_icon"
-            android:elevation="8dp"
+            android:elevation="@dimen/elevation"
             android:background="@drawable/sign_in_button"
-            android:text="Sign in with Google"
+            android:text="@string/sign_in_with_google"
             android:id="@+id/signInWithGoogle"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/login_text_input_width"
+            android:layout_height="@dimen/login_text_input_height"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -122,17 +123,17 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textSize="16sp"
+            android:textSize="@dimen/login_text_size"
             android:textColor="@color/loginScreenMainColor"
-            android:text="Don't have an account?"
+            android:text="@string/do_not_have_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:layout_marginBottom="25dp"
-            android:textSize="24sp"
+            android:layout_marginBottom="@dimen/login_screen_items_margin"
+            android:textSize="@dimen/login_big_text_size"
             android:textColor="@color/loginScreenMainColor"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

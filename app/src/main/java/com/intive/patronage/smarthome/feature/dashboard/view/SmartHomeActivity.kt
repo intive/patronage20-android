@@ -17,7 +17,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.service.Networ
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
-import com.intive.patronage.smarthome.feature.login.Authentication
+import com.intive.patronage.smarthome.feature.login.authentication.Authentication
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.smart_home_activity.*
@@ -86,18 +86,12 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_developer_settings, menu)
-        menuInflater.inflate(R.menu.sign_in, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.developer_settings -> {
-                dashboardCoordinator.goToSettingsScreen()
-            }
-            R.id.log_out_google -> {
-                authentication.signOut()
-            }
+        if (item.itemId == R.id.developer_settings) {
+            dashboardCoordinator.goToSettingsScreen()
         }
         return true
     }

@@ -19,12 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".feature.login.RegisterActivity"
+            android:name=".feature.login.view.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity android:name=".feature.developer_settings.view.DeveloperSettingsActivity" />
         <activity
-            android:name=".feature.login.LoginActivity"
+            android:name=".feature.login.view.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

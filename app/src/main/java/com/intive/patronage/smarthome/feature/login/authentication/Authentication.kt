@@ -1,4 +1,4 @@
-package com.intive.patronage.smarthome.feature.login
+package com.intive.patronage.smarthome.feature.login.authentication
 
 import android.content.Intent
 import android.util.Log
