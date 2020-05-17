@@ -64,7 +64,7 @@ class SensorDialog : DialogFragment() {
         if (sensor.mapPosition != null) {
             homeSharedViewModel.deleteSensor(sensor.id.toInt())
         } else {
-            homeSharedViewModel.postSensorPublishSubject.onNext(sensor)
+//            homeSharedViewModel.postSensorPublishSubject.onNext(sensor)
         }
         dialog?.dismiss()
     }
