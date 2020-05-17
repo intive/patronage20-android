@@ -7,6 +7,9 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 
+private const val SHADOW_RADIUS = 0.3f
+private const val SHADOW_OFFSET = 4f
+
 class DraggedSensor : Drawable() {
     private var x: Float = 0f
     private var y: Float = 0f
@@ -23,7 +26,7 @@ class DraggedSensor : Drawable() {
             isAntiAlias = true
             isDither = true
         }
-        paint.setShadowLayer(sensorSize * 0.3f, 4f, 4f, Color.BLACK)
+        paint.setShadowLayer(sensorSize * SHADOW_RADIUS, SHADOW_OFFSET, SHADOW_OFFSET, Color.BLACK)
         paint.color = sensorBorderColor
         canvas.drawCircle(x, y, sensorBorderSize, paint)
         paint.color = sensorColor
@@ -37,6 +40,8 @@ class DraggedSensor : Drawable() {
         sensorIcon?.setTint(iconColor)
         sensorIcon?.draw(canvas)
     }
+
+    override fun setAlpha(alpha: Int) {}
 
     fun initialize(resources: Resources, sensorToPost: DashboardSensor?, imageHeight: Int) {
         iconColor = resources.getColor(R.color.text, null)
@@ -56,7 +61,6 @@ class DraggedSensor : Drawable() {
         this.invalidateSelf()
     }
 
-    override fun setAlpha(p0: Int) {}
 
     override fun getOpacity() = PixelFormat.OPAQUE
 

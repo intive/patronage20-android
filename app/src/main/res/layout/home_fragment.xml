@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="@dimen/recycler_view_margin_in_portrait"
             android:id="@+id/sensorRecyclerViewD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
