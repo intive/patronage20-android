@@ -33,7 +33,7 @@ fun transformFromTemperatureSensors(temperatureSensors: List<TemperatureSensor>)
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.value.toString(),
+                (it.value/10f).toString(),
                 it.mapPosition
             )
         )
