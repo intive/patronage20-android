@@ -26,7 +26,7 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
                     if (topFragment != null) it.popBackStack()
 
                     if (deeplink)
-                        adjustToDeeplinkLogic(it, event)
+                        adjustToDeeplinkLogic(it, event, fragment)
 
                     it.beginTransaction()
                         .add(event.containerId, fragment, "${fragment.javaClass}")
@@ -41,10 +41,10 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
         }
     }
 
-    private fun adjustToDeeplinkLogic(fragmentManager: FragmentManager, event: FragmentEvent) {
+    private fun adjustToDeeplinkLogic(fragmentManager: FragmentManager, event: FragmentEvent, fragment: Fragment) {
         if (fragmentManager.fragments.size > 1)
             goBack()
-        else if (fragmentManager.fragments.size == 0) {
+        else if (fragmentManager.fragments.size == 0 && fragment !is SmartHomeFragment) {
             fragmentManager.beginTransaction()
                 .add(
                     event.containerId,
