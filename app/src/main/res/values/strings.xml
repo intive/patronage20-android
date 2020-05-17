@@ -64,4 +64,12 @@
     <string name="notifications_setting">Show notifications</string>
     <string name="settings_toolbar">Settings</string>
     <string name="third_party_acknowledgments">Third Party Acknowledgments</string>
+    <string name="weak_password">Password is not strong enough</string>
+    <string name="invalid_email">Email address is incorrect</string>
+    <string name="account_does_not_exists">Account doesn\'t exists</string>
+    <string name="account_already_exists">Account already exists. Please sign in</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="different_password">Passwords are not the same</string>
+    <string name="google_sign_in_failed">Google sign in failed</string>
+    <string name="google_sign_in_success">Google sign in finished successfully</string>
 </resources>

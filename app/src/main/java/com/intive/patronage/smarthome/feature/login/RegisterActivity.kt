@@ -2,12 +2,10 @@ package com.intive.patronage.smarthome.feature.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.feature.login.Authentication
+import com.intive.patronage.smarthome.feature.login.animation.startRegisterActivityEnterAnimation
+import com.intive.patronage.smarthome.feature.login.animation.startRegisterActivityExitAnimation
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.android.ext.android.inject
@@ -27,41 +25,33 @@ class RegisterActivity : AppCompatActivity() {
 
         authentication.initAuthFirebase()
 
-        signIn.setOnClickListener {
+        registerInfo.setOnClickListener {
             it.isEnabled = false
-            val toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom)
-            registerInfo.startAnimation(toBottom)
-
-            val toRight = AnimationUtils.loadAnimation(this, R.anim.to_right)
-            toRight.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(p0: Animation?) {}
-                override fun onAnimationEnd(p0: Animation?) {
-                    coordinator.goToLoginScreen()
-                }
-                override fun onAnimationStart(p0: Animation?) {}
-            })
-            registerCard.startAnimation(toRight)
+            startRegisterActivityExitAnimation(this, coordinator, registerCard, registerInfo)
         }
 
         createAccount.setOnClickListener {
-            val isConfirmed = newAccountPassword.text.toString() == confirmPassword.text.toString()
-            if (isConfirmed) {
-                authentication.createAccount(newAccountEmail.text.toString(), newAccountPassword.text.toString())
+            val email = newAccountEmail.text.toString()
+            val password = newAccountPassword.text.toString()
+            val confirm = confirmPassword.text.toString()
+            if (email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
+                Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Passwords are not the same", Toast.LENGTH_SHORT).show()
+                val isConfirmed = password == confirm
+                if (isConfirmed) {
+                    authentication.createUserWithEmailAndPassword(email, password)
+                } else {
+                    Toast.makeText(this, R.string.different_password, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        signIn.isEnabled = true
-        overridePendingTransition(0, 0)
+        registerInfo.isEnabled = true
 
-        val fromRight = AnimationUtils.loadAnimation(this, R.anim.from_right)
-        registerCard.startAnimation(fromRight)
-
-        val fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom)
-        registerInfo.startAnimation(fromBottom)
+        overridePendingTransition(NO_ANIMATION, NO_ANIMATION)
+        startRegisterActivityEnterAnimation(this, registerCard, registerInfo)
     }
 }

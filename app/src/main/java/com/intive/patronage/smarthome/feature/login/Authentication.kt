@@ -10,17 +10,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.navigator.LoginCoordinator
 
-private const val RC_SIGN_IN = 1
+private const val SIGN_IN_REQUEST_CODE = 1
 
 class Authentication(
     private val appCompatActivity: AppCompatActivity,
     private val loginCoordinator: LoginCoordinator
-): LoginServices() {
+) {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInOptions: GoogleSignInOptions
@@ -44,17 +43,17 @@ class Authentication(
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-                showToast("Google sign in finished successfully")
+                showToast(R.string.google_sign_in_success)
                 goToDashboard()
             } else {
                 googleSignInClient.signOut()
-                showToast("Google sign in failed")
+                showToast(R.string.google_sign_in_failed)
             }
         }
     }
 
-    fun signIn() {
-        appCompatActivity.startActivityForResult(googleSignInClient.signInIntent, RC_SIGN_IN)
+    fun signInWithGoogle() {
+        appCompatActivity.startActivityForResult(googleSignInClient.signInIntent, SIGN_IN_REQUEST_CODE)
     }
 
     fun signOut() {
@@ -74,30 +73,43 @@ class Authentication(
     fun isUserLogged() = auth.currentUser != null
 
     fun accountVerification(requestCode: Int, data: Intent?) {
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == SIGN_IN_REQUEST_CODE) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (exception: ApiException) {
-                Log.d(appCompatActivity.getString(R.string.login), "Google sign in failed", exception)
-                showToast("Google sign in failed")
+                Log.d(
+                    appCompatActivity.getString(R.string.login),
+                    appCompatActivity.getString(R.string.google_sign_in_failed),
+                    exception
+                )
+                showToast(R.string.google_sign_in_failed)
             }
         }
     }
 
-    fun createAccount(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
+    fun createUserWithEmailAndPassword(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful) {
                 goToDashboard()
             } else {
-                Log.d("TAG", "failure", task.exception)
-                showToast("Authentication failed")
+                showCreateUserException(it, appCompatActivity.applicationContext)
             }
         }
     }
 
-    private fun showToast(text: String) {
+    fun signInWithEmailAndPassword(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                goToDashboard()
+            } else {
+                showSignInException(it, appCompatActivity.applicationContext)
+            }
+        }
+    }
+
+    private fun showToast(text: Int) {
         Toast.makeText(appCompatActivity.applicationContext, text, Toast.LENGTH_SHORT).show()
     }
 
