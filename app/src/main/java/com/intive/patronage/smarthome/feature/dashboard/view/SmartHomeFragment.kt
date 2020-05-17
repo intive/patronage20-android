@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
@@ -41,41 +41,52 @@ class SmartHomeFragment : Fragment() {
         setupTabLayout()
     }
 
-    fun setupTabLayout() {
+    private fun setupTabLayout() {
         smartHomeViewPager.adapter = viewPagerAdapter
-        TabLayoutMediator(smartHomeTabLayout, smartHomeViewPager)
-        { tab, position ->
-            when (position) {
-                0 -> tab.text = getString(R.string.dashboard_appbar)
-                1 -> tab.text = getString(R.string.home_appbar)
-            }
+        TabLayoutMediator(smartHomeTabLayout, smartHomeViewPager) { tab, position ->
+            setTabTextBasedOnPosition(tab, position)
         }.attach()
 
-        smartHomeTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position!!) {
-                    0 -> mFirebaseAnalytics.switchScreenEvent(
-                        activity, getString(R.string.dahboard_fragment_class_name)
-                    )
-                    1 -> mFirebaseAnalytics.switchScreenEvent(
-                        activity, getString(R.string.home_fragment_class_name)
-                    )
-                }
-            }
-        })
+        smartHomeTabLayout.addOnTabSelectedListener(SmartHomeOnTabSelectedListener())
     }
 
-    fun setupToolbar(): ActionBar {
+    private fun setTabTextBasedOnPosition(tab: TabLayout.Tab, position: Int) {
+        if (position == 0)
+            tab.text = getString(R.string.dashboard_appbar)
+        else
+            tab.text = getString(R.string.home_appbar)
+    }
+
+    private inner class SmartHomeOnTabSelectedListener : OnTabSelectedListenerImpl() {
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            if (tab?.position == 0) {
+                mFirebaseAnalytics.switchScreenEvent(
+                    activity,
+                    getString(R.string.dahboard_fragment_class_name)
+                )
+            } else {
+                mFirebaseAnalytics.switchScreenEvent(
+                    activity,
+                    getString(R.string.home_fragment_class_name)
+                )
+            }
+        }
+    }
+
+    private fun setupToolbar(): ActionBar {
         val toolbar = (activity as AppCompatActivity).supportActionBar as ActionBar
         toolbar.title = ""
         toolbar.setDisplayHomeAsUpEnabled(false)
-        toolbar.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.backgroundColor)))
+        context?.let {
+            toolbar.setBackgroundDrawable(
+                ColorDrawable(
+                    ContextCompat.getColor(
+                        it,
+                        R.color.backgroundColor
+                    )
+                )
+            )
+        }
         (activity as SmartHomeActivity).showLogo()
         return toolbar
     }
