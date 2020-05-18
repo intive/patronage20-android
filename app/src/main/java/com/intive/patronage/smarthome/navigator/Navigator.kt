@@ -1,6 +1,7 @@
 package com.intive.patronage.smarthome.navigator
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
