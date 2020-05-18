@@ -70,8 +70,8 @@ class HomeFragment : Fragment(), ToastListener {
                     super.onLongPress(e)
                     if (!dragAction) {
                         val sensor = image.findSensor(e.x, e.y)
-                        if (sensor != null) {
-                            homeSharedViewModel.deleteSensor(sensor.id.toInt())
+                        sensor?.let {
+                            homeSharedViewModel.deleteSensor(it.id.toInt())
                         }
                     }
                 }
@@ -92,29 +92,25 @@ class HomeFragment : Fragment(), ToastListener {
         draggedView = null
         recyclerView.suppressLayout(false)
         dragAction = false
-        if (x >= 0 && y >= 0) {
-            if (x >= image.x && x <= image.x + image.width && y >= image.y && y <= image.y + image.height) {
-                handlePost(sensorToPost, x - image.x, y - image.y)
-            }
+        if (x >= 0 && y >= 0 && x >= image.x && x <= image.x + image.width && y >= image.y && y <= image.y + image.height) {
+            handlePost(sensorToPost, x - image.x, y - image.y)
         }
     }
 
     private fun getSensors() {
         homeSharedViewModel.items.observe(this, Observer {
-            if (it != null) {
-                image.setData(it)
-            }
+            image.setData(it)
         })
     }
 
     private fun handlePost(sensor: DashboardSensor?, x: Float, y: Float) {
         if (image.checkForSensors(x, y)) {
-            if (sensor != null) {
+            sensor?.let {
                 homeSharedViewModel.postSensor(
-                    sensor.id.toInt(),
+                    it.id.toInt(),
                     HomeSensor(
-                        sensor.id.toInt(),
-                        sensor.type,
+                        it.id.toInt(),
+                        it.type,
                         MapPosition(
                             coordinateToPercentX(x, image.width),
                             coordinateToPercentY(y, image.height)
