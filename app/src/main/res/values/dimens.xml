@@ -42,5 +42,9 @@
     <dimen name="settings_list_item_icon_height">32dp</dimen>
     <dimen name="settings_list_item_icon_margin">8dp</dimen>
     <dimen name="settings_list_item_text_size">16sp</dimen>
+    <dimen name="home_sensor_size">40dp</dimen>
+    <dimen name="home_sensor_icon_size">20dp</dimen>
+    <dimen name="home_sensor_margin">10dp</dimen>
     <dimen name="color_picker_padding">9dp</dimen>
+    <dimen name="recycler_view_margin_in_portrait">35dp</dimen>
 </resources>

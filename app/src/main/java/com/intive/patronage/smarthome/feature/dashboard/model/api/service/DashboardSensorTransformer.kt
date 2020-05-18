@@ -6,6 +6,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.*
 import java.lang.StringBuilder
 
 const val TRANSFORMER_SEPARATOR = ","
+const val TEMPERATURE_DIVISOR = 10f
 
 fun transformFromLights(lights: List<Light>): List<DashboardSensor> {
     val sensors = mutableListOf<DashboardSensor>()
@@ -33,7 +34,7 @@ fun transformFromTemperatureSensors(temperatureSensors: List<TemperatureSensor>)
             DashboardSensor(
                 it.id.toString(),
                 it.type,
-                it.value.toString(),
+                (it.value/TEMPERATURE_DIVISOR).toString(),
                 it.mapPosition
             )
         )

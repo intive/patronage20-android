@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+        <variable
+            name="homeViewModelDataBind"
+            type="com.intive.patronage.smarthome.feature.home.viewmodel.HomeSharedViewModel" />
+    </data>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".feature.home.view.HomeFragment">
+    android:layout_height="match_parent"
+    tools:context=".feature.home.view.HomeFragment"
+    android:id="@+id/homeLayout">
 
 
-    <com.intive.patronage.smarthome.feature.home.view.HomeLayoutView
-        android:id="@+id/home"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_house"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"/>
+        android:layout_height="match_parent">
+
+        <com.intive.patronage.smarthome.feature.home.view.HomeLayoutView
+            android:id="@+id/home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_house"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/recycler_view_margin_in_portrait"
+            android:id="@+id/sensorRecyclerViewD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home"
+            app:data="@{homeViewModelDataBind.items}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
+</layout>
