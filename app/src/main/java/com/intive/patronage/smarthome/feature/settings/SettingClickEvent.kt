@@ -41,6 +41,11 @@ enum class SettingClickEvent {
         override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper) {
             dashboardCoordinator.goToThirdPartyAcknowledgments()
         }
+    },
+    LEGAL_NOTICE {
+        override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper) {
+            dashboardCoordinator.goToLegalNotice()
+        }
     };
 
     abstract fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper)

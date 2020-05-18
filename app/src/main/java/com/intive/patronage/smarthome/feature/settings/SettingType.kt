@@ -35,6 +35,14 @@ enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isC
             itemView.settingImage.visibility = View.VISIBLE
             itemView.settingImage.setBackgroundResource(R.drawable.extendable_setting_icon)
         }
+    },
+    LEGAL_NOTICE("image", false) {
+        override fun setItemView(itemView: View) {
+            itemView.settingImageText.text = itemView.resources.getString(R.string.legal_notice)
+            itemView.settingImageIcon.setBackgroundResource(R.drawable.ic_policy_24px)
+            itemView.settingImage.visibility = View.VISIBLE
+            itemView.settingImage.setBackgroundResource(R.drawable.extendable_setting_icon)
+        }
     };
 
     abstract fun setItemView(itemView: View)
