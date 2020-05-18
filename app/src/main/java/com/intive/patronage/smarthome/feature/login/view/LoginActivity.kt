@@ -2,8 +2,8 @@ package com.intive.patronage.smarthome.feature.login.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.login.authentication.Authentication
 import com.intive.patronage.smarthome.feature.login.animation.startEnterAnimation
@@ -24,12 +24,14 @@ class LoginActivity : AppCompatActivity() {
         parametersOf(this)
     }
 
-    private var isTheFirstTime = true
+    private var isTheFirstTime: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         val view = window.decorView.rootView
+
+        isTheFirstTime = savedInstanceState != null
 
         setupInput()
         authentication.initAuthFirebase()
@@ -82,14 +84,14 @@ class LoginActivity : AppCompatActivity() {
     private fun enableSignInButton() {
         if (!signIn.isEnabled) {
             signIn.isEnabled = true
-            signIn.background.setTint(resources.getColor(R.color.colorAccent))
+            signIn.background.setTint(ContextCompat.getColor(this, R.color.colorAccent))
         }
     }
 
     private fun disableSignInButton() {
         if (signIn.isEnabled) {
             signIn.isEnabled = false
-            signIn.background.setTint(resources.getColor(R.color.colorAccentLightDark))
+            signIn.background.setTint(ContextCompat.getColor(this, R.color.colorAccentLightDark))
         }
     }
 

@@ -22,9 +22,9 @@ class LoginCoordinator(private val navigator: Navigator) : DeeplinkCoordinator{
         navigator.close()
     }
 
-    fun goToScreen() {
+    fun goToScreen(affinity: Boolean = false) {
         navigator.goToScreen(ActivityEvent(SmartHomeActivity::class.java))
-        navigator.close()
+        navigator.close(affinity)
     }
 
     override fun goToLoginScreen() {

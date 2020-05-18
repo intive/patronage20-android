@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.login.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.login.authentication.Authentication
 import com.intive.patronage.smarthome.feature.login.animation.startEnterAnimation
@@ -89,14 +90,14 @@ class RegisterActivity : AppCompatActivity() {
     private fun enableSignUpButton() {
         if (!createAccount.isEnabled) {
             createAccount.isEnabled = true
-            createAccount.background.setTint(resources.getColor(R.color.colorAccent))
+            createAccount.background.setTint(ContextCompat.getColor(this, R.color.colorAccent))
         }
     }
 
     private fun disableSignUpButton() {
         if (createAccount.isEnabled) {
             createAccount.isEnabled = false
-            createAccount.background.setTint(resources.getColor(R.color.colorAccentLightDark))
+            createAccount.background.setTint(ContextCompat.getColor(this, R.color.colorAccentLightDark))
         }
     }
 

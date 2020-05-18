@@ -93,7 +93,7 @@ class Authentication(
     fun createUserWithEmailAndPassword(email: String, password: String, view: View) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                goToDashboard()
+                goToDashboard(true)
             } else {
                showCreateUserException(it, appCompatActivity.applicationContext, view)
             }
@@ -114,10 +114,10 @@ class Authentication(
         Toast.makeText(appCompatActivity.applicationContext, text, Toast.LENGTH_SHORT).show()
     }
 
-    private fun goToDashboard() {
+    private fun goToDashboard(affinity: Boolean = false) {
         val data = appCompatActivity.intent?.data
         data?.let {
             loginCoordinator.goToScreenBasedOnDeeplinkIntent(appCompatActivity.intent)
-        } ?: loginCoordinator.goToScreen()
+        } ?: loginCoordinator.goToScreen(affinity)
     }
 }
