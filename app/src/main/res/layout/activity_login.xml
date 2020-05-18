@@ -31,6 +31,8 @@
         android:layout_height="@dimen/login_card_height">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailLayout"
+            app:errorEnabled="true"
             app:hintEnabled="false"
             android:hint="@string/app_name"
             android:layout_width="wrap_content"
@@ -52,7 +54,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="@dimen/login_screen_items_margin"
+            android:id="@+id/passwordLayout"
+            app:errorEnabled="true"
+            android:layout_marginTop="@dimen/standard_break"
             app:hintEnabled="false"
             android:hint="@string/app_name"
             app:passwordToggleEnabled="true"
@@ -75,7 +79,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:layout_marginTop="@dimen/login_screen_items_margin"
+            android:layout_marginTop="@dimen/standard_break"
             android:textSize="@dimen/login_text_size"
             android:textAllCaps="false"
             android:elevation="@dimen/elevation"

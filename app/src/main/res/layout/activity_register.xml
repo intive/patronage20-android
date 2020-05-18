@@ -11,7 +11,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/application_logo"
+        android:id="@+id/applicationLogo"
         android:layout_width="@dimen/splash_screen_logo_size"
         android:layout_height="wrap_content"
         android:contentDescription="@string/logo"
@@ -31,7 +31,9 @@
         android:layout_height="@dimen/login_card_height">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newAccountEmailLayout"
             app:hintEnabled="false"
+            app:errorEnabled="true"
             android:hint="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -52,8 +54,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="@dimen/login_screen_items_margin"
+            android:id="@+id/newAccountPasswordLayout"
+            android:layout_marginTop="@dimen/standard_break"
             app:hintEnabled="false"
+            app:errorEnabled="true"
             android:hint="@string/app_name"
             app:passwordToggleEnabled="true"
             android:layout_width="wrap_content"
@@ -75,14 +79,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="@dimen/login_screen_items_margin"
+            android:id="@+id/confirmPasswordLayout"
+            android:layout_marginTop="@dimen/standard_break"
             app:hintEnabled="false"
+            app:errorEnabled="true"
             android:hint="@string/app_name"
             app:passwordToggleEnabled="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPassword"
                 android:textSize="@dimen/login_text_size"
                 android:textColor="@color/loginScreenMainColor"
@@ -98,7 +104,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:layout_marginTop="@dimen/login_screen_items_margin"
+            android:layout_marginTop="@dimen/standard_break"
             android:textSize="@dimen/login_text_size"
             android:textAllCaps="false"
             android:elevation="@dimen/elevation"

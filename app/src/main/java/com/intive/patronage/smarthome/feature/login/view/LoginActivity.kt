@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.login.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.login.authentication.Authentication
@@ -28,9 +29,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val view = window.decorView.rootView
 
         setupInput()
-
         authentication.initAuthFirebase()
         authentication.initGoogleSignIn()
 
@@ -39,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         signIn.setOnClickListener {
-            authentication.signInWithEmailAndPassword(getEmail(), getPassword())
+            authentication.signInWithEmailAndPassword(getEmail(), getPassword(), view)
         }
 
         loginInfo.setOnClickListener {
@@ -52,12 +53,14 @@ class LoginActivity : AppCompatActivity() {
         email.addTextChangedListener(object: TextWatcherWrapper() {
             override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 checkIfInputIsEmpty(text, getPassword())
+                emailLayout.error = null
             }
         })
 
         password.addTextChangedListener(object: TextWatcherWrapper() {
             override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 checkIfInputIsEmpty(text, getEmail())
+                passwordLayout.error = null
             }
         })
     }
@@ -77,13 +80,17 @@ class LoginActivity : AppCompatActivity() {
     private fun getPassword() = password.text.toString()
 
     private fun enableSignInButton() {
-        signIn.isEnabled = true
-        signIn.background.setTint(resources.getColor(R.color.colorAccent))
+        if (!signIn.isEnabled) {
+            signIn.isEnabled = true
+            signIn.background.setTint(resources.getColor(R.color.colorAccent))
+        }
     }
 
     private fun disableSignInButton() {
-        signIn.isEnabled = false
-        signIn.background.setTint(resources.getColor(R.color.colorAccentLightDark))
+        if (signIn.isEnabled) {
+            signIn.isEnabled = false
+            signIn.background.setTint(resources.getColor(R.color.colorAccentLightDark))
+        }
     }
 
     override fun onResume() {
@@ -100,9 +107,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupView() {
         loginInfo.isEnabled = true
-        email.text.clear()
-        password.text.clear()
         disableSignInButton()
+
+        email.text.clear()
+        emailLayout.error = null
+
+        password.text.clear()
+        passwordLayout.error = null
     }
 
     override fun onStart() {

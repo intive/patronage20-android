@@ -9,8 +9,11 @@ import org.koin.dsl.module
 
 val loginModule: Module = module {
 
-    factory { (activity: AppCompatActivity) -> LoginCoordinator(Navigator(activity, get())) }
-    factory { (appCompatActivity: AppCompatActivity) -> Authentication(appCompatActivity, LoginCoordinator(Navigator(appCompatActivity,get()))) }
+    factory { (activity: AppCompatActivity) ->
+        LoginCoordinator(Navigator(activity, get())) }
+
+    factory { (appCompatActivity: AppCompatActivity) ->
+        Authentication(appCompatActivity, LoginCoordinator(Navigator(appCompatActivity,get()))) }
 }
 
 

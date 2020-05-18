@@ -2,6 +2,7 @@ package com.intive.patronage.smarthome.feature.login.authentication
 
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -89,22 +90,22 @@ class Authentication(
         }
     }
 
-    fun createUserWithEmailAndPassword(email: String, password: String) {
+    fun createUserWithEmailAndPassword(email: String, password: String, view: View) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 goToDashboard()
             } else {
-                showCreateUserException(it, appCompatActivity.applicationContext)
+               showCreateUserException(it, appCompatActivity.applicationContext, view)
             }
         }
     }
 
-    fun signInWithEmailAndPassword(email: String, password: String) {
+    fun signInWithEmailAndPassword(email: String, password: String, view: View) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 goToDashboard()
             } else {
-                showSignInException(it, appCompatActivity.applicationContext)
+                showSignInException(it, appCompatActivity.applicationContext, view)
             }
         }
     }
