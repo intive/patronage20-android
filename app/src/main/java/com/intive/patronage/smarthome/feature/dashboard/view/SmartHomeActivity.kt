@@ -18,6 +18,8 @@ import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActiv
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
 import com.intive.patronage.smarthome.feature.login.authentication.Authentication
+import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
+import com.intive.patronage.smarthome.feature.splashcreen.SplashScreenActivity
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.smart_home_activity.*
@@ -152,6 +154,9 @@ class SmartHomeActivity : AppCompatActivity() {
             }
             "${SmartHomeFragment::class.java}" -> {
                 setToolbarAfterReturnFromDetailScreen()
+            }
+            "${SettingsFragment::class.java}" -> {
+                setToolbarForDetailsScreen(R.string.settings_toolbar, true)
             }
         }
     }
