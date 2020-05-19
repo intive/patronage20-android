@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity(), LoginEventListener {
              isTheFirstTime = false
         } else {
             overridePendingTransition(NO_ANIMATION, NO_ANIMATION)
-            startEnterAnimation(this, loginCard, loginInfo, true)
+            startEnterAnimation(loginCard, loginInfo, true)
         }
     }
 
@@ -78,6 +78,6 @@ class LoginActivity : AppCompatActivity(), LoginEventListener {
 
     override fun startAnimation() {
         loginInfo.isEnabled = false
-        startExitAnimation(this, coordinator, loginCard, loginInfo, true)
+        startExitAnimation(coordinator, loginCard, loginInfo, true)
     }
 }

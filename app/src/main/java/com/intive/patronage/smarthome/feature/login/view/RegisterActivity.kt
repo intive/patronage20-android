@@ -43,11 +43,11 @@ class RegisterActivity : AppCompatActivity(), RegisterEventListener {
         registerViewModel.isCreateAccountEnabled.value = false
 
         overridePendingTransition(NO_ANIMATION, NO_ANIMATION)
-        startEnterAnimation(this, registerCard, registerInfo, false)
+        startEnterAnimation(registerCard, registerInfo, false)
     }
 
     override fun startAnimation() {
         registerInfo.isEnabled = false
-        startExitAnimation(this, coordinator, registerCard, registerInfo, false)
+        startExitAnimation(coordinator, registerCard, registerInfo, false)
     }
 }
