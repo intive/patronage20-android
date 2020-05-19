@@ -14,7 +14,7 @@ import com.intive.patronage.smarthome.BuildConfig
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.PreferencesWrapper
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
-import com.intive.patronage.smarthome.feature.login.authentication.Authentication
+import com.intive.patronage.smarthome.feature.login.authentication.AuthenticationService
 import com.intive.patronage.smarthome.feature.settings.SettingClickEvent
 import com.intive.patronage.smarthome.feature.settings.SettingType
 import com.intive.patronage.smarthome.feature.settings.feature.setupDarkModeSwitch
@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
     private val preferences: PreferencesWrapper by inject {
         parametersOf(activity)
     }
-    private val authentication: Authentication by inject {
+    private val authenticationService: AuthenticationService by inject {
         parametersOf(activity)
     }
 
@@ -49,8 +49,8 @@ class SettingsFragment : Fragment() {
         setupDarkModeSwitch(resources)
         setupNotificationsVisibilitySwitch(preferences)
 
-        authentication.initAuthFirebase()
-        authentication.initGoogleSignIn()
+        authenticationService.initAuthFirebase()
+        authenticationService.initGoogleSignIn()
 
         val view = inflater.inflate(R.layout.settings_fragment, container, false)
         setupRecyclerView(view)
@@ -88,6 +88,6 @@ class SettingsFragment : Fragment() {
     private fun onSettingClickListener(settingType: SettingType, itemView: View) {
         SettingClickEvent.values().find {
             settingType.toString() == it.toString()
-        }?.onClick(itemView, dashboardCoordinator, preferences, authentication)
+        }?.onClick(itemView, dashboardCoordinator, preferences, authenticationService)
     }
 }

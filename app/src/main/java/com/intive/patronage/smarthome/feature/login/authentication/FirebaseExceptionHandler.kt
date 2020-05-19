@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.intive.patronage.smarthome.R
-import kotlinx.android.synthetic.main.activity_login.view.*
+import com.intive.patronage.smarthome.feature.login.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_register.view.*
 
 private const val WEAK_PASSWORD = "ERROR_WEAK_PASSWORD"
@@ -31,16 +31,16 @@ fun showCreateUserException(task: Task<AuthResult>, context: Context, view: View
     }
 }
 
-fun showSignInException(task: Task<AuthResult>, context: Context, view: View) {
+fun showSignInException(task: Task<AuthResult>, context: Context, viewModel: LoginViewModel) {
     try {
         throw task.exception!!
     } catch (exception: FirebaseAuthInvalidUserException) {
-        view.emailLayout.error = view.resources.getString(R.string.account_does_not_exists)
+        viewModel.emailError.value = context.resources.getString(R.string.account_does_not_exists)
     } catch (exception: FirebaseAuthInvalidCredentialsException) {
         if (exception.errorCode == INVALID_EMAIL) {
-            view.emailLayout.error = view.resources.getString(R.string.invalid_email)
+            viewModel.emailError.value = context.resources.getString(R.string.invalid_email)
         } else {
-            view.passwordLayout.error = view.resources.getString(R.string.invalid_password)
+            viewModel.passwordError.value = context.resources.getString(R.string.invalid_password)
         }
     } catch (exception: Exception) {
         showToast(R.string.update_value_toast_error, context)

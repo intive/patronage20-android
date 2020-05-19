@@ -13,11 +13,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.feature.login.viewmodel.LoginViewModel
 import com.intive.patronage.smarthome.navigator.LoginCoordinator
 
 private const val SIGN_IN_REQUEST_CODE = 1
 
-class Authentication(
+class AuthenticationService(
     private val appCompatActivity: AppCompatActivity,
     private val loginCoordinator: LoginCoordinator
 ) {
@@ -100,12 +101,12 @@ class Authentication(
         }
     }
 
-    fun signInWithEmailAndPassword(email: String, password: String, view: View) {
+    fun signInWithEmailAndPassword(email: String, password: String, viewModel: LoginViewModel) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 goToDashboard()
             } else {
-                showSignInException(it, appCompatActivity.applicationContext, view)
+                showSignInException(it, appCompatActivity.applicationContext, viewModel)
             }
         }
     }

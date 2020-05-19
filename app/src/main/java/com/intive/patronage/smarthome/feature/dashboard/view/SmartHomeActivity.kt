@@ -17,7 +17,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.service.Networ
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
-import com.intive.patronage.smarthome.feature.login.authentication.Authentication
+import com.intive.patronage.smarthome.feature.login.authentication.AuthenticationService
 import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
@@ -31,7 +31,7 @@ class SmartHomeActivity : AppCompatActivity() {
     private val dashboardCoordinator: DashboardCoordinator by inject {
         parametersOf(this)
     }
-    private val authentication: Authentication by inject {
+    private val authenticationService: AuthenticationService by inject {
         parametersOf(this)
     }
     private val alertSnackbar: SmartHomeErrorSnackbar by inject {
@@ -63,9 +63,9 @@ class SmartHomeActivity : AppCompatActivity() {
         }
 
         observeViewModel()
-        authentication.initAuthFirebase()
-        authentication.initGoogleSignIn()
-        if (!authentication.isUserLogged()) {
+        authenticationService.initAuthFirebase()
+        authenticationService.initGoogleSignIn()
+        if (!authenticationService.isUserLogged()) {
             dashboardCoordinator.goToLoginScreen()
         }
     }

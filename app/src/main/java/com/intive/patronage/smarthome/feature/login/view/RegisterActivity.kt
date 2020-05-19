@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.feature.login.authentication.Authentication
+import com.intive.patronage.smarthome.feature.login.authentication.AuthenticationService
 import com.intive.patronage.smarthome.feature.login.animation.startEnterAnimation
 import com.intive.patronage.smarthome.feature.login.animation.startExitAnimation
 import com.intive.patronage.smarthome.feature.login.authentication.TextWatcherWrapper
@@ -14,7 +14,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class RegisterActivity : AppCompatActivity() {
-    private val authentication: Authentication by inject {
+    private val authenticationService: AuthenticationService by inject {
         parametersOf(this)
     }
     private val coordinator: DashboardCoordinator by inject {
@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         val view = window.decorView.rootView
 
         setupInput()
-        authentication.initAuthFirebase()
+        authenticationService.initAuthFirebase()
 
         registerInfo.setOnClickListener {
             it.isEnabled = false
@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         createAccount.setOnClickListener {
-            authentication.createUserWithEmailAndPassword(getNewEmail(), getNewPassword(), view)
+            authenticationService.createUserWithEmailAndPassword(getNewEmail(), getNewPassword(), view)
         }
     }
 
