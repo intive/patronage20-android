@@ -2,7 +2,6 @@ package com.intive.patronage.smarthome.feature.login.authentication
 
 import android.content.Intent
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,6 +13,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.login.viewmodel.LoginViewModel
+import com.intive.patronage.smarthome.feature.login.viewmodel.RegisterViewModel
 import com.intive.patronage.smarthome.navigator.LoginCoordinator
 
 private const val SIGN_IN_REQUEST_CODE = 1
@@ -91,12 +91,12 @@ class AuthenticationService(
         }
     }
 
-    fun createUserWithEmailAndPassword(email: String, password: String, view: View) {
+    fun createUserWithEmailAndPassword(email: String, password: String, viewModel: RegisterViewModel) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 goToDashboard(true)
             } else {
-               showCreateUserException(it, appCompatActivity.applicationContext, view)
+               showCreateUserException(it, appCompatActivity.applicationContext, viewModel)
             }
         }
     }

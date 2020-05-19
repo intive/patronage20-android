@@ -89,7 +89,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                app:signInEnabled="@{viewModel.isSignInEnabled}"
+                app:actionEnabled="@{viewModel.isSignInEnabled}"
                 android:onClick="@{() -> viewModel.signIn()}"
                 android:layout_marginTop="@dimen/standard_break"
                 android:textSize="@dimen/login_text_size"
