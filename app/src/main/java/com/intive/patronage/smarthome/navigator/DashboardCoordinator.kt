@@ -18,6 +18,9 @@ import com.intive.patronage.smarthome.feature.settings.feature.ThirdPartyAcknowl
 import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 
+const val POSITION_HOME_ON_VIEW_PAGER = 1
+const val POSITION_HOME_ON_VIEW_PAGER_KEY = "home_position_on_view_pager"
+
 class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinator {
 
     fun goToLightsDetailsScreen(bundle: Bundle? = null, deeplink: Boolean = false) {
@@ -75,13 +78,15 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
     }
     fun goToDashboard(deeplink: Boolean = false) {
         navigator.goToScreen(
-            FragmentEvent(DashboardFragment::class.java, null, R.id.fragment),
+            FragmentEvent(SmartHomeFragment::class.java, null, R.id.fragment),
             deeplink
         )
     }
 
-    fun goToHome(deeplink: Boolean = false) {
-        navigator.goToScreen(FragmentEvent(HomeFragment::class.java, null, R.id.fragment), deeplink)
+    fun goToHome(bundle: Bundle? = null, deeplink: Boolean = false) {
+        navigator.goToScreen(
+            FragmentEvent(SmartHomeFragment::class.java, bundle, R.id.fragment),
+            deeplink)
     }
 
     fun goToSmartHome(deeplink: Boolean = false) {
@@ -116,7 +121,10 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
     override fun goToScreenBasedOnDeeplinkIntent(intent: Intent) {
         when (intent.getStringExtra(DESTINATION_URL)) {
             DASHBOARD_DESTINATION_URL -> goToDashboard(true)
-            HOME_DESTINATION_URL -> goToHome(true)
+            HOME_DESTINATION_URL -> {
+                intent.putExtra(POSITION_HOME_ON_VIEW_PAGER_KEY, POSITION_HOME_ON_VIEW_PAGER)
+                goToHome(intent.extras,true)
+            }
             BLINDS_DESTINATION_URL -> goToBlindDetailsScreen(
                 intent.extras,
                 true

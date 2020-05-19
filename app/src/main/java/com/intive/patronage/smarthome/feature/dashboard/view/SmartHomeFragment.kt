@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeFragmentViewModel
+import com.intive.patronage.smarthome.navigator.POSITION_HOME_ON_VIEW_PAGER_KEY
 import kotlinx.android.synthetic.main.smart_home_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -39,6 +40,7 @@ class SmartHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupTabLayout()
+        switchViewPagerOnHomeAfterRedirectionDeeplink()
     }
 
     fun setupTabLayout() {
@@ -78,5 +80,13 @@ class SmartHomeFragment : Fragment() {
         toolbar.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.backgroundColor)))
         (activity as SmartHomeActivity).showLogo()
         return toolbar
+    }
+
+    fun switchViewPagerOnHomeAfterRedirectionDeeplink() {
+        val bundle = activity?.intent?.extras
+        if (bundle != null && bundle.containsKey(POSITION_HOME_ON_VIEW_PAGER_KEY)) {
+            val position = bundle.getInt(POSITION_HOME_ON_VIEW_PAGER_KEY)
+            smartHomeViewPager.currentItem = position
+        }
     }
 }

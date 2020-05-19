@@ -74,7 +74,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             textSize = SENSOR_TEXT_SIZE * this@HomeLayoutView.height
             typeface = Typeface.DEFAULT_BOLD
         }
-        stkPaint.apply{
+        stkPaint.apply {
             stkPaint.style = Paint.Style.STROKE
             stkPaint.strokeWidth = 8f
             stkPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
@@ -190,6 +190,27 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
             }
         }
         return true
+    }
+
+    fun findSensor(x: Float, y: Float): DashboardSensor? {
+        val sensor = sensList.filter {
+            it.mapPosition != null
+        }.find {
+            x <= percentToCoordinateX(
+                it.mapPosition!!.x,
+                this.width
+            ) + SENSOR_BORDER_SIZE * this.height && x >= percentToCoordinateX(
+                it.mapPosition.x,
+                this.width
+            ) - SENSOR_BORDER_SIZE * this.height && y <= percentToCoordinateY(
+                it.mapPosition.y,
+                this.height
+            ) + SENSOR_BORDER_SIZE * this.height && y >= percentToCoordinateY(
+                it.mapPosition.y,
+                this.height
+            ) - SENSOR_BORDER_SIZE * this.height
+        }
+        return sensor
     }
 
 }
