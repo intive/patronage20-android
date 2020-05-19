@@ -64,4 +64,5 @@
     <string name="notifications_setting">Show notifications</string>
     <string name="settings_toolbar">Settings</string>
     <string name="third_party_acknowledgments">Third Party Acknowledgments</string>
+    <string name="about_us_title">About Us</string>
 </resources>

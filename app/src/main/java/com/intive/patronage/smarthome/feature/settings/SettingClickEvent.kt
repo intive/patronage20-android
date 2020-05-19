@@ -9,7 +9,11 @@ import kotlinx.android.synthetic.main.settings_switch_item.view.*
 
 enum class SettingClickEvent {
     NIGHT_MODE {
-        override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper) {
+        override fun onClick(
+            itemView: View,
+            dashboardCoordinator: DashboardCoordinator,
+            preferences: PreferencesWrapper
+        ) {
             with(!itemView.settingSwitch.isChecked) {
                 itemView.settingSwitch.isChecked = this
                 SettingType.NIGHT_MODE.isChecked = this
@@ -21,12 +25,20 @@ enum class SettingClickEvent {
         }
     },
     DEVELOPER_SETTINGS {
-        override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper) {
+        override fun onClick(
+            itemView: View,
+            dashboardCoordinator: DashboardCoordinator,
+            preferences: PreferencesWrapper
+        ) {
             dashboardCoordinator.goToDeveloperSettings()
         }
     },
     NOTIFICATIONS {
-        override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper) {
+        override fun onClick(
+            itemView: View,
+            dashboardCoordinator: DashboardCoordinator,
+            preferences: PreferencesWrapper
+        ) {
             with(!itemView.settingSwitch.isChecked) {
                 itemView.settingSwitch.isChecked = this
                 SettingType.NOTIFICATIONS.isChecked = this
@@ -38,10 +50,27 @@ enum class SettingClickEvent {
         }
     },
     THIRD_PARTY_ACKNOWLEDGMENTS {
-        override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper) {
+        override fun onClick(
+            itemView: View,
+            dashboardCoordinator: DashboardCoordinator,
+            preferences: PreferencesWrapper
+        ) {
             dashboardCoordinator.goToThirdPartyAcknowledgments()
+        }
+    },
+    ABOUT_US {
+        override fun onClick(
+            itemView: View,
+            dashboardCoordinator: DashboardCoordinator,
+            preferences: PreferencesWrapper
+        ) {
+            dashboardCoordinator.goToAboutUsScreen()
         }
     };
 
-    abstract fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper)
+    abstract fun onClick(
+        itemView: View,
+        dashboardCoordinator: DashboardCoordinator,
+        preferences: PreferencesWrapper
+    )
 }
