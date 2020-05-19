@@ -1,11 +1,13 @@
 package com.intive.patronage.smarthome.feature.dashboard.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class SmartHomeFragmentViewModel(val dashboardService: DashboardService)  : ViewModel() {
 
@@ -20,8 +22,11 @@ class SmartHomeFragmentViewModel(val dashboardService: DashboardService)  : View
         sensorList = dashboardService.fetchSensorsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .retry()
-            .subscribe({
+            .doOnError{
+                error.value = true
+            }
+            .retryWhen{ it.delay(5, TimeUnit.SECONDS) }
+            .subscribe( {
                 error.value = false
             }, { error.value = true })
     }
