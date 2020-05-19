@@ -32,7 +32,6 @@ class LegalNoticeFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.clear()
-        activity?.menuInflater?.inflate(R.menu.sign_in, menu)
     }
 
     private fun setupToolbar() {

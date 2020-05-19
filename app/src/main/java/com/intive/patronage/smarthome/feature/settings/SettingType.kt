@@ -36,7 +36,7 @@ enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isC
             itemView.settingImage.setBackgroundResource(R.drawable.extendable_setting_icon)
         }
     },
-    LEGAL_NOTICE("image", false) {
+    LEGAL_NOTICE("image") {
         override fun setItemView(itemView: View) {
             itemView.settingImageText.text = itemView.resources.getString(R.string.legal_notice)
             itemView.settingImageIcon.setBackgroundResource(R.drawable.ic_policy_24px)
