@@ -124,7 +124,7 @@
                 android:textSize="@dimen/login_text_size"
                 android:textAllCaps="false"
                 android:elevation="@dimen/elevation"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/login_button"
                 android:textColor="@color/colorPrimary"
                 android:text="@string/create_account"
                 android:id="@+id/createAccount"
