@@ -13,6 +13,7 @@ import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperS
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
+import com.intive.patronage.smarthome.feature.settings.feature.LegalNoticeFragment
 import com.intive.patronage.smarthome.feature.login.view.LoginActivity
 import com.intive.patronage.smarthome.feature.login.view.RegisterActivity
 import com.intive.patronage.smarthome.feature.settings.feature.ThirdPartyAcknowledgmentsFragment
@@ -77,6 +78,17 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
             )
         )
     }
+
+    fun goToLegalNotice(bundle: Bundle? = null) {
+        navigator.goToScreen(
+            FragmentEvent(
+                LegalNoticeFragment::class.java,
+                bundle,
+                R.id.fragment
+            )
+        )
+    }
+
     fun goToDashboard(deeplink: Boolean = false) {
         navigator.goToScreen(
             FragmentEvent(SmartHomeFragment::class.java, null, R.id.fragment),

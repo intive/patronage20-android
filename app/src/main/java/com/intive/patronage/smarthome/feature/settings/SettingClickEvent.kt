@@ -43,6 +43,11 @@ enum class SettingClickEvent {
             dashboardCoordinator.goToThirdPartyAcknowledgments()
         }
     },
+    LEGAL_NOTICE {
+        override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper, authenticationService: AuthenticationService) {
+            dashboardCoordinator.goToLegalNotice()
+        }
+    },
     SIGN_OUT {
         override fun onClick(itemView: View, dashboardCoordinator: DashboardCoordinator, preferences: PreferencesWrapper, authenticationService: AuthenticationService) {
             authenticationService.signOut()
