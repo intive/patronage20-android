@@ -42,6 +42,7 @@ class LightsDetailsViewModel(
     private var disposable: Disposable? = null
     private var lightChangerDisposable: Disposable? = null
     val hsv = MutableLiveData<IntArray>()
+    private var previousHSV = intArrayOf(-1, -1, -1)
 
     var colorPickerPointerWasTouched = false
     var brightnessBarPointerWasTouched = false
@@ -78,14 +79,21 @@ class LightsDetailsViewModel(
         blueForBrightnessBar = rgbForBrightnessBar.blue
         colorPickerEventListener.setBrightnessBarColor(redForBrightnessBar, greenForBrightnessBar, blueForBrightnessBar)
 
+        if (colorPickerPointerWasTouched || brightnessBarPointerWasTouched || !previousHSV.contentEquals(hsv.value!!)) {
+            resetPointersPosition()
+        }
+    }
+
+    private fun resetPointersPosition() {
+        if (!previousHSV.contentEquals(hsv.value!!)) {
+            colorPickerPointerWasTouched = true
+        }
         colorPickerEventListener.resetPointersPosition(colorPickerPointerWasTouched, hsv.value!!)
         clearPointersFlags()
     }
 
     fun onResetClicked() {
-        if (colorPickerPointerWasTouched || brightnessBarPointerWasTouched) {
-            loadLight()
-        }
+        loadLight()
     }
 
     fun onApplyClicked() {
@@ -98,6 +106,11 @@ class LightsDetailsViewModel(
             .subscribe({
                 colorPickerEventListener.showToast(R.string.apply_toast)
                 clearPointersFlags()
+                previousHSV = intArrayOf(
+                    lightChangeHSV[0].toInt(),
+                    (lightChangeHSV[1] * 100).toInt(),
+                    (lightChangeHSV[2] * 100).toInt()
+                )
             }, {
                 colorPickerEventListener.showToast(R.string.update_value_toast_error)
             })
