@@ -72,7 +72,7 @@ class SmartHomeActivity : AppCompatActivity() {
             this, Observer { networkConnection ->
                 if (!networkConnection)
                     alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
-                else
+                else if (networkConnection && alertSnackbar.snackbar.isShown)
                     alertSnackbar.hideSnackbar()
             })
     }

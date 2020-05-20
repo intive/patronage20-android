@@ -19,7 +19,6 @@ class DashboardService(
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
     val dashboardReplaySubject = ReplaySubject.create<List<DashboardSensor>>()
-    val dashboardErrorReplaySubject = ReplaySubject.create<Boolean>()
 
 
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()

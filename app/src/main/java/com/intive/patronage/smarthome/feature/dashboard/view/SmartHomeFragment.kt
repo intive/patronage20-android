@@ -53,9 +53,8 @@ class SmartHomeFragment : Fragment() {
         smartHomeFragmentViewModel.error.observe(this, Observer { error ->
             if (error && !alertSnackbar.snackbar.isShown)
                 alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-            else if (error || alertSnackbar.snackbar.isShown) { } else
+            else if (!error && alertSnackbar.snackbar.isShown)
                 alertSnackbar.hideSnackbar()
-
         })
     }
 

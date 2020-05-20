@@ -8,8 +8,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-const val MIN_WAIT_TIME = 2L
-const val MAX_WAIT_TIME = 3L
+const val MIN_WAIT_TIME = 5L
+const val MAX_WAIT_TIME = 30L
 
 class SplashScreenViewModel(dashboardService: DashboardService) : ViewModel() {
 
