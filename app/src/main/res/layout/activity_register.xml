@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.intive.patronage.smarthome.feature.login.viewmodel.LoginViewModel"/>
+            type="com.intive.patronage.smarthome.feature.login.viewmodel.RegisterViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundColor"
-        tools:context="com.intive.patronage.smarthome.feature.login.view.LoginActivity">
+        tools:context="com.intive.patronage.smarthome.feature.login.view.RegisterActivity">
 
         <ImageView
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
             app:srcCompat="@drawable/logo"/>
 
         <LinearLayout
-            android:id="@+id/loginCard"
+            android:id="@+id/registerCard"
             android:gravity="center"
             android:orientation="vertical"
             android:elevation="@dimen/elevation"
@@ -39,16 +39,17 @@
             android:layout_height="@dimen/login_card_height">
 
             <com.google.android.material.textfield.TextInputLayout
-                app:inputError="@{viewModel.emailError}"
-                android:id="@+id/emailLayout"
-                app:errorEnabled="true"
+                app:inputError="@{viewModel.newEmailError}"
+                android:id="@+id/newAccountEmailLayout"
                 app:hintEnabled="false"
+                app:errorEnabled="true"
+                android:hint="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    app:onEmailInput="@{viewModel}"
-                    android:id="@+id/email"
+                    app:onNewEmailInput="@{viewModel}"
+                    android:id="@+id/newAccountEmail"
                     android:textSize="@dimen/login_text_size"
                     android:textColor="@color/loginScreenMainColor"
                     android:hint="@string/email"
@@ -63,18 +64,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                app:inputError="@{viewModel.passwordError}"
-                android:id="@+id/passwordLayout"
-                app:errorEnabled="true"
+                app:inputError="@{viewModel.newPasswordError}"
+                android:id="@+id/newAccountPasswordLayout"
                 android:layout_marginTop="@dimen/standard_break"
                 app:hintEnabled="false"
+                app:errorEnabled="true"
+                android:hint="@string/app_name"
                 app:passwordToggleEnabled="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    app:onPasswordInput="@{viewModel}"
-                    android:id="@+id/password"
+                    app:onNewPasswordInput="@{viewModel}"
+                    android:id="@+id/newAccountPassword"
                     android:textSize="@dimen/login_text_size"
                     android:textColor="@color/loginScreenMainColor"
                     android:hint="@string/password"
@@ -88,50 +90,52 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                app:inputError="@{viewModel.confirmPasswordError}"
+                android:id="@+id/confirmPasswordLayout"
+                android:layout_marginTop="@dimen/standard_break"
+                app:hintEnabled="false"
+                app:errorEnabled="true"
+                android:hint="@string/app_name"
+                app:passwordToggleEnabled="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    app:onConfirmPasswordInput="@{viewModel}"
+                    android:id="@+id/confirmPassword"
+                    android:textSize="@dimen/login_text_size"
+                    android:textColor="@color/loginScreenMainColor"
+                    android:hint="@string/confirm_password"
+                    android:padding="@dimen/login_text_input_padding"
+                    android:background="@drawable/rounded_with_stroke"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:layout_width="@dimen/login_text_input_width"
+                    android:layout_height="@dimen/login_text_input_height"
+                    android:importantForAutofill="no" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
-                app:actionEnabled="@{viewModel.isSignInEnabled}"
-                android:onClick="@{() -> viewModel.signIn()}"
+                app:actionEnabled="@{viewModel.isCreateAccountEnabled()}"
+                android:onClick="@{() -> viewModel.createAccount()}"
                 android:layout_marginTop="@dimen/standard_break"
                 android:textSize="@dimen/login_text_size"
                 android:textAllCaps="false"
                 android:elevation="@dimen/elevation"
                 android:background="@drawable/login_button"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/sign_in"
-                android:id="@+id/signIn"
+                android:text="@string/create_account"
+                android:id="@+id/createAccount"
                 android:layout_width="@dimen/login_text_input_width"
                 android:layout_height="@dimen/login_text_input_height"/>
-
-            <TextView
-                android:textSize="@dimen/login_text_size"
-                android:textColor="@color/loginScreenMainColor"
-                android:gravity="center"
-                android:text="@string/or"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/login_text_input_height"/>
-
-            <Button
-                android:onClick="@{() -> viewModel.signInWithGoogle()}"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/login_text_size"
-                android:textAllCaps="false"
-                android:drawableStart="@drawable/google_icon"
-                android:elevation="@dimen/elevation"
-                android:background="@drawable/sign_in_button"
-                android:text="@string/sign_in_with_google"
-                android:id="@+id/signInWithGoogle"
-                android:layout_width="@dimen/login_text_input_width"
-                android:layout_height="@dimen/login_text_input_height"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/applicationLogo"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:onClick="@{() -> viewModel.signUp()}"
-            android:id="@+id/loginInfo"
+            android:onClick="@{() -> viewModel.signIn()}"
+            android:id="@+id/registerInfo"
             android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +147,7 @@
             <TextView
                 android:textSize="@dimen/login_text_size"
                 android:textColor="@color/loginScreenMainColor"
-                android:text="@string/do_not_have_an_account"
+                android:text="@string/already_have_an_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -151,8 +155,8 @@
                 android:layout_marginBottom="@dimen/login_screen_items_margin"
                 android:textSize="@dimen/login_big_text_size"
                 android:textColor="@color/loginScreenMainColor"
-                android:text="@string/sign_up"
-                android:id="@+id/signUp"
+                android:text="@string/sign_in"
+                android:id="@+id/signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

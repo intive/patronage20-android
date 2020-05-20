@@ -65,4 +65,23 @@
     <string name="settings_toolbar">Settings</string>
     <string name="third_party_acknowledgments">Third Party Acknowledgments</string>
     <string name="legal_notice">Legal notice</string>
+    <string name="weak_password">Password is not strong enough</string>
+    <string name="invalid_email">Email address is incorrect</string>
+    <string name="account_does_not_exists">Account doesn\'t exists</string>
+    <string name="account_already_exists">Account already exists. Please sign in</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="different_password">Passwords are not the same</string>
+    <string name="google_sign_in_failed">Google sign in failed</string>
+    <string name="google_sign_in_success">Google sign in finished successfully</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="or">or</string>
+    <string name="do_not_have_an_account">Don\'t have an account?</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="create_account">Create account</string>
+    <string name="sign_out">Sign out</string>
 </resources>

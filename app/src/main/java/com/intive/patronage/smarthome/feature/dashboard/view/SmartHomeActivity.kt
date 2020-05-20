@@ -2,12 +2,10 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,9 +17,8 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.service.Networ
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeActivityViewModel
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
-import com.intive.patronage.smarthome.feature.login.LoginGoogle
+import com.intive.patronage.smarthome.feature.login.authentication.AuthenticationService
 import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
-import com.intive.patronage.smarthome.feature.splashcreen.SplashScreenActivity
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.smart_home_activity.*
@@ -29,19 +26,26 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-
 class SmartHomeActivity : AppCompatActivity() {
 
-    private val dashboardCoordinator: DashboardCoordinator by inject { parametersOf(this) }
-    private val loginGoogle: LoginGoogle by inject { parametersOf(this) }
-    private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(this) }
-    private val networkConnectionService: NetworkConnectionService by inject { parametersOf(this) }
-    private val smartHomeActivityViewModel: SmartHomeActivityViewModel by viewModel {
-        parametersOf(
-            networkConnectionService
-        )
+    private val dashboardCoordinator: DashboardCoordinator by inject {
+        parametersOf(this)
     }
-    private val deeplinkService: DeeplinkService by inject { parametersOf(dashboardCoordinator) }
+    private val authenticationService: AuthenticationService by inject {
+        parametersOf(this)
+    }
+    private val alertSnackbar: SmartHomeErrorSnackbar by inject {
+        parametersOf(this)
+    }
+    private val networkConnectionService: NetworkConnectionService by inject {
+        parametersOf(this)
+    }
+    private val smartHomeActivityViewModel: SmartHomeActivityViewModel by viewModel {
+        parametersOf(networkConnectionService)
+    }
+    private val deeplinkService: DeeplinkService by inject {
+        parametersOf(dashboardCoordinator)
+    }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -59,13 +63,12 @@ class SmartHomeActivity : AppCompatActivity() {
         }
 
         observeViewModel()
-        loginGoogle.initialAuthFirebase()
-        loginGoogle.initialGoogleSignIn()
-        if(!loginGoogle.isUserLogged()){
+        authenticationService.initAuthFirebase()
+        authenticationService.initGoogleSignIn()
+        if (!authenticationService.isUserLogged()) {
             dashboardCoordinator.goToLoginScreen()
         }
     }
-
 
     private fun observeViewModel() {
         smartHomeActivityViewModel.networkConnection.observe(
@@ -84,18 +87,12 @@ class SmartHomeActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_developer_settings, menu)
-        menuInflater.inflate(R.menu.sign_in, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.developer_settings -> {
-                dashboardCoordinator.goToSettingsScreen()
-            }
-            R.id.log_out_google -> {
-                loginGoogle.signOut()
-            }
+        if (item.itemId == R.id.developer_settings) {
+            dashboardCoordinator.goToSettingsScreen()
         }
         return true
     }

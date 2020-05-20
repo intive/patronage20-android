@@ -21,4 +21,5 @@
     <color name="error">#B00020</color>
     <color name="sensorIcon">#F0F0F0</color>
     <color name="text">#000</color>
+    <color name="loginScreenMainColor">#2e2d32</color>
 </resources>
