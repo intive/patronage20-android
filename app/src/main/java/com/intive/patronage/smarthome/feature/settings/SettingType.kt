@@ -28,12 +28,20 @@ enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isC
             itemView.settingSwitch.visibility = View.VISIBLE
         }
     },
-    THIRD_PARTY_ACKNOWLEDGMENTS("image", true) {
+    THIRD_PARTY_ACKNOWLEDGMENTS("image") {
         override fun setItemView(itemView: View) {
             itemView.settingImageText.text = itemView.resources.getString(R.string.third_party_acknowledgments)
-            itemView.settingImageIcon.setBackgroundResource(R.drawable.third_party_acknowledgment)
+            itemView.settingImageIcon.setBackgroundResource(R.drawable.info)
             itemView.settingImage.visibility = View.VISIBLE
             itemView.settingImage.setBackgroundResource(R.drawable.extendable_setting_icon)
+        }
+    },
+    SIGN_OUT("image") {
+        override fun setItemView(itemView: View) {
+            itemView.settingImageText.text = itemView.resources.getString(R.string.sign_out)
+            itemView.settingImageIcon.setBackgroundResource(R.drawable.account)
+            itemView.settingImage.visibility = View.VISIBLE
+            itemView.settingImage.setBackgroundResource(R.drawable.exit)
         }
     };
 

@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.intive.patronage.smarthome.AnalyticsWrapper
-import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
-import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
-import kotlinx.android.synthetic.main.smart_home_activity.view.*
 import org.koin.core.KoinComponent
 
-class Navigator(private val activity: AppCompatActivity, private val analytics: AnalyticsWrapper) :
-    KoinComponent {
+class Navigator(
+    private val activity: AppCompatActivity,
+    private val analytics: AnalyticsWrapper
+): KoinComponent {
 
     fun goToScreen(event: NavigationEvent, deeplink: Boolean = false) {
 
@@ -66,7 +64,11 @@ class Navigator(private val activity: AppCompatActivity, private val analytics: 
         }
     }
 
-    fun close() {
-        activity.finish()
+    fun close(affinity: Boolean = false) {
+        if (!affinity) {
+            activity.finish()
+        } else {
+            activity.finishAffinity()
+        }
     }
 }

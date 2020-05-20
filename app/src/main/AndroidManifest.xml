@@ -18,9 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity" />
         <activity
-            android:name=".feature.login.LoginActivity"
+            android:name=".feature.login.view.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".feature.developer_settings.view.DeveloperSettingsActivity" />
+        <activity
+            android:name=".feature.login.view.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -43,6 +47,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,7 +63,7 @@
 
         <receiver
             android:name=".notifications.service.SmartHomeNotificationsServiceReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="RESTART_SERVICE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -72,7 +77,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/splash_screen_icon" />
-
     </application>
 
 </manifest>

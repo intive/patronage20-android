@@ -7,7 +7,7 @@ import com.intive.patronage.smarthome.common.DESTINATION_URL
 import com.intive.patronage.smarthome.common.ID_PARAMETER_URL
 import com.intive.patronage.smarthome.common.ID_QUERY_URL
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
-import com.intive.patronage.smarthome.feature.login.LoginActivity
+import com.intive.patronage.smarthome.feature.login.view.LoginActivity
 import com.intive.patronage.smarthome.feature.splashcreen.SplashScreenActivity
 
 class LoginCoordinator(private val navigator: Navigator) : DeeplinkCoordinator{
@@ -22,9 +22,9 @@ class LoginCoordinator(private val navigator: Navigator) : DeeplinkCoordinator{
         navigator.close()
     }
 
-    fun goToScreen() {
+    fun goToScreen(affinity: Boolean = false) {
         navigator.goToScreen(ActivityEvent(SmartHomeActivity::class.java))
-        navigator.close()
+        navigator.close(affinity)
     }
 
     override fun goToLoginScreen() {
