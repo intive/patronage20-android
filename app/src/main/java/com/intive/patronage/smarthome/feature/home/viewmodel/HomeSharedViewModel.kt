@@ -1,6 +1,5 @@
 package com.intive.patronage.smarthome.feature.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.R
@@ -15,7 +14,6 @@ import com.intive.patronage.smarthome.feature.home.model.api.service.HomeService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 
 class HomeSharedViewModel(private val dashboardService: DashboardService, private val homeService: HomeService) : ViewModel() {
 
@@ -45,7 +43,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribe({
                 toastListener.showToast(R.string.sensor_add_success)
             }, {
-                toastListener.showToast(R.string.sensor_add_failure)
+                toastListener.showToast(R.string.sensor_add_failure_no_connection)
                 it.printStackTrace()
             })
     }
@@ -57,7 +55,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribe({
                 toastListener.showToast(R.string.sensor_removed)
             }, {
-                toastListener.showToast(R.string.sensor_add_failure)
+                toastListener.showToast(R.string.sensor_add_failure_position_occupied)
             })
     }
 
