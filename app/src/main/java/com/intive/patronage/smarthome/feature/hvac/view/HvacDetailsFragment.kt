@@ -60,17 +60,17 @@ class HvacDetailsFragment : Fragment(), HVACViewEventListener {
     }
 
     override fun setHeatingTemperature(heatingTemperature: Int) {
-        binding.hvacCircle.minTemperature = heatingTemperature
+        binding.hvacCircle.heatingTemperature = heatingTemperature
         binding.hvacCircle.postInvalidate()
     }
 
     override fun setCoolingTemperature(coolingTemperature: Int) {
-        binding.hvacCircle.maxTemperature = coolingTemperature
+        binding.hvacCircle.coolingTemperature = coolingTemperature
         binding.hvacCircle.postInvalidate()
     }
 
-    override fun saveSetting() {
-        Toast.makeText(activity, R.string.apply_toast, Toast.LENGTH_SHORT).show()
+    override fun showToast(message: Int) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun resetSetting() {

@@ -3,7 +3,7 @@
 xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <item
-    android:icon="@drawable/ic_exit_to_app"
+    android:icon="@drawable/exit"
     android:id="@+id/log_out_google"
     app:showAsAction="ifRoom">
 </item>

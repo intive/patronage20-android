@@ -11,8 +11,10 @@ import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
-import com.intive.patronage.smarthome.feature.login.LoginActivity
 import com.intive.patronage.smarthome.feature.settings.feature.AboutUsFragment
+import com.intive.patronage.smarthome.feature.settings.feature.LegalNoticeFragment
+import com.intive.patronage.smarthome.feature.login.view.LoginActivity
+import com.intive.patronage.smarthome.feature.login.view.RegisterActivity
 import com.intive.patronage.smarthome.feature.settings.feature.ThirdPartyAcknowledgmentsFragment
 import com.intive.patronage.smarthome.feature.settings.view.SettingsFragment
 import com.intive.patronage.smarthome.feature.temperature.view.TemperatureDetailsFragment
@@ -75,11 +77,21 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
             )
         )
     }
-
+  
     fun goToAboutUsScreen(bundle: Bundle? = null) {
         navigator.goToScreen(
             FragmentEvent(
                 AboutUsFragment::class.java,
+                bundle,
+                R.id.fragment
+            )
+        )
+    }
+  
+    fun goToLegalNotice(bundle: Bundle? = null) {
+        navigator.goToScreen(
+            FragmentEvent(
+                LegalNoticeFragment::class.java,
                 bundle,
                 R.id.fragment
             )
@@ -126,6 +138,10 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
     override fun goToLoginScreen() {
         navigator.goToScreen(ActivityEvent(LoginActivity::class.java))
         navigator.close()
+    }
+
+    fun goToRegisterScreen() {
+        navigator.goToScreen(ActivityEvent(RegisterActivity::class.java))
     }
 
     override fun goToScreenBasedOnDeeplinkIntent(intent: Intent) {

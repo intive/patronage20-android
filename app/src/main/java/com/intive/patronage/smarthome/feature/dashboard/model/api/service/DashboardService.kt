@@ -1,5 +1,6 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
+import android.util.Log
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
@@ -19,6 +20,7 @@ class DashboardService(
 ) {
     val dashboardReplaySubject = ReplaySubject.create<List<DashboardSensor>>()
 
+
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
         .switchIfEmpty(getDashboardFromNetwork())
 
@@ -32,8 +34,6 @@ class DashboardService(
             if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(
                 aggregatedDashboard
             )
-        }.doOnError {
-            it.printStackTrace()
         }
     }
 
@@ -49,15 +49,12 @@ class DashboardService(
             .doOnNext {
                 dashboardReplaySubject.onNext(it)
             }
-            .doOnError{
-
-            }
     }
 
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =
         Observable.interval(intervalDelay, intervalDelay, TimeUnit.SECONDS)
             .flatMap { provideDashboardSensors(getDashboardFromNetwork()) }
-            .startWith(provideDashboardSensors(getDashboard()))
+            .doOnSubscribe{provideDashboardSensors(getDashboard())}
 
 
     private fun transformSensors(dashboard: Dashboard): List<DashboardSensor> {

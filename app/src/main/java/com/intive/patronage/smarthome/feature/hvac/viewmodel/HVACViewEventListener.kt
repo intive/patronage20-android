@@ -6,6 +6,6 @@ interface HVACViewEventListener {
     fun connectionError(error: Boolean)
     fun setHeatingTemperature(heatingTemperature :Int)
     fun setCoolingTemperature(coolingTemperature :Int)
-    fun saveSetting()
+    fun showToast(message: Int)
     fun resetSetting()
 }
