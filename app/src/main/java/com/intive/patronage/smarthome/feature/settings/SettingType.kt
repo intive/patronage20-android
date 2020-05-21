@@ -28,7 +28,7 @@ enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isC
             itemView.settingSwitch.visibility = View.VISIBLE
         }
     },
-    THIRD_PARTY_ACKNOWLEDGMENTS("image", true) {
+    THIRD_PARTY_ACKNOWLEDGMENTS("image") {
         override fun setItemView(itemView: View) {
             itemView.settingImageText.text = itemView.resources.getString(R.string.third_party_acknowledgments)
             itemView.settingImageIcon.setBackgroundResource(R.drawable.third_party_acknowledgment)
@@ -36,7 +36,7 @@ enum class SettingType(val type: String, val onlyDebug: Boolean = false, var isC
             itemView.settingImage.setBackgroundResource(R.drawable.extendable_setting_icon)
         }
     },
-    ABOUT_US("image", true) {
+    ABOUT_US("image") {
         override fun setItemView(itemView: View) {
             itemView.settingImageText.text = itemView.resources.getString(R.string.about_us_title)
             itemView.settingImageIcon.setBackgroundResource(R.drawable.about_us_icon)
