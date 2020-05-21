@@ -6,13 +6,12 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.*
 
 import com.intive.patronage.smarthome.feature.blind.view.BlindDetailsFragment
-import com.intive.patronage.smarthome.feature.dashboard.view.DashboardFragment
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
 import com.intive.patronage.smarthome.feature.hvac.view.HvacDetailsFragment
 import com.intive.patronage.smarthome.feature.developer_settings.view.DeveloperSettingsActivity
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeFragment
-import com.intive.patronage.smarthome.feature.home.view.HomeFragment
 import com.intive.patronage.smarthome.feature.light.view.LightsDetailsFragment
+import com.intive.patronage.smarthome.feature.settings.feature.AboutUsFragment
 import com.intive.patronage.smarthome.feature.settings.feature.LegalNoticeFragment
 import com.intive.patronage.smarthome.feature.login.view.LoginActivity
 import com.intive.patronage.smarthome.feature.login.view.RegisterActivity
@@ -78,7 +77,17 @@ class DashboardCoordinator(private val navigator: Navigator) : DeeplinkCoordinat
             )
         )
     }
-
+  
+    fun goToAboutUsScreen(bundle: Bundle? = null) {
+        navigator.goToScreen(
+            FragmentEvent(
+                AboutUsFragment::class.java,
+                bundle,
+                R.id.fragment
+            )
+        )
+    }
+  
     fun goToLegalNotice(bundle: Bundle? = null) {
         navigator.goToScreen(
             FragmentEvent(
