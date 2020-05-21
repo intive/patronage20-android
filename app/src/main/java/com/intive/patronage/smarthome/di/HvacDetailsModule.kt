@@ -1,5 +1,7 @@
 package com.intive.patronage.smarthome.di
 
+import com.intive.patronage.smarthome.feature.hvac.model.api.HVACDetailsService
+import com.intive.patronage.smarthome.feature.hvac.model.api.HVACRoomDTO
 import com.intive.patronage.smarthome.feature.hvac.viewmodel.HVACViewEventListener
 import com.intive.patronage.smarthome.feature.hvac.viewmodel.HvacViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -11,7 +13,9 @@ val hvacDetailsModule = module {
         HvacViewModel(
             get(),
             hvacViewEventListener,
-            id
+            id,
+            get()
         )
     }
+    single { HVACDetailsService(get()) }
 }

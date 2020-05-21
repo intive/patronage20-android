@@ -11,7 +11,6 @@ private const val URL = "https://patronage20-js-master.herokuapp.com"
 class SmartHomeAPIFactory(private val httpClient: OkHttpClient) {
     val moshi =
         Moshi.Builder()
-            .add(HVACRoomAdapter())
             .build()
 
 
