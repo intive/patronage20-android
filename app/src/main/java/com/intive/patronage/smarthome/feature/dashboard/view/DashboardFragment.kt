@@ -46,7 +46,6 @@ class DashboardFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.dashboardViewModelDataBind = dashboardViewModel
         setupRecyclerView(binding)
-        observeViewModel()
 
         return binding.root
     }
@@ -74,16 +73,7 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun observeViewModel() {
-        dashboardViewModel.error.observe(this, Observer { error ->
-            if (error) {
-                alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-            } else {
 
-                alertSnackbar.hideSnackbar()
-            }
-        })
-    }
 
     private fun setupRecyclerView(binding: DashboardFragmentBinding) {
         val recyclerView: RecyclerView = binding.sensorRecyclerView

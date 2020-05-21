@@ -2,17 +2,20 @@ package com.intive.patronage.smarthome.feature.dashboard.view
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.intive.patronage.smarthome.AnalyticsWrapper
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.SmartHomeErrorSnackbar
 import com.intive.patronage.smarthome.feature.dashboard.viewmodel.SmartHomeFragmentViewModel
 import com.intive.patronage.smarthome.navigator.POSITION_HOME_ON_VIEW_PAGER_KEY
 import kotlinx.android.synthetic.main.smart_home_fragment.*
@@ -26,6 +29,8 @@ class SmartHomeFragment : Fragment() {
     private val viewPagerAdapter: SmartHomeFragmentViewPagerAdapter
             by inject { parametersOf(childFragmentManager, lifecycle) }
     private val smartHomeFragmentViewModel: SmartHomeFragmentViewModel by viewModel()
+    private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(activity) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +46,16 @@ class SmartHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupTabLayout()
         switchViewPagerOnHomeAfterRedirectionDeeplink()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        smartHomeFragmentViewModel.error.observe(this, Observer { error ->
+            if (error && !alertSnackbar.snackbar.isShown)
+                alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
+            else if (!error && alertSnackbar.snackbar.isShown)
+                alertSnackbar.hideSnackbar()
+        })
     }
 
     fun setupTabLayout() {
