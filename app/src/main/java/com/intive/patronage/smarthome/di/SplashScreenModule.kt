@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val splashScreenModule: Module = module {
     single { SmartHomeAlertDialog() }
     single { ProgressBarAnimation() }
-    single { (activity: AppCompatActivity) -> SmartHomeErrorSnackbar(activity) }
+    factory { (activity: AppCompatActivity) -> SmartHomeErrorSnackbar(activity) }
     viewModel {
         SplashScreenViewModel(
             get()
