@@ -55,7 +55,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribe({
                 toastListener.showToast(R.string.sensor_removed)
             }, {
-                toastListener.showToast(R.string.sensor_add_failure_position_occupied)
+                toastListener.showToast(R.string.sensor_delete_failure_no_connection)
             })
     }
 
