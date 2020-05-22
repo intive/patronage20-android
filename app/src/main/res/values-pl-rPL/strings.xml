@@ -11,13 +11,13 @@
     <string name="sign_out">Wyloguj</string>
     <string name="do_not_have_an_account">Nie masz konta ?</string>
     <string name="already_have_an_account">Posiadasz już konto ?</string>
-    <string name="google_sign_in_failed">Logowanie nie powiodło sie</string>
+    <string name="google_sign_in_failed">Logowanie nie powiodło się</string>
     <string name="google_sign_in_success">Logowanie zakończyło się pomyślnie</string>
     <string name="different_password">Hasła różnią się od siebie</string>
-    <string name="invalid_password">Nie poprawne hasło</string>
+    <string name="invalid_password">Niepoprawne hasło</string>
     <string name="account_does_not_exists">Konto nie istnieje</string>
     <string name="account_already_exists">Konto już istnieje. Proszę się zalogować</string>
-    <string name="invalid_email">Adres email jest nie poprawny</string>
+    <string name="invalid_email">Adres email jest niepoprawny</string>
     <string name="weak_password">Hasło nie jest wystarczająco silne</string>
     <string name="legal_notice">Notka prawna</string>
     <string name="third_party_acknowledgments">Podziękowania dla osób trzecich</string>
