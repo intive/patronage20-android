@@ -34,7 +34,7 @@
             android:id="@+id/brightness"
             app:layout_constraintTop_toBottomOf="@id/colorPicker"
             app:layout_constraintBottom_toTopOf="@+id/currentColor"
-            android:layout_width="216dp"
+            android:layout_width="220dp"
             android:layout_height="72dp"/>
 
         <View
