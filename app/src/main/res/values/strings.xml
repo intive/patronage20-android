@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">SmartHome</string>
+    <string name="app_name" translatable="false">SmartHome</string>
     <string name="dashboard_appbar">Dashboard</string>
     <string name="reset">Reset</string>
     <string name="apply">Apply</string>
-    <string name="red">R</string>
-    <string name="green">G</string>
-    <string name="blue">B</string>
+    <string name="red" translatable="false">R</string>
+    <string name="green" translatable="false">G</string>
+    <string name="blue" translatable="false">B</string>
     <string name="lights_details_appbar">LED lights</string>
     <string name="hvac_details_appbar">HVAC</string>
     <string name="error_title">Error</string>
@@ -19,12 +19,12 @@
     <string name="window_sensor_name">Window</string>
     <string name="RFID_sensor_name">RFID sensor</string>
     <string name="HVAC_sensor_name">HVAC</string>
-    <string name="temperature_details">%1$s°C</string>
-    <string name="window_blinds_details">%1$s%%</string>
+    <string name="temperature_details" translatable="false">%1$s°C</string>
+    <string name="window_blinds_details" translatable="false">%1$s%%</string>
     <string name="smoke_detected">Smoke detected</string>
     <string name="hvac_room_heating_temperature">Heating temperature: </string>
     <string name="hvac_room_cooling_temperature">Cooling temperature: </string>
-    <string name="transformer_separator">, </string>
+    <string name="transformer_separator" translatable="false">, </string>
     <string name="hvac_room_hysteresis">Hysteresis: </string>
     <string name="hvac_status_heating">Heating</string>
     <string name="hvac_status_cooling">Cooling</string>
@@ -33,28 +33,28 @@
     <string name="sensor_removed">Sensor has been successfully deleted</string>
     <string name="blind_details_appbar">Blind</string>
     <string name="hvac_details_temp_label">Set temp:</string>
-    <string name="hvac_datails_hint">…</string>
+    <string name="hvac_datails_hint" translatable="false">…</string>
     <string name="hvac_details_connecting_error">Unable to load HVAC System</string>
     <string name="hvac_hysteresis_label">Hysteresis</string>
     <string name="hvac_temperature_label">Temperature</string>
     <string name="home_appbar">Home</string>
     <string name="apply_toast">Successfully applied</string>
     <string name="update_value_toast_error">Something went wrong</string>
-    <string name="graph_1_h">1 h</string>
-    <string name="graph_3_h">3 h</string>
-    <string name="graph_6_h">6 h</string>
-    <string name="graph_12_h">12 h</string>
-    <string name="graph_24_h">24 h</string>
-    <string name="channel_name">name</string>
-    <string name="channel_description">description</string>
-    <string name="filter_view_http_splash">filter_view_http_splash</string>
+    <string name="graph_1_h" translatable="false">1 h</string>
+    <string name="graph_3_h" translatable="false">3 h</string>
+    <string name="graph_6_h" translatable="false">6 h</string>
+    <string name="graph_12_h" translatable="false">12 h</string>
+    <string name="graph_24_h" translatable="false">24 h</string>
+    <string name="channel_name" translatable="false">name</string>
+    <string name="channel_description" translatable="false">description</string>
+    <string name="filter_view_http_splash" translatable="false">filter_view_http_splash</string>
     <string name="network_connection_error">No internet connection</string>
     <string name="api_connection_error">Couldn\'t connect to SmartHome</string>
-    <string name="house_image">House image</string>
-    <string name="logo">Logo</string>
-    <string name="login">Login</string>
-    <string name="dahboard_fragment_class_name">DashboardFragment</string>
-    <string name="home_fragment_class_name">HomeFragment</string>
+    <string name="house_image" translatable="false">House image</string>
+    <string name="logo" translatable="false">Logo</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="dahboard_fragment_class_name" translatable="false">DashboardFragment</string>
+    <string name="home_fragment_class_name" translatable="false">HomeFragment</string>
     <string name="splash_screen_text"><u>your intelligent home</u></string>
     <string name="foreground_notification_title">Your SmartHome is active</string>
     <string name="Version">Version %s</string>
