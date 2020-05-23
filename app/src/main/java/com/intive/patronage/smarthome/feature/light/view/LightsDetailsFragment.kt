@@ -157,7 +157,7 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
     }
 
     override fun setBrightnessBarPointerPosition(x: Float) {
-        val margin = lightsDetailsViewModel.halfOfPointerWidth * 3 / 4
+        val margin = (lightsDetailsViewModel.halfOfPointerWidth * 3 / 4) + (resources.displayMetrics.density * 2)
 
         if (x >= lightsDetailsViewModel.brightnessBarPointerEndX - margin) {
             brightnessBarPointer.x = lightsDetailsViewModel.brightnessBarPointerEndX - margin
