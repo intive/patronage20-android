@@ -42,18 +42,23 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setupToolbar()
-
         lightsDetailsViewModel.halfOfPointerWidth = resources.displayMetrics.density * 8
         lightsDetailsViewModel.colorPickerEventListener = this
-
-        val pointerRadius = lightsDetailsViewModel.halfOfPointerWidth - resources.displayMetrics.density
-        colorPickerPointer = ColorPickerPointer(pointerRadius)
-        brightnessBarPointer = BrightnessBarPointer(pointerRadius)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lights_details, container, false)
         binding.lifecycleOwner = this
         binding.lightDetailsViewModel = lightsDetailsViewModel
+
+        setupToolbar()
+        setupView()
+
+        return binding.root
+    }
+
+    private fun setupView() {
+        val pointerRadius = lightsDetailsViewModel.halfOfPointerWidth - resources.displayMetrics.density
+        colorPickerPointer = ColorPickerPointer(pointerRadius)
+        brightnessBarPointer = BrightnessBarPointer(pointerRadius)
 
         binding.brightness.setDrawingCacheEnabled(true)
         binding.colorPicker.setDrawingCacheEnabled(true)
@@ -87,8 +92,6 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
 
         brightnessOverlay.add(brightnessBarPointer)
         colorPickerOverlay.add(colorPickerPointer)
-
-        return binding.root
     }
 
     private fun setupToolbar() {
@@ -154,7 +157,7 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
     }
 
     override fun setBrightnessBarPointerPosition(x: Float) {
-        val margin = 18f
+        val margin = lightsDetailsViewModel.halfOfPointerWidth
 
         if (x >= lightsDetailsViewModel.brightnessBarPointerEndX - margin) {
             brightnessBarPointer.x = lightsDetailsViewModel.brightnessBarPointerEndX - margin

@@ -40,8 +40,8 @@
                 android:id="@+id/brightness"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/currentColor"
-                android:layout_width="216dp"
-                android:layout_height="72dp"/>
+                android:layout_width="@dimen/brightness_bar_width"
+                android:layout_height="@dimen/brightness_bar_height"/>
 
             <View
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,8 +50,8 @@
                 android:id="@+id/currentColor"
                 app:layout_constraintTop_toBottomOf="@id/brightness"
                 app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
-                android:layout_width="216dp"
-                android:layout_height="72dp"/>
+                android:layout_width="@dimen/current_color_view_width"
+                android:layout_height="@dimen/brightness_bar_height"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="@dimen/standard_break"

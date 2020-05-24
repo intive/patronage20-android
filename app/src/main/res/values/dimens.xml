@@ -55,4 +55,7 @@
     <dimen name="login_text_input_height">50dp</dimen>
     <dimen name="login_screen_items_margin">25dp</dimen>
     <dimen name="recycler_view_margin_in_portrait">35dp</dimen>
+    <dimen name="brightness_bar_height">72dp</dimen>
+    <dimen name="brightness_bar_width">220dp</dimen>
+    <dimen name="current_color_view_width">216dp</dimen>
 </resources>
