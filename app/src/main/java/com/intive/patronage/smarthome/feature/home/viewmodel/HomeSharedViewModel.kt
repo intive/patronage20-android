@@ -7,6 +7,7 @@ import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.common.ToastListener
 import com.intive.patronage.smarthome.common.coordinateToPercentX
 import com.intive.patronage.smarthome.common.coordinateToPercentY
+import com.intive.patronage.smarthome.common.handleCodeHTTPAndShowToast
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
@@ -41,7 +42,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                toastListener.showToast(R.string.sensor_add_success)
+                handleCodeHTTPAndShowToast(it.code(), R.string.sensor_add_success, R.string.sensor_add_failure_no_connection, toastListener::showToast)
             }, {
                 toastListener.showToast(R.string.sensor_add_failure_no_connection)
                 it.printStackTrace()
@@ -53,7 +54,7 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                toastListener.showToast(R.string.sensor_removed)
+                handleCodeHTTPAndShowToast(it.code(), R.string.sensor_removed, R.string.sensor_delete_failure_no_connection, toastListener::showToast)
             }, {
                 toastListener.showToast(R.string.sensor_delete_failure_no_connection)
             })

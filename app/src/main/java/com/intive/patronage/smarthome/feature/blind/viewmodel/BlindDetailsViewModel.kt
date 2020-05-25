@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.databinding.Bindable
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
+import com.intive.patronage.smarthome.common.handleCodeHTTPAndShowToast
 import com.intive.patronage.smarthome.feature.blind.model.BlindSensor
 import com.intive.patronage.smarthome.feature.blind.model.api.BlindDetailsService
 import com.intive.patronage.smarthome.feature.blind.view.BlindViewEventListener
@@ -52,7 +53,7 @@ class BlindDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                blindViewEventListener.showToast(R.string.apply_toast)
+                handleCodeHTTPAndShowToast(it.code(), R.string.apply_toast, R.string.update_value_toast_error, blindViewEventListener::showToast)
             }, {
                 blindViewEventListener.showToast(R.string.update_value_toast_error)
             })

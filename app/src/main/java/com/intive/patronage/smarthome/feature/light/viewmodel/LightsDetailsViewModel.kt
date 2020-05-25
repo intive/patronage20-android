@@ -9,6 +9,7 @@ import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.common.convertHSVtoRGB
 import com.intive.patronage.smarthome.common.convertRGBtoHSV
+import com.intive.patronage.smarthome.common.handleCodeHTTPAndShowToast
 import com.intive.patronage.smarthome.feature.dashboard.model.Light
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.light.model.api.LightDTO
@@ -104,7 +105,7 @@ class LightsDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                colorPickerEventListener.showToast(R.string.apply_toast)
+                handleCodeHTTPAndShowToast(it.code(), R.string.apply_toast, R.string.update_value_toast_error, colorPickerEventListener::showToast)
                 clearPointersFlags()
                 previousHSV = intArrayOf(
                     lightChangeHSV[0].toInt(),
