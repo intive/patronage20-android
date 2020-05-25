@@ -10,7 +10,7 @@ import org.koin.core.KoinComponent
 class Navigator(
     private val activity: AppCompatActivity,
     private val analytics: AnalyticsWrapper
-): KoinComponent {
+) : KoinComponent {
 
     fun goToScreen(event: NavigationEvent, deeplink: Boolean = false) {
 
@@ -24,7 +24,7 @@ class Navigator(
                     if (topFragment != null) it.popBackStack()
 
                     if (deeplink)
-                        adjustToDeeplinkLogic(it, event, fragment)
+                        adjustToDeeplinkLogic(it, event)
 
                     it.beginTransaction()
                         .add(event.containerId, fragment, "${fragment.javaClass}")
@@ -39,19 +39,19 @@ class Navigator(
         }
     }
 
-    private fun adjustToDeeplinkLogic(fragmentManager: FragmentManager, event: FragmentEvent, fragment: Fragment) {
-        if (fragmentManager.fragments.size > 1)
-            goBack()
-        else if (fragmentManager.fragments.size == 0 && fragment !is SmartHomeFragment) {
-            fragmentManager.beginTransaction()
-                .add(
-                    event.containerId,
-                    SmartHomeFragment(),
-                    "${SmartHomeFragment::class.java}"
-                )
-                .addToBackStack(null)
-                .commit()
-        }
+    private fun adjustToDeeplinkLogic(
+        fragmentManager: FragmentManager,
+        event: FragmentEvent
+    ) {
+
+        fragmentManager.beginTransaction()
+            .add(
+                event.containerId,
+                SmartHomeFragment(),
+                "${SmartHomeFragment::class.java}"
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     fun goBack() {
