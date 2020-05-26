@@ -1,6 +1,5 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
-import android.util.Log
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
@@ -34,6 +33,8 @@ class DashboardService(
             if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(
                 aggregatedDashboard
             )
+        }.doOnError {
+            it.printStackTrace()
         }
     }
 
@@ -48,6 +49,9 @@ class DashboardService(
             .toObservable()
             .doOnNext {
                 dashboardBehaviorSubject.onNext(it)
+            }
+            .doOnError{
+
             }
     }
 
