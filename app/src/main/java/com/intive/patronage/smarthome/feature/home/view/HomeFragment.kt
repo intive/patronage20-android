@@ -119,7 +119,7 @@ class HomeFragment : Fragment(), ToastListener {
                 )
             }
         } else {
-            showToast(R.string.sensor_add_failure)
+            showToast(R.string.sensor_add_failure_position_occupied)
         }
     }
 

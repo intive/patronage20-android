@@ -70,10 +70,10 @@ enum class SensorType(val type: String) {
             setTextAndVisibility(view, View.VISIBLE, R.string.window_sensor_name)
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.windowSensor, null))
             if (sensor.details == "true") {
-                view.sensorDetalis.text = "Opened"
+                view.sensorDetalis.text = view.resources.getString(R.string.opened_window)
                 view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.window_open, null))
             } else {
-                view.sensorDetalis.text = "Closed"
+                view.sensorDetalis.text = view.resources.getString(R.string.closed_window)
                 view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.window_closed, null))
             }
         }

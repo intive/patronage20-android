@@ -9,8 +9,8 @@
     <string name="sign_in_with_google">Zaloguj się przez Google</string>
     <string name="create_account">Utwórz konto</string>
     <string name="sign_out">Wyloguj</string>
-    <string name="do_not_have_an_account">Nie masz konta ?</string>
-    <string name="already_have_an_account">Posiadasz już konto ?</string>
+    <string name="do_not_have_an_account">Nie masz konta?</string>
+    <string name="already_have_an_account">Posiadasz już konto?</string>
     <string name="google_sign_in_failed">Logowanie nie powiodło się</string>
     <string name="google_sign_in_success">Logowanie zakończyło się pomyślnie</string>
     <string name="different_password">Hasła różnią się od siebie</string>
@@ -25,7 +25,6 @@
     <string name="notifications_setting">Pokaż powiadomienia</string>
     <string name="home_appbar">Dom</string>
     <string name="blind_details_appbar">Roleta</string>
-    <string name="sensor_add_failure">Sensor znajduje się już w tym miejscu</string>
     <string name="sensor_removed">Sesnor został usunięty pomyślnie</string>
     <string name="sensor_add_success">Sensor został dodany pomyślnie</string>
     <string name="error_title">Błąd</string>
@@ -48,7 +47,6 @@
     <string name="hvac_room_cooling_temperature">Temperatura chłodzenia:</string>
     <string name="connection_error_message">Brak połączenia z inteligentnym domem</string>
     <string name="hvac_details_appbar">COWIG</string>
-    <string name="email">Email</string>
     <string name="developer_settings">Ustawienia deweloperskie</string>
     <string name="delete_sensors">Usuń wszystkie sensory</string>
     <string name="dark_mode_setting">Włącz tryb nocny</string>
@@ -65,4 +63,10 @@
     <string name="splash_screen_text"><u>Twój inteligentny dom</u></string>
     <string name="dashboard_appbar">Panel sterowania</string>
     <string name="placeholder">Symbol zastępczy</string>
+    <string name="about_us_title">O nas</string>
+    <string name="sensor_add_failure_position_occupied">Sensor już istnieje w tym miejscu</string>
+    <string name="sensor_add_failure_no_connection">Sensor nie może zostać dodany</string>
+    <string name="sensor_delete_failure_no_connection">Sensor nie może zostać usunięty</string>
+    <string name="opened_window">Otwarte</string>
+    <string name="closed_window">Zamknięte</string>
 </resources>

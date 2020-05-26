@@ -29,7 +29,9 @@
     <string name="hvac_status_heating">Heating</string>
     <string name="hvac_status_cooling">Cooling</string>
     <string name="sensor_add_success">Sensor has been successfully added</string>
-    <string name="sensor_add_failure">Sensor already exists in this place</string>
+    <string name="sensor_add_failure_position_occupied">Sensor already exists in this place</string>
+    <string name="sensor_add_failure_no_connection">Sensor could not be added</string>
+    <string name="sensor_delete_failure_no_connection">Sensor could not be deleted</string>
     <string name="sensor_removed">Sensor has been successfully deleted</string>
     <string name="blind_details_appbar">Blind</string>
     <string name="hvac_details_temp_label">Set temp:</string>
@@ -73,7 +75,7 @@
     <string name="different_password">Passwords are not the same</string>
     <string name="google_sign_in_failed">Google sign in failed</string>
     <string name="google_sign_in_success">Google sign in finished successfully</string>
-    <string name="email">Email</string>
+    <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="sign_in">Sign In</string>
@@ -84,4 +86,7 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="create_account">Create account</string>
     <string name="sign_out">Sign out</string>
+    <string name="about_us_title">About Us</string>
+    <string name="opened_window">Opened</string>
+    <string name="closed_window">Closed</string>
 </resources>
