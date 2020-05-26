@@ -8,9 +8,7 @@ import com.intive.patronage.smarthome.feature.settings.SettingType
 
 fun setupDarkModeSwitch(resources: Resources) {
     val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-    if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-        SettingType.NIGHT_MODE.isChecked = true
-    }
+    SettingType.NIGHT_MODE.isChecked = currentNightMode == Configuration.UI_MODE_NIGHT_YES
 }
 
 fun setDarkMode(darkMode: Boolean, preferencesWrapper: PreferencesWrapper) {
