@@ -68,5 +68,4 @@
     <string name="sensor_delete_failure_no_connection">Sensor nie może zostać usunięty</string>
     <string name="opened_window">Otwarte</string>
     <string name="closed_window">Zamknięte</string>
-    <string name="about_us_title">O nas</string>
 </resources>
