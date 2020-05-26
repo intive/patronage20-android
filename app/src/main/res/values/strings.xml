@@ -86,7 +86,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="create_account">Create account</string>
     <string name="sign_out">Sign out</string>
-    <string name="about_us_title">About Us</string>
     <string name="opened_window">Opened</string>
     <string name="closed_window">Closed</string>
 </resources>

@@ -63,7 +63,6 @@
     <string name="splash_screen_text"><u>Twój inteligentny dom</u></string>
     <string name="dashboard_appbar">Panel sterowania</string>
     <string name="placeholder">Symbol zastępczy</string>
-    <string name="about_us_title">O nas</string>
     <string name="sensor_add_failure_position_occupied">Sensor już istnieje w tym miejscu</string>
     <string name="sensor_add_failure_no_connection">Sensor nie może zostać dodany</string>
     <string name="sensor_delete_failure_no_connection">Sensor nie może zostać usunięty</string>
