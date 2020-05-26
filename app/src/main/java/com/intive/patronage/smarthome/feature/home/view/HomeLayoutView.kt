@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.home.view
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorType
@@ -157,7 +158,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                         sensorPendingToPostX,
                         this.width
                     ) + SENSOR_BORDER_SIZE * this.height
-                            || percentToCoordinateX(
+                            && percentToCoordinateX(
                         it.mapPosition.x,
                         this.width
                     ) > percentToCoordinateX(
@@ -168,7 +169,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                         sensorPendingToPostY,
                         this.height
                     ) + SENSOR_BORDER_SIZE * this.height
-                            || percentToCoordinateY(
+                            && percentToCoordinateY(
                         it.mapPosition.y,
                         this.height
                     ) > percentToCoordinateY(
