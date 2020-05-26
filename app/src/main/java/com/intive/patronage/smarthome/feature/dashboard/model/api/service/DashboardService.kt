@@ -50,9 +50,6 @@ class DashboardService(
             .doOnNext {
                 dashboardBehaviorSubject.onNext(it)
             }
-            .doOnError{
-
-            }
     }
 
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =

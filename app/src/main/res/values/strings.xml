@@ -28,7 +28,7 @@
     <string name="hvac_room_hysteresis">Hysteresis: </string>
     <string name="hvac_status_heating">Heating</string>
     <string name="hvac_status_cooling">Cooling</string>
-    <string name="sensor_add_success">Sensor has been successfully added</string>
+    <string name="sensor_add_success">Sensor has been successfully moved</string>
     <string name="sensor_add_failure_position_occupied">Sensor already exists in this place</string>
     <string name="sensor_add_failure_no_connection">Sensor could not be added</string>
     <string name="sensor_delete_failure_no_connection">Sensor could not be deleted</string>
