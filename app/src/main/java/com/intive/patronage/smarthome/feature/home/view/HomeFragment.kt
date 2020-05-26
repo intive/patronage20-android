@@ -154,15 +154,6 @@ class HomeFragment : Fragment(), ToastListener {
                 image.sensorPendingToMove = null
                 image.sensorPendingToPost = null
                 image.sensorPendingToDelete = null
-                if(it.mapPosition != null){
-                    homeSharedViewModel.postSensor(
-                    it.id.toInt(),
-                    HomeSensor(
-                        it.id.toInt(),
-                        it.type,
-                        it.mapPosition
-                    )
-                )}
             }
         }
     }
