@@ -1,6 +1,16 @@
 <?xml version ="1.0" encoding ="utf-8"?>
 <actions>
     <action intentName="actions.intent.OPEN_APP_FEATURE">
-        <fulfillment urlTemplate="smart.home://open.app/specific?destination=dashboard" />
+        <parameter name="feature">
+            <entity-set-reference entitySetId="FeatureEntitySet"/>
+        </parameter>
+
+        <fulfillment urlTemplate="smart.home://open.app/specific{?destination}">
+            <parameter-mapping intentParameter="feature" urlParameter="destination" />
+        </fulfillment>
     </action>
+
+    <entity-set entitySetId="FeatureEntitySet">
+        <entity identifier="DASHBOARD" name="dashboard" />
+    </entity-set>
 </actions>
