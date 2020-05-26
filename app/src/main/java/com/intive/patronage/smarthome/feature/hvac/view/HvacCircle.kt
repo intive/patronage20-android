@@ -144,10 +144,10 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         coldCircle = RectF(tempCircle)
         hotCircle = RectF(tempCircle)
 
-        coldPoint = getPoint(coldCircle.centerX(), coldCircle.centerY(), radius / 2, START_ANGLE + coldSweepAngle)
-        hotPoint = getPoint(hotCircle.centerX(), hotCircle.centerY(), radius / 2, TEMP_OFFSET + (hotSweepAngle * (-1)))
         coldSweepAngle = (heatingTemperature.toFloat() - MIN_HEATING_TEMPERATURE) / 10 * ONE_DEGREE
         hotSweepAngle = (RANGE * 10 - coolingTemperature + MIN_HEATING_TEMPERATURE).toFloat() / 10 * ONE_DEGREE
+        coldPoint = getPoint(coldCircle.centerX(), coldCircle.centerY(), radius / 2, START_ANGLE + coldSweepAngle)
+        hotPoint = getPoint(hotCircle.centerX(), hotCircle.centerY(), radius / 2, TEMP_OFFSET + (hotSweepAngle * (-1)))
 
         catchTemperature()
         canvas?.drawArc(tempCircle, START_ANGLE, SWEEP_ANGLE, false, paint)
