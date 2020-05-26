@@ -24,16 +24,13 @@ class HomeSharedViewModel(
     private var postSensorCall: Disposable? = null
     private var deleteSensorCall: Disposable? = null
     lateinit var toastListener: ToastListener
-    var isDragOnMap: Boolean = false
 
     init {
         sensorList = dashboardService.dashboardBehaviorSubject
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                if (!isDragOnMap) {
-                    items.value = it.filter { it.type != SensorType.HVAC_ROOM.type }
-                }
+                items.value = it.filter { it.type != SensorType.HVAC_ROOM.type }
                 error.value = false
             }, { error.value = true })
     }
