@@ -42,6 +42,7 @@ class HomeFragment : Fragment(), ToastListener {
     private var sensorToPost: DashboardSensor? = null
     private var dragAction: Boolean = false
     private var draggedView: View? = null
+    private var sensorAlpha: Float = 0.3f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,13 +70,18 @@ class HomeFragment : Fragment(), ToastListener {
                 override fun onLongPress(e: MotionEvent) {
                     super.onLongPress(e)
                     if (!dragAction) {
-                        val sensor = image.findSensor(e.x, e.y)
-                        sensor?.let {
-                            homeSharedViewModel.deleteSensor(it.id.toInt())
-                        }
+                        handleDragOnMap(e.x, e.y)
                     }
                 }
             })
+    }
+
+    private fun handleDragOnMap(x: Float, y: Float){
+        val sensor = image.findSensor(x, y)
+        sensor?.let {
+            image.sensorPendingToMove = it
+            initDragAction(it, x - ((resources.getDimension(R.dimen.home_sensor_margin) * 2) + recyclerView.x) + image.x, y - ((resources.getDimension(R.dimen.home_sensor_margin) * 2) + recyclerView.y) + image.y)
+        }
     }
 
     private fun onDragStart(x: Float, y: Float) {
@@ -91,10 +97,17 @@ class HomeFragment : Fragment(), ToastListener {
         draggedView?.alpha = 1f
         draggedView = null
         recyclerView.suppressLayout(false)
-        dragAction = false
         if (x >= 0 && y >= 0 && x >= image.x && x <= image.x + image.width && y >= image.y && y <= image.y + image.height) {
+            image.sensorPendingToDelete = sensorToPost
             handlePost(sensorToPost, x - image.x, y - image.y)
         }
+        else {
+            sensorToPost?.let{
+                homeSharedViewModel.deleteSensor(it.id.toInt())
+                image.sensorPendingToDelete = sensorToPost
+            }
+        }
+        dragAction = false
     }
 
     private fun getSensors() {
@@ -103,8 +116,25 @@ class HomeFragment : Fragment(), ToastListener {
         })
     }
 
+    private fun initDragAction(sensor: DashboardSensor, x: Float, y: Float){
+        sensorToPost = sensor
+        recyclerView.suppressLayout(true)
+        homeOverlay.add(draggedSensor)
+        dragAction = true
+        val event = MotionEvent.obtain(
+            SystemClock.uptimeMillis(),
+            SystemClock.uptimeMillis(),
+            MotionEvent.ACTION_DOWN,
+            x , y, 0
+        )
+        binding.homeLayout.dispatchTouchEvent(event)
+    }
+
     private fun handlePost(sensor: DashboardSensor?, x: Float, y: Float) {
         if (image.checkForSensors(x, y)) {
+            image.sensorPendingToPost = sensorToPost
+            image.sensorPendingToPostX = coordinateToPercentX(x, image.width)
+            image.sensorPendingToPostY = coordinateToPercentY(y, image.height)
             sensor?.let {
                 homeSharedViewModel.postSensor(
                     it.id.toInt(),
@@ -120,6 +150,20 @@ class HomeFragment : Fragment(), ToastListener {
             }
         } else {
             showToast(R.string.sensor_add_failure_position_occupied)
+            image.sensorPendingToMove?.let{
+                image.sensorPendingToMove = null
+                image.sensorPendingToPost = null
+                image.sensorPendingToDelete = null
+                if(it.mapPosition != null){
+                    homeSharedViewModel.postSensor(
+                    it.id.toInt(),
+                    HomeSensor(
+                        it.id.toInt(),
+                        it.type,
+                        it.mapPosition
+                    )
+                )}
+            }
         }
     }
 
@@ -133,7 +177,7 @@ class HomeFragment : Fragment(), ToastListener {
         activity?.windowManager?.defaultDisplay?.getRealMetrics(displayMetrics)
         val orientation = resources.configuration.orientation
         recyclerView.apply {
-            setHasFixedSize(true)
+            adapter = homeSensorListAdapter
             layoutManager = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 LinearLayoutManager(activity)
             } else {
@@ -144,7 +188,7 @@ class HomeFragment : Fragment(), ToastListener {
                     ) * 2)).toInt()
                 )
             }
-            adapter = homeSensorListAdapter
+            setHasFixedSize(true)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
@@ -152,29 +196,19 @@ class HomeFragment : Fragment(), ToastListener {
 
     private fun onItemClick(sensor: DashboardSensor, x: Float, y: Float, draggedView: View) {
         this.draggedView = draggedView
-        draggedView.alpha = 0.3f
-        sensorToPost = sensor
-        recyclerView.suppressLayout(true)
-        homeOverlay.add(draggedSensor)
-        dragAction = true
-        val e = MotionEvent.obtain(
-            SystemClock.uptimeMillis(),
-            SystemClock.uptimeMillis(),
-            MotionEvent.ACTION_DOWN,
-            x, y, 0
-        )
-        binding.homeLayout.dispatchTouchEvent(e)
+        draggedView.alpha = sensorAlpha
+        initDragAction(sensor, x, y)
     }
 
     private fun setTouchListeners() {
         binding.homeLayout.setOnTouchListener { view, motionEvent ->
-            if ((motionEvent.action == MotionEvent.ACTION_DOWN) and dragAction) {
+            if ((motionEvent.action == MotionEvent.ACTION_DOWN) && dragAction) {
+                view.parent.requestDisallowInterceptTouchEvent(true)
                 onDragStart(motionEvent.x, motionEvent.y)
             }
-            if ((motionEvent.action == MotionEvent.ACTION_MOVE) and dragAction) {
-                view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((motionEvent.action == MotionEvent.ACTION_MOVE) && dragAction) {
                 draggedSensor.setPosition(motionEvent.x, motionEvent.y)
-            } else if ((motionEvent.action == MotionEvent.ACTION_UP) and dragAction) {
+            } else if ((motionEvent.action == MotionEvent.ACTION_UP) && dragAction) {
                 view.parent.requestDisallowInterceptTouchEvent(false)
                 onDragEnd(motionEvent.x, motionEvent.y)
             }
@@ -182,6 +216,7 @@ class HomeFragment : Fragment(), ToastListener {
         }
         image.setOnTouchListener { v, motionEvent ->
             gestureDetector.onTouchEvent(motionEvent)
+            !dragAction
         }
     }
 
