@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.intive.patronage.smarthome.common.ObservableViewModel
 import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
+import com.intive.patronage.smarthome.feature.dashboard.model.api.service.TEMPERATURE_DIVISOR
 import com.intive.patronage.smarthome.feature.temperature.utils.GraphPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -30,7 +31,7 @@ class TemperatureDetailsViewModel(
 
     private fun setData() {
         data.value = (1 until values.size + 1).map {
-            GraphPoint(it, values[it - 1])
+            GraphPoint(it, (values[it - 1]) / TEMPERATURE_DIVISOR)
         }
 
         values.clear()
