@@ -58,7 +58,7 @@ class LightsDetailsFragment : Fragment(), ColorPickerEventListener {
     private fun setupView() {
         val pointerRadius = lightsDetailsViewModel.halfOfPointerWidth - resources.displayMetrics.density
         colorPickerPointer = ColorPickerPointer(pointerRadius)
-        brightnessBarPointer = BrightnessBarPointer(pointerRadius)
+        brightnessBarPointer = BrightnessBarPointer(pointerRadius - resources.displayMetrics.density)
 
         binding.brightness.setDrawingCacheEnabled(true)
         binding.colorPicker.setDrawingCacheEnabled(true)
