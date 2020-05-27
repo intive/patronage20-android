@@ -33,7 +33,7 @@ class HvacViewModel(
     }
 
     private fun loadHvac() {
-        disposable = dashboardService.getHVACById(id)
+        disposable = dashboardService.getHVACById(1) //dashboardService.getHVACById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -84,9 +84,13 @@ class HvacViewModel(
     fun saveSettings() {
         updateStatusDisposable = hvacDetailsService.changeHVACStatus(
             HVACRoomDTO(
-                id, type, heatingTemperature, coolingTemperature,
+                1, type, heatingTemperature, coolingTemperature,
                 hysteresis, temperatureSensorId, windowSensorIds
             )
+            /*HVACRoomDTO(
+                id, type, heatingTemperature, coolingTemperature,
+                hysteresis, temperatureSensorId, windowSensorIds
+            )*/
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -12,5 +12,10 @@
 
     <entity-set entitySetId="FeatureEntitySet">
         <entity identifier="DASHBOARD" name="dashboard" />
+        <entity identifier="HOME" name="home" />
+        <entity identifier="BLINDS" name="blinds" />
+        <entity identifier="LIGHT" name="light" />
+        <entity identifier="HVAC" name="hvac" />
+        <entity identifier="TEMPERATURE" name="temperature" />
     </entity-set>
 </actions>

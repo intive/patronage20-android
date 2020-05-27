@@ -31,7 +31,7 @@ class BlindDetailsViewModel(
     }
 
     fun loadBlind() {
-        disposable = dashboardService.getBlindById(id)
+        disposable = dashboardService.getBlindById(71) //dashboardService.getBlindById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -47,7 +47,7 @@ class BlindDetailsViewModel(
     }
 
     private fun updateBlindPosition() {
-        val blind = BlindSensor(id, BLIND_SENSOR_TYPE, 100 - position)
+        val blind = BlindSensor(71, BLIND_SENSOR_TYPE, 100 - position) //BlindSensor(id, BLIND_SENSOR_TYPE, 100 - position)
         updatePositionCall = blindDetailsService.updateBlindPosition(blind)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

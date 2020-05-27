@@ -52,7 +52,7 @@ class LightsDetailsViewModel(
     }
 
     private fun loadLight() {
-        disposable = dashboardService.getLightById(id)
+        disposable = dashboardService.getLightById(21) //dashboardService.getLightById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -99,7 +99,8 @@ class LightsDetailsViewModel(
     fun onApplyClicked() {
         val lightChangeHSV = convertRGBtoHSV(red, green, blue)
         lightChangerDisposable = lightService.changeLightColor(
-            LightDTO(id, type, lightChangeHSV[0].toInt(), (lightChangeHSV[1] * 100).toInt(), (lightChangeHSV[2] * 100).toInt())
+            LightDTO(21, type, lightChangeHSV[0].toInt(), (lightChangeHSV[1] * 100).toInt(), (lightChangeHSV[2] * 100).toInt())
+            //LightDTO(id, type, lightChangeHSV[0].toInt(), (lightChangeHSV[1] * 100).toInt(), (lightChangeHSV[2] * 100).toInt())
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

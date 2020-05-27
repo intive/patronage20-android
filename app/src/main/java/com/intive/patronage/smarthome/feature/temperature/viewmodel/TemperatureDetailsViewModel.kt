@@ -87,7 +87,7 @@ class TemperatureDetailsViewModel(
         counter[number]++
 
         dashboard.temperatureSensors?.forEach {
-            if (it.id == this.id) {
+            if (it.id == 62) { //if (it.id == this.id) {
                 sumOfTemperatureValues[number] += it.value.toFloat()
             }
         }
