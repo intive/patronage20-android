@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.home.view
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorType
@@ -34,6 +35,12 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     private var smokeSensorBlink: Boolean = false
     private var sensList: MutableList<DashboardSensor> = mutableListOf()
     private var setup = false
+    private var sensorAlpha: Float = 0.3f
+    var sensorPendingToPost: DashboardSensor? = null
+    var sensorPendingToPostX: Float = 0f
+    var sensorPendingToPostY: Float = 0f
+    var sensorPendingToDelete: DashboardSensor? = null
+    var sensorPendingToMove: DashboardSensor? = null
 
     private fun setupView() {
         val drawable = ContextCompat.getDrawable(context, R.drawable.ic_house)
@@ -93,7 +100,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         cvs.drawRect(0f, 0f, this.width.toFloat(), this.height.toFloat(), paint)
         cvs.drawBitmap(clearBitmap, 0f, 0f, null)
         sensList.filter {
-            it.mapPosition != null
+            it.mapPosition != null && it.id != sensorPendingToDelete?.id
         }.forEach {
             drawSensor(
                 percentToCoordinateX(it.mapPosition!!.x, this.width),
@@ -101,10 +108,83 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                 it
             )
         }
+        sensorPendingToPost?.let {
+            drawSensor(
+                percentToCoordinateX(sensorPendingToPostX, this.width),
+                percentToCoordinateY(sensorPendingToPostY, this.height),
+                it
+            )
+        }
         this.setImageBitmap(bitmap)
     }
 
+    private fun setPaintAlpha(id: String, x: Float, y: Float) {
+        if (id == sensorPendingToMove?.id
+            && (x < percentToCoordinateX(
+                sensorPendingToPostX,
+                this.width
+            ) - SENSOR_BORDER_SIZE * this.height
+                    || x > percentToCoordinateX(
+                sensorPendingToPostX,
+                this.width
+            ) + SENSOR_BORDER_SIZE * this.height)
+            && (y < percentToCoordinateY(
+                sensorPendingToPostY,
+                this.height
+            ) - SENSOR_BORDER_SIZE * this.height
+                    || y > percentToCoordinateY(
+                sensorPendingToPostY,
+                this.height
+            ) + SENSOR_BORDER_SIZE * this.height)
+        ) {
+            paint.alpha = (255 * sensorAlpha).toInt()
+            arcPaint.alpha = (255 * sensorAlpha).toInt()
+            stkPaint.alpha = (255 * sensorAlpha).toInt()
+            textPaint.alpha = (255 * sensorAlpha).toInt()
+        } else {
+            paint.alpha = 255
+            arcPaint.alpha = 255
+            stkPaint.alpha = 255
+            textPaint.alpha = 255
+        }
+    }
+
     fun setData(sensList: List<DashboardSensor>) {
+        sensList.find {
+            it.id == sensorPendingToPost?.id
+        }?.let {
+            if (it.mapPosition != null) {
+                if ((percentToCoordinateX(it.mapPosition.x, this.width) < percentToCoordinateX(
+                        sensorPendingToPostX,
+                        this.width
+                    ) + SENSOR_BORDER_SIZE * this.height
+                            && percentToCoordinateX(
+                        it.mapPosition.x,
+                        this.width
+                    ) > percentToCoordinateX(
+                        sensorPendingToPostX,
+                        this.width
+                    ) - SENSOR_BORDER_SIZE * this.height)
+                    && (percentToCoordinateY(it.mapPosition.y, this.height) < percentToCoordinateY(
+                        sensorPendingToPostY,
+                        this.height
+                    ) + SENSOR_BORDER_SIZE * this.height
+                            && percentToCoordinateY(
+                        it.mapPosition.y,
+                        this.height
+                    ) > percentToCoordinateY(
+                        sensorPendingToPostY,
+                        this.height
+                    ) - SENSOR_BORDER_SIZE * this.height)
+                ) {
+                    sensorPendingToPost = null
+                    sensorPendingToMove = null
+                    sensorPendingToDelete = null
+                    sensorPendingToPostX = 0f
+                    sensorPendingToPostY = 0f
+                }
+            }
+        }
         this.sensList.clear()
         this.sensList.addAll(sensList)
     }
@@ -151,6 +231,25 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
                 smokeSensorBlinkStart = System.currentTimeMillis()
                 smokeSensorBlink = !smokeSensorBlink
             }
+            if (sensor.id == sensorPendingToMove?.id && (x < percentToCoordinateX(
+                    sensorPendingToPostX,
+                    this.width
+                ) - SENSOR_BORDER_SIZE * this.height
+                        || x > percentToCoordinateX(
+                    sensorPendingToPostX,
+                    this.width
+                ) + SENSOR_BORDER_SIZE * this.height)
+                && (y < percentToCoordinateY(
+                    sensorPendingToPostY,
+                    this.height
+                ) - SENSOR_BORDER_SIZE * this.height
+                        || y > percentToCoordinateY(
+                    sensorPendingToPostY,
+                    this.height
+                ) + SENSOR_BORDER_SIZE * this.height)
+            ) {
+                drawable.alpha = (255 * sensorAlpha).toInt()
+            }
             drawable.draw(cvs)
         }
         if (sensor.type == SensorType.TEMPERATURE_SENSOR.type) {
@@ -170,6 +269,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     }
 
     private fun drawSensor(x: Float, y: Float, sensor: DashboardSensor) {
+        setPaintAlpha(sensor.id, x, y)
         drawSensorBorder(x, y, sensor)
         paint.color = resources.getColor(R.color.colorPrimary, null)
         cvs.drawCircle(x, y, SENSOR_SIZE * this.height, paint)
@@ -181,7 +281,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
         val distance = SENSOR_DISTANCE * this.height
         if (!sensList.isNullOrEmpty()) {
             sensList.filter {
-                it.mapPosition != null
+                it.mapPosition != null && it.id != sensorPendingToMove?.id
             }.forEach {
                 val sensorCoordX = percentToCoordinateX(it.mapPosition!!.x, this.width)
                 val sensorCoordY = percentToCoordinateY(it.mapPosition.y, this.height)

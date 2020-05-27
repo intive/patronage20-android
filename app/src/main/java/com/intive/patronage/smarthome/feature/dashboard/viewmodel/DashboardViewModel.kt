@@ -19,7 +19,7 @@ class DashboardViewModel(val dashboardService: DashboardService) : ViewModel() {
     }
 
     fun fetchSensors() {
-        sensorList = dashboardService.dashboardReplaySubject
+        sensorList = dashboardService.dashboardBehaviorSubject
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
