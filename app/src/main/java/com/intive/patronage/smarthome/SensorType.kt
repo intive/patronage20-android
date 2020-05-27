@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import kotlinx.android.synthetic.main.sensor_list_item.view.*
+import kotlin.math.roundToInt
 
 enum class SensorType(val type: String) {
 
@@ -27,9 +28,10 @@ enum class SensorType(val type: String) {
     },
     TEMPERATURE_SENSOR("TEMPERATURE_SENSOR") {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
+            val temperature: Float = ((sensor.details.toFloat() * 10.0).roundToInt() / 10.0).toFloat()
             setTextAndVisibility(view, View.VISIBLE, R.string.temperature_sensor_name)
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.temperatureSensor, null))
-            view.sensorDetalis.text = view.context.getString(R.string.temperature_details, sensor.details)
+            view.sensorDetalis.text = view.context.getString(R.string.temperature_details, temperature.toString())
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.thermometer, null))
         }
 
