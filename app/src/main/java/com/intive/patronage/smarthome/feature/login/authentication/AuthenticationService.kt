@@ -94,6 +94,7 @@ class AuthenticationService(
     fun createUserWithEmailAndPassword(email: String, password: String, viewModel: RegisterViewModel) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
+                showToast(R.string.sign_up_success)
                 goToDashboard(true)
             } else {
                showCreateUserException(it, appCompatActivity.applicationContext, viewModel)
@@ -104,6 +105,7 @@ class AuthenticationService(
     fun signInWithEmailAndPassword(email: String, password: String, viewModel: LoginViewModel) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
+                showToast(R.string.sign_in_success)
                 goToDashboard()
             } else {
                 showSignInException(it, appCompatActivity.applicationContext, viewModel)
