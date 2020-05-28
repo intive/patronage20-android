@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.databinding.ActivityLoginBinding
-import com.intive.patronage.smarthome.feature.login.authentication.AuthenticationService
 import com.intive.patronage.smarthome.feature.login.animation.startEnterAnimation
 import com.intive.patronage.smarthome.feature.login.animation.startExitAnimation
+import com.intive.patronage.smarthome.feature.login.authentication.AuthenticationService
 import com.intive.patronage.smarthome.feature.login.viewmodel.LoginViewModel
 import com.intive.patronage.smarthome.navigator.DashboardCoordinator
 import kotlinx.android.synthetic.main.activity_login.*
@@ -30,12 +30,14 @@ class LoginActivity : AppCompatActivity(), LoginEventListener {
     }
 
     private var isTheFirstTime: Boolean = true
+    private var isPreviousLoginWithGoogle: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginViewModel.loginEventListener = this
 
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        val binding: ActivityLoginBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.viewModel = loginViewModel
         binding.lifecycleOwner = this
 
@@ -46,12 +48,14 @@ class LoginActivity : AppCompatActivity(), LoginEventListener {
     override fun onResume() {
         super.onResume()
         setupView()
-
         if (isTheFirstTime) {
-             isTheFirstTime = false
-        } else {
+            isTheFirstTime = false
+        } else if (!isPreviousLoginWithGoogle) {
             overridePendingTransition(NO_ANIMATION, NO_ANIMATION)
             startEnterAnimation(loginCard, loginInfo, true)
+        }
+        if (isPreviousLoginWithGoogle) {
+            isPreviousLoginWithGoogle = false
         }
     }
 
@@ -74,6 +78,7 @@ class LoginActivity : AppCompatActivity(), LoginEventListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         authenticationService.accountVerification(requestCode, data)
+        isPreviousLoginWithGoogle = true
     }
 
     override fun startAnimation() {
