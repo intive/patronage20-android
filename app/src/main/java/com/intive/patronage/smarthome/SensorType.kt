@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -22,7 +23,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.light, null).mutate())
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return resources.getDrawable(R.drawable.light_bulb_outline, null).mutate()
         }
     },
@@ -35,7 +36,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.thermometer, null))
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return resources.getDrawable(R.drawable.thermometer, null).mutate()
         }
     },
@@ -51,7 +52,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.smoke_detector, null))
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return resources.getDrawable(R.drawable.smoke_detector, null).mutate()
         }
     },
@@ -63,7 +64,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.window_blinds, null))
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return resources.getDrawable(R.drawable.window_blinds, null).mutate()
         }
     },
@@ -71,7 +72,8 @@ enum class SensorType(val type: String) {
         override fun setAttributes(sensor: DashboardSensor, view: View) {
             setTextAndVisibility(view, View.VISIBLE, R.string.window_sensor_name)
             view.sensorFlag.setColorFilter(view.resources.getColor(R.color.windowSensor, null))
-            if (sensor.details == "true") {
+            Log.d("XD", sensor.details)
+            if (sensor.details == "open") {
                 view.sensorDetalis.text = view.resources.getString(R.string.opened_window)
                 view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.window_open, null))
             } else {
@@ -80,7 +82,10 @@ enum class SensorType(val type: String) {
             }
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
+            if (sensor.details == "open") {
+                return resources.getDrawable(R.drawable.window_open, null).mutate()
+            }
             return resources.getDrawable(R.drawable.window_closed, null).mutate()
         }
     },
@@ -91,7 +96,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.rfid_sensor, null))
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return resources.getDrawable(R.drawable.rfid_sensor, null).mutate()
         }
     },
@@ -102,7 +107,7 @@ enum class SensorType(val type: String) {
             view.sensorImage.setImageDrawable(view.resources.getDrawable(R.drawable.hvac, null))
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return resources.getDrawable(R.drawable.hvac, null).mutate()
         }
     },
@@ -111,13 +116,13 @@ enum class SensorType(val type: String) {
             view.sensorName.text = "HVACA"
         }
 
-        override fun getDrawable(resources: Resources): Drawable? {
+        override fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable? {
             return null
         }
     };
 
     abstract fun setAttributes(sensor: DashboardSensor, view: View)
-    abstract fun getDrawable(resources: Resources): Drawable?
+    abstract fun getDrawable(sensor: DashboardSensor, resources: Resources): Drawable?
     fun setTextAndVisibility(view: View, visibility: Int, nameSensor: Int) {
         view.sensorName.text = view.context.getString(nameSensor)
         view.sensorDetalis.visibility = visibility

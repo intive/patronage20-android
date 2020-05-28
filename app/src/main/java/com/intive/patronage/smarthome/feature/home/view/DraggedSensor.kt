@@ -49,9 +49,11 @@ class DraggedSensor : Drawable() {
         sensorColor = resources.getColor(R.color.colorPrimary, null)
         sensorBorderSize = SENSOR_BORDER_SIZE * imageHeight
         sensorBorderColor = resources.getColor(R.color.colorAccentLightDark, null)
-        sensorIcon = SensorType.values().find {
-            it.type == sensorToPost?.type
-        }?.getDrawable(resources)
+        sensorToPost?.let {sensor ->
+            sensorIcon = SensorType.values().find {
+                it.type == sensor.type
+            }?.getDrawable(sensor, resources)
+        }
         sensorIconSize = SENSOR_ICON_SIZE * imageHeight
     }
 
