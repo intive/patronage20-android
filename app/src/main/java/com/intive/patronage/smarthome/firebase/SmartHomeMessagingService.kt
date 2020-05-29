@@ -12,7 +12,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.intive.patronage.smarthome.R
-import com.intive.patronage.smarthome.SmartHomeApplication
 import com.intive.patronage.smarthome.common.NOTIFICATIONS_VISIBILITY
 import com.intive.patronage.smarthome.common.PreferencesWrapper
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
@@ -32,12 +31,18 @@ class SmartHomeMessagingService : FirebaseMessagingService() {
 
         if (preferences.checkIfContains(NOTIFICATIONS_VISIBILITY)) {
             if (preferences.getBooleanFromPreference(NOTIFICATIONS_VISIBILITY)) {
-                message.data.isNotEmpty().let {
-                    sendNotification(message)
-                    Log.d(TAG, "From: ${message.from}")
-                    Log.d(TAG, "Notification: id: ${message.messageId}, body: ${message.notification?.body}")
-                }
+                showNotification(message)
             }
+        } else {
+            showNotification(message)
+        }
+    }
+
+    private fun showNotification(message: RemoteMessage) {
+        message.data.isNotEmpty().let {
+            sendNotification(message)
+            Log.d(TAG, "From: ${message.from}")
+            Log.d(TAG, "Notification: id: ${message.messageId}, body: ${message.notification?.body}")
         }
     }
 
