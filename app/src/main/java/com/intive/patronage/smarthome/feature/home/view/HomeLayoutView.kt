@@ -215,7 +215,7 @@ class HomeLayoutView(context: Context, attrs: AttributeSet?) :
     private fun drawSensorIcon(x: Float, y: Float, sensor: DashboardSensor) {
         val drawable = SensorType.values().find {
             it.type == sensor.type
-        }?.getDrawable(resources)
+        }?.getDrawable(sensor, resources)
         if (drawable != null) {
             drawable.setBounds(
                 (x - SENSOR_ICON_SIZE * this.height).toInt(),
