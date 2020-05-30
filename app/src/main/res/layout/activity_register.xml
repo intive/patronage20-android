@@ -40,8 +40,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 app:counterEnabled="true"
-                app:counterMaxLength="40"
-                android:maxLength="40"
+                app:counterMaxLength="@integer/max_email_length"
                 app:inputError="@{viewModel.newEmailError}"
                 android:id="@+id/newAccountEmailLayout"
                 app:hintEnabled="false"
@@ -51,8 +50,9 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:digits="@string/available_input"
-                    android:maxLength="40"
+                    android:maxLength="@integer/max_email_length"
                     app:onNewEmailInput="@{viewModel}"
                     android:id="@+id/newAccountEmail"
                     android:textSize="@dimen/login_text_size"
@@ -70,7 +70,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 app:counterEnabled="true"
-                app:counterMaxLength="20"
+                app:counterMaxLength="@integer/max_password_length"
                 app:inputError="@{viewModel.newPasswordError}"
                 android:id="@+id/newAccountPasswordLayout"
                 android:layout_marginTop="@dimen/standard_break"
@@ -82,8 +82,9 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:digits="@string/available_input"
-                    android:maxLength="20"
+                    android:maxLength="@integer/max_password_length"
                     app:onNewPasswordInput="@{viewModel}"
                     android:id="@+id/newAccountPassword"
                     android:textSize="@dimen/login_text_size"
@@ -101,7 +102,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 app:counterEnabled="true"
-                app:counterMaxLength="20"
+                app:counterMaxLength="@integer/max_password_length"
                 app:inputError="@{viewModel.confirmPasswordError}"
                 android:id="@+id/confirmPasswordLayout"
                 android:layout_marginTop="@dimen/standard_break"
@@ -113,8 +114,9 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
                     android:digits="@string/available_input"
-                    android:maxLength="20"
+                    android:maxLength="@integer/max_password_length"
                     app:onConfirmPasswordInput="@{viewModel}"
                     android:id="@+id/confirmPassword"
                     android:textSize="@dimen/login_text_size"
