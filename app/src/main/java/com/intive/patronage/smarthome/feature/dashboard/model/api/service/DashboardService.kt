@@ -18,6 +18,8 @@ class DashboardService(
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
     val dashboardBehaviorSubject = BehaviorSubject.create<List<DashboardSensor>>()
+    val dashboardBehaviorSubjectError = BehaviorSubject.create<Boolean>()
+
 
 
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
@@ -49,7 +51,9 @@ class DashboardService(
             .toObservable()
             .doOnNext {
                 dashboardBehaviorSubject.onNext(it)
+                dashboardBehaviorSubjectError.onNext(true)
             }
+            .doOnError { dashboardBehaviorSubjectError.onNext(false) }
     }
 
     fun fetchSensorsInInterval(): Observable<List<DashboardSensor>> =

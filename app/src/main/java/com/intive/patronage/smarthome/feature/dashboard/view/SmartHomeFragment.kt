@@ -46,16 +46,6 @@ class SmartHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupTabLayout()
         switchViewPagerOnHomeAfterRedirectionDeeplink()
-        observeViewModel()
-    }
-
-    private fun observeViewModel() {
-        smartHomeFragmentViewModel.error.observe(this, Observer { error ->
-            if (error && !alertSnackbar.snackbar.isShown)
-                alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
-            else if (!error && alertSnackbar.snackbar.isShown)
-                alertSnackbar.hideSnackbar()
-        })
     }
 
     private fun setupTabLayout() {
