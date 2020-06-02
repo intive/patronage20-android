@@ -31,7 +31,6 @@ class SmartHomeFragment : Fragment() {
     private val smartHomeFragmentViewModel: SmartHomeFragmentViewModel by viewModel()
     private val alertSnackbar: SmartHomeErrorSnackbar by inject { parametersOf(activity) }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -109,7 +108,7 @@ class SmartHomeFragment : Fragment() {
     }
 
     fun switchViewPagerOnHomeAfterRedirectionDeeplink() {
-        val bundle = activity?.intent?.extras
+        val bundle = this.arguments
         if (bundle != null && bundle.containsKey(POSITION_HOME_ON_VIEW_PAGER_KEY)) {
             val position = bundle.getInt(POSITION_HOME_ON_VIEW_PAGER_KEY)
             smartHomeViewPager.currentItem = position
