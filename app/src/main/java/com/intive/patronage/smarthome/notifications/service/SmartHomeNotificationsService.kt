@@ -49,7 +49,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
     private fun getNotifications() = notificationsAPI.getNotifications().toObservable()
 
     private fun getNotificationsInInterval() = Observable.interval(INITIAL_DELAY, PERIOD, TimeUnit.SECONDS)
-            .flatMap { getNotifications() }
+        .flatMap { getNotifications() }
 
     private fun deleteNotification(id: Int) {
         deleteAPICall = notificationsAPI.deleteNotification(id)
@@ -110,6 +110,7 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
         notificationsList = getNotificationsInInterval()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
+            .retryWhen { it.delay(PERIOD, TimeUnit.SECONDS) }
             .subscribe({
                 if (preferences.checkIfContains(NOTIFICATIONS_VISIBILITY)) {
                     if (preferences.getBooleanFromPreference(NOTIFICATIONS_VISIBILITY)) {
