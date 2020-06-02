@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -58,6 +59,8 @@ class SmartHomeMessagingService : FirebaseMessagingService() {
                     .setBigContentTitle(message.notification?.title)
             )
             .setAutoCancel(true)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setOnlyAlertOnce(true)
 
         with(NotificationManagerCompat.from(this)) {
             notify(0, builder.build())

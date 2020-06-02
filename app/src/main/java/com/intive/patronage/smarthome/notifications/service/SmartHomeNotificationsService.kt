@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
@@ -148,10 +149,12 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
     }
 
     private fun createNotification(title: String, text: String) = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_home_white_24dp)
-            .setContentTitle(title)
-            .setContentText(text)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+        .setSmallIcon(R.drawable.splash_screen_icon)
+        .setContentTitle(title)
+        .setContentText(text)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setOnlyAlertOnce(true)
 
     override fun onBind(intent: Intent?): IBinder? {
         return null

@@ -39,6 +39,8 @@
             android:layout_height="@dimen/login_card_height">
 
             <com.google.android.material.textfield.TextInputLayout
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/max_email_length"
                 app:inputError="@{viewModel.emailError}"
                 android:id="@+id/emailLayout"
                 app:errorEnabled="true"
@@ -47,6 +49,9 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
+                    android:digits="@string/available_input"
+                    android:maxLength="@integer/max_email_length"
                     app:onEmailInput="@{viewModel}"
                     android:id="@+id/email"
                     android:textSize="@dimen/login_text_size"
@@ -63,6 +68,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/max_password_length"
                 app:inputError="@{viewModel.passwordError}"
                 android:id="@+id/passwordLayout"
                 app:errorEnabled="true"
@@ -73,6 +80,9 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:singleLine="true"
+                    android:digits="@string/available_input"
+                    android:maxLength="@integer/max_password_length"
                     app:onPasswordInput="@{viewModel}"
                     android:id="@+id/password"
                     android:textSize="@dimen/login_text_size"
