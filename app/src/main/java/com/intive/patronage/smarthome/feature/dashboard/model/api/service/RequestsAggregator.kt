@@ -3,7 +3,7 @@ package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 import com.intive.patronage.smarthome.feature.dashboard.model.Dashboard
 
 private var requestCounter: Int = 0
-private val sumOfTemperatureValues = mutableMapOf<Int, Int>()
+private val sumOfTemperatureValues = mutableMapOf<Int, Float>()
 private const val valuesAmount = 60
 
 fun aggregateRequests(dashboard: Dashboard): Dashboard? {
@@ -20,16 +20,16 @@ fun aggregateRequests(dashboard: Dashboard): Dashboard? {
 
         requestCounter = 0
         sumOfTemperatureValues.forEach {
-            sumOfTemperatureValues[it.key] = 0
+            sumOfTemperatureValues[it.key] = 0f
         }
 
         return dashboard
     } else {
         dashboard.temperatureSensors?.forEach {
-            val sum: Int? = if (sumOfTemperatureValues.contains(it.id)) {
+            val sum: Float? = if (sumOfTemperatureValues.contains(it.id)) {
                 sumOfTemperatureValues.getValue(it.id)
             } else {
-                0
+                0f
             }
 
             if (sum != null) {

@@ -10,7 +10,7 @@ import kotlin.random.Random
 class TemperatureAdapter {
     @FromJson
     fun fromJson(temperature: TemperatureSensor): TemperatureSensor = temperature.apply {
-        value = Random.nextInt(31) + 10
+        value = Random.nextInt(31) + 10 + Random.nextFloat()
     }
 }
 

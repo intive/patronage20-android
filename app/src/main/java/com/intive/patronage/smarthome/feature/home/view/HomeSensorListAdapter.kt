@@ -29,7 +29,10 @@ class HomeSensorListAdapter(private val onHomeSensorClickListener: (sensor: Dash
     override fun getItemCount() = sensorsList.size
 
     fun update(sensorsList: List<DashboardSensor>) {
-        this.sensorsList.replace(sensorsList.filter { it.mapPosition == null })
-        notifyDataSetChanged()
+        val filteredSensorList = sensorsList.filter { it.mapPosition == null }
+        val isDataChanged = this.sensorsList.size != filteredSensorList.size
+        this.sensorsList.replace(filteredSensorList)
+        if (isDataChanged) notifyDataSetChanged()
+        else notifyItemRangeChanged(0, sensorsList.size)
     }
 }

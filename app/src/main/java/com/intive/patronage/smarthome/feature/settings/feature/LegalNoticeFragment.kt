@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.feature.dashboard.view.SmartHomeActivity
+import java.util.*
 
 class LegalNoticeFragment : Fragment() {
 

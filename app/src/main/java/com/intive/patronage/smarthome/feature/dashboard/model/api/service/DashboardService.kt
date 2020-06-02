@@ -1,6 +1,5 @@
 package com.intive.patronage.smarthome.feature.dashboard.model.api.service
 
-import android.util.Log
 import com.intive.patronage.smarthome.api.SmartHomeAPI
 import com.intive.patronage.smarthome.feature.dashboard.model.*
 import com.intive.patronage.smarthome.feature.dashboard.model.api.respository.DashboardRepositoryAPI
@@ -8,7 +7,7 @@ import com.intive.patronage.smarthome.feature.dashboard.model.api.room.repositor
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
-import io.reactivex.subjects.ReplaySubject
+import io.reactivex.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
 const val intervalDelay = 1L
@@ -18,7 +17,7 @@ class DashboardService(
     private val dashboardRepository: DashboardRepositoryAPI,
     private val dashboardRoomRepository: DashboardRoomRepositoryAPI
 ) {
-    val dashboardReplaySubject = ReplaySubject.create<List<DashboardSensor>>()
+    val dashboardBehaviorSubject = BehaviorSubject.create<List<DashboardSensor>>()
 
 
     fun getDashboard(): Single<Dashboard> = dashboardRepository.getDashboard()
@@ -34,6 +33,8 @@ class DashboardService(
             if (aggregatedDashboard != null) dashboardRoomRepository.insertDashboard(
                 aggregatedDashboard
             )
+        }.doOnError {
+            it.printStackTrace()
         }
     }
 
@@ -47,7 +48,7 @@ class DashboardService(
         return source.map { transformSensors(it) }
             .toObservable()
             .doOnNext {
-                dashboardReplaySubject.onNext(it)
+                dashboardBehaviorSubject.onNext(it)
             }
     }
 

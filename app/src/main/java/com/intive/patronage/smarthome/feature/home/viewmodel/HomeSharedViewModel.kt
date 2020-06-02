@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.common.ToastListener
-import com.intive.patronage.smarthome.common.coordinateToPercentX
-import com.intive.patronage.smarthome.common.coordinateToPercentY
 import com.intive.patronage.smarthome.common.handleHttpResponseCode
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
@@ -16,19 +14,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class HomeSharedViewModel(private val dashboardService: DashboardService, private val homeService: HomeService) : ViewModel() {
+class HomeSharedViewModel(
+    private val dashboardService: DashboardService,
+    private val homeService: HomeService
+) : ViewModel() {
 
     val items = MutableLiveData<List<DashboardSensor>>()
     val error = MutableLiveData<Boolean>().apply { value = false }
     private var sensorList: Disposable? = null
     private var postSensorCall: Disposable? = null
     private var deleteSensorCall: Disposable? = null
-    private var actualSensorX = 0f
-    private var actualSensorY = 0f
     lateinit var toastListener: ToastListener
 
     init {
-        sensorList = dashboardService.dashboardReplaySubject
+        sensorList = dashboardService.dashboardBehaviorSubject
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -65,18 +64,5 @@ class HomeSharedViewModel(private val dashboardService: DashboardService, privat
         sensorList?.dispose()
         postSensorCall?.dispose()
         deleteSensorCall?.dispose()
-    }
-
-    fun setSensorPosition(x: Float, y: Float, imageWidth: Int, imageHeight: Int) {
-        actualSensorX = coordinateToPercentX(x, imageWidth)
-        actualSensorY = coordinateToPercentY(y, imageHeight)
-    }
-
-    fun getSensorXPosition(): Float{
-        return actualSensorX
-    }
-
-    fun getSensorYPosition(): Float{
-        return actualSensorY
     }
 }

@@ -19,7 +19,7 @@ class HomeSensorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         val drawable = SensorType.values().find {
             it.type == sensor.type
-        }?.getDrawable(itemView.resources)?.mutate()
+        }?.getDrawable(sensor, itemView.resources)?.mutate()
         drawable?.setTint(itemView.resources.getColor(R.color.text, null))
         with(itemView) {
             sensorIcon.setImageDrawable(drawable)
