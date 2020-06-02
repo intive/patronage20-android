@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.SensorType
 import com.intive.patronage.smarthome.common.ToastListener
+import com.intive.patronage.smarthome.common.handleHttpResponseCode
 import com.intive.patronage.smarthome.feature.dashboard.model.DashboardSensor
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.home.model.api.HomeSensor
@@ -40,7 +41,7 @@ class HomeSharedViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                toastListener.showToast(R.string.sensor_add_success)
+                handleHttpResponseCode(it.code(), R.string.sensor_add_success, R.string.sensor_add_failure_no_connection, toastListener::showToast)
             }, {
                 toastListener.showToast(R.string.sensor_add_failure_no_connection)
                 it.printStackTrace()
@@ -52,7 +53,7 @@ class HomeSharedViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                toastListener.showToast(R.string.sensor_removed)
+                handleHttpResponseCode(it.code(), R.string.sensor_removed, R.string.sensor_delete_failure_no_connection, toastListener::showToast)
             }, {
                 toastListener.showToast(R.string.sensor_delete_failure_no_connection)
             })

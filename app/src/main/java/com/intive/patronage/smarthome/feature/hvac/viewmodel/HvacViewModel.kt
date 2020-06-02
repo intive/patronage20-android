@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.hvac.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.intive.patronage.smarthome.R
+import com.intive.patronage.smarthome.common.handleHttpResponseCode
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
 import com.intive.patronage.smarthome.feature.hvac.model.api.HVACDetailsService
 import com.intive.patronage.smarthome.feature.hvac.model.api.HVACRoomDTO
@@ -90,12 +91,10 @@ class HvacViewModel(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                hvacViewEventListener.showToast(R.string.apply_toast)
-            },
-                {
-                    hvacViewEventListener.showToast(R.string.update_value_toast_error)
-                })
+            .subscribe(
+                { handleHttpResponseCode(it.code(), R.string.apply_toast, R.string.update_value_toast_error, hvacViewEventListener::showToast) },
+                { hvacViewEventListener.showToast(R.string.update_value_toast_error) }
+            )
     }
 
     fun resetSetting() {

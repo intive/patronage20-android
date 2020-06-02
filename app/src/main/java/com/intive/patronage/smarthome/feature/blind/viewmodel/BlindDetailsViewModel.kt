@@ -4,13 +4,16 @@ import android.util.Log
 import androidx.databinding.Bindable
 import com.intive.patronage.smarthome.R
 import com.intive.patronage.smarthome.common.ObservableViewModel
+import com.intive.patronage.smarthome.common.handleHttpResponseCode
 import com.intive.patronage.smarthome.feature.blind.model.BlindSensor
 import com.intive.patronage.smarthome.feature.blind.model.api.BlindDetailsService
 import com.intive.patronage.smarthome.feature.blind.view.BlindViewEventListener
 import com.intive.patronage.smarthome.feature.dashboard.model.api.service.DashboardService
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 const val BLIND_SENSOR_TYPE = "windowBlind"
 
@@ -52,7 +55,7 @@ class BlindDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                blindViewEventListener.showToast(R.string.apply_toast)
+                handleHttpResponseCode(it.code(), R.string.apply_toast, R.string.update_value_toast_error, blindViewEventListener::showToast)
             }, {
                 blindViewEventListener.showToast(R.string.update_value_toast_error)
             })
