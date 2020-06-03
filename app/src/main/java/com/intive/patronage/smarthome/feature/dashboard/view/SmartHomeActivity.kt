@@ -62,7 +62,7 @@ class SmartHomeActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        observeViewModel()
+        observeInternetConnection()
         authenticationService.initAuthFirebase()
         authenticationService.initGoogleSignIn()
         if (!authenticationService.isUserLogged()) {
@@ -70,13 +70,32 @@ class SmartHomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel() {
+    private fun observeInternetConnection() {
+        var internetError = false
+        var apiError = false
         smartHomeActivityViewModel.networkConnection.observe(
             this, Observer { networkConnection ->
-                if (!networkConnection)
+                if (!networkConnection) {
                     alertSnackbar.showSnackbar(getString(R.string.network_connection_error))
-                else if (networkConnection && alertSnackbar.snackbar.isShown)
+                    internetError = true
+                }
+                else if (networkConnection && alertSnackbar.snackbar.isShown){
+                    if (!apiError) alertSnackbar.hideSnackbar()
+                    internetError = false
+
+                }
+            })
+
+        smartHomeActivityViewModel.apiConnection.observe(
+            this, Observer { apiConnection ->
+                if (!apiConnection) {
+                    if (!internetError) alertSnackbar.showSnackbar(getString(R.string.api_connection_error))
+                    apiError = true
+                }
+                else if (apiConnection && alertSnackbar.snackbar.isShown) {
                     alertSnackbar.hideSnackbar()
+                    apiError = false
+                }
             })
     }
 

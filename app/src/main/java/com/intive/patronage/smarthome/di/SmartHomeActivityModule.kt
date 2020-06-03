@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val smartHomeActivityModule = module {
     factory { (activity: SmartHomeActivity) -> NetworkConnectionService(activity) }
+
     viewModel { (networkConnection: NetworkConnectionService) ->
-        SmartHomeActivityViewModel(networkConnection)
-    }
+        SmartHomeActivityViewModel(get(), networkConnection) }
 }
