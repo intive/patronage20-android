@@ -48,12 +48,12 @@ class SplashScreenActivity : AppCompatActivity() {
         })
 
         initProgressBar()
+        startProgressAnimation()
     }
 
     override fun onResume() {
         super.onResume()
         startSlideInAnimation()
-        startProgressAnimation()
     }
 
     private fun startSlideInAnimation() {
