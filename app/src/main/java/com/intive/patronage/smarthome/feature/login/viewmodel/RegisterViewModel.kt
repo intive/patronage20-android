@@ -29,7 +29,13 @@ class RegisterViewModel(
     }
 
     fun checkIfInputIsEmpty() {
-        isCreateAccountEnabled.value = newEmail.isNotEmpty() && newPassword.isNotEmpty() && confirmPassword.isNotEmpty() && (newPassword == confirmPassword)
+        isCreateAccountEnabled.value =
+            newEmail.isNotEmpty() &&
+            newPassword.isNotEmpty() &&
+            confirmPassword.isNotEmpty() &&
+            (newPassword == confirmPassword) &&
+            newEmailError.value.isNullOrEmpty() &&
+            newPasswordError.value.isNullOrEmpty()
     }
 
     fun checkIfConfirmedPasswordIsTheSame(resources: Resources) {

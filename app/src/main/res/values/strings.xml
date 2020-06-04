@@ -91,7 +91,5 @@
     <string name="closed_window">Closed</string>
     <string name="sign_in_success">Sign in finished successfully</string>
     <string name="sign_up_success">Sign up finished successfully</string>
-    <string name="available_input" translatable="false">
-        QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890`-=[]\u005C;\u0027,./!@#$%^\u0026*()_+{}|:"?~\u003C\u003E
-    </string>
+    <string name="illegal_character">You entered illegal characters</string>
 </resources>

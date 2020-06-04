@@ -29,6 +29,10 @@ class LoginViewModel(
     }
 
     fun checkIfInputIsEmpty() {
-        isSignInEnabled.value = email.isNotEmpty() && password.isNotEmpty()
+        isSignInEnabled.value =
+            email.isNotEmpty() &&
+            password.isNotEmpty() &&
+            emailError.value.isNullOrEmpty() &&
+            passwordError.value.isNullOrEmpty()
     }
 }

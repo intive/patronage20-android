@@ -3,6 +3,7 @@ package com.intive.patronage.smarthome.feature.login.binding
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import com.intive.patronage.smarthome.feature.login.authentication.TextWatcherWrapper
+import com.intive.patronage.smarthome.feature.login.authentication.findIllegalCharacters
 import com.intive.patronage.smarthome.feature.login.viewmodel.RegisterViewModel
 
 @BindingAdapter("onNewEmailInput")
@@ -11,7 +12,7 @@ fun setOnNewEmailInputListener(view: EditText, viewModel: RegisterViewModel) {
         override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
             viewModel.apply {
                 newEmail = text.toString()
-                newEmailError.value = ""
+                newEmailError.value = findIllegalCharacters(text, view.resources)
                 checkIfInputIsEmpty()
             }
         }
@@ -24,7 +25,7 @@ fun setOnNewPasswordInputListener(view: EditText, viewModel: RegisterViewModel) 
         override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
             viewModel.apply {
                 newPassword = text.toString()
-                newPasswordError.value = ""
+                newPasswordError.value = findIllegalCharacters(text, view.resources)
                 checkIfInputIsEmpty()
                 checkIfConfirmedPasswordIsTheSame(view.resources)
             }

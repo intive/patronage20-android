@@ -51,7 +51,6 @@
 
                 <EditText
                     android:singleLine="true"
-                    android:digits="@string/available_input"
                     android:maxLength="@integer/max_email_length"
                     app:onNewEmailInput="@{viewModel}"
                     android:id="@+id/newAccountEmail"
@@ -83,7 +82,6 @@
 
                 <EditText
                     android:singleLine="true"
-                    android:digits="@string/available_input"
                     android:maxLength="@integer/max_password_length"
                     app:onNewPasswordInput="@{viewModel}"
                     android:id="@+id/newAccountPassword"
@@ -115,7 +113,6 @@
 
                 <EditText
                     android:singleLine="true"
-                    android:digits="@string/available_input"
                     android:maxLength="@integer/max_password_length"
                     app:onConfirmPasswordInput="@{viewModel}"
                     android:id="@+id/confirmPassword"
