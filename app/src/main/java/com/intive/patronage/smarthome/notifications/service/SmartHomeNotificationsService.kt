@@ -44,15 +44,16 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
     private var notificationsList: Disposable? = null
     private var deleteAPICall: Disposable? = null
 
-    private var previousNotifications: HashMap<Int, Notification> = HashMap(NOTIFICATIONS_COUNT)
+    private var previousNotifications: HashMap<Long, Notification> = HashMap(NOTIFICATIONS_COUNT)
     private var wakeLock: PowerManager.WakeLock? = null
+    private var notificationId = 1
 
     private fun getNotifications() = notificationsAPI.getNotifications().toObservable()
 
     private fun getNotificationsInInterval() = Observable.interval(INITIAL_DELAY, PERIOD, TimeUnit.SECONDS)
         .flatMap { getNotifications() }
 
-    private fun deleteNotification(id: Int) {
+    private fun deleteNotification(id: Long) {
         deleteAPICall = notificationsAPI.deleteNotification(id)
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
@@ -63,15 +64,18 @@ class SmartHomeNotificationsService : Service(), KoinComponent {
             })
     }
 
-    private fun showNotification(title: String, text: String, id: Int) {
+    private fun showNotification(title: String, text: String, id: Long) {
         createNotificationChannel()
 
         val notification = createNotification(title,text)
         with(NotificationManagerCompat.from(this)) {
-            notify(id, notification.build())
+            notify(notificationId, notification.build())
         }
 
         deleteNotification(id)
+
+        if (notificationId == NOTIFICATIONS_COUNT) notificationId = 1
+        else notificationId++
     }
 
     private fun createNotificationChannel() {

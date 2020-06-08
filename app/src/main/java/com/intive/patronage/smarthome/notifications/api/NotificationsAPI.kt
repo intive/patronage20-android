@@ -11,5 +11,5 @@ interface NotificationsAPI {
     fun getNotifications(): Single<List<Notification>>
 
     @DELETE("/api/v1/notifications/{id}")
-    fun deleteNotification(@Path("id") id: Int): Single<Any>
+    fun deleteNotification(@Path("id") id: Long): Single<Any>
 }
