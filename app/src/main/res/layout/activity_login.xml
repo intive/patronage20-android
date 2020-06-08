@@ -50,7 +50,6 @@
 
                 <EditText
                     android:singleLine="true"
-                    android:digits="@string/available_input"
                     android:maxLength="@integer/max_email_length"
                     app:onEmailInput="@{viewModel}"
                     android:id="@+id/email"
@@ -81,7 +80,6 @@
 
                 <EditText
                     android:singleLine="true"
-                    android:digits="@string/available_input"
                     android:maxLength="@integer/max_password_length"
                     app:onPasswordInput="@{viewModel}"
                     android:id="@+id/password"
