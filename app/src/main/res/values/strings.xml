@@ -57,7 +57,7 @@
     <string name="login" translatable="false">Login</string>
     <string name="dahboard_fragment_class_name" translatable="false">DashboardFragment</string>
     <string name="home_fragment_class_name" translatable="false">HomeFragment</string>
-    <string name="splash_screen_text"><u>your intelligent home</u></string>
+    <string name="splash_screen_text"><u>Your intelligent home</u></string>
     <string name="foreground_notification_title">Your SmartHome is active</string>
     <string name="Version">Version %s</string>
     <string name="delete_sensors">Delete all sensors</string>
@@ -71,7 +71,7 @@
     <string name="weak_password">Password is not strong enough</string>
     <string name="invalid_email">Email address is incorrect</string>
     <string name="account_does_not_exists">Account doesn\'t exists</string>
-    <string name="account_already_exists">Account already exists. Please choose\nanother email</string>
+    <string name="account_already_exists">Account already exists. Please choose another email</string>
     <string name="invalid_password">Invalid password</string>
     <string name="different_password">Passwords are not the same</string>
     <string name="google_sign_in_failed">Google sign in failed</string>
@@ -89,6 +89,8 @@
     <string name="sign_out">Sign out</string>
     <string name="opened_window">Opened</string>
     <string name="closed_window">Closed</string>
+    <string name="min_temp">Min Temp</string>
+    <string name="max_temp">Max Temp</string>
     <string name="sign_in_success">Sign in finished successfully</string>
     <string name="sign_up_success">Sign up finished successfully</string>
     <string name="available_input" translatable="false">

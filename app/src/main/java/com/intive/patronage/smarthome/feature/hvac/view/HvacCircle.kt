@@ -199,7 +199,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         setTextSize()
 
         val text = (heatingTemperature.toFloat() / 10).toString()
-        val minTempLabel = "Min Temp"
+        val minTempLabel = resources.getString(R.string.min_temp)
         val tempString = "$text °C"
 
         if (width < height) {
@@ -237,7 +237,7 @@ class HvacCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         setTextSize()
 
         val text = ((coolingTemperature).toFloat() / 10).toString()
-        val tempLabel = "Max Temp"
+        val tempLabel = resources.getString(R.string.max_temp)
         val tempString = "$text °C"
 
         if (width < height) {

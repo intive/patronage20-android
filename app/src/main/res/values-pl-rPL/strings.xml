@@ -16,7 +16,7 @@
     <string name="different_password">Hasła różnią się od siebie</string>
     <string name="invalid_password">Niepoprawne hasło</string>
     <string name="account_does_not_exists">Konto nie istnieje</string>
-    <string name="account_already_exists">Konto już istnieje. Proszę wybrać\ninny email</string>
+    <string name="account_already_exists">Konto już istnieje. Proszę wybrać inny email</string>
     <string name="invalid_email">Adres email jest niepoprawny</string>
     <string name="weak_password">Hasło nie jest wystarczająco silne</string>
     <string name="legal_notice">Notka prawna</string>
@@ -26,7 +26,7 @@
     <string name="home_appbar">Dom</string>
     <string name="blind_details_appbar">Roleta</string>
     <string name="sensor_removed">Sesnor został usunięty pomyślnie</string>
-    <string name="sensor_add_success">Sensor został dodany pomyślnie</string>
+    <string name="sensor_add_success">Sensor został przesunięty pomyślnie</string>
     <string name="error_title">Błąd</string>
     <string name="reset">Zresetuj</string>
     <string name="apply">Zatwierdź</string>
@@ -39,20 +39,20 @@
     <string name="window_sensor_name">Okno</string>
     <string name="RFID_sensor_name">Sensor RFID</string>
     <string name="HVAC_sensor_name">COWIG</string>
-    <string name="smoke_detected">Czujnik dymu</string>
-    <string name="hvac_room_hysteresis">Histereza:</string>
+    <string name="smoke_detected">Wykryto dym</string>
+    <string name="hvac_room_hysteresis">Histereza: </string>
     <string name="hvac_status_heating">Ogrzewanie</string>
     <string name="hvac_status_cooling">Chłodzenie</string>
-    <string name="hvac_room_heating_temperature">Temperatura ogrzewania:</string>
-    <string name="hvac_room_cooling_temperature">Temperatura chłodzenia:</string>
-    <string name="connection_error_message">Brak połączenia z inteligentnym domem</string>
+    <string name="hvac_room_heating_temperature">Temperatura ogrzewania: </string>
+    <string name="hvac_room_cooling_temperature">Temperatura chłodzenia: </string>
+    <string name="connection_error_message">Brak połączenia z Inteligentnym Domem</string>
     <string name="hvac_details_appbar">COWIG</string>
     <string name="developer_settings">Ustawienia deweloperskie</string>
     <string name="delete_sensors">Usuń wszystkie sensory</string>
     <string name="dark_mode_setting">Włącz tryb nocny</string>
     <string name="Version">Wersja %s</string>
-    <string name="foreground_notification_title">Twój inteligentny dom jest aktywny</string>
-    <string name="api_connection_error">Nie można połączyć się z inteligentnym domem</string>
+    <string name="foreground_notification_title">Twój Inteligentny Dom jest aktywny</string>
+    <string name="api_connection_error">Nie można połączyć się z Inteligentnym Domem</string>
     <string name="update_value_toast_error">Coś poszło nie tak</string>
     <string name="apply_toast">Zatwierdzono zmianę</string>
     <string name="hvac_temperature_label">Temperatura</string>
@@ -60,7 +60,7 @@
     <string name="hvac_details_temp_label">Ustaw temperaturę:</string>
     <string name="hvac_details_connecting_error">Nie można załadować systemu COWIG</string>
     <string name="network_connection_error">Brak połączenia z internetem</string>
-    <string name="splash_screen_text"><u>Twój inteligentny dom</u></string>
+    <string name="splash_screen_text"><u>Twój Inteligentny Dom</u></string>
     <string name="dashboard_appbar">Panel sterowania</string>
     <string name="placeholder">Symbol zastępczy</string>
     <string name="sensor_add_failure_position_occupied">Sensor już istnieje w tym miejscu</string>
@@ -68,7 +68,9 @@
     <string name="sensor_delete_failure_no_connection">Sensor nie może zostać usunięty</string>
     <string name="opened_window">Otwarte</string>
     <string name="closed_window">Zamknięte</string>
-    <string name="about_us_title">O nas</string>
+    <string name="min_temp">Min Temp</string>
+    <string name="max_temp">Maks Temp</string>
+    <string name="about_us_title">O Nas</string>
     <string name="sign_in_success">Logowanie zakończyło się pomyślnie</string>
     <string name="sign_up_success">Rejestracja zakończyła się pomyślnie</string>
 </resources>
