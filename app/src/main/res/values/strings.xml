@@ -15,7 +15,7 @@
     <string name="light_sensor_name">Light</string>
     <string name="temperature_sensor_name">Temperature</string>
     <string name="smoke_sensor_name">Smoke sensor</string>
-    <string name="blinds_sensor_name">Window blinds</string>
+    <string name="blinds_sensor_name">Window blind</string>
     <string name="window_sensor_name">Window</string>
     <string name="RFID_sensor_name">RFID sensor</string>
     <string name="HVAC_sensor_name">HVAC</string>
@@ -57,7 +57,7 @@
     <string name="login" translatable="false">Login</string>
     <string name="dahboard_fragment_class_name" translatable="false">DashboardFragment</string>
     <string name="home_fragment_class_name" translatable="false">HomeFragment</string>
-    <string name="splash_screen_text"><u>Your intelligent home</u></string>
+    <string name="splash_screen_text"><u>Your Intelligent Home</u></string>
     <string name="foreground_notification_title">Your SmartHome is active</string>
     <string name="Version">Version %s</string>
     <string name="delete_sensors">Delete all sensors</string>
@@ -70,7 +70,7 @@
     <string name="legal_notice">Legal notice</string>
     <string name="weak_password">Password is not strong enough</string>
     <string name="invalid_email">Email address is incorrect</string>
-    <string name="account_does_not_exists">Account doesn\'t exists</string>
+    <string name="account_does_not_exists">Account doesn\'t exist</string>
     <string name="account_already_exists">Account already exists. Please choose\nanother email</string>
     <string name="invalid_password">Invalid password</string>
     <string name="different_password">Passwords are not the same</string>
@@ -87,7 +87,7 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="create_account">Create account</string>
     <string name="sign_out">Sign out</string>
-    <string name="opened_window">Opened</string>
+    <string name="opened_window">Open</string>
     <string name="closed_window">Closed</string>
     <string name="min_temp">Min Temp</string>
     <string name="max_temp">Max Temp</string>
